@@ -43,7 +43,8 @@
   .room{flex:1;border-radius:14px;padding:13px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;box-shadow:var(--shadow);border:none;font-family:inherit;transition:transform .12s}
   .room:active{transform:scale(.96)}
   .r-i{font-size:24px}.r-n{font-size:13px;font-weight:800;color:#fff}
-  .r-s{font-size:10px;color:rgba(255,255,255,.9);font-weight:600;text-align:center;line-height:1.4}
+  .r-s{font-size:11px;color:#fff;font-weight:800;text-align:center;line-height:1.35}
+  .r-d{font-size:10px;color:rgba(255,255,255,.9);font-weight:700;text-align:center;line-height:1.3}
   .rm-health{background:linear-gradient(135deg,#22c77a,#0fa86a)}
   .rm-know{background:linear-gradient(135deg,#4a7eff,#2a5edf)}
   .rm-spirit{background:linear-gradient(135deg,#9b59ff,#7a39df)}
@@ -52,32 +53,30 @@
   .rm-eco{background:linear-gradient(135deg,#ffb800,#e09800)}
   .found{margin-top:8px;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between}
   .found span{font-size:12px;font-weight:700;color:var(--soft)}
-  .mm{display:flex;gap:5px}
-  .mm button{font-size:20px;background:none;border:none;cursor:pointer;opacity:.35;padding:2px;transition:all .15s}
-  .mm button.sel{opacity:1;transform:scale(1.25)}
+  .found b{font-size:15px;font-weight:800;color:var(--purple)}
   .tenko-btn{width:100%;margin-top:10px;padding:14px;background:linear-gradient(135deg,#4a7eff,#9b59ff);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 4px 16px rgba(74,126,255,.35)}
-  /* metrics */
+  /* insight / next */
+  .insight{background:#fff;border-radius:var(--r);padding:14px;margin-top:12px;box-shadow:var(--shadow);border-left:5px solid var(--blue)}
+  .insight .ih{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:7px}
+  .insight .ib{font-size:13px;line-height:1.85;color:var(--text)}
+  .insight .idate{font-size:11px;color:var(--muted);margin-top:8px}
+  .nextmove{margin-top:10px;background:linear-gradient(135deg,rgba(255,107,53,.10),rgba(255,184,0,.10));border:1.5px solid rgba(255,107,53,.35);border-radius:var(--r);padding:13px 14px;display:flex;gap:9px;align-items:flex-start}
+  .nextmove .nl{font-size:12px;font-weight:800;color:var(--orange);flex:none;letter-spacing:.06em}
+  .nextmove .nb{font-size:13px;font-weight:700;line-height:1.65;color:var(--text)}
+  /* metrics (read only) */
   .mg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .mb{background:var(--bg);border-radius:12px;padding:11px;border:1.5px solid var(--border)}
   .ml{font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:600}
   .mi-row{display:flex;align-items:baseline;gap:4px}
-  .mi{width:100%;font-size:24px;font-weight:700;background:none;border:none;color:var(--text);font-family:inherit;outline:none}
+  .mv{font-size:24px;font-weight:700;color:var(--text)}
   .mu{font-size:12px;color:var(--muted)}
-  .md{font-size:11px;margin-top:2px;font-weight:600;min-height:14px}
+  .md{font-size:11px;margin-top:2px;font-weight:700;min-height:14px;color:var(--muted)}
   .md.up{color:var(--red)}.md.down{color:var(--green)}
-  .one{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:11px;font-size:14px;font-family:inherit;color:var(--text);outline:none;resize:vertical;min-height:56px}
-  /* routine */
-  .rg{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);padding:8px 0 5px}
+  /* list rows */
   .ri{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border)}
   .ri:last-child{border-bottom:none}
-  .rc{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;color:var(--green);transition:all .15s}
-  .rc.done{border-color:var(--green);background:rgba(34,199,122,.1);transform:rotate(-8deg)}
   .rn{flex:1;font-size:14px;font-weight:500}
-  .rn.done{color:var(--muted);text-decoration:line-through}
-  .rd{display:flex;gap:3px}
-  .rd i{width:7px;height:7px;border-radius:50%;background:var(--border);display:block}
-  .rd i.on{background:var(--green)}
-  .rd i.td{outline:2px solid var(--orange);outline-offset:1px}
+  .rv{font-size:14px;font-weight:800}
   /* progress */
   .pr{margin-bottom:12px}
   .ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
@@ -85,9 +84,14 @@
   .pv{font-size:15px;font-weight:800}
   .pb{height:12px;background:var(--bg);border-radius:6px;overflow:hidden}
   .pf{height:100%;border-radius:6px;transition:width .5s}
-  .cr{display:flex;gap:10px;margin-top:7px;align-items:center}
-  .cb{width:42px;height:42px;border-radius:12px;border:none;font-size:20px;font-weight:800;cursor:pointer;font-family:inherit;color:#fff}
   .pace{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6}
+  /* udemy table */
+  .ut{width:100%;font-size:12px;border-collapse:collapse}
+  .ut th{font-size:10px;color:var(--muted);font-weight:700;text-align:right;padding:5px 3px;border-bottom:1.5px solid var(--border)}
+  .ut th:first-child{text-align:left}
+  .ut td{padding:7px 3px;border-bottom:1px solid var(--border);text-align:right;font-weight:700}
+  .ut td:first-child{text-align:left;font-weight:600;color:var(--soft);font-size:11px}
+  .ut .dlt{font-size:10px;font-weight:700;color:var(--green)}
   /* kaishoku */
   .kg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
   .kb{border-radius:12px;padding:12px}
@@ -96,28 +100,19 @@
   .kf{height:100%;border-radius:4px;background:rgba(255,255,255,.95)}
   .kc{font-size:21px;font-weight:800;color:#fff}
   .km{font-size:11px;color:rgba(255,255,255,.75)}
-  .wk{display:flex;gap:7px;align-items:center;margin-top:10px;padding:11px;background:var(--bg);border-radius:12px}
-  .wd{width:13px;height:13px;border-radius:50%}
-  .wd.u{background:var(--orange)}.wd.e{background:var(--border)}.wd.x{background:var(--red)}
-  .wt{font-size:12px;color:var(--soft);font-weight:700}
-  .warn{font-size:12px;color:var(--red);font-weight:700;margin-top:8px;min-height:16px}
-  .kadd{display:flex;gap:7px;margin-top:10px}
-  .kadd select,.kadd input{padding:9px;font-size:13px;font-family:inherit;border:1.5px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);outline:none}
-  .kadd input[type=date]{flex:1}
-  .kadd .ka-btn{padding:9px 14px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-weight:800;font-family:inherit;cursor:pointer}
   .klog{font-size:13px;color:var(--soft)}
   .klog .e{padding:9px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center}
   .klog .e:last-child{border-bottom:none}
-  .klog .del{margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px}
   /* graph */
-  .gt{display:flex;gap:7px;margin-bottom:12px}
-  .gt div{flex:1;padding:9px 4px;background:#fff;border:1.5px solid var(--border);border-radius:10px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;text-align:center}
+  .gt{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+  .gt div{flex:1 0 auto;padding:9px 10px;background:#fff;border:1.5px solid var(--border);border-radius:10px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;text-align:center;white-space:nowrap}
   .gt div.on{background:var(--blue);border-color:var(--blue);color:#fff}
-  .save{width:100%;padding:14px;background:linear-gradient(135deg,var(--green),#0fa86a);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 4px 16px rgba(34,199,122,.35);margin-top:2px}
   .msg{font-size:13px;color:var(--green);text-align:center;margin-top:7px;min-height:18px;font-weight:700}
   .note{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.7}
   .report{background:var(--bg);border:1.5px dashed var(--border);border-radius:12px;padding:12px;font-size:12px;line-height:1.8;white-space:pre-wrap;word-break:break-all;display:none;margin-top:10px}
   .report.show{display:block}
+  .steps{font-size:13px;line-height:2;color:var(--soft)}
+  .err{background:rgba(255,68,68,.08);border:1.5px solid rgba(255,68,68,.35);color:var(--red);border-radius:12px;padding:12px;font-size:13px;font-weight:700;line-height:1.7}
 </style>
 </head>
 <body>
@@ -131,101 +126,129 @@
   </div>
   <div class="roof"><span>2030.4.29 へ</span></div>
   <div class="floor"><div class="fl">3F</div>
-    <button class="room rm-eco" onclick="go('eco')"><span class="r-i">💰</span><span class="r-n">経済</span><span class="r-s" id="s-eco"></span></button>
+    <button class="room rm-eco" onclick="go('eco')"><span class="r-i">💰</span><span class="r-n">経済</span><span class="r-s" id="s-eco">—</span><span class="r-d" id="d-eco"></span></button>
   </div>
   <div class="floor"><div class="fl">2F</div>
-    <button class="room rm-work" onclick="go('work')"><span class="r-i">🚀</span><span class="r-n">仕事</span><span class="r-s" id="s-work"></span></button>
-    <button class="room rm-priv" onclick="go('priv')"><span class="r-i">🍶</span><span class="r-n">会食・家族</span><span class="r-s" id="s-priv"></span></button>
+    <button class="room rm-work" onclick="go('work')"><span class="r-i">🚀</span><span class="r-n">仕事</span><span class="r-s" id="s-work">—</span><span class="r-d" id="d-work"></span></button>
+    <button class="room rm-priv" onclick="go('priv')"><span class="r-i">🍶</span><span class="r-n">会食・家族</span><span class="r-s" id="s-priv">—</span><span class="r-d" id="d-priv"></span></button>
   </div>
   <div class="floor"><div class="fl">1F</div>
-    <button class="room rm-know" onclick="go('know')"><span class="r-i">📚</span><span class="r-n">知識</span><span class="r-s" id="s-know"></span></button>
-    <button class="room rm-health" onclick="go('health')" style="flex:1.3"><span class="r-i">💪</span><span class="r-n">健康</span><span class="r-s" id="s-health"></span></button>
-    <button class="room rm-spirit" onclick="go('spirit')"><span class="r-i">🧘</span><span class="r-n">精神</span><span class="r-s" id="s-spirit"></span></button>
+    <button class="room rm-know" onclick="go('know')"><span class="r-i">📚</span><span class="r-n">知識</span><span class="r-s" id="s-know">—</span><span class="r-d" id="d-know"></span></button>
+    <button class="room rm-health" onclick="go('health')" style="flex:1.3"><span class="r-i">💪</span><span class="r-n">健康</span><span class="r-s" id="s-health">—</span><span class="r-d" id="d-health"></span></button>
+    <button class="room rm-spirit" onclick="go('spirit')"><span class="r-i">🧘</span><span class="r-n">精神</span><span class="r-s" id="s-spirit">—</span><span class="r-d" id="d-spirit"></span></button>
   </div>
-  <div class="found"><span>今日のご機嫌度</span><div class="mm" id="mmini"></div></div>
-  <button class="tenko-btn" onclick="makeReport()">📋 点呼レポートを作る（Claudeに送る用）</button>
+  <div class="found"><span>最新の記録日</span><b id="latestDate">—</b></div>
+
+  <!-- 気づき -->
+  <div class="insight">
+    <div class="ih">💡 気づき</div>
+    <div class="ib" id="insightBody">読み込み中…</div>
+    <div class="idate" id="insightDate"></div>
+  </div>
+
+  <!-- 次の一手 -->
+  <div class="nextmove">
+    <div class="nl">▶ 次の一手</div>
+    <div class="nb" id="nextMove">読み込み中…</div>
+  </div>
+
+  <button class="tenko-btn" onclick="copyTemplate()">📋 点呼テンプレをコピー</button>
   <div class="report" id="reportBox"></div>
   <div class="msg" id="homeMsg"></div>
 
   <div class="card" style="margin-top:14px">
     <div class="ct"><span class="dot" style="background:var(--blue)"></span>🌅 朝のやること（覚えなくていい）</div>
-    <div style="font-size:13px;line-height:2;color:var(--soft)">
+    <div class="steps">
       ① 体重計に乗る<br>
       ② あすけん→体重画面スクショ<br>
       ③ Oura→睡眠スコアスクショ<br>
-      ④ 上の顔をタップ（ご機嫌度）<br>
-      ⑤ 💪健康→体重を入力→保存<br>
-      ⑥ 「📋点呼レポート」タップ<br>
-      ⑦ Claudeに貼る＋スクショ2枚→送信
+      ④ 上の「📋点呼テンプレをコピー」をタップ<br>
+      ⑤ Claudeに貼る＋スクショ2枚→送信<br>
+      ⑥ おわり（アプリへの入力は不要）
     </div>
   </div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--purple)"></span>🌙 夜のやること（覚えなくていい）</div>
-    <div style="font-size:13px;line-height:2;color:var(--soft)">
-      ① ルーティンを✓ポチポチ<br>
-      ② 🧘精神→一言＋良かったこと3つ（音声入力OK）<br>
-      ③ 会食した日だけ🍶で追加<br>
-      ④ 「📋点呼レポート」タップ<br>
-      ⑤ Claudeに貼って送信→寝る
+    <div class="steps">
+      ① 「📋点呼テンプレをコピー」をタップ<br>
+      ② Claudeに貼って、今日のことを話す（音声入力OK）<br>
+      ③ 会食した日はその一言も添える<br>
+      ④ 送信→寝る<br>
+      ⑤ 翌朝7時、このアプリが自動で最新になっています
     </div>
   </div>
   <div class="card" style="background:rgba(34,199,122,.07);border:1.5px solid rgba(34,199,122,.3);box-shadow:none">
-    <div style="font-size:13px;font-weight:700;color:var(--green)">😮‍💨 疲れてる日の最小形（3タップ）</div>
+    <div style="font-size:13px;font-weight:700;color:var(--green)">😮‍💨 疲れてる日の最小形（2タップ）</div>
     <div style="font-size:13px;line-height:2;color:var(--soft);margin-top:4px">
-      顔タップ →「📋点呼レポート」→ Claudeに貼って送信。<br>それだけで点呼成立。完璧は不要。
+      「📋点呼テンプレをコピー」→ Claudeに貼って送信。<br>それだけで点呼成立。完璧は不要。
     </div>
   </div>
+  <div id="loadErr"></div>
 </div>
 
 <!-- HEALTH -->
 <div class="page" id="pg-health">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">💪 健康</div></div>
   <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--blue)"></span>今日の数値</div>
+    <div class="ct"><span class="dot" style="background:var(--blue)"></span>最新の数値（台帳より）</div>
     <div class="mg">
       <div class="mb"><div class="ml">⚖️ 体重（目標78.4）</div>
-        <div class="mi-row"><input class="mi" id="w" type="number" step="0.1" inputmode="decimal" placeholder="84.3"><span class="mu">kg</span></div>
-        <div class="md" id="wd"></div></div>
-      <div class="mb"><div class="ml">❤️ 血圧（上）</div>
-        <div class="mi-row"><input class="mi" id="bp" type="number" inputmode="numeric" placeholder="120"><span class="mu">mmHg</span></div>
-        <div class="md"></div></div>
+        <div class="mi-row"><span class="mv" id="v-weight">—</span><span class="mu">kg</span></div>
+        <div class="md" id="d-weight"></div></div>
+      <div class="mb"><div class="ml">💍 Oura睡眠スコア</div>
+        <div class="mi-row"><span class="mv" id="v-sleep">—</span><span class="mu">点</span></div>
+        <div class="md" id="d-sleep"></div></div>
     </div>
     <div class="mg" style="margin-top:10px">
       <div class="mb"><div class="ml">🔥 体脂肪率</div>
-        <div class="mi-row"><input class="mi" id="fat" type="number" step="0.1" inputmode="decimal" placeholder="30.7"><span class="mu">%</span></div></div>
-      <div class="mb"><div class="ml">💍 Oura睡眠スコア</div>
-        <div class="mi-row"><input class="mi" id="sleep" type="number" inputmode="numeric" placeholder="80"><span class="mu">点</span></div></div>
+        <div class="mi-row"><span class="mv" id="v-fat">—</span><span class="mu">%</span></div>
+        <div class="md" id="d-fat"></div></div>
+      <div class="mb"><div class="ml">💪 筋肉量</div>
+        <div class="mi-row"><span class="mv" id="v-muscle">—</span><span class="mu">kg</span></div>
+        <div class="md" id="d-muscle"></div></div>
+    </div>
+    <div class="mg" style="margin-top:10px">
+      <div class="mb"><div class="ml">🧬 体内年齢</div>
+        <div class="mi-row"><span class="mv" id="v-bodyAge">—</span><span class="mu">歳</span></div>
+        <div class="md" id="d-bodyAge"></div></div>
+      <div class="mb"><div class="ml">❤️ 血圧（上／下）</div>
+        <div class="mi-row"><span class="mv" id="v-bp" style="font-size:20px">—</span></div>
+        <div class="md" id="d-bp"></div></div>
     </div>
   </div>
   <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--green)"></span>健康ルーティン</div>
-    <div id="rt-health"></div>
-    <div class="note">あすけん・Oura Ringのスクショは点呼でClaudeに直接送る→ClaudeがDriveに記帳。ここは自分で数字を控えたい日用。</div>
+    <div class="ct"><span class="dot" style="background:var(--green)"></span>直近の記録</div>
+    <div id="healthRecent"></div>
   </div>
-  <button class="save" onclick="saveAll('healthMsg')">💾 保存</button>
-  <div class="msg" id="healthMsg"></div>
+  <div class="note">数値はすべてGoogleドライブの「GOKIGEN台帳」が出どころです。点呼でClaudeにスクショを送ると、翌朝7時にここへ反映されます。</div>
 </div>
 
 <!-- WORK -->
 <div class="page" id="pg-work">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🚀 仕事</div></div>
   <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--orange)"></span>2030年4月29日への進捗</div>
-    <div class="pr"><div class="ph"><span class="pn">📖 Kindle</span><span class="pv" id="kN"></span></div>
-      <div class="pb"><div class="pf" id="kB" style="background:linear-gradient(90deg,#ff6b35,#ffb800)"></div></div>
-      <div class="cr"><button class="cb" style="background:var(--border);color:var(--soft)" onclick="cnt('kindle',-1)">−</button><span style="flex:1;text-align:center;font-size:12px;color:var(--muted)">リリースで＋</span><button class="cb" style="background:linear-gradient(135deg,#ff6b35,#ffb800)" onclick="cnt('kindle',1)">＋</button></div></div>
-    <div class="pr"><div class="ph"><span class="pn">🎓 Udemy</span><span class="pv" id="uN"></span></div>
-      <div class="pb"><div class="pf" id="uB" style="background:linear-gradient(90deg,#4a7eff,#9b59ff)"></div></div>
-      <div class="cr"><button class="cb" style="background:var(--border);color:var(--soft)" onclick="cnt('udemy',-1)">−</button><span style="flex:1;text-align:center;font-size:12px;color:var(--muted)">リリースで＋</span><button class="cb" style="background:linear-gradient(135deg,#4a7eff,#9b59ff)" onclick="cnt('udemy',1)">＋</button></div></div>
+    <div class="ct"><span class="dot" style="background:var(--orange)"></span>Udemy 全10コース（最新スナップショット）</div>
+    <div class="mg">
+      <div class="mb"><div class="ml">👥 累計登録者</div>
+        <div class="mi-row"><span class="mv" id="v-enroll">—</span><span class="mu">人</span></div>
+        <div class="md" id="d-enroll"></div></div>
+      <div class="mb"><div class="ml">⭐ 平均評価</div>
+        <div class="mi-row"><span class="mv" id="v-rating">—</span></div>
+        <div class="md" id="d-rating"></div></div>
+    </div>
+    <div class="pace" id="udemyAsOf"></div>
+  </div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--blue)"></span>コース別（前回比）</div>
+    <div style="overflow-x:auto">
+      <table class="ut" id="udemyTable"></table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--purple)"></span>2030年4月29日への進捗</div>
+    <div class="pr"><div class="ph"><span class="pn">🎓 Udemy 公開コース</span><span class="pv" id="uN"></span></div>
+      <div class="pb"><div class="pf" id="uB" style="background:linear-gradient(90deg,#4a7eff,#9b59ff)"></div></div></div>
     <div class="pace" id="pace"></div>
-  </div>
-  <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--pink)"></span>今月のプロモーション（月4＋2）</div>
-    <div id="rt-promo"></div>
-  </div>
-  <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--purple)"></span>進行中：ご機嫌ルーティン改修</div>
-    <div id="rt-kaishu"></div>
   </div>
 </div>
 
@@ -233,39 +256,55 @@
 <div class="page" id="pg-eco">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">💰 経済</div></div>
   <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--yellow)"></span>今月のUdemy収益（万円）</div>
-    <div class="mi-row"><input class="mi" id="rev" type="number" inputmode="numeric" placeholder="35" style="font-size:28px"><span class="mu">万円</span></div>
-    <div class="note">現状：手つかずで月35〜40万。レクチャーメール月4＋クーポン月2で月60〜70万が射程。累計2,800万円（2021〜26.6）。</div>
+    <div class="ct"><span class="dot" style="background:var(--yellow)"></span>Udemy 累計収益（最新スナップショット）</div>
+    <div class="mi-row"><span class="mv" id="v-rev" style="font-size:28px">—</span><span class="mu">USD</span></div>
+    <div class="md" id="d-rev"></div>
+    <div class="pace" id="ecoAsOf"></div>
   </div>
   <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--green)"></span>資産運用の宿題</div>
-    <div id="rt-eco"></div>
-    <div class="note">会社の現金4,000〜5,000万円。米国国債4.5%なら年約200万円。</div>
+    <div class="ct"><span class="dot" style="background:var(--green)"></span>コース別 累計収益</div>
+    <div style="overflow-x:auto">
+      <table class="ut" id="ecoTable"></table>
+    </div>
   </div>
-  <button class="save" onclick="saveAll('ecoMsg')">💾 保存</button>
-  <div class="msg" id="ecoMsg"></div>
+  <div class="note">会社の現金4,000〜5,000万円。米国国債4.5%なら年約200万円。</div>
 </div>
 
 <!-- KNOW -->
 <div class="page" id="pg-know">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">📚 知識</div></div>
-  <div class="card"><div class="ct"><span class="dot" style="background:var(--blue)"></span>学びのルーティン</div><div id="rt-know"></div></div>
-  <div class="card"><div class="ct"><span class="dot" style="background:var(--purple)"></span>今日の学び（ファクトリーのネタ）</div>
-    <textarea class="one" id="learn" placeholder="今日の気づき・学び…夜の点呼でObsidian用に整形します"></textarea></div>
-  <button class="save" onclick="saveAll('knowMsg')">💾 保存</button>
-  <div class="msg" id="knowMsg"></div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--blue)"></span>記録の継続</div>
+    <div class="mg">
+      <div class="mb"><div class="ml">📖 台帳の記録日数</div>
+        <div class="mi-row"><span class="mv" id="v-days">—</span><span class="mu">日</span></div></div>
+      <div class="mb"><div class="ml">🔥 記録開始から</div>
+        <div class="mi-row"><span class="mv" id="v-span">—</span><span class="mu">日目</span></div></div>
+    </div>
+  </div>
+  <div class="card"><div class="ct"><span class="dot" style="background:var(--purple)"></span>直近の学び・出来事（台帳より）</div>
+    <div id="knowLog"></div>
+  </div>
 </div>
 
 <!-- SPIRIT -->
 <div class="page" id="pg-spirit">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🧘 精神</div></div>
-  <div class="card"><div class="ct"><span class="dot" style="background:var(--purple)"></span>今日のご機嫌度</div>
-    <div class="mm" id="mfull" style="justify-content:space-between"></div></div>
-  <div class="card"><div class="ct"><span class="dot" style="background:var(--pink)"></span>感謝のルーティン</div><div id="rt-spirit"></div></div>
-  <div class="card"><div class="ct"><span class="dot" style="background:var(--green)"></span>今日の一言＋良かったこと3つ</div>
-    <textarea class="one" id="good" placeholder="今日を一言で。良かったこと3つ。10年日記のネタになります"></textarea></div>
-  <button class="save" onclick="saveAll('spiritMsg')">💾 保存</button>
-  <div class="msg" id="spiritMsg"></div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--purple)"></span>コンディション（最新）</div>
+    <div class="mg">
+      <div class="mb"><div class="ml">😄 ご機嫌度</div>
+        <div class="mi-row"><span class="mv" id="v-mood">—</span><span class="mu">/5</span></div>
+        <div class="md" id="d-mood"></div></div>
+      <div class="mb"><div class="ml">💍 睡眠スコア</div>
+        <div class="mi-row"><span class="mv" id="v-sleep2">—</span><span class="mu">点</span></div>
+        <div class="md" id="d-sleep2"></div></div>
+    </div>
+  </div>
+  <div class="card"><div class="ct"><span class="dot" style="background:var(--green)"></span>今日の一言（台帳より）</div>
+    <div class="ib" id="spiritNote" style="font-size:13px;line-height:1.85"></div>
+  </div>
+  <div class="note">ご機嫌度は点呼でClaudeに伝えた内容が台帳に記帳され、ここに反映されます。アプリでのタップ入力は廃止しました。</div>
 </div>
 
 <!-- PRIV / KAISHOKU -->
@@ -274,19 +313,9 @@
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--orange)"></span>会食マネジメント（今月）</div>
     <div class="kg" id="kgrid"></div>
-    <div class="wk" id="kweek"></div>
-    <div class="warn" id="kwarn"></div>
-    <div class="kadd">
-      <input type="date" id="kdate">
-      <select id="kcat"><option value="client">客</option><option value="mentor">師</option><option value="okuri">恩</option><option value="friend">友</option></select>
-      <button class="ka-btn" onclick="addK()">追加</button>
-    </div>
+    <div class="note">台帳の「会食」欄から自動集計しています。</div>
   </div>
-  <div class="card"><div class="ct"><span class="dot" style="background:var(--pink)"></span>今月の記録</div><div class="klog" id="klog"></div></div>
-  <div class="card"><div class="ct"><span class="dot" style="background:var(--purple)"></span>夫婦の夢メモ</div>
-    <textarea class="one" id="fam" placeholder="妻との山登り・旅ラン・クルーズの計画…"></textarea></div>
-  <button class="save" onclick="saveAll('privMsg')">💾 保存</button>
-  <div class="msg" id="privMsg"></div>
+  <div class="card"><div class="ct"><span class="dot" style="background:var(--pink)"></span>会食の記録（全期間）</div><div class="klog" id="klog"></div></div>
 </div>
 
 <!-- GRAPH -->
@@ -294,9 +323,10 @@
   <div class="hdr"><div class="h1">📈 推移</div></div>
   <div class="gt">
     <div class="on" onclick="sw('weight',this)">⚖️体重</div>
-    <div onclick="sw('bp',this)">❤️血圧</div>
-    <div onclick="sw('mood',this)">😄機嫌</div>
     <div onclick="sw('sleep',this)">💍睡眠</div>
+    <div onclick="sw('fat',this)">🔥体脂肪</div>
+    <div onclick="sw('bodyAge',this)">🧬体内年齢</div>
+    <div onclick="sw('udemy',this)">🚀仕事(Udemy)</div>
   </div>
   <div class="card"><div class="ct" id="gTitle"></div><canvas id="chart" height="210"></canvas></div>
   <div class="card"><div class="ct"><span class="dot" style="background:var(--orange)"></span>統計</div>
@@ -306,11 +336,18 @@
 <!-- SETTINGS -->
 <div class="page" id="pg-set">
   <div class="hdr"><div class="h1">⚙️ 設定</div></div>
-  <div class="card"><div class="ct">データ</div>
-    <button class="save" style="background:linear-gradient(135deg,#4a7eff,#9b59ff)" onclick="exportAll()">📤 全データを書き出す（バックアップ）</button>
-    <div class="report" id="expBox"></div>
-    <button class="save" style="background:linear-gradient(135deg,var(--red),#cc2200);margin-top:10px" onclick="if(confirm('全データを消去します。よろしいですか？'))wipe()">🗑️ 全リセット</button>
-    <div class="note">正式なデータ保管はGoogle Drive（GOKIGEN_日次ログ）。このアプリは入力と閲覧の窓口で、点呼レポートを毎日Claudeに送ることでDriveに永続記録されます。</div>
+  <div class="card"><div class="ct">データの出どころ</div>
+    <div style="font-size:13px;line-height:1.9;color:var(--soft)">
+      このアプリは <b>data.json</b> だけを読んで表示しています。手入力の欄はありません。<br><br>
+      data.json は毎朝7時に、Googleドライブの<br>
+      ・GOKIGEN台帳（全ファイル）<br>
+      ・Udemy台帳（全ファイル）<br>
+      を全期間まとめて自動生成されます。
+    </div>
+    <div class="note" id="genInfo"></div>
+  </div>
+  <div class="card"><div class="ct">読み込み状態</div>
+    <div id="loadState" style="font-size:13px;color:var(--soft);line-height:1.9"></div>
   </div>
 </div>
 
@@ -323,252 +360,348 @@
 <script>
 /* ===== util ===== */
 const pad=n=>String(n).padStart(2,'0');
-const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
-const daysAgo=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
-const mKey=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)};
-const monday=ds=>{const d=new Date(ds);const s=(d.getDay()+6)%7;d.setDate(d.getDate()-s);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
 const DOWS=['日','月','火','水','木','金','土'];
 const MOODS=['😩','😕','😐','🙂','😄'];
+const fmtInt=n=>n==null?'—':n.toLocaleString('ja-JP');
+const fmtUSD=n=>n==null?'—':'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 
-/* ===== storage: localStorage優先、Claude環境ならwindow.storageにも複写 ===== */
-const hasCS=typeof window.storage!=='undefined'&&window.storage&&typeof window.storage.get==='function';
-async function LD(k,f){try{const v=localStorage.getItem(k);if(v!==null)return JSON.parse(v)}catch(e){}
-  if(hasCS){try{const r=await window.storage.get(k);if(r)return JSON.parse(r.value)}catch(e){}}return f}
-async function SV(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}
-  if(hasCS){try{await window.storage.set(k,JSON.stringify(v))}catch(e){}}}
+/* ===== state ===== */
+let DATA=null, chart=null, curG='weight';
 
-/* ===== 初期データ（2026-07-10時点の実データ） ===== */
-const SEED_REC={'2026-07-10':{weight:84.3,fat:30.7,mood:null,routines:{}}};
-const SEED_K=[
-  {date:'2026-07-02',cat:'client',memo:'アズビル合宿 初日夜'},
-  {date:'2026-07-07',cat:'mentor',memo:'師匠と鉄鍋→カラオケSARA'},
-  {date:'2026-07-10',cat:'client',memo:'アズビル懇親会（藤沢）'}
-];
-const ROUT={
-  health:[{id:'h1',n:'白湯・水を飲む'},{id:'h2',n:'体を動かす（ストレッチ・ウォーク）'},{id:'h3',n:'体重を測る'}],
-  know:[{id:'k1',n:'学習（Udemy／Notion）'},{id:'k2',n:'エキスパートシークレッツ（週）'}],
-  spirit:[{id:'s1',n:'感謝の行（ありがとう）'},{id:'s2',n:'上機嫌で人と接する'},{id:'s3',n:'nakajiファクトリー（夜）'}],
-  promo:[{id:'p1',n:'レクチャーメール①'},{id:'p2',n:'レクチャーメール②'},{id:'p3',n:'レクチャーメール③'},{id:'p4',n:'レクチャーメール④'},{id:'p5',n:'クーポンメール①'},{id:'p6',n:'クーポンメール②'}],
-  kaishu:[{id:'q1',n:'診断（レビュー分析）✓済 7/10'},{id:'q2',n:'カリキュラム仕分け（残す/トリム/差替/追加）'},{id:'q3',n:'第1段：冗長カット編集'},{id:'q4',n:'第2段：会食マネジメント2026 差し替え'},{id:'q5',n:'第3段：AI版GOKIGEN新章'},{id:'q6',n:'教育的お知らせで8,055人に告知'}],
-  eco:[{id:'e1',n:'FP・証券会社に相談日程を入れる'},{id:'e2',n:'会社現金の運用方針を決める'},{id:'e3',n:'SBI 10万円振込（7/15）'}]
-};
+/* 最新から順に、その項目が入っている行を探す */
+function lastWith(key,skip){
+  const h=DATA.health; let found=0;
+  for(let i=h.length-1;i>=0;i--){
+    if(h[i][key]!=null){ if(found===(skip||0))return h[i]; found++; }
+  }
+  return null;
+}
+/* 直近値と「前回比」（1つ前に記録がある日との差） */
+function latestPair(key){
+  return {cur:lastWith(key,0), prev:lastWith(key,1)};
+}
+function deltaText(key,unit,digits,invert){
+  const {cur,prev}=latestPair(key);
+  if(!cur) return {txt:'記録なし',cls:'md'};
+  if(!prev) return {txt:'前回比 —',cls:'md'};
+  const d=cur[key]-prev[key];
+  if(Math.abs(d)<1e-9) return {txt:'前回比 ±0',cls:'md'};
+  const up=d>0;
+  const sign=up?'▲':'▼';
+  const good=invert?up:!up;
+  return {txt:sign+Math.abs(d).toFixed(digits||1)+(unit||'')+' 前回比（'+prev.date.slice(5)+'）',cls:'md '+(good?'down':'up')};
+}
+function setMetric(id,key,unit,digits,invert){
+  const {cur}=latestPair(key);
+  const ve=document.getElementById('v-'+id);
+  const de=document.getElementById('d-'+id);
+  if(ve) ve.textContent = cur? (digits!=null? Number(cur[key]).toFixed(digits) : cur[key]) : '—';
+  if(de){const d=deltaText(key,unit,digits,invert);de.textContent=d.txt;de.className=d.cls;}
+}
+
+/* ===== Udemy 集計 ===== */
+function uSnap(i){ return DATA.udemy[DATA.udemy.length-1+i]; }
+function uSum(snap,field){ return snap? snap.rows.reduce((a,r)=>a+(r[field]||0),0) : null; }
+function uAvgRating(snap){
+  if(!snap)return null;
+  return snap.rows.reduce((a,r)=>a+r.rating,0)/snap.rows.length;
+}
+
+/* ===== 会食 ===== */
 const KCATS=[
   {k:'client',l:'👔 客',max:5,bg:'linear-gradient(135deg,#4a7eff,#9b59ff)'},
   {k:'mentor',l:'🎓 師',max:3,bg:'linear-gradient(135deg,#9b59ff,#ff4d8d)'},
   {k:'okuri',l:'🤝 恩',max:3,bg:'linear-gradient(135deg,#22c77a,#4a7eff)'},
-  {k:'friend',l:'🍻 友',max:3,bg:'linear-gradient(135deg,#ffb800,#ff6b35)'}
+  {k:'friend',l:'🍻 友',max:3,bg:'linear-gradient(135deg,#ffb800,#ff6b35)'},
+  {k:'family',l:'👨‍👩‍👧 家族',max:4,bg:'linear-gradient(135deg,#ff4d8d,#ff6b35)',wide:true}
 ];
-const KLBL={client:'客',mentor:'師',okuri:'恩',friend:'友'};
-const KICO={client:'👔',mentor:'🎓',okuri:'🤝',friend:'🍻'};
-
-let rec={},kai=[],work={kindle:38,udemy:10,checks:{}},texts={learn:'',good:'',fam:'',rev:null};
-let chart=null,curG='weight';
+function catOf(s){
+  if(!s)return null;
+  if(/家族|妻|長女|アキさん/.test(s))return 'family';
+  if(/客|研修|懇親|アズビル|三井|ベネッセ|大塚/.test(s))return 'client';
+  if(/師/.test(s))return 'mentor';
+  if(/恩/.test(s))return 'okuri';
+  if(/友|祝い/.test(s))return 'friend';
+  return 'friend';
+}
+function diningList(){
+  return DATA.health.filter(r=>r.dining && !/^なし/.test(r.dining))
+    .map(r=>({date:r.date,memo:r.dining,cat:catOf(r.dining)}));
+}
 
 /* ===== init ===== */
 async function init(){
   const d=new Date();
   document.getElementById('dateStr').textContent=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日（'+DOWS[d.getDay()]+'）';
-  rec=await LD('gk-rec',null);
-  if(!rec){rec=SEED_REC;await SV('gk-rec',rec)}
-  if(!rec[today()])rec[today()]={weight:null,fat:null,bp:null,sleep:null,mood:null,routines:{}};
-  kai=await LD('gk-kai',null);
-  if(!kai){kai=SEED_K;await SV('gk-kai',kai)}
-  work=await LD('gk-work',work);
-  if(!work.checks)work.checks={};
-  texts=await LD('gk-txt',texts);
-  document.getElementById('kdate').value=today();
-  bindInputs();renderAll();
-}
-function T(){return rec[today()]}
-function bindInputs(){
-  const t=T();
-  const map={w:'weight',bp:'bp',fat:'fat',sleep:'sleep'};
-  for(const[id,key]of Object.entries(map)){
-    const el=document.getElementById(id);
-    if(t[key]!=null)el.value=t[key];
-    el.oninput=()=>{t[key]=el.value===''?null:parseFloat(el.value);renderDelta();renderHouse()};
+  try{
+    const res=await fetch('data.json?v='+Date.now(),{cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    DATA=await res.json();
+  }catch(e){
+    document.getElementById('loadErr').innerHTML=
+      '<div class="err">データ（data.json）を読み込めませんでした。<br>'+String(e.message||e)+'</div>';
+    document.getElementById('loadState').textContent='❌ 読み込み失敗: '+String(e.message||e);
+    return;
   }
-  const tmap={learn:'learn',good:'good',fam:'fam',rev:'rev'};
-  for(const[id,key]of Object.entries(tmap)){
-    const el=document.getElementById(id);
-    if(texts[key]!=null&&texts[key]!=='')el.value=texts[key];
-    el.oninput=()=>{texts[key]=el.value};
-  }
+  renderAll();
 }
-function renderAll(){renderHouse();renderMood();renderDelta();
-  rtList('rt-health',ROUT.health);rtList('rt-know',ROUT.know);rtList('rt-spirit',ROUT.spirit);
-  ckList('rt-promo',ROUT.promo);ckList('rt-kaishu',ROUT.kaishu);ckList('rt-eco',ROUT.eco);
-  renderWork();renderK();}
+
+function renderAll(){
+  renderHouse(); renderInsight(); renderHealth(); renderWork();
+  renderEco(); renderKnow(); renderSpirit(); renderPriv(); renderSettings();
+}
 
 /* ===== house ===== */
 function renderHouse(){
-  const t=T();
-  const mk=mKey();
-  const mCnt=kai.filter(e=>e.date.startsWith(mk)).length;
-  document.getElementById('s-health').textContent=t.weight?('今日 '+t.weight+'kg'):'体重を記録';
-  document.getElementById('s-work').textContent='K'+work.kindle+'/100・U'+work.udemy+'/100';
-  document.getElementById('s-priv').textContent='会食 '+mCnt+'/12日';
-  document.getElementById('s-eco').textContent=texts.rev?('Udemy月'+texts.rev+'万円'):'収益を記録';
-  const done=[...ROUT.health,...ROUT.know,...ROUT.spirit].filter(r=>t.routines[r.id]).length;
-  document.getElementById('s-know').textContent='学び・読書';
-  document.getElementById('s-spirit').textContent=t.mood?('今日 '+MOODS[t.mood-1]):'機嫌を記録';
+  const h=DATA.health;
+  const latest=h[h.length-1];
+  document.getElementById('latestDate').textContent=latest.date+'（'+latest.dow+'）';
+
+  // 健康 = 体重
+  const w=latestPair('weight');
+  setRoom('health', w.cur? w.cur.weight.toFixed(1)+'kg':'—', roomDelta('weight','kg',1,false));
+
+  // 精神 = ご機嫌度があればそれ、なければ睡眠
+  const m=latestPair('mood');
+  if(m.cur){ setRoom('spirit', '機嫌 '+m.cur.mood+'/5', roomDelta('mood','',0,true)); }
+  else { setRoom('spirit', '睡眠 '+(lastWith('sleep',0)?lastWith('sleep',0).sleep:'—'), roomDelta('sleep','',0,true)); }
+
+  // 知識 = 記録日数
+  setRoom('know', '台帳 '+h.length+'日', '継続記録');
+
+  // 仕事 = Udemy累計登録
+  const s0=uSnap(0), s1=uSnap(-1);
+  const e0=uSum(s0,'cumEnroll'), e1=uSum(s1,'cumEnroll');
+  setRoom('work', fmtInt(e0)+'人', e1!=null? ('▲'+fmtInt(e0-e1)+' 前回比'):'—');
+
+  // 経済 = Udemy累計収益
+  const r0=uSum(s0,'cumRevenue'), r1=uSum(s1,'cumRevenue');
+  setRoom('eco', '$'+Math.round(r0).toLocaleString('en-US'), r1!=null? ('▲$'+Math.round(r0-r1).toLocaleString('en-US')+' 前回比'):'—');
+
+  // 会食 = 今月
+  const mk=latest.date.slice(0,7);
+  const mCnt=diningList().filter(e=>e.date.startsWith(mk)).length;
+  setRoom('priv', '今月 '+mCnt+'日', '月間12日まで');
 }
-function renderMood(){
-  const t=T();
-  document.getElementById('mmini').innerHTML=MOODS.map((m,i)=>`<button class="${t.mood===i+1?'sel':''}" onclick="setM(${i+1})">${m}</button>`).join('');
-  const f=document.getElementById('mfull');
-  if(f)f.innerHTML=MOODS.map((m,i)=>`<button style="flex:1;font-size:26px;padding:8px 0;background:${t.mood===i+1?'rgba(155,89,255,.12)':'var(--bg)'};border:2px solid ${t.mood===i+1?'var(--purple)':'var(--border)'};border-radius:12px;cursor:pointer" onclick="setM(${i+1})">${m}</button>`).join('');
+function setRoom(id,main,sub){
+  document.getElementById('s-'+id).textContent=main;
+  document.getElementById('d-'+id).textContent=sub||'';
 }
-async function setM(l){T().mood=T().mood===l?null:l;renderMood();renderHouse();await SV('gk-rec',rec)}
-function renderDelta(){
-  const t=T();const y=rec[daysAgo(1)];
-  const el=document.getElementById('wd');
-  if(t.weight&&y&&y.weight){const d=(t.weight-y.weight).toFixed(1);
-    el.textContent=(d>0?'▲':'▼')+Math.abs(d)+'kg 昨日比';el.className='md '+(d>0?'up':'down')}
-  else{el.textContent='';el.className='md'}
+function roomDelta(key,unit,digits,invert){
+  const {cur,prev}=latestPair(key);
+  if(!cur||!prev)return '前回比 —';
+  const d=cur[key]-prev[key];
+  if(Math.abs(d)<1e-9)return '前回比 ±0';
+  return (d>0?'▲':'▼')+Math.abs(d).toFixed(digits||0)+(unit||'')+' 前回比';
 }
 
-/* ===== routines ===== */
-function rtList(elId,list){
-  const t=T();
-  document.getElementById(elId).innerHTML=list.map(r=>{
-    const done=!!t.routines[r.id];
-    const dots=Array.from({length:7},(_,i)=>{
-      const k=daysAgo(6-i);const rr=i===6?t:rec[k];
-      return`<i class="${rr&&rr.routines&&rr.routines[r.id]?'on':''}${i===6?' td':''}"></i>`}).join('');
-    return`<div class="ri"><button class="rc ${done?'done':''}" onclick="tg('${r.id}','${elId}')">${done?'✓':''}</button><span class="rn ${done?'done':''}">${r.n}</span><span class="rd">${dots}</span></div>`}).join('');
+/* ===== 気づき & 次の一手 ===== */
+function renderInsight(){
+  const withNote=DATA.health.filter(r=>r.note && r.note.length>0);
+  const last=withNote[withNote.length-1];
+  document.getElementById('insightBody').textContent=last? last.note : '記録がありません';
+  document.getElementById('insightDate').textContent=last? (last.date+'（'+last.dow+'）の台帳より') : '';
+  document.getElementById('nextMove').textContent=computeNextMove();
 }
-async function tg(id,elId){const t=T();t.routines[id]=!t.routines[id];
-  rtList(elId,elId==='rt-health'?ROUT.health:elId==='rt-know'?ROUT.know:ROUT.spirit);
-  renderHouse();await SV('gk-rec',rec)}
-function ckList(elId,list){
-  const src=elId==='rt-promo'?mKey()+'-':'';
-  document.getElementById(elId).innerHTML=list.map(r=>{
-    const key=src+r.id;const done=!!work.checks[key];
-    return`<div class="ri"><button class="rc ${done?'done':''}" onclick="ck('${key}','${elId}')">${done?'✓':''}</button><span class="rn ${done?'done':''}">${r.n}</span></div>`}).join('');
-}
-async function ck(key,elId){work.checks[key]=!work.checks[key];
-  ckList(elId,elId==='rt-promo'?ROUT.promo:elId==='rt-kaishu'?ROUT.kaishu:ROUT.eco);
-  await SV('gk-work',work)}
+function computeNextMove(){
+  const h=DATA.health;
+  const ws=h.filter(r=>r.weight!=null);
+  const cur=ws[ws.length-1];
+  const last7=ws.slice(-8,-1);
+  const avg7=last7.length? last7.reduce((a,r)=>a+r.weight,0)/last7.length : null;
+  const sleepRow=lastWith('sleep',0);
 
-/* ===== work ===== */
+  if(avg7!=null && cur.weight>avg7+0.3)
+    return '体重が直近7回の平均（'+avg7.toFixed(1)+'kg）を上回っています。今日は朝のウォーキングを1本入れましょう。';
+  if(sleepRow && sleepRow.sleep<60)
+    return '睡眠スコアが'+sleepRow.sleep+'点と低めです。今夜は日付が変わる前に布団へ。';
+  const mk=h[h.length-1].date.slice(0,7);
+  const mCnt=diningList().filter(e=>e.date.startsWith(mk)).length;
+  if(mCnt>=10)
+    return '今月の会食が'+mCnt+'日。残り枠はわずかです。次の予定は来月に回しましょう。';
+  if(avg7!=null && cur.weight<avg7-0.3)
+    return '体重が7回平均を下回って好調です。今日は同じリズムを崩さないことだけ意識しましょう。';
+  return 'いい流れです。今日は点呼を1回、いつも通り送るだけでOK。';
+}
+
+/* ===== 各部屋 ===== */
+function renderHealth(){
+  setMetric('weight','weight','kg',1,false);
+  setMetric('sleep','sleep','',0,true);
+  setMetric('fat','fat','%',1,false);
+  setMetric('muscle','muscle','kg',1,true);
+  setMetric('bodyAge','bodyAge','歳',0,false);
+  const bp=lastWith('bpHigh',0);
+  document.getElementById('v-bp').textContent=bp? (bp.bpHigh+' / '+(bp.bpLow??'—')) : '—';
+  document.getElementById('d-bp').textContent=bp? (bp.date.slice(5)+' の測定') : '記録なし';
+
+  const rows=DATA.health.filter(r=>r.weight!=null).slice(-10).reverse();
+  document.getElementById('healthRecent').innerHTML=rows.map(r=>
+    `<div class="ri"><span class="rn">${r.date.slice(5)}（${r.dow}）</span><span class="rv">${r.weight.toFixed(1)}kg</span><span class="rv" style="color:var(--muted);font-size:12px;width:56px;text-align:right">睡眠${r.sleep??'—'}</span></div>`
+  ).join('');
+}
 function renderWork(){
-  document.getElementById('kN').textContent=work.kindle+' / 100冊';
-  document.getElementById('uN').textContent=work.udemy+' / 100コース';
-  document.getElementById('kB').style.width=work.kindle+'%';
-  document.getElementById('uB').style.width=work.udemy+'%';
-  const dl=new Date('2030-04-29');const m=Math.max(1,Math.round((dl-new Date())/(2628e6)));
-  document.getElementById('pace').textContent='🎯 2030/4/29まで約'+m+'ヶ月｜必要ペース：Kindle月'+((100-work.kindle)/m).toFixed(1)+'冊・Udemy月'+((100-work.udemy)/m).toFixed(1)+'コース';
-}
-async function cnt(t,n){work[t]=Math.max(0,Math.min(100,work[t]+n));renderWork();renderHouse();await SV('gk-work',work)}
+  const s0=uSnap(0), s1=uSnap(-1);
+  const e0=uSum(s0,'cumEnroll'), e1=uSum(s1,'cumEnroll');
+  document.getElementById('v-enroll').textContent=fmtInt(e0);
+  document.getElementById('d-enroll').textContent=e1!=null?('▲'+fmtInt(e0-e1)+'人 前回比（'+s1.date.slice(5)+'）'):'—';
+  document.getElementById('d-enroll').className='md down';
+  const a0=uAvgRating(s0), a1=uAvgRating(s1);
+  document.getElementById('v-rating').textContent=a0?a0.toFixed(2):'—';
+  if(a1!=null){const d=a0-a1;
+    document.getElementById('d-rating').textContent=(d>=0?'▲':'▼')+Math.abs(d).toFixed(2)+' 前回比';
+    document.getElementById('d-rating').className='md '+(d>=0?'down':'up');}
+  document.getElementById('udemyAsOf').textContent='基準日: '+s0.date+' '+s0.time+'（前回: '+(s1?s1.date:'—')+'）';
 
-/* ===== kaishoku ===== */
-function renderK(){
-  const mk=mKey();
-  const month=kai.filter(e=>e.date.startsWith(mk));
-  const grid=document.getElementById('kgrid');
-  grid.innerHTML=KCATS.map(c=>{
+  const names={};DATA.udemyCourses.forEach(c=>names[c.id]=c.short);
+  let html='<tr><th>コース</th><th>累計登録</th><th>前回比</th><th>評価</th></tr>';
+  s0.rows.forEach(r=>{
+    const p=s1? s1.rows.find(x=>x.id===r.id):null;
+    const d=p? r.cumEnroll-p.cumEnroll : null;
+    html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtInt(r.cumEnroll)}</td><td class="dlt">${d!=null?('+'+fmtInt(d)):'—'}</td><td>${r.rating}</td></tr>`;
+  });
+  document.getElementById('udemyTable').innerHTML=html;
+
+  const n=DATA.udemyCourses.length;
+  document.getElementById('uN').textContent=n+' / 100コース';
+  document.getElementById('uB').style.width=n+'%';
+  const dl=new Date('2030-04-29');const mo=Math.max(1,Math.round((dl-new Date())/(2628e6)));
+  document.getElementById('pace').textContent='🎯 2030/4/29まで約'+mo+'ヶ月｜必要ペース：Udemy月'+((100-n)/mo).toFixed(1)+'コース';
+}
+function renderEco(){
+  const s0=uSnap(0), s1=uSnap(-1);
+  const r0=uSum(s0,'cumRevenue'), r1=uSum(s1,'cumRevenue');
+  document.getElementById('v-rev').textContent=fmtUSD(r0);
+  if(r1!=null){document.getElementById('d-rev').textContent='▲'+fmtUSD(r0-r1)+' 前回比（'+s1.date.slice(5)+'）';
+    document.getElementById('d-rev').className='md down';}
+  document.getElementById('ecoAsOf').textContent='基準日: '+s0.date+' '+s0.time;
+  const names={};DATA.udemyCourses.forEach(c=>names[c.id]=c.short);
+  let html='<tr><th>コース</th><th>累計収益</th><th>前回比</th></tr>';
+  s0.rows.slice().sort((a,b)=>b.cumRevenue-a.cumRevenue).forEach(r=>{
+    const p=s1? s1.rows.find(x=>x.id===r.id):null;
+    const d=p? r.cumRevenue-p.cumRevenue : null;
+    html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtUSD(r.cumRevenue)}</td><td class="dlt">${d!=null&&d>0?('+$'+d.toFixed(2)):'—'}</td></tr>`;
+  });
+  document.getElementById('ecoTable').innerHTML=html;
+}
+function renderKnow(){
+  const h=DATA.health;
+  document.getElementById('v-days').textContent=h.length;
+  const d0=new Date(h[0].date), d1=new Date(h[h.length-1].date);
+  document.getElementById('v-span').textContent=Math.round((d1-d0)/86400000)+1;
+  const rows=h.filter(r=>r.note).slice(-8).reverse();
+  document.getElementById('knowLog').innerHTML=rows.map(r=>
+    `<div style="padding:10px 0;border-bottom:1px solid var(--border)">
+       <div style="font-size:11px;color:var(--muted);font-weight:700">${r.date.slice(5)}（${r.dow}）</div>
+       <div style="font-size:13px;line-height:1.75;margin-top:3px">${r.note.length>150?r.note.slice(0,150)+'…':r.note}</div>
+     </div>`).join('');
+}
+function renderSpirit(){
+  const m=lastWith('mood',0);
+  document.getElementById('v-mood').textContent=m? m.mood : '—';
+  document.getElementById('d-mood').textContent=m? (MOODS[m.mood-1]+' '+m.date.slice(5)+' の記録') : '記録なし';
+  const s=lastWith('sleep',0);
+  document.getElementById('v-sleep2').textContent=s? s.sleep : '—';
+  const dd=deltaText('sleep','',0,true);
+  document.getElementById('d-sleep2').textContent=dd.txt;document.getElementById('d-sleep2').className=dd.cls;
+  const withNote=DATA.health.filter(r=>r.note);
+  const last=withNote[withNote.length-1];
+  document.getElementById('spiritNote').textContent=last?last.note:'—';
+}
+function renderPriv(){
+  const list=diningList();
+  const mk=DATA.health[DATA.health.length-1].date.slice(0,7);
+  const month=list.filter(e=>e.date.startsWith(mk));
+  document.getElementById('kgrid').innerHTML=KCATS.map(c=>{
     const used=month.filter(e=>e.cat===c.k).length;
     const pct=Math.min(used/c.max*100,100);
-    return`<div class="kb" style="background:${c.bg}"><div class="kl">${c.l}（Max${c.max}）</div><div class="kbar"><div class="kf" style="width:${pct}%"></div></div><span class="kc">${used}</span><span class="km"> / ${c.max}日</span></div>`}).join('');
-  const wkKey=monday(today());
-  const wkCnt=kai.filter(e=>monday(e.date)===wkKey).length;
-  const dots=Array.from({length:3},(_,i)=>`<div class="wd ${i<wkCnt?(wkCnt>=3?'x':'u'):'e'}"></div>`).join('');
-  document.getElementById('kweek').innerHTML=dots+`<span class="wt">今週 ${wkCnt}/3日　月間 ${month.length}/12日</span>`;
-  // 連続チェック
-  const dates=new Set(kai.map(e=>e.date));
-  let warn='';
-  for(const e of kai){const d=new Date(e.date);d.setDate(d.getDate()+1);
-    const nx=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-    if(dates.has(nx)){const d2=new Date(nx);d2.setDate(d2.getDate()+1);
-      const n3=d2.getFullYear()+'-'+pad(d2.getMonth()+1)+'-'+pad(d2.getDate());
-      warn='⚠️ '+e.date.slice(5)+'〜連続会食。'+n3.slice(5)+'は絶対に入れない';break}}
-  if(!warn&&month.length>=10)warn='⚠️ 月間残りわずか（'+(12-month.length)+'日）';
-  if(!warn&&wkCnt>=3)warn='⚠️ 今週の枠を使い切りました';
-  document.getElementById('kwarn').textContent=warn;
-  document.getElementById('klog').innerHTML=month.length?
-    month.slice().sort((a,b)=>b.date.localeCompare(a.date)).map((e,i)=>`<div class="e"><span style="font-size:17px">${KICO[e.cat]}</span><div><div style="font-weight:600;font-size:13px">${e.memo||KLBL[e.cat]}</div><div style="font-size:11px;color:var(--muted)">${e.date}（${KLBL[e.cat]}）</div></div><button class="del" onclick="delK('${e.date}','${e.cat}','${(e.memo||'').replace(/'/g,'')}')">✕</button></div>`).join('')
-    :'<div style="text-align:center;padding:16px;color:var(--muted)">今月の記録なし</div>';
-  renderHouse();
+    return`<div class="kb" style="background:${c.bg}${c.wide?';grid-column:span 2':''}"><div class="kl">${c.l}（Max${c.max}）</div><div class="kbar"><div class="kf" style="width:${pct}%"></div></div><span class="kc">${used}</span><span class="km"> / ${c.max}日</span></div>`}).join('');
+  document.getElementById('klog').innerHTML=list.length?
+    list.slice().reverse().map(e=>
+      `<div class="e"><div><div style="font-weight:600;font-size:13px">${e.memo}</div><div style="font-size:11px;color:var(--muted)">${e.date}</div></div></div>`).join('')
+    :'<div style="text-align:center;padding:16px;color:var(--muted)">記録なし</div>';
 }
-async function addK(){
-  const date=document.getElementById('kdate').value;
-  const cat=document.getElementById('kcat').value;
-  if(!date)return;
-  kai.push({date,cat,memo:''});
-  renderK();await SV('gk-kai',kai);
-}
-async function delK(date,cat,memo){
-  const i=kai.findIndex(e=>e.date===date&&e.cat===cat&&(e.memo||'')===memo);
-  if(i>=0)kai.splice(i,1);
-  renderK();await SV('gk-kai',kai);
+function renderSettings(){
+  document.getElementById('genInfo').textContent='最終生成: '+(DATA.generatedAt||'—');
+  const h=DATA.health;
+  document.getElementById('loadState').innerHTML=
+    '✅ data.json 読み込み成功<br>健康データ: <b>'+h.length+'日分</b>（'+h[0].date+' 〜 '+h[h.length-1].date+'）<br>'+
+    'Udemyスナップショット: <b>'+DATA.udemy.length+'件</b>（'+DATA.udemy[0].date+' 〜 '+DATA.udemy[DATA.udemy.length-1].date+'）';
 }
 
-/* ===== save / report ===== */
-async function saveAll(msgId){
-  rec[today()]=T();
-  await SV('gk-rec',rec);await SV('gk-txt',texts);await SV('gk-work',work);
-  const el=document.getElementById(msgId);el.textContent='✅ 保存しました';
-  setTimeout(()=>el.textContent='',2200);renderHouse();
-}
-function makeReport(){
-  const t=T();
-  const mk=mKey();const month=kai.filter(e=>e.date.startsWith(mk));
-  const todayK=kai.filter(e=>e.date===today());
-  const done=[...ROUT.health,...ROUT.know,...ROUT.spirit].filter(r=>t.routines[r.id]);
-  const all=[...ROUT.health,...ROUT.know,...ROUT.spirit];
-  const lines=['【GOKIGEN点呼 '+today()+'】',
-    '体重:'+(t.weight??'未')+'kg 体脂肪:'+(t.fat??'未')+'% 血圧:'+(t.bp??'未')+' 睡眠:'+(t.sleep??'未'),
-    'ご機嫌度:'+(t.mood?t.mood+'/5 '+MOODS[t.mood-1]:'未'),
-    'ルーティン:'+done.length+'/'+all.length+'（'+(done.map(r=>r.n.split('（')[0]).join('・')||'なし')+'）',
-    '会食:'+(todayK.length?todayK.map(e=>KLBL[e.cat]+(e.memo?'・'+e.memo:'')).join('／'):'なし')+'（月間'+month.length+'/12）',
-    'K'+work.kindle+'/100 U'+work.udemy+'/100',
-    '一言:'+(texts.good||'（未記入）'),
-    '学び:'+(texts.learn||'（未記入）')];
-  const txt=lines.join('\n');
+/* ===== 点呼テンプレ ===== */
+function copyTemplate(){
+  const d=new Date();
+  const ds=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  const txt=
+`【GOKIGEN点呼 ${ds}】
+（あすけんの体重画面とOuraの睡眠スコア、スクショを一緒に送ります）
+
+体重:
+睡眠:
+ご機嫌度:    /5
+運動:
+会食:
+今日の一言:
+
+→ 台帳に記帳して、明日のdata.jsonに反映してください。`;
   const box=document.getElementById('reportBox');
   box.textContent=txt;box.className='report show';
-  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>{
-    document.getElementById('homeMsg').textContent='✅ コピーしました。Claudeに貼り付けて送信→Driveに記帳されます';
-    setTimeout(()=>document.getElementById('homeMsg').textContent='',4000);
-  }).catch(()=>{});
+  const msg=document.getElementById('homeMsg');
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(txt).then(()=>{
+      msg.textContent='✅ コピーしました。Claudeに貼り付けて、スクショを添えて送信';
+      setTimeout(()=>msg.textContent='',5000);
+    }).catch(()=>{msg.textContent='下のテキストを長押しでコピーしてください';});
+  }else{msg.textContent='下のテキストを長押しでコピーしてください';}
 }
-function exportAll(){
-  const data={rec,kai,work,texts,exported:new Date().toISOString()};
-  const box=document.getElementById('expBox');
-  box.textContent=JSON.stringify(data);box.className='report show';
-  if(navigator.clipboard)navigator.clipboard.writeText(JSON.stringify(data));
-}
-async function wipe(){localStorage.clear();location.reload()}
 
 /* ===== graph ===== */
 function sw(t,el){document.querySelectorAll('.gt div').forEach(d=>d.classList.remove('on'));el.classList.add('on');curG=t;draw()}
 function draw(){
-  const titles={weight:'体重 30日推移（緑線=目標78.4kg）',bp:'血圧（上）30日推移',mood:'ご機嫌度 30日推移',sleep:'Oura睡眠スコア 30日推移'};
+  if(!DATA)return;
+  const titles={weight:'体重の推移（緑線=目標78.4kg）',sleep:'Oura睡眠スコアの推移',fat:'体脂肪率の推移',bodyAge:'体内年齢の推移',udemy:'Udemy 累計登録者の推移'};
   document.getElementById('gTitle').textContent=titles[curG];
-  const labels=[],vals=[];
-  for(let i=29;i>=0;i--){const k=daysAgo(i);const r=rec[k];
-    labels.push(k.slice(5));vals.push(r&&r[curG]!=null?r[curG]:null)}
-  const colors={weight:'#4a7eff',bp:'#ff4444',mood:'#22c77a',sleep:'#9b59ff'};
+  const colors={weight:'#4a7eff',sleep:'#9b59ff',fat:'#ff6b35',bodyAge:'#22c77a',udemy:'#ff4d8d'};
+  let labels=[],vals=[],unit='';
+
+  if(curG==='udemy'){
+    DATA.udemy.forEach(s=>{labels.push(s.date.slice(5));vals.push(uSum(s,'cumEnroll'))});
+    unit='人';
+  }else{
+    DATA.health.forEach(r=>{labels.push(r.date.slice(5));vals.push(r[curG]!=null?r[curG]:null)});
+    unit={weight:'kg',sleep:'点',fat:'%',bodyAge:'歳'}[curG];
+  }
   const ds=[{data:vals,borderColor:colors[curG],backgroundColor:colors[curG]+'22',tension:.35,spanGaps:true,pointRadius:3,pointBackgroundColor:colors[curG],borderWidth:2.5}];
-  if(curG==='weight')ds.push({data:Array(30).fill(78.4),borderColor:'#22c77a',borderDash:[6,4],pointRadius:0,borderWidth:2});
+  if(curG==='weight')ds.push({data:Array(vals.length).fill(78.4),borderColor:'#22c77a',borderDash:[6,4],pointRadius:0,borderWidth:2});
+
   const ctx=document.getElementById('chart').getContext('2d');
   if(chart)chart.destroy();
+  if(typeof Chart==='undefined'){document.getElementById('stats').textContent='グラフ描画ライブラリを読み込めませんでした（オフライン？）';return}
   chart=new Chart(ctx,{type:'line',data:{labels,datasets:ds},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#9aa0b8',font:{size:9},maxRotation:0,autoSkip:true,maxTicksLimit:8},grid:{display:false}},y:{ticks:{color:'#9aa0b8',font:{size:10}},grid:{color:'#e2e8f8'}}}}});
+
   const nn=vals.filter(v=>v!=null);
   const st=document.getElementById('stats');
   if(!nn.length){st.innerHTML='まだデータがありません';return}
-  const avg=(nn.reduce((a,b)=>a+b,0)/nn.length).toFixed(1);
+  const avg=(nn.reduce((a,b)=>a+b,0)/nn.length);
   let extra='';
-  if(curG==='weight'){const last=nn[nn.length-1];extra='<br>🎯 目標78.4kgまで あと'+(last-78.4).toFixed(1)+'kg'}
-  st.innerHTML='📊 平均 <b>'+avg+'</b>｜最小 '+Math.min(...nn).toFixed(1)+'｜最大 '+Math.max(...nn).toFixed(1)+'｜記録 '+nn.length+'日'+extra;
+  if(curG==='weight'){
+    const first=nn[0],last=nn[nn.length-1];
+    extra='<br>📉 記録開始から <b>'+(last-first).toFixed(1)+'kg</b>（'+first.toFixed(1)+'→'+last.toFixed(1)+'）'+
+          '<br>🎯 目標78.4kgまで あと'+(last-78.4).toFixed(1)+'kg';
+  }
+  if(curG==='udemy'){
+    const first=nn[0],last=nn[nn.length-1];
+    extra='<br>📈 期間中 <b>+'+fmtInt(last-first)+'人</b>';
+  }
+  st.innerHTML='📊 平均 <b>'+avg.toFixed(1)+unit+'</b>｜最小 '+Math.min(...nn).toFixed(1)+'｜最大 '+Math.max(...nn).toFixed(1)+'｜記録 '+nn.length+'点'+extra;
 }
 
 /* ===== nav ===== */
 function go(p){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
   document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));
-  document.getElementById('pg-'+(p==='home'?'home':p)).classList.add('on');
+  document.getElementById('pg-'+p).classList.add('on');
   const nv=document.getElementById('nv-'+p);
   (nv||document.getElementById('nv-home')).classList.add('on');
   if(p==='graph')setTimeout(draw,80);

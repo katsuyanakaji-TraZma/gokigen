@@ -1,0 +1,302 @@
+{
+  "generatedAt": "2026-08-11T09:20:00+09:00",
+  "source": {
+    "gokigenFolderId": "1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
+    "udemyFolderId": "1g3hrPVRIYB_GOYho36DLRnITG_c5-elx",
+    "rule": "全ファイルを読み、日付が重複したら新しいファイルを優先"
+  },
+  "health": [
+    {
+      "date": "2026-07-10", "dow": "金",
+      "weight": 84.3, "fat": 30.7, "muscle": 55.5, "visceral": 11, "bodyAge": 62,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": null,
+      "exercise": null, "dining": "アズビル研修＋懇親会(客)", "routine": null,
+      "note": "GOKIGEN記録開始の日"
+    },
+    {
+      "date": "2026-07-12", "dow": "日",
+      "weight": 84.1, "fat": 30.6, "muscle": 55.4, "visceral": 11, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": 6, "sleep": 83,
+      "exercise": null, "dining": "尾崎くん新築祝い(友枠)", "routine": null,
+      "note": "睡眠不足の自覚あり。都内前泊前日。"
+    },
+    {
+      "date": "2026-07-13", "dow": "月",
+      "weight": null, "fat": null, "muscle": null, "visceral": null, "bodyAge": null,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": null,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "Udemy→Kindleへ生産フロー転換「詰まるところがなくなった」。チャコ日報の初回運用日。気分:ご機嫌"
+    },
+    {
+      "date": "2026-07-14", "dow": "火",
+      "weight": null, "fat": null, "muscle": null, "visceral": null, "bodyAge": null,
+      "bpHigh": null, "bpLow": null, "mood": 4, "sleep": 81,
+      "exercise": null, "dining": "なし", "routine": 12.5,
+      "note": "三井化学本店コーチング研修当日。コンディション64・アクティビティ92・レジリエンス不足（安静時心拍高め、激しい運動回避・睡眠優先の指示）。K38/100 U10/100"
+    },
+    {
+      "date": "2026-07-16", "dow": "木",
+      "weight": 84.0, "fat": 30.6, "muscle": 55.4, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": 3, "sleep": 78,
+      "exercise": "ウォーキング予定", "dining": null, "routine": null,
+      "note": "コンディション53(要注意)・レジリエンス50(不足)・アクティビティ95。朝食は納豆ご飯＋めかぶ。今日はOCA→ウォーキング、14:15〜80分リラクゼマッサージ、16:00〜AGA薬受け取り。"
+    },
+    {
+      "date": "2026-07-17", "dow": "金",
+      "weight": 83.7, "fat": 30.5, "muscle": 55.3, "visceral": 10, "bodyAge": 61,
+      "bpHigh": 114, "bpLow": 76, "mood": null, "sleep": 87,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠87「しっかり休んだ夜」(7h12m)。コンディション72・アクティビティ95・レジリエンス不足（夜間回復:要注意、日中ストレス:高）。朝食はサラダ・雑穀ご飯・みそ汁・ヨーグルト・めかぶ。体重83.7kg（前日比-0.3）。19:30血圧114/76・脈拍79"
+    },
+    {
+      "date": "2026-07-20", "dow": "月",
+      "weight": 82.1, "fat": 29.9, "muscle": 54.7, "visceral": 10, "bodyAge": 60,
+      "bpHigh": 132, "bpLow": 88, "mood": null, "sleep": 62,
+      "exercise": "ウォーク7.50km(1:33:22・515kcal・平均心拍99)", "dining": null, "routine": null,
+      "note": "睡眠62・レジリエンス不足（夜間回復:要注意・日中の回復:良好）・コンディション69・アクティビティ96（目標50%超過）。5:44から川口市内ウォーク。体重82.1kg（7/17比-1.6）。体内年齢60歳に改善。8:38血圧132/88・脈拍78（機器の血圧高表示あり・ウォーク後の測定）"
+    },
+    {
+      "date": "2026-07-21", "dow": "火",
+      "weight": 81.6, "fat": 29.7, "muscle": 54.5, "visceral": 10, "bodyAge": 60,
+      "bpHigh": 142, "bpLow": 99, "mood": 5, "sleep": 76,
+      "exercise": "ウォーク6.08km(1:21:09・424kcal・平均心拍101)", "dining": null, "routine": null,
+      "note": "睡眠76・コンディション77「スケジュール通り」・アクティビティ87・レジリエンス不足（夜間回復:要注意・日中の回復:良好・日中ストレス:中）。6:57から川口市ウォーク。8:00測定で体重81.6kg（前日比-0.5・記録開始から-2.7）。皮下脂肪率26.4%・骨格筋率45.4%。12:30血圧142/99・脈拍82。ご機嫌かなりよい（体重が落ちていたから）"
+    },
+    {
+      "date": "2026-07-22", "dow": "水",
+      "weight": 82.2, "fat": 29.9, "muscle": 54.7, "visceral": 10, "bodyAge": 60,
+      "bpHigh": null, "bpLow": null, "mood": 4, "sleep": 75,
+      "exercise": "なし（ジム休み・アティーナ美容院でリフレッシュ）", "dining": "家族（アキさん）・スペメシLeon（丸の内）", "routine": null,
+      "note": "睡眠75「効率よく眠れました」(5h15m・効率91%)。コンディション66「体に耳を傾けましょう」・アクティビティ88。6:45測定で体重82.2kg(前日比+0.6・記録開始から-2.1)。ベネッセへ質問FIX＋投影資料送付を完了。Ouraの指示どおりジムを休み美容院でリフレッシュ。19時からアキさんとスペメシLeon(二人で1万円くらい・和牛パエリア◎・評価3.5)→7月の家族枠を消化。リミットレスの初デイリーダイジェスト受領。前夜に夫婦YouTubeチャンネル1本目公開。ご機嫌4/5。"
+    },
+    {
+      "date": "2026-07-23", "dow": "木",
+      "weight": 82.4, "fat": 30.0, "muscle": 54.8, "visceral": 10, "bodyAge": 60,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 86,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠86・コンディション75「ペースを調整しましょう」・アクティビティ87。6:39測定で体重82.4kg(前日比+0.2・記録開始から-1.9)。就床23:58・入眠0:05・起床6:45・睡眠6h04m・効率89.7%・快眠97.3。今日は14-17時OJTトレーナー研修(Zoom)が本番。夜19:30 YouTube紐付け→20:00 Claude Code導入(Mac mini)。"
+    },
+    {
+      "date": "2026-07-24", "dow": "金",
+      "weight": 82.5, "fat": 30.0, "muscle": 54.9, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 76,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠76・コンディション78「健康的な習慣」・アクティビティ86・レジリエンスが不足→やや不足に改善。就床2:02・入眠2:35・起床6:46・睡眠4h08m・効率87.6%。7:10測定で体重82.5kg(前日比+0.1)。あすけん1年グラフ: スタート84.0kg→-1.5kg。今日は9:00-17:30三井化学関連会社LDP STEP3(Zoom)が本番。夜19:00 Claude Code導入。"
+    },
+    {
+      "date": "2026-07-25", "dow": "土",
+      "weight": 83.6, "fat": 30.4, "muscle": 55.3, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 55,
+      "exercise": "朝5時半から2時間・10kmウォーキング", "dining": "家族・丸源ラーメン", "routine": null,
+      "note": "睡眠55・コンディション59「安静時心拍数の上昇」・アクティビティ82。就床1:09・入眠1:26・起床5:38・睡眠3h12m・効率71.7%。2夜連続の深夜就寝。5:37測定で体重83.6kg(前日比+1.1)。朝5時半から2時間・10kmウォーキング(思いつき10件をAI秘書へ→カレンダーに指示書化)。前夜にClaude Code導入→ゆるりんちょ2本目の初号機が深夜完成。note記事「書き散らかして、大抵は忘れる人のカレンダー設計」を公開。夜は家族で丸源ラーメン。"
+    },
+    {
+      "date": "2026-07-26", "dow": "日",
+      "weight": 83.4, "fat": 30.4, "muscle": 55.1, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 67,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠67・コンディション68「回復を促す」・アクティビティ86。就床0:12・入眠0:17・起床5:45・睡眠5h05m・効率91.9%。6:09測定で体重83.4kg(前日比-0.2)。日中〜夜はモザイク処理と格闘(CapCut→Filmora→手作業に切替)の末、夜にゆるりんちょ2本目(スペインバル編)をYouTube公開。Filmoraの顔認識・選択機能を発見。"
+    },
+    {
+      "date": "2026-07-27", "dow": "月",
+      "weight": 82.7, "fat": 30.1, "muscle": 54.9, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 76,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠76・コンディション81「眠れない夜が続いていますか？」(睡眠バランス:要注意)・アクティビティ85。安静時心拍57bpm・心拍変動/体表温/回復指数は最適。就床0:21・入眠0:33・起床6:50・睡眠5h48m・効率89.5%・快眠85.6。7:19測定で体重82.7kg(前日比-0.7)。午前にアズビル・三井化学の請求書2件を発行完了。Udemy提出は7/31(金)朝に変更決定。16:15自動車点検。"
+    },
+    {
+      "date": "2026-07-28", "dow": "火",
+      "weight": 82.0, "fat": 29.8, "muscle": 54.7, "visceral": 10, "bodyAge": 60,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 66,
+      "exercise": null, "dining": "家族・北海道のウニ", "routine": null,
+      "note": "睡眠66・コンディション69「体調に合わせて活動しましょう」・アクティビティ69。就床2:35・入眠3:05・起床7:17・睡眠4h09m・効率88.6%。7:27測定で体重82.0kg(前日比-0.7・記録開始から-2.3)・体内年齢60歳に改善。9:00-12:00田島ルーフィング「戦略ミドル研修」を実施(大きな石・自己効力感・ベイビーステップ・褒め褒めタイム)。夜は家族で北海道のウニ「海感じるキャンペーンだなぁ」。"
+    },
+    {
+      "date": "2026-07-29", "dow": "水",
+      "weight": 83.1, "fat": 30.3, "muscle": 55.0, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 59,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠59・コンディション57「安静時心拍数の上昇」(上昇が続いている・今日は無理をしない)・アクティビティ63。5:04測定で体重83.1kg(前日比+1.1)・あすけん1年成果-0.9kg・体内年齢61歳。AIエージェント講座を受講(講師=天狼院書店・三浦社長)。Udemy提出は8/3(月)に再変更。"
+    },
+    {
+      "date": "2026-07-30", "dow": "木",
+      "weight": 83.1, "fat": 30.2, "muscle": 55.1, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 82,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠82・コンディション80「体の声に合わせて動いてみる」・アクティビティ58。6:57測定で体重83.1kg(前日比±0)。本番前夜にしっかり回復(睡眠59→82・コンディション57→80)。12:05-12:55ベネッセ×Udemyスペシャルライブ講座の本番(佐村俊恵先生とコラボ)→「ばっちり最高」の手応えで大成功。事後アンケートも高評価。15時三井化学アルムナイMTG→16時Udemy→Kindle変換仕込み。夜に方針転換: 7/31は休養日として天山湯治郷へ。"
+    },
+    {
+      "date": "2026-07-31", "dow": "金",
+      "weight": 83.1, "fat": 30.3, "muscle": 55.0, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 81,
+      "exercise": null, "dining": "家族・天山湯治郷(妻アキさん・長女と夕食飲み会)", "routine": null,
+      "note": "睡眠81・コンディション66「無理をしないように」・アクティビティ55。7:34測定で体重83.1kg(前日比±0)。7月最終日は休養日: 8時にKindle初稿チェック→KDP入稿、9:45からアキさんと天山湯治郷へ(ゆるりんちょ3本目ロケを兼ねる)。7月は84.3→83.1で月間-1.2kg・GOKIGEN記録21日間を完走。「YYYY_MM_ver年齢.年齢内月数」の自己バージョン表記を確定。"
+    },
+    {
+      "date": "2026-08-01", "dow": "土",
+      "weight": 83.2, "fat": 30.3, "muscle": 55.1, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 84,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠84(3日連続80台)・コンディション75・アクティビティ69。7:46測定で体重83.2kg(前日比+0.1)。8月スタート(2026_08_ver57.04)。方針転換: 8/1-3のUdemy「部下の一言」集中制作を全撤回。8/1〜中旬は組織適応の教科書のPhase2・ゆるりんちょ・既存Udemy群の加速に専念、部下の一言は8/15再始動・8月末リリースに変更。C08「ご機嫌ルーティン」刷新を決定・台本とパワポ(13枚)を完成。夜はKindle出版部Zoomで8月方針を共有。"
+    },
+    {
+      "date": "2026-08-02", "dow": "日",
+      "weight": 82.8, "fat": 30.1, "muscle": 55.0, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 92,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠92(快眠スコア)・就床0:55・入眠1:01・起床5:15・睡眠4h12m・効率96.9%。7:47測定で体重82.8kg(前日比-0.3)・あすけん1年成果-1.2kg。前日(8/1)のリミットレスダイジェスト受領→Drive保存済み。今日はC08刷新の撮影→編集。"
+    },
+    {
+      "date": "2026-08-03", "dow": "月",
+      "weight": 82.7, "fat": 30.1, "muscle": 54.9, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": 4, "sleep": 88,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠88(良好)・就床22:55・入眠23:02・起床5:45・睡眠6h28m・効率94.6%・快眠98.5。コンディション82「自分へのご褒美を」・アクティビティ63。6:14測定で体重82.7kg(前日比-0.1)。C08刷新をv3に更新(自己採点フック・新旧対応ブリッジ・実データグラフ追加)。天狼院・三浦さんの「SENJU」発信に刺激を受け、GOKIGENの個人向けOS化を方針決定(販売は保留)→8/5にダッシュボード拡張を予定化。午後は鈴木さんとの1on1コーチング＋研修(メタ認知・ベイビーステップ・行動変容の4機能)。"
+    },
+    {
+      "date": "2026-08-04", "dow": "火",
+      "weight": 82.6, "fat": 30.1, "muscle": 54.8, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 94,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠94(3日連続90台)・就床0:08・入眠0:35・起床6:33・睡眠5h47m・効率90.1%・快眠93.5。6:42測定で体重82.6kg(前日比-0.1)。C08はまだ台本チェック未着手と判明→8/8-9に日程確定・カレンダー化。15時エトー様(味の素)とのコーチングセッション。"
+    },
+    {
+      "date": "2026-08-05", "dow": "水",
+      "weight": 82.1, "fat": 29.9, "muscle": 54.7, "visceral": 10, "bodyAge": 60,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 77,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠77・コンディション73「気分に従いましょう」・アクティビティ55。7:10測定で体重82.1kg(前日比-0.5)・体内年齢60歳に改善。9:00 LCサプライヤー確認、9:30アズビルセミナー、10時からGOKIGEN OS(コックピット)のダッシュボード拡張作業。日中は「質問力(インパクトクエスチョン)」ティーチングトーク実施。"
+    },
+    {
+      "date": "2026-08-06", "dow": "木",
+      "weight": 82.3, "fat": 30.0, "muscle": 54.7, "visceral": 10, "bodyAge": 60,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 77,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠77・コンディション72「くつろぎましょう」・アクティビティ55。7:35測定で体重82.3kg(前日比-0.2)・体内年齢60歳・あすけん1年成果-1.7kg。前日(8/5)のリミットレスダイジェスト受領→Drive保存済み。夜は全10コースUB入り記念「感謝祭」キャンペーンの仕込み。"
+    },
+    {
+      "date": "2026-08-07", "dow": "金",
+      "weight": 82.7, "fat": 30.1, "muscle": 54.9, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 69,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠69・就床2:40・入眠3:26・起床7:38・睡眠3h9m・効率63.7%・快眠68.7。コンディション56「休憩を取りましょう」・アクティビティ59。7:23測定で体重82.7kg(前日比+0.4)。前夜は「感謝祭」ページの深夜仕上げ(note公開1:51)。X告知は本人が物語版に差し替えて投稿。14時からGOKIGEN OS全期間データ再同期の緊急対応。"
+    },
+    {
+      "date": "2026-08-08", "dow": "土",
+      "weight": null, "fat": null, "muscle": null, "visceral": null, "bodyAge": null,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": null,
+      "exercise": null, "dining": "家族・ボルケーノカルビ", "routine": null,
+      "note": "「OSのバージョンアップ」講義(午前・初心者OS/偏差値38理論・完璧主義の張り紙・ビジョンのフルカラー動画化)を実施。夕方は加絵さんの運転練習に助手席から伴走。夜は家族で「ボルケーノカルビ」。※体重・睡眠データ未取得(点呼スクショなし)。"
+    },
+    {
+      "date": "2026-08-09", "dow": "日",
+      "weight": 83.1, "fat": 30.2, "muscle": 55.1, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 48,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠48・就床1:11・入眠2:26・起床6:00・睡眠3h33m・入眠潜時1時間14分56秒・効率73.7%・快眠78.3。コンディション64・アクティビティ90(アクティブカロリー271・目標達成)。7:32測定で体重83.1kg(前日比+0.4)。前日(8/8)のリミットレスダイジェスト受領→Drive保存済み。"
+    },
+    {
+      "date": "2026-08-10", "dow": "月",
+      "weight": 82.0, "fat": 29.8, "muscle": 54.7, "visceral": 10, "bodyAge": 60,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 67,
+      "exercise": "ウォーキング7.25km", "dining": "家族(すきっぱー)", "routine": null,
+      "note": "睡眠67・就床23:52・入眠0:20・起床5:29・睡眠5h7m・効率91.1%・快眠91.4。コンディション65・アクティビティ95(アクティブカロリー472・目標を80%上回り達成)。朝5:56からウォーキング7.25km・1時間42分・10,192歩・398kcal・平均心拍92。7:46測定で体重82.0kg(前日比-1.1)・体脂肪率29.8%・体内年齢60歳・あすけん1年成果-2.0kg。夜17:30から家族との食事「すきっぱー」(8月の家族食事①)。"
+    },
+    {
+      "date": "2026-08-11", "dow": "火",
+      "weight": 83.0, "fat": 30.2, "muscle": 55.0, "visceral": 10, "bodyAge": 61,
+      "bpHigh": null, "bpLow": null, "mood": null, "sleep": 90,
+      "exercise": null, "dining": null, "routine": null,
+      "note": "睡眠90・就床22:32・入眠22:39・起床6:00・睡眠7h19m50s・入眠潜時6分31秒・効率98.2%・快眠95.0。コンディション69「当然の休息」・アクティビティ92。8:32測定で体重83.0kg(前日比+1.0)・体脂肪率30.2%・体内年齢61歳・あすけん1年成果-1.0kg(前夜は家族ですきっぱー)。noteの月間アクセス(7/12-8/11)は全体ビュー7,653・コメント42・スキ401。"
+    }
+  ],
+  "udemyCourses": [
+    { "id": "C01", "short": "組織適応の教科書", "published": "2026/6" },
+    { "id": "C02", "short": "老害と呼ばせない", "published": "2025/7" },
+    { "id": "C03", "short": "年下上司の信頼関係", "published": "2024/10" },
+    { "id": "C04", "short": "リスキリング", "published": "2024/3" },
+    { "id": "C05", "short": "ビジョン実現の技術", "published": "2024/1" },
+    { "id": "C06", "short": "トランジション", "published": "2023/11" },
+    { "id": "C07", "short": "承認パワー", "published": "2023/9" },
+    { "id": "C08", "short": "ご機嫌ルーティン", "published": "2022/11" },
+    { "id": "C09", "short": "教える技術／育む技術", "published": "2022/10" },
+    { "id": "C10", "short": "コーチング決定版", "published": "2021/10" }
+  ],
+  "udemy": [
+    {
+      "date": "2026-07-10", "time": "11:00",
+      "rows": [
+        { "id": "C01", "cumEnroll": 105, "monthEnroll": 16, "cumRevenue": 162.56, "rating": 4.9 },
+        { "id": "C02", "cumEnroll": 4557, "monthEnroll": 75, "cumRevenue": 7485.11, "rating": 4.04 },
+        { "id": "C03", "cumEnroll": 2629, "monthEnroll": 24, "cumRevenue": 4320.54, "rating": 4.17 },
+        { "id": "C04", "cumEnroll": 3904, "monthEnroll": 16, "cumRevenue": 3792.40, "rating": 4.05 },
+        { "id": "C05", "cumEnroll": 4440, "monthEnroll": 27, "cumRevenue": 7280.46, "rating": 4.16 },
+        { "id": "C06", "cumEnroll": 7545, "monthEnroll": 34, "cumRevenue": 14749.05, "rating": 4.09 },
+        { "id": "C07", "cumEnroll": 4796, "monthEnroll": 16, "cumRevenue": 11204.29, "rating": 4.13 },
+        { "id": "C08", "cumEnroll": 8055, "monthEnroll": 7, "cumRevenue": 26331.96, "rating": 3.75 },
+        { "id": "C09", "cumEnroll": 14520, "monthEnroll": 108, "cumRevenue": 47670.96, "rating": 4.01 },
+        { "id": "C10", "cumEnroll": 17585, "monthEnroll": 62, "cumRevenue": 67048.77, "rating": 4.12 }
+      ]
+    },
+    {
+      "date": "2026-07-12", "time": "8:00",
+      "rows": [
+        { "id": "C01", "cumEnroll": 109, "monthEnroll": 20, "cumRevenue": 169.31, "rating": 4.9 },
+        { "id": "C02", "cumEnroll": 4573, "monthEnroll": 91, "cumRevenue": 7485.11, "rating": 4.04 },
+        { "id": "C03", "cumEnroll": 2637, "monthEnroll": 32, "cumRevenue": 4320.54, "rating": 4.17 },
+        { "id": "C04", "cumEnroll": 3908, "monthEnroll": 20, "cumRevenue": 3792.40, "rating": 4.05 },
+        { "id": "C05", "cumEnroll": 4444, "monthEnroll": 31, "cumRevenue": 7280.46, "rating": 4.15 },
+        { "id": "C06", "cumEnroll": 7551, "monthEnroll": 40, "cumRevenue": 14749.05, "rating": 4.08 },
+        { "id": "C07", "cumEnroll": 4800, "monthEnroll": 20, "cumRevenue": 11204.29, "rating": 4.13 },
+        { "id": "C08", "cumEnroll": 8057, "monthEnroll": 9, "cumRevenue": 26331.96, "rating": 3.7 },
+        { "id": "C09", "cumEnroll": 14538, "monthEnroll": 126, "cumRevenue": 47670.96, "rating": 4.0 },
+        { "id": "C10", "cumEnroll": 17591, "monthEnroll": 68, "cumRevenue": 67048.77, "rating": 4.12 }
+      ]
+    },
+    {
+      "date": "2026-07-17", "time": "7:00",
+      "rows": [
+        { "id": "C01", "cumEnroll": 110, "monthEnroll": 21, "cumRevenue": 171.49, "rating": 4.9 },
+        { "id": "C02", "cumEnroll": 4626, "monthEnroll": 144, "cumRevenue": 7487.29, "rating": 4.03 },
+        { "id": "C03", "cumEnroll": 2661, "monthEnroll": 56, "cumRevenue": 4323.51, "rating": 4.14 },
+        { "id": "C04", "cumEnroll": 3920, "monthEnroll": 32, "cumRevenue": 3792.40, "rating": 4.08 },
+        { "id": "C05", "cumEnroll": 4455, "monthEnroll": 43, "cumRevenue": 7280.46, "rating": 4.16 },
+        { "id": "C06", "cumEnroll": 7565, "monthEnroll": 51, "cumRevenue": 14751.22, "rating": 4.09 },
+        { "id": "C07", "cumEnroll": 4806, "monthEnroll": 27, "cumRevenue": 11204.29, "rating": 4.13 },
+        { "id": "C08", "cumEnroll": 8063, "monthEnroll": 14, "cumRevenue": 26331.96, "rating": 3.77 },
+        { "id": "C09", "cumEnroll": 14605, "monthEnroll": 191, "cumRevenue": 47673.93, "rating": 3.98 },
+        { "id": "C10", "cumEnroll": 17617, "monthEnroll": 93, "cumRevenue": 67055.92, "rating": 4.13 }
+      ]
+    },
+    {
+      "date": "2026-08-01", "time": "21:18",
+      "rows": [
+        { "id": "C01", "cumEnroll": 188, "monthEnroll": 0, "cumRevenue": 176.67, "rating": 4.89 },
+        { "id": "C02", "cumEnroll": 4739, "monthEnroll": 0, "cumRevenue": 7497.68, "rating": 4.04 },
+        { "id": "C03", "cumEnroll": 2737, "monthEnroll": 0, "cumRevenue": 4323.63, "rating": 4.14 },
+        { "id": "C04", "cumEnroll": 3956, "monthEnroll": 0, "cumRevenue": 3792.80, "rating": 4.15 },
+        { "id": "C05", "cumEnroll": 4479, "monthEnroll": 0, "cumRevenue": 7281.09, "rating": 4.21 },
+        { "id": "C06", "cumEnroll": 7616, "monthEnroll": 0, "cumRevenue": 14751.22, "rating": 4.12 },
+        { "id": "C07", "cumEnroll": 4842, "monthEnroll": 0, "cumRevenue": 11206.66, "rating": 4.01 },
+        { "id": "C08", "cumEnroll": 8087, "monthEnroll": 0, "cumRevenue": 26334.14, "rating": 3.83 },
+        { "id": "C09", "cumEnroll": 14846, "monthEnroll": 0, "cumRevenue": 47683.43, "rating": 4.01 },
+        { "id": "C10", "cumEnroll": 17722, "monthEnroll": 0, "cumRevenue": 67120.42, "rating": 4.17 }
+      ]
+    },
+    {
+      "date": "2026-08-09", "time": "8:00",
+      "rows": [
+        { "id": "C01", "cumEnroll": 285, "monthEnroll": 91, "cumRevenue": 198.51, "rating": 4.81 },
+        { "id": "C02", "cumEnroll": 4800, "monthEnroll": 56, "cumRevenue": 7504.63, "rating": 4.01 },
+        { "id": "C03", "cumEnroll": 2771, "monthEnroll": 31, "cumRevenue": 4323.63, "rating": 4.08 },
+        { "id": "C04", "cumEnroll": 3968, "monthEnroll": 11, "cumRevenue": 3792.80, "rating": 4.11 },
+        { "id": "C05", "cumEnroll": 4503, "monthEnroll": 23, "cumRevenue": 7281.09, "rating": 4.17 },
+        { "id": "C06", "cumEnroll": 7633, "monthEnroll": 16, "cumRevenue": 14758.17, "rating": 4.13 },
+        { "id": "C07", "cumEnroll": 4850, "monthEnroll": 9, "cumRevenue": 11206.66, "rating": 4.04 },
+        { "id": "C08", "cumEnroll": 8102, "monthEnroll": 14, "cumRevenue": 26334.14, "rating": 3.81 },
+        { "id": "C09", "cumEnroll": 14926, "monthEnroll": 77, "cumRevenue": 47683.43, "rating": 4.01 },
+        { "id": "C10", "cumEnroll": 17791, "monthEnroll": 68, "cumRevenue": 67143.26, "rating": 4.18 }
+      ]
+    }
+  ]
+}
