@@ -1,5 +1,6 @@
 const fs = require("fs");
-const src = fs.readFileSync("__dirname + "/../update-data.gs"", "utf8");
+const path = require("path");
+const src = fs.readFileSync(path.join(__dirname, "..", "update-data.gs"), "utf8");
 const pick = (a, b) => src.slice(src.indexOf(a), b ? src.indexOf(b) : undefined);
 eval(pick("var HEALTH_FIELDS", "// ===== Udemy台帳"));
 eval(pick("// ===== 変換ヘルパー =====", "// ===== GitHub ====="));
