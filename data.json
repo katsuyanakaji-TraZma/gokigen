@@ -1,9 +1,10 @@
 {
-  "generatedAt": "2026-08-11T05:36:05.620+00:00",
+  "generatedAt": "2026-08-11T14:53:36+09:00",
   "version": "1.1",
   "source": {
     "gokigenFolderId": "1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
     "udemyFolderId": "1g3hrPVRIYB_GOYho36DLRnITG_c5-elx",
+    "udemyXlsxId": "1T7SE-LrYr4gtTxvyGkBDgNZ_4ruTnvJv",
     "rule": "全ファイルを読み、日付が重複したら新しいファイルを優先"
   },
   "qualityDropped": [],
