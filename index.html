@@ -294,7 +294,7 @@
     <div class="ct"><span class="dot" style="background:var(--purple)"></span>コンディション（最新）</div>
     <div class="mg">
       <div class="mb"><div class="ml">😄 ご機嫌度</div>
-        <div class="mi-row"><span class="mv" id="v-mood">—</span><span class="mu">/5</span></div>
+        <div class="mi-row"><span class="mv" id="v-mood">—</span><span class="mu" id="u-mood"></span></div>
         <div class="md" id="d-mood"></div></div>
       <div class="mb"><div class="ml">💍 睡眠スコア</div>
         <div class="mi-row"><span class="mv" id="v-sleep2">—</span><span class="mu">点</span></div>
@@ -599,7 +599,11 @@ function renderKnow(){
 function renderSpirit(){
   const m=lastWith('mood',0);
   document.getElementById('v-mood').textContent=m? m.mood : '—';
-  document.getElementById('d-mood').textContent=m? (MOODS[m.mood-1]+' '+m.date.slice(5)+' の記録') : '記録なし';
+  // 台帳には5段階と10段階が混在しているため、5以下のときだけ「/5」と顔を出す
+  document.getElementById('u-mood').textContent=(m&&m.mood<=5)?'/5':'';
+  document.getElementById('d-mood').textContent=m
+    ? ((m.mood<=5? MOODS[m.mood-1]+' ':'')+m.date.slice(5)+' の記録')
+    : '記録なし';
   const s=lastWith('sleep',0);
   document.getElementById('v-sleep2').textContent=s? s.sleep : '—';
   const dd=deltaText('sleep','',0,true);
