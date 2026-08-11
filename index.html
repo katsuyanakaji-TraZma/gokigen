@@ -60,6 +60,18 @@
   .insight .ih{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:7px}
   .insight .ib{font-size:13px;line-height:1.85;color:var(--text)}
   .insight .idate{font-size:11px;color:var(--muted);margin-top:8px}
+  /* 今日の記録（折りたたみ） */
+  .rec{background:#fff;border-radius:var(--r);margin-top:10px;box-shadow:var(--shadow);overflow:hidden}
+  .rec summary{list-style:none;cursor:pointer;padding:13px 14px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--soft);display:flex;align-items:center;justify-content:space-between}
+  .rec summary::-webkit-details-marker{display:none}
+  .rec summary::after{content:'▼';font-size:10px;color:var(--muted);transition:transform .2s}
+  .rec[open] summary::after{transform:rotate(180deg)}
+  .rec .rb{padding:0 14px 14px;font-size:13px;line-height:1.85;color:var(--text)}
+  .rec .rdate{font-size:11px;color:var(--muted);margin-top:8px}
+  /* コース切替 */
+  .csel{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px}
+  .csel button{flex:0 0 auto;padding:7px 11px;border-radius:9px;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap}
+  .csel button.on{background:var(--orange);border-color:var(--orange);color:#fff}
   .nextmove{margin-top:10px;background:linear-gradient(135deg,rgba(255,107,53,.10),rgba(255,184,0,.10));border:1.5px solid rgba(255,107,53,.35);border-radius:var(--r);padding:13px 14px;display:flex;gap:9px;align-items:flex-start}
   .nextmove .nl{font-size:12px;font-weight:800;color:var(--orange);flex:none;letter-spacing:.06em}
   .nextmove .nb{font-size:13px;font-weight:700;line-height:1.65;color:var(--text)}
@@ -71,7 +83,7 @@
   .mv{font-size:24px;font-weight:700;color:var(--text)}
   .mu{font-size:12px;color:var(--muted)}
   .md{font-size:11px;margin-top:2px;font-weight:700;min-height:14px;color:var(--muted)}
-  .md.up{color:var(--red)}.md.down{color:var(--green)}
+  .md.good{color:var(--green)}.md.bad{color:var(--orange)}
   /* list rows */
   .ri{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border)}
   .ri:last-child{border-bottom:none}
@@ -139,12 +151,19 @@
   </div>
   <div class="found"><span>最新の記録日</span><b id="latestDate">—</b></div>
 
-  <!-- 気づき -->
+  <!-- 気づき（data.jsonから機械算出） -->
   <div class="insight">
     <div class="ih">💡 気づき</div>
     <div class="ib" id="insightBody">読み込み中…</div>
     <div class="idate" id="insightDate"></div>
   </div>
+
+  <!-- 今日の記録（台帳の一言そのまま・折りたたみ） -->
+  <details class="rec">
+    <summary>📝 今日の記録</summary>
+    <div class="rb" id="recBody"></div>
+    <div class="rb rdate" id="recDate" style="padding-top:0"></div>
+  </details>
 
   <!-- 次の一手 -->
   <div class="nextmove">
@@ -237,6 +256,12 @@
         <div class="md" id="d-rating"></div></div>
     </div>
     <div class="pace" id="udemyAsOf"></div>
+  </div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--pink)"></span>累計登録者の推移（2021年10月〜）</div>
+    <div class="csel" id="courseSel"></div>
+    <canvas id="chart5y" height="200"></canvas>
+    <div class="pace" id="fiveYearStat"></div>
   </div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--blue)"></span>コース別（前回比）</div>
@@ -380,16 +405,19 @@ function lastWith(key,skip){
 function latestPair(key){
   return {cur:lastWith(key,0), prev:lastWith(key,1)};
 }
+/* 差分は ＋/− で表記し、望ましい方向を緑・望ましくない方向をオレンジにする。
+   invert=true は「増えるほど良い」項目（睡眠・筋肉・登録者など）。 */
+function signed(d,digits,unit){
+  return (d>0?'+':'−')+Math.abs(d).toFixed(digits==null?1:digits)+(unit||'');
+}
 function deltaText(key,unit,digits,invert){
   const {cur,prev}=latestPair(key);
   if(!cur) return {txt:'記録なし',cls:'md'};
   if(!prev) return {txt:'前回比 —',cls:'md'};
   const d=cur[key]-prev[key];
   if(Math.abs(d)<1e-9) return {txt:'前回比 ±0',cls:'md'};
-  const up=d>0;
-  const sign=up?'▲':'▼';
-  const good=invert?up:!up;
-  return {txt:sign+Math.abs(d).toFixed(digits||1)+(unit||'')+' 前回比（'+prev.date.slice(5)+'）',cls:'md '+(good?'down':'up')};
+  const good=invert? d>0 : d<0;
+  return {txt:signed(d,digits,unit)+' 前回比（'+prev.date.slice(5)+'）',cls:'md '+(good?'good':'bad')};
 }
 function setMetric(id,key,unit,digits,invert){
   const {cur}=latestPair(key);
@@ -461,9 +489,9 @@ function renderHouse(){
   const w=latestPair('weight');
   setRoom('health', w.cur? w.cur.weight.toFixed(1)+'kg':'—', roomDelta('weight','kg',1,false));
 
-  // 精神 = ご機嫌度があればそれ、なければ睡眠
+  // 精神 = ご機嫌度があればそれ（10段階）、なければ睡眠
   const m=latestPair('mood');
-  if(m.cur){ setRoom('spirit', '機嫌 '+m.cur.mood+'/5', roomDelta('mood','',0,true)); }
+  if(m.cur){ setRoom('spirit', '機嫌 '+m.cur.mood+'/10', roomDelta('mood','',0,true)); }
   else { setRoom('spirit', '睡眠 '+(lastWith('sleep',0)?lastWith('sleep',0).sleep:'—'), roomDelta('sleep','',0,true)); }
 
   // 知識 = 記録日数
@@ -472,11 +500,11 @@ function renderHouse(){
   // 仕事 = Udemy累計登録
   const s0=uSnap(0), s1=uSnap(-1);
   const e0=uSum(s0,'cumEnroll'), e1=uSum(s1,'cumEnroll');
-  setRoom('work', fmtInt(e0)+'人', e1!=null? ('▲'+fmtInt(e0-e1)+' 前回比'):'—');
+  setRoom('work', fmtInt(e0)+'人', e1!=null? ('+'+fmtInt(e0-e1)+' 前回比'):'—');
 
   // 経済 = Udemy累計収益
   const r0=uSum(s0,'cumRevenue'), r1=uSum(s1,'cumRevenue');
-  setRoom('eco', '$'+Math.round(r0).toLocaleString('en-US'), r1!=null? ('▲$'+Math.round(r0-r1).toLocaleString('en-US')+' 前回比'):'—');
+  setRoom('eco', '$'+Math.round(r0).toLocaleString('en-US'), r1!=null? ('+$'+Math.round(r0-r1).toLocaleString('en-US')+' 前回比'):'—');
 
   // 会食 = 今月
   const mk=latest.date.slice(0,7);
@@ -492,17 +520,116 @@ function roomDelta(key,unit,digits,invert){
   if(!cur||!prev)return '前回比 —';
   const d=cur[key]-prev[key];
   if(Math.abs(d)<1e-9)return '前回比 ±0';
-  return (d>0?'▲':'▼')+Math.abs(d).toFixed(digits||0)+(unit||'')+' 前回比';
+  return signed(d,digits==null?0:digits,unit)+' 前回比';
 }
 
 /* ===== 気づき & 次の一手 ===== */
 function renderInsight(){
+  // 📝今日の記録＝台帳の一言をそのまま（折りたたみ）
   const withNote=DATA.health.filter(r=>r.note && r.note.length>0);
   const last=withNote[withNote.length-1];
-  document.getElementById('insightBody').textContent=last? last.note : '記録がありません';
-  document.getElementById('insightDate').textContent=last? (last.date+'（'+last.dow+'）の台帳より') : '';
+  document.getElementById('recBody').textContent=last? last.note : '記録がありません';
+  document.getElementById('recDate').textContent=last? (last.date+'（'+last.dow+'）の台帳より') : '';
+
+  // 💡気づき＝data.jsonから機械算出した横断の発見（最も情報量の多いもの1つ）
+  const best=computeInsights().sort((a,b)=>b.score-a.score)[0];
+  document.getElementById('insightBody').textContent=best? best.text : 'まだ判断できるだけの記録がありません。';
+  document.getElementById('insightDate').textContent=best? ('算出ルール: '+best.name+'　／　'+DATA.health.length+'日分の記録から') : '';
+
   document.getElementById('nextMove').textContent=computeNextMove();
 }
+
+/* data.json 全体を横断して「発見」を作る。各ルールは score が高いほど情報量が多い。 */
+function computeInsights(){
+  const h=DATA.health, out=[];
+  const ws=h.filter(r=>r.weight!=null);
+  const idx={}; h.forEach((r,i)=>idx[r.date]=i);
+  const nextDay=ds=>{const d=new Date(ds+'T00:00:00+09:00');d.setDate(d.getDate()+1);
+    return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+
+  // ルール1: 会食の翌日、体重はどうなるか／何日で戻るか
+  (function(){
+    const events=[];
+    h.forEach(r=>{
+      if(!r.dining||/^なし/.test(r.dining))return;
+      const base=r.weight!=null? r.weight : null;
+      const nx=h.find(x=>x.date===nextDay(r.date));
+      if(!nx||nx.weight==null||base==null)return;
+      // 3日以内に元の体重以下へ戻ったか
+      let back=false;
+      for(let k=1;k<=3;k++){
+        const t=h.find(x=>x.date===addDays(r.date,k+0));
+        if(t&&t.weight!=null&&t.weight<=base+0.05){back=true;break}
+      }
+      events.push({d:r.date,delta:nx.weight-base,back:back});
+    });
+    if(events.length<3)return;
+    const avg=events.reduce((a,e)=>a+e.delta,0)/events.length;
+    const backs=events.filter(e=>e.back).length;
+    out.push({name:'会食の翌日',score:events.length*1.5+Math.abs(avg)*10,
+      text:'会食した翌日の体重は平均'+signed(avg,1,'kg')+'。'+
+           events.length+'回のうち'+backs+'回は3日以内に元の体重まで戻っています。'});
+  })();
+
+  // ルール2: 直近7回平均との乖離
+  (function(){
+    if(ws.length<8)return;
+    const cur=ws[ws.length-1], prev7=ws.slice(-8,-1);
+    const avg=prev7.reduce((a,r)=>a+r.weight,0)/prev7.length;
+    const d=cur.weight-avg;
+    out.push({name:'直近7回平均との差',score:Math.abs(d)*14,
+      text:'今の体重'+cur.weight.toFixed(1)+'kgは、直近7回の平均'+avg.toFixed(1)+'kgより'+signed(d,1,'kg')+'。'+
+           (d>0?'戻し方を1つ決めると効きます。':'この流れが続いています。')});
+  })();
+
+  // ルール3: よく眠れた日の翌日は体重がどう動くか
+  (function(){
+    const pairs=[];
+    h.forEach(r=>{
+      if(r.sleep==null||r.weight==null)return;
+      const nx=h.find(x=>x.date===nextDay(r.date));
+      if(!nx||nx.weight==null)return;
+      pairs.push({sleep:r.sleep,delta:nx.weight-r.weight});
+    });
+    if(pairs.length<6)return;
+    const med=pairs.map(p=>p.sleep).sort((a,b)=>a-b)[Math.floor(pairs.length/2)];
+    const hi=pairs.filter(p=>p.sleep>=med), lo=pairs.filter(p=>p.sleep<med);
+    if(hi.length<2||lo.length<2)return;
+    const ah=hi.reduce((a,p)=>a+p.delta,0)/hi.length;
+    const al=lo.reduce((a,p)=>a+p.delta,0)/lo.length;
+    out.push({name:'睡眠と翌日の体重',score:Math.abs(ah-al)*12,
+      text:'睡眠スコアが'+med+'点以上だった翌日の体重は平均'+signed(ah,1,'kg')+'、'+
+           med+'点未満だった翌日は平均'+signed(al,1,'kg')+'。差は'+Math.abs(ah-al).toFixed(1)+'kgです。'});
+  })();
+
+  // ルール4: Udemy 今月のペースは前月比でどうか
+  (function(){
+    const m=DATA.udemyMonthly;
+    if(!m||m.length<3)return;
+    const cur=m[m.length-1], prev=m[m.length-2], prev2=m[m.length-3];
+    const gainNow=cur.enroll-prev.enroll, gainPrev=prev.enroll-prev2.enroll;
+    if(gainPrev<=0)return;
+    const today=new Date(), dim=new Date(today.getFullYear(),today.getMonth()+1,0).getDate();
+    const pace=gainNow/Math.max(1,today.getDate())*dim;   // 今月ぶんを月末換算
+    const ratio=pace/gainPrev;
+    out.push({name:'Udemyの今月ペース',score:Math.abs(ratio-1)*22+6,
+      text:'Udemyの新規登録は今月ここまで'+fmtInt(gainNow)+'人。月末換算で約'+fmtInt(Math.round(pace))+
+           '人、前月の'+fmtInt(gainPrev)+'人に対して'+(ratio>=1?'約'+ratio.toFixed(1)+'倍のペース':'約'+Math.round(ratio*100)+'%のペース')+'です。'});
+  })();
+
+  // ルール5: 記録が途切れている日
+  (function(){
+    const miss=h.filter(r=>r.weight==null);
+    if(!miss.length)return;
+    out.push({name:'記録の抜け',score:miss.length*2.2,
+      text:'体重の記録が抜けているのは'+miss.length+'日（'+miss.map(r=>r.date.slice(5)).join('・')+'）。'+
+           'グラフはその日を飛ばしてつないでいます。'});
+  })();
+
+  return out;
+}
+function addDays(ds,n){const d=new Date(ds+'T00:00:00+09:00');d.setDate(d.getDate()+n);
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
 function computeNextMove(){
   const h=DATA.health;
   const ws=h.filter(r=>r.weight!=null);
@@ -544,13 +671,13 @@ function renderWork(){
   const s0=uSnap(0), s1=uSnap(-1);
   const e0=uSum(s0,'cumEnroll'), e1=uSum(s1,'cumEnroll');
   document.getElementById('v-enroll').textContent=fmtInt(e0);
-  document.getElementById('d-enroll').textContent=e1!=null?('▲'+fmtInt(e0-e1)+'人 前回比（'+s1.date.slice(5)+'）'):'—';
-  document.getElementById('d-enroll').className='md down';
+  document.getElementById('d-enroll').textContent=e1!=null?('+'+fmtInt(e0-e1)+'人 前回比（'+s1.date.slice(5)+'）'):'—';
+  document.getElementById('d-enroll').className='md good';
   const a0=uAvgRating(s0), a1=uAvgRating(s1);
   document.getElementById('v-rating').textContent=a0?a0.toFixed(2):'—';
   if(a1!=null){const d=a0-a1;
-    document.getElementById('d-rating').textContent=(d>=0?'▲':'▼')+Math.abs(d).toFixed(2)+' 前回比';
-    document.getElementById('d-rating').className='md '+(d>=0?'down':'up');}
+    document.getElementById('d-rating').textContent=signed(d,2,'')+' 前回比';
+    document.getElementById('d-rating').className='md '+(d>=0?'good':'bad');}
   document.getElementById('udemyAsOf').textContent='基準日: '+s0.date+' '+s0.time+'（前回: '+(s1?s1.date:'—')+'）';
 
   const names={};DATA.udemyCourses.forEach(c=>names[c.id]=c.short);
@@ -561,6 +688,8 @@ function renderWork(){
     html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtInt(r.cumEnroll)}</td><td class="dlt">${d!=null?('+'+fmtInt(d)):'—'}</td><td>${r.rating}</td></tr>`;
   });
   document.getElementById('udemyTable').innerHTML=html;
+  renderCourseSel();
+  draw5y();
 
   const n=DATA.udemyCourses.length;
   document.getElementById('uN').textContent=n+' / 100コース';
@@ -599,10 +728,10 @@ function renderKnow(){
 function renderSpirit(){
   const m=lastWith('mood',0);
   document.getElementById('v-mood').textContent=m? m.mood : '—';
-  // 台帳には5段階と10段階が混在しているため、5以下のときだけ「/5」と顔を出す
-  document.getElementById('u-mood').textContent=(m&&m.mood<=5)?'/5':'';
+  document.getElementById('u-mood').textContent=m? '/10' : '';
+  // 10段階を5つの顔に落として表示（1-2→😩 3-4→😕 5-6→😐 7-8→🙂 9-10→😄）
   document.getElementById('d-mood').textContent=m
-    ? ((m.mood<=5? MOODS[m.mood-1]+' ':'')+m.date.slice(5)+' の記録')
+    ? (MOODS[Math.min(4,Math.floor((m.mood-1)/2))]+' '+m.date.slice(5)+' の記録')
     : '記録なし';
   const s=lastWith('sleep',0);
   document.getElementById('v-sleep2').textContent=s? s.sleep : '—';
@@ -631,6 +760,44 @@ function renderSettings(){
   document.getElementById('loadState').innerHTML=
     '✅ data.json 読み込み成功<br>健康データ: <b>'+h.length+'日分</b>（'+h[0].date+' 〜 '+h[h.length-1].date+'）<br>'+
     'Udemyスナップショット: <b>'+DATA.udemy.length+'件</b>（'+DATA.udemy[0].date+' 〜 '+DATA.udemy[DATA.udemy.length-1].date+'）';
+}
+
+/* ===== 5年分の登録者カーブ（全体 / コース別） ===== */
+let curCourse='ALL', chart5y=null;
+function renderCourseSel(){
+  const el=document.getElementById('courseSel');
+  if(!el||!DATA.udemyMonthly)return;
+  const btns=[{id:'ALL',label:'全体'}].concat(
+    DATA.udemyCourses.map(c=>({id:c.id,label:c.id+' '+c.short})));
+  el.innerHTML=btns.map(b=>
+    `<button class="${curCourse===b.id?'on':''}" onclick="selCourse('${b.id}')">${b.label}</button>`).join('');
+}
+function selCourse(id){curCourse=id;renderCourseSel();draw5y()}
+function draw5y(){
+  const m=DATA.udemyMonthly;
+  const cv=document.getElementById('chart5y');
+  if(!m||!m.length||!cv)return;
+  if(typeof Chart==='undefined')return;
+  const labels=m.map(x=>x.ym);
+  const vals=m.map(x=>curCourse==='ALL'? x.enroll
+    : (x.byCourse[curCourse] ? x.byCourse[curCourse].enroll : null));
+  const ctx=cv.getContext('2d');
+  if(chart5y)chart5y.destroy();
+  chart5y=new Chart(ctx,{type:'line',data:{labels,datasets:[{
+      data:vals,borderColor:'#ff4d8d',backgroundColor:'rgba(255,77,141,.10)',
+      fill:true,tension:.3,spanGaps:true,pointRadius:0,borderWidth:2.5}]},
+    options:{responsive:true,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#9aa0b8',font:{size:9},maxRotation:0,autoSkip:true,maxTicksLimit:6},grid:{display:false}},
+              y:{ticks:{color:'#9aa0b8',font:{size:10}},grid:{color:'#e2e8f8'}}}}});
+  const nn=vals.filter(v=>v!=null);
+  const st=document.getElementById('fiveYearStat');
+  if(!nn.length){st.textContent='このコースの履歴がありません';return}
+  const first=nn[0], last=nn[nn.length-1];
+  const startYm=labels[vals.findIndex(v=>v!=null)];
+  const name=curCourse==='ALL'?'全10コース合計':
+    (DATA.udemyCourses.find(c=>c.id===curCourse)||{}).short||curCourse;
+  st.textContent=name+'：'+startYm+' の '+fmtInt(first)+'人 → '+labels[labels.length-1]+' の '+fmtInt(last)+
+    '人（+'+fmtInt(last-first)+'人／'+nn.length+'ヶ月）';
 }
 
 /* ===== 点呼テンプレ ===== */
@@ -664,13 +831,18 @@ function copyTemplate(){
 function sw(t,el){document.querySelectorAll('.gt div').forEach(d=>d.classList.remove('on'));el.classList.add('on');curG=t;draw()}
 function draw(){
   if(!DATA)return;
-  const titles={weight:'体重の推移（緑線=目標78.4kg）',sleep:'Oura睡眠スコアの推移',fat:'体脂肪率の推移',bodyAge:'体内年齢の推移',udemy:'Udemy 累計登録者の推移'};
+  const titles={weight:'体重の推移（緑線=目標78.4kg）',sleep:'Oura睡眠スコアの推移',fat:'体脂肪率の推移',bodyAge:'体内年齢の推移',udemy:'Udemy 累計登録者の推移（2021年10月〜）'};
   document.getElementById('gTitle').textContent=titles[curG];
   const colors={weight:'#4a7eff',sleep:'#9b59ff',fat:'#ff6b35',bodyAge:'#22c77a',udemy:'#ff4d8d'};
   let labels=[],vals=[],unit='';
 
   if(curG==='udemy'){
-    DATA.udemy.forEach(s=>{labels.push(s.date.slice(5));vals.push(uSum(s,'cumEnroll'))});
+    // 5年分の月次履歴があればそちらを使う（2021年10月〜）
+    if(DATA.udemyMonthly&&DATA.udemyMonthly.length){
+      DATA.udemyMonthly.forEach(x=>{labels.push(x.ym);vals.push(x.enroll)});
+    }else{
+      DATA.udemy.forEach(s=>{labels.push(s.date.slice(5));vals.push(uSum(s,'cumEnroll'))});
+    }
     unit='人';
   }else{
     DATA.health.forEach(r=>{labels.push(r.date.slice(5));vals.push(r[curG]!=null?r[curG]:null)});

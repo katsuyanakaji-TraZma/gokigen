@@ -1,10 +1,12 @@
 {
-  "generatedAt": "2026-08-11T13:39:08+09:00",
+  "generatedAt": "2026-08-11T05:36:05.620+00:00",
+  "version": "1.1",
   "source": {
     "gokigenFolderId": "1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
     "udemyFolderId": "1g3hrPVRIYB_GOYho36DLRnITG_c5-elx",
     "rule": "全ファイルを読み、日付が重複したら新しいファイルを優先"
   },
+  "qualityDropped": [],
   "health": [
     {
       "date": "2026-07-10",
@@ -67,7 +69,7 @@
       "bodyAge": null,
       "bpHigh": null,
       "bpLow": null,
-      "mood": 4,
+      "mood": 8,
       "sleep": 81,
       "exercise": null,
       "dining": "なし",
@@ -84,7 +86,7 @@
       "bodyAge": 61,
       "bpHigh": null,
       "bpLow": null,
-      "mood": 3,
+      "mood": 6,
       "sleep": 78,
       "exercise": "ウォーキング予定",
       "dining": null,
@@ -135,7 +137,7 @@
       "bodyAge": 60,
       "bpHigh": 142,
       "bpLow": 99,
-      "mood": 5,
+      "mood": 10,
       "sleep": 76,
       "exercise": "ウォーク6.08km(1:21:09・424kcal・平均心拍101)。明日はOCAジム予定",
       "dining": "睡眠76・コンディション77「スケジュール通り」・アクティビティ87・レジリエンス不足（夜間回復:要注意・日中の回復:良好・日中ストレス:中）。6:57から川口市ウォーク。8:00測定で体重81.6kg（前日比-0.5・記録開始から-2.7）。皮下脂肪率26.4%・骨格筋率45.4%。朝食はご飯・サラダ・みそ汁・めかぶ。昼食はパン・ヨーグルト(はちみつ)・エッグサラダ・牛乳。前日は「修復の日」（ストレス15分・回復7h45m）。12:30血圧142/99・脈拍82。ご機嫌かなりよい（体重が落ちていたから）",
@@ -152,7 +154,7 @@
       "bodyAge": 60,
       "bpHigh": null,
       "bpLow": null,
-      "mood": 4,
+      "mood": 8,
       "sleep": 75,
       "exercise": "なし（ジム休み・アティーナ美容院でリフレッシュ）",
       "dining": "家族（アキさん）・スペメシLeon（丸の内）",
@@ -356,7 +358,7 @@
       "bodyAge": 61,
       "bpHigh": null,
       "bpLow": null,
-      "mood": 4,
+      "mood": 8,
       "sleep": 88,
       "exercise": null,
       "dining": null,
@@ -504,52 +506,62 @@
     {
       "id": "C01",
       "short": "組織適応の教科書",
-      "published": "2026/6"
+      "published": "2026/6",
+      "title": "【異動・昇進】組織適応の教科書　－最初の90日で勝負が決まる！新しい職場で信頼と成果を勝ち取るOSアップデートの技術"
     },
     {
       "id": "C02",
-      "short": "『老害』と呼ばせない",
-      "published": "2025/7"
+      "short": "老害とは呼ばせない",
+      "published": "2025/7",
+      "title": "『老害』と呼ばせない！40代・50代から始める 自己アップデート＆セルフモチベーションマネジメント講座"
     },
     {
       "id": "C03",
-      "short": "年上部下",
-      "published": "2024/10"
+      "short": "ベテラン年上部下",
+      "published": "2024/10",
+      "title": "年上部下・ベテラン部下が動き出す！年下上司のための信頼関係マネジメント実践講座"
     },
     {
       "id": "C04",
-      "short": "人生100年時代",
-      "published": "2024/3"
+      "short": "リスキリング",
+      "published": "2024/3",
+      "title": "【耳から学ぶビジネストレンド】人生100年時代。リスキリングなくして生き残れない。自ら未来を拓くアップデートの技術。"
     },
     {
       "id": "C05",
-      "short": "未来を決めれば人生は変わる",
-      "published": "2024/1"
+      "short": "漢字一文字魔法",
+      "published": "2024/1",
+      "title": "未来を決めれば人生は変わる。その「決め方」では残念ながら叶いません。\"漢字一文字\"で人生が動き出す！ビジョン実現の技術。"
     },
     {
       "id": "C06",
-      "short": "トランジションマネジメント",
-      "published": "2023/11"
+      "short": "トラジマ",
+      "published": "2023/11",
+      "title": "トランジションマネジメント　人生の転機を「変わる技術」で乗り越えよ！爆速で成長し結果を出し続けていく人になるための方法"
     },
     {
       "id": "C07",
-      "short": "成果をあげるリーダーが必ずや",
-      "published": "2023/9"
+      "short": "承認パワー",
+      "published": "2023/9",
+      "title": "成果をあげるリーダーが必ずやっている。承認パワーで人と組織が元気に動き出す！コーチング×リーダーシップ実践講座"
     },
     {
       "id": "C08",
-      "short": "人生100年時代",
-      "published": "2022/11"
+      "short": "ご機嫌",
+      "published": "2022/11",
+      "title": "人生100年時代 経営者・リーダーが不機嫌では困ります『あなたがご機嫌でいるためのルーティン／構築法とセルフコーチング"
     },
     {
       "id": "C09",
-      "short": "部下",
-      "published": "2022/10"
+      "short": "Z世代",
+      "published": "2022/10",
+      "title": "部下・新人をいち早く成長させる人材育成法／Ｚ世代が思わず動き出したくなるサクセスパスコーチング『教える技術／育む技術』"
     },
     {
       "id": "C10",
-      "short": "部下と組織の可能性を開くリー",
-      "published": "2021/10"
+      "short": "開くリーダー",
+      "published": "2021/10",
+      "title": "部下と組織の可能性を開くリーダーになる！理論と事例で即実践できるコーチング＆リーダーシップ講座決定版（日本語・英語字幕）"
     }
   ],
   "udemy": [
@@ -932,6 +944,2781 @@
           "rating": 4.18
         }
       ]
+    }
+  ],
+  "udemyMonthly": [
+    {
+      "ym": "2021-10",
+      "enroll": 675,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 675,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2021-11",
+      "enroll": 1533,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 1533,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2021-12",
+      "enroll": 2080,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 2080,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-01",
+      "enroll": 2500,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 2500,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-02",
+      "enroll": 2648,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 2648,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-03",
+      "enroll": 2877,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 2877,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-04",
+      "enroll": 3128,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 3128,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-05",
+      "enroll": 3351,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 3351,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-06",
+      "enroll": 3540,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 3540,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-07",
+      "enroll": 3719,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 3719,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-08",
+      "enroll": 3910,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 3910,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-09",
+      "enroll": 4070,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 4070,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-10",
+      "enroll": 4720,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 458,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 4262,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-11",
+      "enroll": 5387,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 358,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 552,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 4477,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2022-12",
+      "enroll": 6528,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 1218,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 586,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 4724,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-01",
+      "enroll": 7622,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 1954,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 679,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 4989,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-02",
+      "enroll": 8798,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 2520,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 1033,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 5245,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-03",
+      "enroll": 9759,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 2892,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 1371,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 5496,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-04",
+      "enroll": 10639,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 3130,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 1600,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 5909,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-05",
+      "enroll": 11481,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 3357,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 1837,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 6287,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-06",
+      "enroll": 12495,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 3625,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 2155,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 6715,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-07",
+      "enroll": 13525,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 3847,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 2520,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 7158,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-08",
+      "enroll": 14111,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 3923,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 2727,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 7461,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-09",
+      "enroll": 15611,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 396,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 4102,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 3133,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 7980,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-10",
+      "enroll": 16557,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 494,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 4252,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 3488,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 8323,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-11",
+      "enroll": 18577,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 327,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 1093,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 4429,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 3782,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 8946,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2023-12",
+      "enroll": 20020,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 528,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 1440,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 4607,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 4038,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 9407,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-01",
+      "enroll": 22220,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 342,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 1227,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 1689,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 4837,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 4386,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 9739,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-02",
+      "enroll": 23817,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 828,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 1584,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 1804,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 4960,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 4675,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 9966,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-03",
+      "enroll": 25653,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 185,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 1158,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 1873,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 1942,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 5139,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 5045,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 10311,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-04",
+      "enroll": 27146,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 270,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 1476,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 2098,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 2041,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 5287,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 5373,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 10601,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-05",
+      "enroll": 28810,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 628,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 1737,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 2315,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 2132,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 5408,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 5680,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 10910,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-06",
+      "enroll": 30666,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 895,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 1883,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 2832,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 2235,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 5541,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 6056,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 11224,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-07",
+      "enroll": 32081,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 1047,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 2010,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 3211,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 2371,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 5626,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 6331,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 11485,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-08",
+      "enroll": 33325,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 1148,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 2136,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 3523,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 2480,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 5706,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 6577,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 11755,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-09",
+      "enroll": 35144,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 1340,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 2326,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 4065,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 2601,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 5836,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 6869,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 12107,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-10",
+      "enroll": 37301,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 369,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 1556,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 2488,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 4380,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 2748,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 5993,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 7244,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 12523,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-11",
+      "enroll": 38349,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 671,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 1645,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 2550,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 4475,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 2847,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 6094,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 7420,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 12647,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2024-12",
+      "enroll": 40119,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1124,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 1810,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 2646,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 4636,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 2952,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 6303,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 7799,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 12849,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-01",
+      "enroll": 42480,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1408,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 2205,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 2867,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 4940,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3086,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 6540,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 8203,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 13231,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-02",
+      "enroll": 43843,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1478,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 2350,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 2978,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 5111,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3181,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 6701,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 8453,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 13591,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-03",
+      "enroll": 44824,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1536,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 2428,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3056,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 5253,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3247,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 6802,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 8630,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 13872,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-04",
+      "enroll": 46020,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1614,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 2527,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3124,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 5436,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3344,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 6910,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 8940,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 14125,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-05",
+      "enroll": 46020,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1614,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 2527,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3124,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 5436,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3344,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 6910,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 8940,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 14125,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-06",
+      "enroll": 47538,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1676,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 2679,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3214,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 5630,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3448,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7031,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 9405,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 14455,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-07",
+      "enroll": 49549,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 310,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1763,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 2950,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3273,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 5841,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3579,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7155,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 9908,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 14770,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-08",
+      "enroll": 52437,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 975,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1922,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3138,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3538,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 6090,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3772,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7370,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 10417,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 15215,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-09",
+      "enroll": 54208,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 1412,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 1996,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3241,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3660,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 6229,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3898,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7490,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 10772,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 15510,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-10",
+      "enroll": 54845,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 1600,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 2020,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3280,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3701,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 6277,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 3970,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7520,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 10880,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 15597,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-11",
+      "enroll": 56962,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 2100,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 2095,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3403,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3841,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 6496,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 4152,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7611,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 11401,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 15863,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2025-12",
+      "enroll": 57462,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 2600,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 2095,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3403,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3841,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 6496,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 4152,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7611,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 11401,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 15863,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2026-01",
+      "enroll": 57762,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 2900,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 2095,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3403,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 3841,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 6496,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 4152,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7611,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 11401,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 15863,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2026-02",
+      "enroll": 61292,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 3090,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 2243,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3575,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 4093,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 6892,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 4430,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7828,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 12602,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 16539,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2026-03",
+      "enroll": 61292,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 3090,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 2243,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3575,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 4093,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 6892,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 4430,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7828,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 12602,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 16539,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2026-04",
+      "enroll": 64401,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 3822,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 2384,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3711,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 4242,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 7166,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 4627,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7948,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 13407,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 17094,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2026-05",
+      "enroll": 64401,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 3822,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 2384,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3711,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 4242,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 7166,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 4627,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7948,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 13407,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 17094,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2026-06",
+      "enroll": 66243,
+      "revenue": 0,
+      "byCourse": {
+        "C01": {
+          "enroll": null,
+          "revenue": null
+        },
+        "C02": {
+          "enroll": 4256,
+          "revenue": null
+        },
+        "C03": {
+          "enroll": 2502,
+          "revenue": null
+        },
+        "C04": {
+          "enroll": 3809,
+          "revenue": null
+        },
+        "C05": {
+          "enroll": 4320,
+          "revenue": null
+        },
+        "C06": {
+          "enroll": 7399,
+          "revenue": null
+        },
+        "C07": {
+          "enroll": 4704,
+          "revenue": null
+        },
+        "C08": {
+          "enroll": 7993,
+          "revenue": null
+        },
+        "C09": {
+          "enroll": 13948,
+          "revenue": null
+        },
+        "C10": {
+          "enroll": 17312,
+          "revenue": null
+        }
+      }
+    },
+    {
+      "ym": "2026-07",
+      "enroll": 68428,
+      "revenue": 190072.47,
+      "byCourse": {
+        "C01": {
+          "enroll": 110,
+          "revenue": 171.49
+        },
+        "C02": {
+          "enroll": 4626,
+          "revenue": 7487.29
+        },
+        "C03": {
+          "enroll": 2661,
+          "revenue": 4323.51
+        },
+        "C04": {
+          "enroll": 3920,
+          "revenue": 3792.4
+        },
+        "C05": {
+          "enroll": 4455,
+          "revenue": 7280.46
+        },
+        "C06": {
+          "enroll": 7565,
+          "revenue": 14751.22
+        },
+        "C07": {
+          "enroll": 4806,
+          "revenue": 11204.29
+        },
+        "C08": {
+          "enroll": 8063,
+          "revenue": 26331.96
+        },
+        "C09": {
+          "enroll": 14605,
+          "revenue": 47673.93
+        },
+        "C10": {
+          "enroll": 17617,
+          "revenue": 67055.92
+        }
+      }
+    },
+    {
+      "ym": "2026-08",
+      "enroll": 69629,
+      "revenue": 190226.32,
+      "byCourse": {
+        "C01": {
+          "enroll": 285,
+          "revenue": 198.51
+        },
+        "C02": {
+          "enroll": 4800,
+          "revenue": 7504.63
+        },
+        "C03": {
+          "enroll": 2771,
+          "revenue": 4323.63
+        },
+        "C04": {
+          "enroll": 3968,
+          "revenue": 3792.8
+        },
+        "C05": {
+          "enroll": 4503,
+          "revenue": 7281.09
+        },
+        "C06": {
+          "enroll": 7633,
+          "revenue": 14758.17
+        },
+        "C07": {
+          "enroll": 4850,
+          "revenue": 11206.66
+        },
+        "C08": {
+          "enroll": 8102,
+          "revenue": 26334.14
+        },
+        "C09": {
+          "enroll": 14926,
+          "revenue": 47683.43
+        },
+        "C10": {
+          "enroll": 17791,
+          "revenue": 67143.26
+        }
+      }
     }
   ]
 }
