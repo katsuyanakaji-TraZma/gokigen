@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-08-12T12:12:10+09:00",
+  "generatedAt": "2026-08-12T12:59:43+09:00",
   "version": "1.1",
   "source": {
     "gokigenFolderId": "1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
     "udemyFolderId": "1g3hrPVRIYB_GOYho36DLRnITG_c5-elx",
     "rule": "全ファイルを読み、重複したら新しいファイルを優先",
     "udemyFiles": [
+      {
+        "name": "Udemy台帳_base",
+        "rows": 1718
+      },
       {
         "name": "Udemy台帳_2026-07-12",
         "rows": 20
@@ -38,7 +42,7 @@
     18,
     22
   ],
-  "udemyBaseUrl": null,
+  "udemyBaseUrl": "https://docs.google.com/spreadsheets/d/1LnBZZQ2I0HBlGr4hcfffizAJQl-WNybIBOefX9ZZBOw/edit?usp=drivesdk",
   "qualityDropped": [],
   "health": [
     {
@@ -616,6 +620,641 @@
   ],
   "udemy": [
     {
+      "date": "2025-09-16",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1100,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-09-20",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1200,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-09-24",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1300,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-09-28",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1412,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 1996,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 3241,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 3660,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 6229,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 3898,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 7490,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 10772,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 15510,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-10-02",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1460,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-10-07",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1518,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2020,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 3280,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 3701,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 6277,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 3970,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 7520,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 10880,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 15597,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-10-21",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1600,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-11-02",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1700,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-11-09",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1800,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-11-16",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 1946,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2095,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 3403,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 3841,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 6496,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4152,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 7611,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 11401,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 15863,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-11-23",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 2100,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-12-01",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 2200,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-12-08",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 2300,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-12-15",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 2400,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-12-20",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 2500,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2025-12-27",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 2600,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-01-04",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 2700,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-01-12",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 2800,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-01-25",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 2900,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-02-09",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 3080,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2243,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 3575,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4093,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 6892,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4430,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 7828,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 12602,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 16539,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-02-10",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 3090,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-04-20",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 3822,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2384,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 3711,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4242,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7166,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4627,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 7948,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 13407,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17094,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "time": null,
+      "rows": [
+        {
+          "id": "C02",
+          "cumEnroll": 4256,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2502,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 3809,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4320,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7399,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4704,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 7993,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 13948,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17312,
+          "monthEnroll": null,
+          "cumRevenue": null,
+          "rating": null
+        }
+      ]
+    },
+    {
       "date": "2026-07-10",
       "time": "4:00",
       "rows": [
@@ -1152,7 +1791,11 @@
     {
       "ym": "2021-10",
       "enroll": 675,
+      "newEnroll": null,
       "revenue": 0,
+      "from": null,
+      "to": "2021-10-30",
+      "records": 13,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1199,7 +1842,11 @@
     {
       "ym": "2021-11",
       "enroll": 1533,
+      "newEnroll": 858,
       "revenue": 0,
+      "from": "2021-10-30",
+      "to": "2021-11-30",
+      "records": 29,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1246,7 +1893,11 @@
     {
       "ym": "2021-12",
       "enroll": 2080,
+      "newEnroll": 547,
       "revenue": 0,
+      "from": "2021-11-30",
+      "to": "2021-12-31",
+      "records": 31,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1293,7 +1944,11 @@
     {
       "ym": "2022-01",
       "enroll": 2500,
+      "newEnroll": 420,
       "revenue": 0,
+      "from": "2021-12-31",
+      "to": "2022-01-31",
+      "records": 31,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1340,7 +1995,11 @@
     {
       "ym": "2022-02",
       "enroll": 2648,
+      "newEnroll": 148,
       "revenue": 0,
+      "from": "2022-01-31",
+      "to": "2022-02-28",
+      "records": 28,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1387,7 +2046,11 @@
     {
       "ym": "2022-03",
       "enroll": 2877,
+      "newEnroll": 229,
       "revenue": 0,
+      "from": "2022-02-28",
+      "to": "2022-03-31",
+      "records": 31,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1434,7 +2097,11 @@
     {
       "ym": "2022-04",
       "enroll": 3128,
+      "newEnroll": 251,
       "revenue": 0,
+      "from": "2022-03-31",
+      "to": "2022-04-30",
+      "records": 30,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1481,7 +2148,11 @@
     {
       "ym": "2022-05",
       "enroll": 3351,
+      "newEnroll": 223,
       "revenue": 0,
+      "from": "2022-04-30",
+      "to": "2022-05-31",
+      "records": 31,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1528,7 +2199,11 @@
     {
       "ym": "2022-06",
       "enroll": 3540,
+      "newEnroll": 189,
       "revenue": 0,
+      "from": "2022-05-31",
+      "to": "2022-06-30",
+      "records": 29,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1575,7 +2250,11 @@
     {
       "ym": "2022-07",
       "enroll": 3719,
+      "newEnroll": 179,
       "revenue": 0,
+      "from": "2022-06-30",
+      "to": "2022-07-31",
+      "records": 31,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1622,7 +2301,11 @@
     {
       "ym": "2022-08",
       "enroll": 3910,
+      "newEnroll": 191,
       "revenue": 0,
+      "from": "2022-07-31",
+      "to": "2022-08-31",
+      "records": 30,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1669,7 +2352,11 @@
     {
       "ym": "2022-09",
       "enroll": 4070,
+      "newEnroll": 160,
       "revenue": 0,
+      "from": "2022-08-31",
+      "to": "2022-09-30",
+      "records": 30,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1716,7 +2403,11 @@
     {
       "ym": "2022-10",
       "enroll": 4720,
+      "newEnroll": 650,
       "revenue": 0,
+      "from": "2022-09-30",
+      "to": "2022-10-31",
+      "records": 31,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1763,7 +2454,11 @@
     {
       "ym": "2022-11",
       "enroll": 5387,
+      "newEnroll": 667,
       "revenue": 0,
+      "from": "2022-10-31",
+      "to": "2022-11-30",
+      "records": 27,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1810,7 +2505,11 @@
     {
       "ym": "2022-12",
       "enroll": 6528,
+      "newEnroll": 1141,
       "revenue": 0,
+      "from": "2022-11-30",
+      "to": "2022-12-31",
+      "records": 31,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1857,7 +2556,11 @@
     {
       "ym": "2023-01",
       "enroll": 7622,
+      "newEnroll": 1094,
       "revenue": 0,
+      "from": "2022-12-31",
+      "to": "2023-01-30",
+      "records": 27,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1904,7 +2607,11 @@
     {
       "ym": "2023-02",
       "enroll": 8798,
+      "newEnroll": 1176,
       "revenue": 0,
+      "from": "2023-01-30",
+      "to": "2023-02-26",
+      "records": 17,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1951,7 +2658,11 @@
     {
       "ym": "2023-03",
       "enroll": 9759,
+      "newEnroll": 961,
       "revenue": 0,
+      "from": "2023-02-26",
+      "to": "2023-03-31",
+      "records": 15,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -1998,7 +2709,11 @@
     {
       "ym": "2023-04",
       "enroll": 10639,
+      "newEnroll": 880,
       "revenue": 0,
+      "from": "2023-03-31",
+      "to": "2023-04-29",
+      "records": 8,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2045,7 +2760,11 @@
     {
       "ym": "2023-05",
       "enroll": 11481,
+      "newEnroll": 842,
       "revenue": 0,
+      "from": "2023-04-29",
+      "to": "2023-05-26",
+      "records": 8,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2092,7 +2811,11 @@
     {
       "ym": "2023-06",
       "enroll": 12495,
+      "newEnroll": 1014,
       "revenue": 0,
+      "from": "2023-05-26",
+      "to": "2023-06-27",
+      "records": 6,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2139,7 +2862,11 @@
     {
       "ym": "2023-07",
       "enroll": 13525,
+      "newEnroll": 1030,
       "revenue": 0,
+      "from": "2023-06-27",
+      "to": "2023-07-31",
+      "records": 9,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2186,7 +2913,11 @@
     {
       "ym": "2023-08",
       "enroll": 14111,
+      "newEnroll": 586,
       "revenue": 0,
+      "from": "2023-07-31",
+      "to": "2023-08-26",
+      "records": 8,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2233,7 +2964,11 @@
     {
       "ym": "2023-09",
       "enroll": 15611,
+      "newEnroll": 1500,
       "revenue": 0,
+      "from": "2023-08-26",
+      "to": "2023-09-29",
+      "records": 12,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2280,7 +3015,11 @@
     {
       "ym": "2023-10",
       "enroll": 16557,
+      "newEnroll": 946,
       "revenue": 0,
+      "from": "2023-09-29",
+      "to": "2023-10-31",
+      "records": 17,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2327,7 +3066,11 @@
     {
       "ym": "2023-11",
       "enroll": 18577,
+      "newEnroll": 2020,
       "revenue": 0,
+      "from": "2023-10-31",
+      "to": "2023-11-30",
+      "records": 23,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2374,7 +3117,11 @@
     {
       "ym": "2023-12",
       "enroll": 20020,
+      "newEnroll": 1443,
       "revenue": 0,
+      "from": "2023-11-30",
+      "to": "2023-12-29",
+      "records": 10,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2421,7 +3168,11 @@
     {
       "ym": "2024-01",
       "enroll": 22220,
+      "newEnroll": 2200,
       "revenue": 0,
+      "from": "2023-12-29",
+      "to": "2024-01-31",
+      "records": 19,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2468,7 +3219,11 @@
     {
       "ym": "2024-02",
       "enroll": 23817,
+      "newEnroll": 1597,
       "revenue": 0,
+      "from": "2024-01-31",
+      "to": "2024-02-27",
+      "records": 11,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2515,7 +3270,11 @@
     {
       "ym": "2024-03",
       "enroll": 25653,
+      "newEnroll": 1836,
       "revenue": 0,
+      "from": "2024-02-27",
+      "to": "2024-03-30",
+      "records": 10,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2562,7 +3321,11 @@
     {
       "ym": "2024-04",
       "enroll": 27146,
+      "newEnroll": 1493,
       "revenue": 0,
+      "from": "2024-03-30",
+      "to": "2024-04-29",
+      "records": 4,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2609,7 +3372,11 @@
     {
       "ym": "2024-05",
       "enroll": 28810,
+      "newEnroll": 1664,
       "revenue": 0,
+      "from": "2024-04-29",
+      "to": "2024-05-27",
+      "records": 7,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2656,7 +3423,11 @@
     {
       "ym": "2024-06",
       "enroll": 30666,
+      "newEnroll": 1856,
       "revenue": 0,
+      "from": "2024-05-27",
+      "to": "2024-06-30",
+      "records": 5,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2703,7 +3474,11 @@
     {
       "ym": "2024-07",
       "enroll": 32081,
+      "newEnroll": 1415,
       "revenue": 0,
+      "from": "2024-06-30",
+      "to": "2024-07-27",
+      "records": 3,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2750,7 +3525,11 @@
     {
       "ym": "2024-08",
       "enroll": 33325,
+      "newEnroll": 1244,
       "revenue": 0,
+      "from": "2024-07-27",
+      "to": "2024-08-20",
+      "records": 2,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2797,7 +3576,11 @@
     {
       "ym": "2024-09",
       "enroll": 35144,
+      "newEnroll": 1819,
       "revenue": 0,
+      "from": "2024-08-20",
+      "to": "2024-09-20",
+      "records": 2,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2844,7 +3627,11 @@
     {
       "ym": "2024-10",
       "enroll": 37301,
+      "newEnroll": 2157,
       "revenue": 0,
+      "from": "2024-09-20",
+      "to": "2024-10-30",
+      "records": 7,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2891,7 +3678,11 @@
     {
       "ym": "2024-11",
       "enroll": 38349,
+      "newEnroll": 1048,
       "revenue": 0,
+      "from": "2024-10-30",
+      "to": "2024-11-19",
+      "records": 3,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2938,7 +3729,11 @@
     {
       "ym": "2024-12",
       "enroll": 40119,
+      "newEnroll": 1770,
       "revenue": 0,
+      "from": "2024-11-19",
+      "to": "2024-12-17",
+      "records": 3,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -2985,7 +3780,11 @@
     {
       "ym": "2025-01",
       "enroll": 42480,
+      "newEnroll": 2361,
       "revenue": 0,
+      "from": "2024-12-17",
+      "to": "2025-01-26",
+      "records": 5,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3032,7 +3831,11 @@
     {
       "ym": "2025-02",
       "enroll": 43843,
+      "newEnroll": 1363,
       "revenue": 0,
+      "from": "2025-01-26",
+      "to": "2025-02-26",
+      "records": 2,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3079,7 +3882,11 @@
     {
       "ym": "2025-03",
       "enroll": 44824,
+      "newEnroll": 981,
       "revenue": 0,
+      "from": "2025-02-26",
+      "to": "2025-03-21",
+      "records": 2,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3126,7 +3933,11 @@
     {
       "ym": "2025-04",
       "enroll": 46020,
+      "newEnroll": 1196,
       "revenue": 0,
+      "from": "2025-03-21",
+      "to": "2025-04-21",
+      "records": 3,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3173,7 +3984,11 @@
     {
       "ym": "2025-05",
       "enroll": 46020,
+      "newEnroll": 0,
       "revenue": 0,
+      "from": "2025-04-21",
+      "to": "2025-04-21",
+      "records": 0,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3220,7 +4035,11 @@
     {
       "ym": "2025-06",
       "enroll": 47538,
+      "newEnroll": 1518,
       "revenue": 0,
+      "from": "2025-04-21",
+      "to": "2025-06-02",
+      "records": 1,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3267,7 +4086,11 @@
     {
       "ym": "2025-07",
       "enroll": 49549,
+      "newEnroll": 2011,
       "revenue": 0,
+      "from": "2025-06-02",
+      "to": "2025-07-31",
+      "records": 9,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3314,7 +4137,11 @@
     {
       "ym": "2025-08",
       "enroll": 52437,
+      "newEnroll": 2888,
       "revenue": 0,
+      "from": "2025-07-31",
+      "to": "2025-08-27",
+      "records": 27,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3361,7 +4188,11 @@
     {
       "ym": "2025-09",
       "enroll": 54208,
+      "newEnroll": 1771,
       "revenue": 0,
+      "from": "2025-08-27",
+      "to": "2025-09-28",
+      "records": 6,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3408,7 +4239,11 @@
     {
       "ym": "2025-10",
       "enroll": 54845,
+      "newEnroll": 637,
       "revenue": 0,
+      "from": "2025-09-28",
+      "to": "2025-10-21",
+      "records": 3,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3455,7 +4290,11 @@
     {
       "ym": "2025-11",
       "enroll": 56962,
+      "newEnroll": 2117,
       "revenue": 0,
+      "from": "2025-10-21",
+      "to": "2025-11-23",
+      "records": 4,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3502,7 +4341,11 @@
     {
       "ym": "2025-12",
       "enroll": 57462,
+      "newEnroll": 500,
       "revenue": 0,
+      "from": "2025-11-23",
+      "to": "2025-12-27",
+      "records": 5,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3549,7 +4392,11 @@
     {
       "ym": "2026-01",
       "enroll": 57762,
+      "newEnroll": 300,
       "revenue": 0,
+      "from": "2025-12-27",
+      "to": "2026-01-25",
+      "records": 3,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3596,7 +4443,11 @@
     {
       "ym": "2026-02",
       "enroll": 61292,
+      "newEnroll": 3530,
       "revenue": 0,
+      "from": "2026-01-25",
+      "to": "2026-02-10",
+      "records": 2,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3643,7 +4494,11 @@
     {
       "ym": "2026-03",
       "enroll": 61292,
+      "newEnroll": 0,
       "revenue": 0,
+      "from": "2026-02-10",
+      "to": "2026-02-10",
+      "records": 0,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3690,7 +4545,11 @@
     {
       "ym": "2026-04",
       "enroll": 64401,
+      "newEnroll": 3109,
       "revenue": 0,
+      "from": "2026-02-10",
+      "to": "2026-04-20",
+      "records": 1,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3737,7 +4596,11 @@
     {
       "ym": "2026-05",
       "enroll": 64401,
+      "newEnroll": 0,
       "revenue": 0,
+      "from": "2026-04-20",
+      "to": "2026-04-20",
+      "records": 0,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3784,7 +4647,11 @@
     {
       "ym": "2026-06",
       "enroll": 66243,
+      "newEnroll": 1842,
       "revenue": 0,
+      "from": "2026-04-20",
+      "to": "2026-06-05",
+      "records": 1,
       "byCourse": {
         "C01": {
           "enroll": null,
@@ -3831,9 +4698,9 @@
     {
       "ym": "2026-07",
       "enroll": 68428,
-      "newEnroll": null,
+      "newEnroll": 2185,
       "revenue": 190072.47,
-      "from": null,
+      "from": "2026-06-05",
       "to": "2026-07-17",
       "records": 3,
       "byCourse": {
