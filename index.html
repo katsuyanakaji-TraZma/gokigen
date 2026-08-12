@@ -104,6 +104,13 @@
   .ut td{padding:7px 3px;border-bottom:1px solid var(--border);text-align:right;font-weight:700}
   .ut td:first-child{text-align:left;font-weight:600;color:var(--soft);font-size:11px}
   .ut .dlt{font-size:10px;font-weight:700;color:var(--green)}
+  .ut .dlt.bad{color:var(--orange)}
+  /* 詳細データ（スプレッドシート）へのリンク */
+  .dlink{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;
+    padding:12px 14px;border-radius:12px;border:1.5px solid rgba(255,107,53,.35);
+    background:rgba(255,107,53,.07);color:var(--orange);font-size:13px;font-weight:800;text-decoration:none}
+  .dlink span.arw{font-size:15px}
+  .dlink.off{opacity:.5;pointer-events:none;border-style:dashed}
   /* kaishoku */
   .kg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
   .kb{border-radius:12px;padding:12px}
@@ -193,7 +200,7 @@
       ② Claudeに貼って、今日のことを話す（音声入力OK）<br>
       ③ 会食した日はその一言も添える<br>
       ④ 送信→寝る<br>
-      ⑤ 翌朝7時、このアプリが自動で最新になっています
+      ⑤ 8時・12時・18時・22時に、このアプリが自動で最新になります
     </div>
   </div>
   <div class="card" style="background:rgba(34,199,122,.07);border:1.5px solid rgba(34,199,122,.3);box-shadow:none">
@@ -239,7 +246,7 @@
     <div class="ct"><span class="dot" style="background:var(--green)"></span>直近の記録</div>
     <div id="healthRecent"></div>
   </div>
-  <div class="note">数値はすべてGoogleドライブの「GOKIGEN台帳」が出どころです。点呼でClaudeにスクショを送ると、翌朝7時にここへ反映されます。</div>
+  <div class="note">数値はすべてGoogleドライブの「GOKIGEN台帳」が出どころです。点呼でClaudeにスクショを送ると、次の更新（8時・12時・18時・22時）でここへ反映されます。</div>
 </div>
 
 <!-- WORK -->
@@ -262,6 +269,7 @@
     <div class="csel" id="courseSel"></div>
     <canvas id="chart5y" height="200"></canvas>
     <div class="pace" id="fiveYearStat"></div>
+    <a class="dlink off" id="udemyDetail" target="_blank" rel="noopener">📂 詳細データを開く<span class="arw">→</span></a>
   </div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--blue)"></span>コース別（前回比）</div>
@@ -364,10 +372,11 @@
   <div class="card"><div class="ct">データの出どころ</div>
     <div style="font-size:13px;line-height:1.9;color:var(--soft)">
       このアプリは <b>data.json</b> だけを読んで表示しています。手入力の欄はありません。<br><br>
-      data.json は毎朝7時に、Googleドライブの<br>
+      data.json は<b id="updHours">1日4回</b>、Googleドライブの<br>
       ・GOKIGEN台帳（全ファイル）<br>
-      ・Udemy台帳（全ファイル）<br>
-      を全期間まとめて自動生成されます。
+      ・Udemy台帳（Udemy台帳_base ＋ デルタ）<br>
+      を全期間まとめて自動生成されます。<br>
+      台帳に動きが無いときは作り直さずスキップします。
     </div>
     <div class="note" id="genInfo"></div>
   </div>
@@ -388,6 +397,7 @@ const pad=n=>String(n).padStart(2,'0');
 const DOWS=['日','月','火','水','木','金','土'];
 const MOODS=['😩','😕','😐','🙂','😄'];
 const fmtInt=n=>n==null?'—':n.toLocaleString('ja-JP');
+const md=ds=>ds?(+ds.slice(5,7))+'/'+(+ds.slice(8,10)):'';
 const fmtUSD=n=>n==null?'—':'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 
 /* ===== state ===== */
@@ -410,6 +420,11 @@ function latestPair(key){
 function signed(d,digits,unit){
   return (d>0?'+':'−')+Math.abs(d).toFixed(digits==null?1:digits)+(unit||'');
 }
+/* 人数の差分。「▲」は使わず ＋/− で書く */
+function signedInt(d){return (d>0?'+':'−')+fmtInt(Math.abs(d))}
+/* 金額の差分。「▲」は使わず ＋/− で書く */
+function signedUSD(d,digits){return (d>0?'+':'−')+'$'+Math.abs(d).toLocaleString('en-US',
+  {minimumFractionDigits:digits==null?2:digits,maximumFractionDigits:digits==null?2:digits})}
 function deltaText(key,unit,digits,invert){
   const {cur,prev}=latestPair(key);
   if(!cur) return {txt:'記録なし',cls:'md'};
@@ -500,11 +515,12 @@ function renderHouse(){
   // 仕事 = Udemy累計登録
   const s0=uSnap(0), s1=uSnap(-1);
   const e0=uSum(s0,'cumEnroll'), e1=uSum(s1,'cumEnroll');
-  setRoom('work', fmtInt(e0)+'人', e1!=null? ('+'+fmtInt(e0-e1)+' 前回比'):'—');
+  setRoom('work', fmtInt(e0)+'人', e1!=null? (signedInt(e0-e1)+' 前回比'):'前回比 —');
 
   // 経済 = Udemy累計収益
   const r0=uSum(s0,'cumRevenue'), r1=uSum(s1,'cumRevenue');
-  setRoom('eco', '$'+Math.round(r0).toLocaleString('en-US'), r1!=null? ('+$'+Math.round(r0-r1).toLocaleString('en-US')+' 前回比'):'—');
+  setRoom('eco', '$'+Math.round(r0).toLocaleString('en-US'),
+    r1!=null? (signedUSD(r0-r1,0)+' 前回比'):'前回比 —');
 
   // 会食 = 今月
   const mk=latest.date.slice(0,7);
@@ -602,19 +618,26 @@ function computeInsights(){
            med+'点未満だった翌日は平均'+signed(al,1,'kg')+'。差は'+Math.abs(ah-al).toFixed(1)+'kgです。'});
   })();
 
-  // ルール4: Udemy 今月のペースは前月比でどうか
+  /* ルール4: Udemyの登録ペース。
+     台帳は毎日つくとは限らず、記録の無い月もある（例: 2026年6月は6/5の1件だけ）。
+     「◯月の新規」と言うと1.5ヶ月ぶんを1ヶ月と呼んでしまうので、
+     実際に測れた区間（from→to）で1日あたりに直して比べる。 */
   (function(){
     const m=DATA.udemyMonthly;
-    if(!m||m.length<3)return;
-    const cur=m[m.length-1], prev=m[m.length-2], prev2=m[m.length-3];
-    const gainNow=cur.enroll-prev.enroll, gainPrev=prev.enroll-prev2.enroll;
-    if(gainPrev<=0)return;
-    const today=new Date(), dim=new Date(today.getFullYear(),today.getMonth()+1,0).getDate();
-    const pace=gainNow/Math.max(1,today.getDate())*dim;   // 今月ぶんを月末換算
-    const ratio=pace/gainPrev;
-    out.push({name:'Udemyの今月ペース',score:Math.abs(ratio-1)*22+6,
-      text:'Udemyの新規登録は今月ここまで'+fmtInt(gainNow)+'人。月末換算で約'+fmtInt(Math.round(pace))+
-           '人、前月の'+fmtInt(gainPrev)+'人に対して'+(ratio>=1?'約'+ratio.toFixed(1)+'倍のペース':'約'+Math.round(ratio*100)+'%のペース')+'です。'});
+    if(!m||m.length<2)return;
+    const span=x=>{
+      if(!x||x.newEnroll==null||!x.from||!x.to)return null;
+      const d=Math.round((new Date(x.to+'T00:00:00+09:00')-new Date(x.from+'T00:00:00+09:00'))/86400000);
+      return d>0? {n:x.newEnroll,d:d,from:x.from,to:x.to} : null;
+    };
+    const cur=span(m[m.length-1]), prev=span(m[m.length-2]);
+    if(!cur||prev===null||prev.n<=0)return;
+    const pNow=cur.n/cur.d, pPrev=prev.n/prev.d, ratio=pNow/pPrev;
+    out.push({name:'Udemyの登録ペース',score:Math.abs(ratio-1)*22+6,
+      text:'Udemyの新規登録は'+md(cur.from)+'→'+md(cur.to)+'の'+cur.d+'日間で'+signedInt(cur.n)+'人（1日'+
+           pNow.toFixed(0)+'人）。その前の'+prev.d+'日間は1日'+pPrev.toFixed(0)+'人だったので、'+
+           (ratio>=1.05?'約'+ratio.toFixed(1)+'倍に上がっています。'
+            :ratio<=0.95?'約'+Math.round(ratio*100)+'%に落ちています。':'ほぼ同じペースです。')});
   })();
 
   // ルール5: 記録が途切れている日
@@ -671,8 +694,11 @@ function renderWork(){
   const s0=uSnap(0), s1=uSnap(-1);
   const e0=uSum(s0,'cumEnroll'), e1=uSum(s1,'cumEnroll');
   document.getElementById('v-enroll').textContent=fmtInt(e0);
-  document.getElementById('d-enroll').textContent=e1!=null?('+'+fmtInt(e0-e1)+'人 前回比（'+s1.date.slice(5)+'）'):'—';
-  document.getElementById('d-enroll').className='md good';
+  const den=document.getElementById('d-enroll');
+  if(e1!=null){const d=e0-e1;                        // 登録者は増えるほど良い
+    den.textContent=signedInt(d)+'人 前回比（'+s1.date.slice(5)+'）';
+    den.className='md '+(d>=0?'good':'bad');
+  }else{den.textContent='前回比 —';den.className='md';}
   const a0=uAvgRating(s0), a1=uAvgRating(s1);
   document.getElementById('v-rating').textContent=a0?a0.toFixed(2):'—';
   if(a1!=null){const d=a0-a1;
@@ -685,11 +711,17 @@ function renderWork(){
   s0.rows.forEach(r=>{
     const p=s1? s1.rows.find(x=>x.id===r.id):null;
     const d=p? r.cumEnroll-p.cumEnroll : null;
-    html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtInt(r.cumEnroll)}</td><td class="dlt">${d!=null?('+'+fmtInt(d)):'—'}</td><td>${r.rating}</td></tr>`;
+    html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtInt(r.cumEnroll)}</td><td class="dlt${d!=null&&d<0?' bad':''}">${d!=null?signedInt(d):'—'}</td><td>${r.rating??'—'}</td></tr>`;
   });
   document.getElementById('udemyTable').innerHTML=html;
   renderCourseSel();
   draw5y();
+
+  // 📂詳細データ＝Udemy台帳_base（スプレッドシート）。URLはdata.jsonから渡ってくる
+  const detail=document.getElementById('udemyDetail');
+  if(DATA.udemyBaseUrl){detail.href=DATA.udemyBaseUrl;detail.className='dlink'}
+  else{detail.removeAttribute('href');detail.className='dlink off';
+    detail.innerHTML='📂 詳細データ（準備中）<span class="arw">→</span>'}
 
   const n=DATA.udemyCourses.length;
   document.getElementById('uN').textContent=n+' / 100コース';
@@ -701,15 +733,18 @@ function renderEco(){
   const s0=uSnap(0), s1=uSnap(-1);
   const r0=uSum(s0,'cumRevenue'), r1=uSum(s1,'cumRevenue');
   document.getElementById('v-rev').textContent=fmtUSD(r0);
-  if(r1!=null){document.getElementById('d-rev').textContent='▲'+fmtUSD(r0-r1)+' 前回比（'+s1.date.slice(5)+'）';
-    document.getElementById('d-rev').className='md down';}
+  const de=document.getElementById('d-rev');
+  if(r1!=null){const d=r0-r1;                       // 収益は増えるほど良い
+    de.textContent=signedUSD(d)+' 前回比（'+s1.date.slice(5)+'）';
+    de.className='md '+(d>=0?'good':'bad');
+  }else{de.textContent='前回比 —';de.className='md';}
   document.getElementById('ecoAsOf').textContent='基準日: '+s0.date+' '+s0.time;
   const names={};DATA.udemyCourses.forEach(c=>names[c.id]=c.short);
   let html='<tr><th>コース</th><th>累計収益</th><th>前回比</th></tr>';
   s0.rows.slice().sort((a,b)=>b.cumRevenue-a.cumRevenue).forEach(r=>{
     const p=s1? s1.rows.find(x=>x.id===r.id):null;
     const d=p? r.cumRevenue-p.cumRevenue : null;
-    html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtUSD(r.cumRevenue)}</td><td class="dlt">${d!=null&&d>0?('+$'+d.toFixed(2)):'—'}</td></tr>`;
+    html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtUSD(r.cumRevenue)}</td><td class="dlt${d!=null&&d<0?' bad':''}">${d!=null?signedUSD(d):'—'}</td></tr>`;
   });
   document.getElementById('ecoTable').innerHTML=html;
 }
@@ -755,11 +790,15 @@ function renderPriv(){
     :'<div style="text-align:center;padding:16px;color:var(--muted)">記録なし</div>';
 }
 function renderSettings(){
+  const hrs=DATA.updateHours&&DATA.updateHours.length? DATA.updateHours : [8,12,18,22];
+  document.getElementById('updHours').textContent='1日'+hrs.length+'回（'+hrs.join('時・')+'時）';
   document.getElementById('genInfo').textContent='最終生成: '+(DATA.generatedAt||'—');
   const h=DATA.health;
+  const files=(DATA.source&&DATA.source.udemyFiles)||[];
   document.getElementById('loadState').innerHTML=
     '✅ data.json 読み込み成功<br>健康データ: <b>'+h.length+'日分</b>（'+h[0].date+' 〜 '+h[h.length-1].date+'）<br>'+
-    'Udemyスナップショット: <b>'+DATA.udemy.length+'件</b>（'+DATA.udemy[0].date+' 〜 '+DATA.udemy[DATA.udemy.length-1].date+'）';
+    'Udemyスナップショット: <b>'+DATA.udemy.length+'件</b>（'+DATA.udemy[0].date+' 〜 '+DATA.udemy[DATA.udemy.length-1].date+'）'+
+    (files.length? '<br>Udemyの読込元: '+files.map(f=>f.name+'（'+f.rows+'行）').join('、') : '');
 }
 
 /* ===== 5年分の登録者カーブ（全体 / コース別） ===== */
@@ -775,12 +814,28 @@ function renderCourseSel(){
 function selCourse(id){curCourse=id;renderCourseSel();draw5y()}
 function draw5y(){
   const m=DATA.udemyMonthly;
-  const cv=document.getElementById('chart5y');
-  if(!m||!m.length||!cv)return;
-  if(typeof Chart==='undefined')return;
+  const st=document.getElementById('fiveYearStat');
+  if(!m||!m.length){if(st)st.textContent='まだ履歴がありません';return}
   const labels=m.map(x=>x.ym);
   const vals=m.map(x=>curCourse==='ALL'? x.enroll
     : (x.byCourse[curCourse] ? x.byCourse[curCourse].enroll : null));
+
+  // 統計の文章はグラフより先に出す（Chart.jsが読めなくても数字は見えるように）
+  const nn=vals.filter(v=>v!=null);
+  if(st){
+    if(!nn.length){st.textContent='このコースの履歴がありません'}
+    else{
+      const first=nn[0], last=nn[nn.length-1];
+      const startYm=labels[vals.findIndex(v=>v!=null)];
+      const name=curCourse==='ALL'?'全'+DATA.udemyCourses.length+'コース合計':
+        (DATA.udemyCourses.find(c=>c.id===curCourse)||{}).short||curCourse;
+      st.textContent=name+'：'+startYm+' の '+fmtInt(first)+'人 → '+labels[labels.length-1]+' の '+fmtInt(last)+
+        '人（'+signedInt(last-first)+'人／'+nn.length+'ヶ月）';
+    }
+  }
+
+  const cv=document.getElementById('chart5y');
+  if(!cv||typeof Chart==='undefined')return;
   const ctx=cv.getContext('2d');
   if(chart5y)chart5y.destroy();
   chart5y=new Chart(ctx,{type:'line',data:{labels,datasets:[{
@@ -789,15 +844,6 @@ function draw5y(){
     options:{responsive:true,plugins:{legend:{display:false}},
       scales:{x:{ticks:{color:'#9aa0b8',font:{size:9},maxRotation:0,autoSkip:true,maxTicksLimit:6},grid:{display:false}},
               y:{ticks:{color:'#9aa0b8',font:{size:10}},grid:{color:'#e2e8f8'}}}}});
-  const nn=vals.filter(v=>v!=null);
-  const st=document.getElementById('fiveYearStat');
-  if(!nn.length){st.textContent='このコースの履歴がありません';return}
-  const first=nn[0], last=nn[nn.length-1];
-  const startYm=labels[vals.findIndex(v=>v!=null)];
-  const name=curCourse==='ALL'?'全10コース合計':
-    (DATA.udemyCourses.find(c=>c.id===curCourse)||{}).short||curCourse;
-  st.textContent=name+'：'+startYm+' の '+fmtInt(first)+'人 → '+labels[labels.length-1]+' の '+fmtInt(last)+
-    '人（+'+fmtInt(last-first)+'人／'+nn.length+'ヶ月）';
 }
 
 /* ===== 点呼テンプレ ===== */
@@ -810,7 +856,7 @@ function copyTemplate(){
 
 体重:
 睡眠:
-ご機嫌度:    /5
+ご機嫌度:    /10
 運動:
 会食:
 今日の一言:
