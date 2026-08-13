@@ -54,6 +54,10 @@
   .found{margin-top:8px;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between}
   .found span{font-size:12px;font-weight:700;color:var(--soft)}
   .found b{font-size:15px;font-weight:800;color:var(--purple)}
+  .reload{width:100%;margin-top:8px;padding:9px 12px;border-radius:12px;border:1.5px solid var(--border);
+    background:#fff;color:var(--soft);font-size:11.5px;font-weight:700;font-family:inherit;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .reload.busy{opacity:.5}
   .tenko-btn{width:100%;margin-top:10px;padding:14px;background:linear-gradient(135deg,#4a7eff,#9b59ff);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 4px 16px rgba(74,126,255,.35)}
   /* insight / next */
   .insight{background:#fff;border-radius:var(--r);padding:14px;margin-top:12px;box-shadow:var(--shadow);border-left:5px solid var(--blue)}
@@ -198,6 +202,7 @@
     <button class="room rm-spirit" onclick="go('spirit')"><span class="r-i">🧘</span><span class="r-n">精神</span><span class="r-s" id="s-spirit">—</span><span class="r-d" id="d-spirit"></span></button>
   </div>
   <div class="found"><span>最新の記録日</span><b id="latestDate">—</b></div>
+  <button class="reload" id="reloadBtn" onclick="loadData(true)">↻ 最新に更新<span id="loadedAt"></span></button>
 
   <!-- 気づき（data.jsonから機械算出） -->
   <div class="insight">
@@ -559,21 +564,61 @@ function diningList(){
     .map(r=>({date:r.date,memo:r.dining,cat:catOf(r.dining)}));
 }
 
-/* ===== init ===== */
+/* ===== init / データの読み直し =====
+   ホーム画面から開くアプリ（standalone）は、閉じてもページが生きたまま残る。
+   起動時に1回読むだけだと、開き直しても最初に読んだ古い数字が出たままになるので、
+   前面に戻ってきたとき・タブに戻ったときに、その場でdata.jsonを取り直す。
+   HTTPキャッシュ避けは fetch の no-store と URL のタイムスタンプの両方でかけている。 */
+var RELOAD_MIN_MS = 30000;      // 前面に戻るたびの取り直しは、この間隔より短ければ省く
+var RELOAD_EVERY_MS = 300000;   // 開きっぱなしのときも5分ごとに見に行く
+let lastLoadAt=0, loading=false;
+
+async function loadData(force){
+  if(loading) return;
+  const now=Date.now();
+  if(!force && DATA && now-lastLoadAt < RELOAD_MIN_MS) return;
+  loading=true;
+  const btn=document.getElementById('reloadBtn');
+  if(btn) btn.classList.add('busy');
+  try{
+    const res=await fetch('data.json?v='+now,{cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    DATA=await res.json();
+    lastLoadAt=Date.now();
+    document.getElementById('loadErr').innerHTML='';
+    renderAll();
+    if(document.getElementById('pg-graph').classList.contains('on')) draw();
+    showLoadedAt('');
+  }catch(e){
+    if(!DATA){       // 一度も読めていないときだけ、画面いっぱいのエラーを出す
+      document.getElementById('loadErr').innerHTML=
+        '<div class="err">データ（data.json）を読み込めませんでした。<br>'+esc(e.message||e)+'</div>';
+      document.getElementById('loadState').textContent='❌ 読み込み失敗: '+String(e.message||e);
+    }else{           // すでに表示できているときは、画面を壊さず小さく知らせる
+      showLoadedAt('・再読込できませんでした');
+    }
+  }finally{
+    loading=false;
+    if(btn) btn.classList.remove('busy');
+  }
+}
+function showLoadedAt(suffix){
+  const el=document.getElementById('loadedAt');
+  if(!el) return;
+  const d=new Date(lastLoadAt||Date.now());
+  el.textContent=' '+pad(d.getHours())+':'+pad(d.getMinutes())+'に読み込み'+
+    (DATA&&DATA.generatedAt? '（台帳の更新 '+String(DATA.generatedAt).slice(5,16).replace('T',' ')+'）' : '')+
+    (suffix||'');
+}
 async function init(){
   const d=new Date();
   document.getElementById('dateStr').textContent=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日（'+DOWS[d.getDay()]+'）';
-  try{
-    const res=await fetch('data.json?v='+Date.now(),{cache:'no-store'});
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    DATA=await res.json();
-  }catch(e){
-    document.getElementById('loadErr').innerHTML=
-      '<div class="err">データ（data.json）を読み込めませんでした。<br>'+String(e.message||e)+'</div>';
-    document.getElementById('loadState').textContent='❌ 読み込み失敗: '+String(e.message||e);
-    return;
-  }
-  renderAll();
+  await loadData(true);
+  // アプリを前面に戻したとき／別タブから戻ったとき／進む戻るで復帰したときに取り直す
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) loadData(); });
+  window.addEventListener('focus',function(){ loadData(); });
+  window.addEventListener('pageshow',function(e){ if(e.persisted) loadData(true); });
+  setInterval(function(){ if(!document.hidden) loadData(); }, RELOAD_EVERY_MS);
 }
 
 function renderAll(){
