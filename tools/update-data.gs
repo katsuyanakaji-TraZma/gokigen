@@ -2,7 +2,8 @@
  * GOKIGEN OS — data.json 自動生成スクリプト（Google Apps Script）
  *
  * やること：
- *   1. Googleドライブの「GOKIGEN台帳」「Udemy台帳」フォルダの全ファイルを読む
+ *   1. Googleドライブの「GOKIGEN台帳」「Udemy台帳」「リミットレス台帳」「経済台帳」の全ファイルと、
+ *      GOKIGEN台帳フォルダの中の「未来ビジョン台帳」（Googleドキュメント）を読む
  *   2. 全期間を1つに統合する（日付が重複したら「新しいファイル」を優先）
  *   3. GitHub の katsuyanakaji-TraZma/gokigen に data.json を書き込む
  *   4. Vercel が自動でデプロイ → アプリが最新になる
@@ -22,6 +23,13 @@ var CONFIG = {
   udemyXlsxId:     '1T7SE-LrYr4gtTxvyGkBDgNZ_4ruTnvJv', // 移植元。移植後は「_アーカイブ」に改名して以後さわらない
   udemyBaseName:    'Udemy台帳_base',
   udemyArchiveName: 'Udemyグラフ vol2_アーカイブ.xlsx',
+  // v1.2で追加：リミットレス台帳（知識・精神）と経済台帳、未来ビジョン台帳
+  limitlessFolderId: '1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg',
+  limitlessBaseName: 'リミットレス台帳_base_v2',
+  limitlessKeepDays: 180,          // data.jsonに残す日数（肥大化させない）
+  ecoFolderId:  '1koH3sVzVu2sqyJvSv5DDXh1MBwShKmAL',
+  ecoBaseName:  '経済台帳_base',
+  futureDocPrefix: '未来ビジョン台帳',  // GOKIGEN台帳フォルダの中のGoogleドキュメント
   updateHours:  [8, 12, 18, 22],   // 自動実行する時刻
   snapshotLimit: 30,               // data.jsonに残す「記録日ごとのスナップショット」の日数
   repoOwner: 'katsuyanakaji-TraZma',
@@ -89,7 +97,8 @@ function run_(force) {
 function changedFilesSince_(since) {
   var cutoff = since.getTime() - 2 * 60 * 1000;   // 取りこぼし防止に2分の余裕を見る
   var out = [];
-  [CONFIG.gokigenFolderId, CONFIG.udemyFolderId].forEach(function (id) {
+  [CONFIG.gokigenFolderId, CONFIG.udemyFolderId,
+   CONFIG.limitlessFolderId, CONFIG.ecoFolderId].forEach(function (id) {
     var it = DriveApp.getFolderById(id).getFiles();
     while (it.hasNext()) {
       var f = it.next();
@@ -200,6 +209,18 @@ function dryRun() {
   d.qualityDropped.forEach(function (x) {
     Logger.log('   ' + x.date + ' ' + x.field + ' = ' + x.value + ' (許容 ' + x.range + ')');
   });
+  // v1.2の3つ
+  Logger.log('未来ビジョン: ' + (d.future
+    ? d.future.docTitle + '（はしご' + d.future.ladder.length + '段／部屋' +
+      Object.keys(d.future.rooms).length + '／軸' + d.future.axes.length + '）'
+    : '読めていません'));
+  Logger.log('リミットレス: ' + d.limitless.rows.length + '行' +
+    (d.limitless.rows.length ? '（' + d.limitless.rows[0].date + '〜' +
+      d.limitless.rows[d.limitless.rows.length - 1].date + '）' : '') +
+    ' 読込元: ' + d.limitless.used.map(function (u) { return u.name + '(' + u.rows + ')'; }).join(' / '));
+  Logger.log('経済台帳: ' + d.eco.rows.length + '件' + (d.eco.asOf ? '（' + d.eco.asOf + '時点）' : '（データ待ち）'));
+  Logger.log('📂リンク: ' + Object.keys(d.links).map(function (k) {
+    return k + (d.links[k].url ? '✓' : '✗'); }).join(' '));
   return d;
 }
 
@@ -222,14 +243,30 @@ function buildData_(previous) {
 
   var base = findUdemyBase_();
 
+  // v1.2：6部屋コックピットの材料。1つ失敗しても他を巻き込まないよう、それぞれtryで囲む
+  var future = null, limitless = { rows: [], used: [] }, eco = { rows: [], used: [] };
+  try { future = readFuture_(); }
+  catch (e) { Logger.log('⚠️ 未来ビジョン台帳を読めませんでした（前回の内容を維持します）: ' + e); }
+  if (!future) future = (previous && previous.future) || null;
+  try { limitless = readLimitless_(); }
+  catch (e) { Logger.log('⚠️ リミットレス台帳を読めませんでした（前回の内容を維持します）: ' + e);
+              limitless = (previous && previous.limitless) || { rows: [], used: [] }; }
+  try { eco = readEco_(); }
+  catch (e) { Logger.log('⚠️ 経済台帳を読めませんでした（前回の内容を維持します）: ' + e);
+              eco = (previous && previous.eco) || { rows: [], used: [] }; }
+
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.1',
+    version: '1.2',
     source: {
       gokigenFolderId: CONFIG.gokigenFolderId,
       udemyFolderId: CONFIG.udemyFolderId,
+      limitlessFolderId: CONFIG.limitlessFolderId,
+      ecoFolderId: CONFIG.ecoFolderId,
       rule: '全ファイルを読み、重複したら新しいファイルを優先',
-      udemyFiles: ledger.used
+      udemyFiles: ledger.used,
+      limitlessFiles: limitless.used,
+      ecoFiles: eco.used
     },
     updateHours: CONFIG.updateHours,
     udemyBaseUrl: base ? base.getUrl() : ((previous && previous.udemyBaseUrl) || null),
@@ -237,7 +274,32 @@ function buildData_(previous) {
     health: healthArr,
     udemyCourses: u.courses,
     udemy: u.snapshots,
-    udemyMonthly: u.monthly
+    udemyMonthly: u.monthly,
+    future: future,
+    limitless: limitless,
+    eco: eco,
+    links: buildLinks_(base, limitless, eco, future, previous)
+  };
+}
+
+/**
+ * 6部屋の「📂詳細データを開く」の行き先。
+ * 台帳が見つからなかった部屋は url が null になり、アプリ側は「準備中」と出す。
+ */
+function buildLinks_(udemyBase, limitless, eco, future, previous) {
+  var gok = 'https://drive.google.com/drive/folders/' + CONFIG.gokigenFolderId;
+  var prev = (previous && previous.links) || {};
+  var keep = function (key, v) { return v || (prev[key] && prev[key].url) || null; };
+  return {
+    health: { label: 'GOKIGEN台帳フォルダ', url: gok },
+    priv:   { label: 'GOKIGEN台帳フォルダ', url: gok },
+    know:   { label: CONFIG.limitlessBaseName, url: keep('know', limitless && limitless.baseUrl) },
+    spirit: { label: CONFIG.limitlessBaseName, url: keep('spirit', limitless && limitless.baseUrl) },
+    work:   { label: CONFIG.udemyBaseName,
+              url: udemyBase ? udemyBase.getUrl() : ((previous && previous.udemyBaseUrl) || null) },
+    eco:    { label: CONFIG.ecoBaseName, url: keep('eco', eco && eco.baseUrl) },
+    future: { label: (future && future.docTitle) || CONFIG.futureDocPrefix,
+              url: keep('future', future && future.docUrl) }
   };
 }
 
@@ -662,6 +724,235 @@ function fetchCurrentJson_() {
     if (res.getResponseCode() !== 200) return null;
     return JSON.parse(res.getContentText());
   } catch (e) { return null; }
+}
+
+// ===== v1.2: 未来ビジョン台帳（Googleドキュメント） =====
+/**
+ * GOKIGEN台帳フォルダの中の「未来ビジョン台帳_YYYY-MM-DD」を読み、
+ *   rooms  … 6部屋それぞれの87歳の完成図（見出し＋箇条書き）
+ *   ladder … 87→77→72→67→62歳のサブゴール
+ *   axes   … 87歳が採点する5つの軸
+ * にほぐす。半年ごとに本人が「重ね塗り」する台帳なので、
+ * 新しい版が置かれたら自動でそちらを読む（ファイル名の日付が新しい方）。
+ * 見出しの形が変わって1件も拾えなかったときは null を返し、呼び出し側が前回の内容を保つ。
+ */
+function findFutureDoc_() {
+  var it = DriveApp.getFolderById(CONFIG.gokigenFolderId).getFiles();
+  var best = null;
+  while (it.hasNext()) {
+    var f = it.next();
+    if (f.getMimeType() !== MimeType.GOOGLE_DOCS) continue;
+    if (f.getName().indexOf(CONFIG.futureDocPrefix) !== 0) continue;
+    if (!best || f.getName() > best.getName()) best = f;    // 名前の日付が新しい方
+  }
+  return best;
+}
+function futureSection_(t) {
+  if (/完成図/.test(t)) return 'rooms';
+  if (/サブゴール|はしご|バックキャスト/.test(t)) return 'ladder';
+  if (/週報|フィードバック/.test(t)) return 'weekly';
+  return null;
+}
+function futureRoom_(t) {
+  if (/健康/.test(t)) return 'health';
+  if (/精神|心/.test(t)) return 'spirit';
+  if (/知識|教養/.test(t)) return 'know';
+  if (/仕事/.test(t)) return 'work';
+  if (/家族|趣味/.test(t)) return 'priv';
+  if (/経済/.test(t)) return 'eco';
+  return null;
+}
+function readFuture_() {
+  var doc = findFutureDoc_();
+  if (!doc) { Logger.log('未来ビジョン台帳が見つかりません'); return null; }
+  var body = DocumentApp.openById(doc.getId()).getBody();
+  var out = {
+    docTitle: doc.getName(), docId: doc.getId(), docUrl: doc.getUrl(),
+    asOf: (doc.getName().match(/(\d{4}-\d{2}-\d{2})/) || [null, null])[1],
+    ladder: [], axes: [], rooms: {}, flag: null, principle: null, tone: null
+  };
+  var H = DocumentApp.ParagraphHeading;
+  var section = null, room = null;
+  var n = body.getNumChildren();
+  for (var i = 0; i < n; i++) {
+    var el = body.getChild(i), type = el.getType();
+    var isPara = (type === DocumentApp.ElementType.PARAGRAPH);
+    var isItem = (type === DocumentApp.ElementType.LIST_ITEM);
+    if (!isPara && !isItem) continue;
+    var text = String((isPara ? el.asParagraph() : el.asListItem()).getText() || '').trim();
+    if (!text) continue;
+    var heading = (isPara ? el.asParagraph() : el.asListItem()).getHeading();
+
+    if (isPara && (heading === H.TITLE || heading === H.HEADING1 || heading === H.HEADING2)) {
+      section = futureSection_(text); room = null; continue;
+    }
+    if (isPara && (heading === H.HEADING3 || heading === H.HEADING4)) {
+      room = (section === 'rooms') ? futureRoom_(text) : null;
+      if (room) out.rooms[room] = { heading: text, bullets: [] };
+      continue;
+    }
+    if (section === 'rooms' && room) {
+      if (out.rooms[room].bullets.length < 8) out.rooms[room].bullets.push(text);
+      continue;
+    }
+    if (section === 'ladder') {
+      var m = text.match(/^(\d{2})歳\s*[(（](\d{4})[)）]\s*[:：]\s*(.+)$/);
+      if (m) { out.ladder.push({ age: parseInt(m[1], 10), year: parseInt(m[2], 10), text: m[3].trim() }); continue; }
+      var f = text.match(/^(\d{2})歳[^:：]*[(（]([\d\/\-]+)[)）]\s*[:：]\s*(.+)$/);   // 61歳最後の日(2030/4/29)
+      if (f) { out.flag = { date: f[2].replace(/\//g, '-'), text: f[3].trim() }; continue; }
+      var p = text.match(/^原則\s*[:：]\s*(.+)$/);
+      if (p) { out.principle = p[1].trim(); continue; }
+    }
+    if (section === 'weekly') {
+      if (/採点軸/.test(text)) {
+        out.axes = text.split(/[①②③④⑤⑥]/).slice(1)
+          .map(function (s) { return s.trim(); }).filter(function (s) { return s; });
+        continue;
+      }
+      var t2 = text.match(/^口調\s*[:：]\s*(.+)$/);
+      if (t2) { out.tone = t2[1].trim(); continue; }
+    }
+  }
+  out.ladder.sort(function (a, b) { return b.age - a.age; });        // 87→62 の並び
+  if (!out.ladder.length && !Object.keys(out.rooms).length) {
+    Logger.log('⚠️ 未来ビジョン台帳の見出しから何も拾えませんでした: ' + doc.getName());
+    return null;
+  }
+  Logger.log('未来ビジョン台帳: ' + doc.getName() + '（はしご' + out.ladder.length +
+             '段／部屋' + Object.keys(out.rooms).length + '／軸' + out.axes.length + '）');
+  return out;
+}
+
+// ===== v1.2: base + デルタ形式の台帳を読む共通部品 =====
+/** フォルダの中から base とデルタを見つけ、弱い順（base → 古いデルタ → 新しいデルタ）に返す */
+function ledgerFiles_(folderId, baseName, deltaRe) {
+  var out = [];
+  var it = DriveApp.getFolderById(folderId).getFiles();
+  while (it.hasNext()) {
+    var f = it.next();
+    if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue;
+    var n = f.getName(), rank = null;
+    if (n === baseName) rank = 0;
+    else if (deltaRe.test(n)) rank = 1;
+    if (rank == null) continue;
+    out.push({ file: f, name: n, rank: rank, t: f.getLastUpdated().getTime() });
+  }
+  out.sort(function (a, b) { return (a.rank - b.rank) || (a.t - b.t); });
+  return out;
+}
+/** 見出し行を探し、項目名（別名の配列）→ 列番号 の対応を作る。先頭一致で拾う */
+function findColumns_(values, spec, requiredKey) {
+  for (var i = 0; i < Math.min(values.length, 10); i++) {
+    var norm = values[i].map(normHead_);
+    var map = {};
+    Object.keys(spec).forEach(function (key) {
+      spec[key].forEach(function (label) {
+        if (map[key] != null) return;
+        var want = normHead_(label);
+        for (var c = 0; c < norm.length; c++) {
+          if (norm[c] && norm[c].indexOf(want) === 0) { map[key] = c; return; }
+        }
+      });
+    });
+    if (map[requiredKey] != null) return { row: i, map: map };
+  }
+  return null;
+}
+
+// ===== v1.2: リミットレス台帳（知識・精神の部屋） =====
+var LIMITLESS_KINDS = ['教え', 'トライ', '初めて', '学び', '人', 'もがき'];
+var LIMITLESS_COLS = {
+  date: ['日付', '記録日'], kind: ['種別', '分類'], text: ['内容'],
+  who: ['関連'], src: ['出所']
+};
+/** 種別セルは「🔥トライ,🌱初めて」のように複数入ることがある。絵文字ではなく言葉で判定する */
+function limitlessKinds_(v) {
+  var out = [];
+  String(v == null ? '' : v).split(/[,、\/／]/).forEach(function (tok) {
+    LIMITLESS_KINDS.forEach(function (k) {
+      if (tok.indexOf(k) >= 0 && out.indexOf(k) < 0) out.push(k);
+    });
+  });
+  return out;
+}
+function readLimitless_() {
+  var srcs = ledgerFiles_(CONFIG.limitlessFolderId, CONFIG.limitlessBaseName,
+                          /^リミットレス台帳ログ_\d{4}-\d{2}-\d{2}/);
+  var byKey = {}, used = [], baseUrl = null;
+  srcs.forEach(function (s) {
+    if (s.rank === 0) baseUrl = s.file.getUrl();
+    var values;
+    try { values = SpreadsheetApp.openById(s.file.getId()).getSheets()[0].getDataRange().getValues(); }
+    catch (e) { Logger.log('読めませんでした: ' + s.name + ' / ' + e); return; }
+    var hd = findColumns_(values, LIMITLESS_COLS, 'date');
+    if (!hd) { Logger.log('見出しが見つかりません: ' + s.name); return; }
+    var cnt = 0;
+    for (var i = hd.row + 1; i < values.length; i++) {
+      var row = values[i];
+      var date = toDate_(row[hd.map.date]);
+      var text = hd.map.text != null ? str_(row[hd.map.text]) : null;
+      if (!date || !text) continue;
+      // 同じ日付×内容はデルタ（後から読んだ方）が勝つ
+      byKey[date + '|' + text] = {
+        date: date,
+        kinds: hd.map.kind != null ? limitlessKinds_(row[hd.map.kind]) : [],
+        text: text,
+        who: hd.map.who != null ? str_(row[hd.map.who]) : null,
+        src: (hd.map.src != null ? str_(row[hd.map.src]) : null) || s.name
+      };
+      cnt++;
+    }
+    used.push({ name: s.name, rows: cnt });
+  });
+  var rows = Object.keys(byKey).sort().map(function (k) { return byKey[k]; });
+  var cutoff = Utilities.formatDate(
+    new Date(new Date().getTime() - CONFIG.limitlessKeepDays * 86400000), 'Asia/Tokyo', 'yyyy-MM-dd');
+  rows = rows.filter(function (r) { return r.date >= cutoff; });
+  Logger.log('リミットレス台帳: ' + rows.length + '行（' + CONFIG.limitlessKeepDays + '日以内）');
+  return { baseName: CONFIG.limitlessBaseName, baseUrl: baseUrl, used: used, rows: rows };
+}
+
+// ===== v1.2: 経済台帳（経済の部屋） =====
+var ECO_COLS = {
+  date: ['記録日', '日付'], name: ['口座', '資産名', '口座/資産名'], cat: ['区分'],
+  amount: ['評価額', '金額'], currency: ['通貨'], src: ['出所']
+};
+function readEco_() {
+  var srcs = ledgerFiles_(CONFIG.ecoFolderId, CONFIG.ecoBaseName, /^経済台帳ログ_\d{4}-\d{2}-\d{2}/);
+  var byKey = {}, used = [], baseUrl = null;
+  srcs.forEach(function (s) {
+    if (s.rank === 0) baseUrl = s.file.getUrl();
+    var values;
+    try { values = SpreadsheetApp.openById(s.file.getId()).getSheets()[0].getDataRange().getValues(); }
+    catch (e) { Logger.log('読めませんでした: ' + s.name + ' / ' + e); return; }
+    var hd = findColumns_(values, ECO_COLS, 'date');
+    if (!hd) { used.push({ name: s.name, rows: 0 }); return; }   // 雛形だけの状態
+    var cnt = 0;
+    for (var i = hd.row + 1; i < values.length; i++) {
+      var row = values[i];
+      var date = toDate_(row[hd.map.date]);
+      var name = hd.map.name != null ? str_(row[hd.map.name]) : null;
+      if (!date || !name) continue;
+      // 同じ記録日×口座はデルタが勝つ
+      byKey[date + '|' + name] = {
+        date: date, name: name,
+        cat: hd.map.cat != null ? str_(row[hd.map.cat]) : null,
+        amount: hd.map.amount != null ? money_(row[hd.map.amount]) : null,
+        currency: (hd.map.currency != null ? str_(row[hd.map.currency]) : null) || 'JPY',
+        src: (hd.map.src != null ? str_(row[hd.map.src]) : null) || s.name
+      };
+      cnt++;
+    }
+    used.push({ name: s.name, rows: cnt });
+  });
+  // 表示は「いちばん新しい記録日の一式」だけでよい（資産は積み上げではなく残高のため）
+  var all = Object.keys(byKey).sort().map(function (k) { return byKey[k]; });
+  var latest = all.length ? all[all.length - 1].date : null;
+  var rows = latest ? all.filter(function (r) { return r.date === latest; }) : [];
+  Logger.log('経済台帳: ' + rows.length + '件' + (latest ? '（' + latest + '時点）' : '（データ待ち）'));
+  return { baseName: CONFIG.ecoBaseName, baseUrl: baseUrl,
+           folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.ecoFolderId,
+           asOf: latest, used: used, rows: rows };
 }
 
 // ===== 変換ヘルパー =====

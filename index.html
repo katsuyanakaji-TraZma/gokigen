@@ -130,6 +130,28 @@
     background:rgba(255,107,53,.07);color:var(--orange);font-size:13px;font-weight:800;text-decoration:none}
   .dlink span.arw{font-size:15px}
   .dlink.off{opacity:.5;pointer-events:none;border-style:dashed}
+  /* 未来欄（87→77→72→67→62のはしご＋87歳の声） */
+  .fut{background:linear-gradient(160deg,#fff, #faf7ff);border:1.5px solid #e8dcff}
+  .lad{display:flex;gap:5px;margin-bottom:9px}
+  .lad button{flex:1;padding:7px 2px;border-radius:9px;border:1.5px solid var(--border);background:#fff;
+    color:var(--muted);font-size:11px;font-weight:800;font-family:inherit;cursor:pointer;line-height:1.25}
+  .lad button b{display:block;font-size:13px}
+  .lad button.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .ladtxt{font-size:12.5px;line-height:1.8;color:var(--text);min-height:44px}
+  .ladtxt .y{color:var(--purple);font-weight:800}
+  .voice{margin-top:10px;padding:11px 12px;border-radius:12px;display:flex;gap:9px;align-items:flex-start}
+  .voice.yell{background:rgba(34,199,122,.09);border:1.5px solid rgba(34,199,122,.32)}
+  .voice.alarm{background:rgba(255,107,53,.09);border:1.5px solid rgba(255,107,53,.32)}
+  .voice .vi{font-size:19px;flex:none;line-height:1.3}
+  .voice .vt{font-size:12.5px;line-height:1.75;font-weight:700;color:var(--text)}
+  .voice .vx{font-size:10px;color:var(--muted);font-weight:700;margin-top:4px}
+  /* 週間カウント（知識・精神） */
+  .wk{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+  .wk div{background:var(--bg);border:1.5px solid var(--border);border-radius:11px;padding:9px 6px;text-align:center}
+  .wk .wl{font-size:10.5px;color:var(--soft);font-weight:700}
+  .wk .wv{font-size:19px;font-weight:800;margin-top:2px}
+  .waiting{background:rgba(155,89,255,.07);border:1.5px dashed rgba(155,89,255,.45);border-radius:12px;
+    padding:12px;font-size:12.5px;line-height:1.8;color:var(--soft)}
   /* kaishoku */
   .kg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
   .kb{border-radius:12px;padding:12px}
@@ -264,7 +286,9 @@
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--green)"></span>直近の記録</div>
     <div id="healthRecent"></div>
+    <div id="dl-health"></div>
   </div>
+  <div class="card fut" id="fut-health"></div>
   <div class="note">数値はすべてGoogleドライブの「GOKIGEN台帳」が出どころです。点呼でClaudeにスクショを送ると、次の更新（8時・12時・18時・22時）でここへ反映されます。</div>
 </div>
 
@@ -314,6 +338,7 @@
       <div class="pb"><div class="pf" id="uB" style="background:linear-gradient(90deg,#4a7eff,#9b59ff)"></div></div></div>
     <div class="pace" id="pace"></div>
   </div>
+  <div class="card fut" id="fut-work"></div>
 </div>
 
 <!-- ECO -->
@@ -331,6 +356,12 @@
       <table class="ut" id="ecoTable"></table>
     </div>
   </div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--purple)"></span>経済台帳（資産の全体像）</div>
+    <div id="ecoLedger"></div>
+    <div id="dl-eco"></div>
+  </div>
+  <div class="card fut" id="fut-eco"></div>
   <div class="note">会社の現金4,000〜5,000万円。米国国債4.5%なら年約200万円。</div>
 </div>
 
@@ -346,9 +377,16 @@
         <div class="mi-row"><span class="mv" id="v-span">—</span><span class="mu">日目</span></div></div>
     </div>
   </div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--green)"></span>今週のリミットレス（直近7日）</div>
+    <div class="wk" id="knowWeek"></div>
+    <div class="pace" id="knowWeekNote"></div>
+  </div>
   <div class="card"><div class="ct"><span class="dot" style="background:var(--purple)"></span>直近の学び・出来事（台帳より）</div>
     <div id="knowLog"></div>
+    <div id="dl-know"></div>
   </div>
+  <div class="card fut" id="fut-know"></div>
 </div>
 
 <!-- SPIRIT -->
@@ -360,11 +398,21 @@
       <div class="mb"><div class="ml">😄 ご機嫌度</div>
         <div class="mi-row"><span class="mv" id="v-mood">—</span><span class="mu" id="u-mood"></span></div>
         <div class="md" id="d-mood"></div></div>
+      <div class="mb"><div class="ml">🗣️ ギバー度（直近7日）</div>
+        <div class="mi-row"><span class="mv" id="v-giver">—</span><span class="mu">回 手渡した</span></div>
+        <div class="md" id="d-giver"></div></div>
+    </div>
+    <div class="mg" style="margin-top:10px">
       <div class="mb"><div class="ml">💍 睡眠スコア</div>
         <div class="mi-row"><span class="mv" id="v-sleep2">—</span><span class="mu">点</span></div>
         <div class="md" id="d-sleep2"></div></div>
+      <div class="mb"><div class="ml">🌱 今週の初めて・トライ</div>
+        <div class="mi-row"><span class="mv" id="v-doki">—</span><span class="mu">件</span></div>
+        <div class="md" id="d-doki"></div></div>
     </div>
+    <div id="dl-spirit"></div>
   </div>
+  <div class="card fut" id="fut-spirit"></div>
   <div class="card"><div class="ct"><span class="dot" style="background:var(--green)"></span>今日の一言（台帳より）</div>
     <div class="ib" id="spiritNote" style="font-size:13px;line-height:1.85"></div>
   </div>
@@ -377,9 +425,13 @@
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--orange)"></span>会食マネジメント（今月）</div>
     <div class="kg" id="kgrid"></div>
+    <div class="pace" id="nextFamily"></div>
     <div class="note">台帳の「会食」欄から自動集計しています。</div>
   </div>
-  <div class="card"><div class="ct"><span class="dot" style="background:var(--pink)"></span>会食の記録（全期間）</div><div class="klog" id="klog"></div></div>
+  <div class="card"><div class="ct"><span class="dot" style="background:var(--pink)"></span>会食の記録（全期間）</div><div class="klog" id="klog"></div>
+    <div id="dl-priv"></div>
+  </div>
+  <div class="card fut" id="fut-priv"></div>
 </div>
 
 <!-- GRAPH -->
@@ -525,6 +577,7 @@ async function init(){
 function renderAll(){
   renderHouse(); renderInsight(); renderHealth(); renderWork();
   renderEco(); renderKnow(); renderSpirit(); renderPriv(); renderSettings();
+  renderCockpit();
 }
 
 /* ===== house ===== */
@@ -857,7 +910,7 @@ function anaLaunch(D){
       fmtInt(aMedian(pp))+'人＝'+Math.round(pv/aMedian(pp)*100)+'%');
   }
   return {key:'launch',name:'新作の立ち上がり',score:18+Math.min(40,Math.abs(1-ratio)*55),
-    lines:[line],detail:detail};
+    id:newest.id,ratio:ratio,months:k+1,lines:[line],detail:detail};
 }
 
 /* ④ 前回からの変化点。いちばん動いたコースと増分を出し、
@@ -946,6 +999,222 @@ function renderAnalysis(){
     link.innerHTML='📂 詳細データ（準備中）<span class="arw">→</span>'}
 }
 
+/* ===== 6部屋コックピット ここから =====
+   6つの部屋に共通で出す「未来のはしご」と「87歳の声」を作る。
+   ここから「ここまで」までは DOM に触らない（tools/test/test-cockpit.js が切り出して検証する）。
+   87歳の声は、その部屋の直近データを未来ビジョン台帳の5軸と突き合わせ、
+   エール（うまくいっている）かアラーム（手が止まっている）を1行返す。 */
+
+var CK_ROOMS = {
+  health:{label:'健康',icon:'💪',axis:'太もも・脚力への投資',      keys:/脚|ウォーク|歩|筋|健康|体重|内臓|ジム|ゴルフ/},
+  know:  {label:'知識',icon:'📚',axis:'生き生き・わくわく・どきどき',keys:/学|AI|歴史|知識|教養|投資/},
+  spirit:{label:'精神',icon:'🧘',axis:'生き生き・わくわく・どきどき',keys:/心|ギバー|わくわく|どきどき|生き生き|百クラブ|仲間|出会い|優し/},
+  work:  {label:'仕事',icon:'🚀',axis:'100作品の発電所建設',       keys:/Udemy|Kindle|作品|発電所|コンテンツ|ゆるりんちょ|AI社員|収入/},
+  priv:  {label:'家族',icon:'🍶',axis:'家族の楽しみの確定',        keys:/家族|旅|孫|アキ|絶景|温泉|低山|子ども|結婚|食/},
+  eco:   {label:'経済',icon:'💰',axis:'資産化工事',               keys:/資産|金融|不動産|万|収入|年金|経済|販売/}
+};
+
+function ckAsOf(D){
+  return (D.generatedAt||'').slice(0,10) ||
+         ((D.health&&D.health.length)? D.health[D.health.length-1].date : '');
+}
+/* 直近 days 日ぶんのリミットレス台帳の行 */
+function ckRows(D,days){
+  const to=ckAsOf(D), from=aYmdAdd(to,-(days-1));
+  return (((D.limitless||{}).rows)||[]).filter(r=>r.date>=from&&r.date<=to);
+}
+function ckKinds(D,days){
+  const c={};
+  ckRows(D,days).forEach(r=>(r.kinds||[]).forEach(k=>c[k]=(c[k]||0)+1));
+  return c;
+}
+/* ギバー度＝🗣️教えの件数と、その相手の組数 */
+function ckGiver(D,days){
+  const rows=ckRows(D,days).filter(r=>(r.kinds||[]).indexOf('教え')>=0);
+  const who={};
+  rows.forEach(r=>{ if(r.who) who[r.who]=1; });
+  return {count:rows.length, who:Object.keys(who)};
+}
+/* 運動の記録がある日数 */
+function ckExercise(D,days){
+  const to=ckAsOf(D), from=aYmdAdd(to,-(days-1));
+  return (D.health||[]).filter(r=>r.date>=from&&r.date<=to&&r.exercise&&!/^なし/.test(r.exercise)).length;
+}
+function ckDining(D){
+  return (D.health||[]).filter(r=>r.dining&&!/^なし/.test(r.dining))
+    .map(r=>({date:r.date,memo:r.dining,cat:catOf(r.dining)}));
+}
+/* 台帳の一言から「これから予定されている家族の楽しみ」を1つ拾う */
+function ckNextFamily(D){
+  // 「直近3日ぶんの一言」だけを見る。古い予定はもう予定ではないため、行数ではなく日付で区切る
+  const to=ckAsOf(D), from=aYmdAdd(to,-2);
+  const h=(D.health||[]).filter(r=>r.note&&r.date>=from&&r.date<=to);
+  for(let i=h.length-1;i>=0;i--){
+    const parts=String(h[i].note).split(/[。\n]/);
+    for(let j=0;j<parts.length;j++){
+      const p=parts[j].trim();
+      if(!p) continue;
+      if(/(明日|明後日|来週|来月|今週末|週末|\d+\/\d+から)/.test(p) &&
+         /(家族|アキさん|旅行|帰省|孫|子ども|温泉|絶景|低山)/.test(p))
+        return {date:h[i].date, text:p.length>44? p.slice(0,44)+'…' : p};
+    }
+  }
+  return null;
+}
+/* 未来のはしご。87歳はその部屋の完成図、それ以外はサブゴールから部屋に関係する一文を選ぶ */
+function ckLadder(D,room,age){
+  const f=D.future;
+  if(!f||!f.ladder||!f.ladder.length) return null;
+  const rung=f.ladder.filter(x=>x.age===age)[0];
+  if(!rung) return null;
+  if(age===f.ladder[0].age){
+    const r=f.rooms&&f.rooms[room];
+    if(r&&r.bullets&&r.bullets.length) return r.bullets[0];
+  }
+  const re=(CK_ROOMS[room]||{}).keys;
+  const parts=String(rung.text).split(/。/).map(s=>s.trim()).filter(Boolean);
+  const hit=re? parts.filter(s=>re.test(s))[0] : null;
+  return hit || parts[0] || rung.text;   // 当てはまる一文が無ければ、その年齢の見出しの一文
+}
+
+/* ===== 87歳の声（部屋ごと） ===== */
+function ckVoiceHealth(D){
+  const ex14=ckExercise(D,14), ex7=ckExercise(D,7);
+  const ws=(D.health||[]).filter(r=>r.weight!=null);
+  const cur=ws[ws.length-1], prev7=ws.slice(-8,-1);
+  const avg=prev7.length? prev7.reduce((a,r)=>a+r.weight,0)/prev7.length : null;
+  const gap=(cur&&avg!=null)? cur.weight-avg : null;
+  const ms=(D.health||[]).filter(r=>r.muscle!=null);
+  const dm=ms.length>=2? ms[ms.length-1].muscle-ms[ms.length-2].muscle : null;
+  if(ex14===0)
+    return {tone:'alarm',text:'この2週間、歩いた記録が1日もないねぇ。体重の数字より太ももだよ。明日の朝、3kmだけ歩こうか。動けるうちに前倒しだよ。'};
+  if(gap!=null&&gap>=1.0)
+    return {tone:'alarm',text:'体重が直近7回の平均より'+gap.toFixed(1)+'kg上、山のてっぺんだねぇ。会食が続いたんだろう、それはいいことだ。笑って戻せばいい、明日と明後日は歩こうか。'};
+  if(gap!=null&&gap>=0.5&&ex7===0)
+    return {tone:'alarm',text:'体重が直近7回の平均より'+gap.toFixed(1)+'kg上だねぇ。会食が続くのはいいことだ。ただ脚が休みすぎだよ、今週あと1回は歩いておこうね。'};
+  if(dm!=null&&dm<0&&ex7===0)
+    return {tone:'alarm',text:'筋肉量が'+signed(dm,1,'kg')+'。減るのはあっという間だよ。歩くのが一番安上がりだ、明日の朝いこう。'};
+  if(dm!=null&&dm>0)
+    return {tone:'yell',text:'筋肉量が'+signed(dm,1,'kg')+'。それでいい、体重の数字より太ももだよ。その脚が87歳のわしを支えてくれてる。'};
+  if(ex7>0)
+    return {tone:'yell',text:'この7日で'+ex7+'回も歩いたね。えらいえらい。100kmウォークは65歳までだ、いまのうちに脚を貯金しておこう。'};
+  return {tone:'alarm',text:'この1週間は歩けてないねぇ。まぁそういう週もあるさ。明日の朝、3kmだけ歩こうか。'};
+}
+function ckVoiceKnow(D){
+  const c=ckKinds(D,7);
+  const h=c['初めて']||0, t=c['トライ']||0, m=c['学び']||0, g=c['もがき']||0;
+  if(!ckRows(D,7).length)
+    return {tone:'alarm',text:'今週はリミットレス台帳が空っぽだねぇ。書かないと無かったことになる。ひと言でいいから残しておこうね。'};
+  if(h===0&&t===0)
+    return {tone:'alarm',text:'今週は「初めて」も「トライ」もゼロだねぇ。小さくていいんだよ、知らない道を歩くだけでも。どきどきを1つ足そうか。'};
+  if(m===0)
+    return {tone:'alarm',text:'トライは'+t+'件あるのに、学びの記録がないねぇ。やりっぱなしはもったいない。ひと言だけ残しておこう。'};
+  if(g>0)
+    return {tone:'yell',text:'今週は初めて'+h+'・トライ'+t+'・学び'+m+'、もがきも'+g+'件あったね。もがいた日ほど、あとで効いてくるんだよ。'};
+  return {tone:'yell',text:'今週は初めて'+h+'・トライ'+t+'・学び'+m+'件。AIと歴史は死ぬまで学べる。その調子でいいよ。'};
+}
+function ckVoiceSpirit(D){
+  const g=ckGiver(D,7), c=ckKinds(D,7);
+  const doki=(c['初めて']||0)+(c['トライ']||0);
+  const ms=(D.health||[]).filter(r=>r.mood!=null);
+  const mood=ms.length? ms[ms.length-1] : null;
+  if(g.count===0)
+    return {tone:'alarm',text:'今週は誰にも教えていないねぇ。ギバーの電池はね、人に配ったときに増えるんだよ。ひとりでいい、話を聞いてあげよう。'};
+  if(mood&&mood.mood<=5)
+    return {tone:'alarm',text:'ご機嫌度が'+mood.mood+'/10か。無理に上げなくていい。風呂と散歩を先に済ませて、あとは寝てしまいなさい。'};
+  if(doki===0)
+    return {tone:'alarm',text:'今週は「わくわく」の種が見当たらないねぇ。百クラブの続きでいい、次に登る低山を1つ決めておこうか。'};
+  return {tone:'yell',text:'今週は'+g.count+'回、'+g.who.length+'組の相手に手渡したね。おおらかでいい。それが巡り巡って、87歳のわしの周りにいる人たちだよ。'};
+}
+function ckVoiceWork(D){
+  const s0=aSnap(D,0), s1=aSnap(D,-1);
+  const n=(D.udemyCourses||[]).length;
+  const lau=(typeof anaLaunch==='function')? anaLaunch(D) : null;
+  if(lau&&lau.ratio!=null&&lau.ratio<0.5)
+    return {tone:'alarm',text:'新作は同じ月齢の過去作の'+Math.round(lau.ratio*100)+'%か。焦らなくていい、でも告知だけは前倒しだよ。発電所は建てても、知られなければ回らないからね。'};
+  if(s0&&s1){
+    const d=(s0.rows||[]).reduce((a,r)=>{const p=aRow(s1,r.id);
+      return a+((p&&r.cumEnroll!=null&&p.cumEnroll!=null)? r.cumEnroll-p.cumEnroll : 0)},0);
+    if(d>0) return {tone:'yell',text:'前回から'+signedInt(d)+'人。'+n+'本の発電所が、寝ている間も回ってるってことだよ。1本ずつでいい、2030年4月29日の旗は毎日のこれが積み上げる。'};
+    return {tone:'alarm',text:'前回から登録が増えていないねぇ。作る手を止める必要はないが、今日は1本、既にある講座の手入れをしようか。'};
+  }
+  return {tone:'yell',text:'いま'+n+'本。まずは書いた分だけが資産になるよ。'};
+}
+function ckVoicePriv(D){
+  const list=ckDining(D);
+  const ym=ckAsOf(D).slice(0,7);
+  const fam=list.filter(e=>e.date.slice(0,7)===ym&&e.cat==='family').length;
+  const nf=ckNextFamily(D);
+  if(fam===0&&!nf)
+    return {tone:'alarm',text:'今月はまだ家族と食卓を囲んでないねぇ。予定はね、決めて初めて楽しみになるんだよ。日にちを1つ入れてしまおう。'};
+  if(nf)
+    return {tone:'yell',text:'「'+nf.text+'」が決まってるね。それでいい。孫が大きくなる前の時間は、あとから買い戻せないからね。'};
+  return {tone:'yell',text:'今月は家族と'+fam+'回。回数より、決まっていることが大事だよ。次の1つも決めておこうか。'};
+}
+function ckVoiceEco(D){
+  const rows=((D.eco||{}).rows)||[];
+  if(!rows.length)
+    return {tone:'alarm',text:'経済台帳の入口ができたね。まずは口座を1つ、名前と金額を書き込むところからでいい。数えられないものは、増やせないんだよ。'};
+  const total=rows.reduce((a,r)=>a+(r.amount||0),0);
+  return {tone:'yell',text:'資産は'+fmtInt(Math.round(total))+'。年1,000万の資産型まで、あわてず一段ずつでいい。一番裏切らないのは金融資産だよ。'};
+}
+function ckVoice(D,room){
+  const f={health:ckVoiceHealth,know:ckVoiceKnow,spirit:ckVoiceSpirit,
+           work:ckVoiceWork,priv:ckVoicePriv,eco:ckVoiceEco}[room];
+  if(!f) return null;
+  const v=f(D);
+  v.axis=(CK_ROOMS[room]||{}).axis||'';
+  v.room=room;
+  return v;
+}
+/* ===== 6部屋コックピット ここまで ===== */
+
+let curAge={};
+function ckAges(){ return ((DATA.future&&DATA.future.ladder)||[]).map(x=>x.age); }
+function setAge(room,age){ curAge[room]=age; renderFuture(room); }
+
+function renderFuture(room){
+  const el=document.getElementById('fut-'+room);
+  if(!el) return;
+  const f=DATA.future, cfg=CK_ROOMS[room]||{};
+  if(!f||!f.ladder||!f.ladder.length){
+    el.innerHTML='<div class="ct"><span class="dot" style="background:var(--purple)"></span>🔭 未来</div>'+
+      '<div class="waiting">未来ビジョン台帳をまだ読み込めていません。次の更新でここに出ます。</div>';
+    return;
+  }
+  const ages=ckAges();
+  const age=curAge[room]||ages[0];
+  const rung=f.ladder.filter(x=>x.age===age)[0]||f.ladder[0];
+  const v=ckVoice(DATA,room);
+  el.innerHTML=
+    '<div class="ct"><span class="dot" style="background:var(--purple)"></span>🔭 未来（'+esc(cfg.label||'')+'）</div>'+
+    '<div class="lad">'+ages.map(a=>{
+      const r=f.ladder.filter(x=>x.age===a)[0];
+      return '<button class="'+(a===age?'on':'')+'" onclick="setAge(\''+room+'\','+a+')">'+
+             '<b>'+a+'</b>'+(r?r.year:'')+'</button>';
+    }).join('')+'</div>'+
+    '<div class="ladtxt"><span class="y">'+age+'歳（'+rung.year+'）</span> '+esc(ckLadder(DATA,room,age)||'')+'</div>'+
+    (v? '<div class="voice '+v.tone+'"><span class="vi">'+(v.tone==='yell'?'👴':'👴')+'</span><div>'+
+        '<div class="vt">'+esc(v.text)+'</div>'+
+        '<div class="vx">87歳の声（'+(v.tone==='yell'?'エール':'アラーム')+'）／見ている軸: '+esc(v.axis)+'</div>'+
+        '</div></div>' : '');
+}
+function renderDlink(room){
+  const el=document.getElementById('dl-'+room);
+  if(!el) return;
+  const l=(DATA.links&&DATA.links[room])||null;
+  if(!l||!l.url){
+    el.innerHTML='<a class="dlink off">📂 詳細データ（準備中）<span class="arw">→</span></a>';
+    return;
+  }
+  el.innerHTML='<a class="dlink" href="'+esc(l.url)+'" target="_blank" rel="noopener">'+
+    '📂 詳細データを開く<span class="arw">→</span></a>'+
+    '<div class="pace">出どころ: '+esc(l.label||'')+'</div>';
+}
+function renderCockpit(){
+  ['health','know','spirit','work','priv','eco'].forEach(r=>{ renderDlink(r); renderFuture(r); });
+}
+
 /* ===== 各部屋 ===== */
 function renderHealth(){
   setMetric('weight','weight','kg',1,false);
@@ -1020,9 +1289,39 @@ function renderEco(){
     html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtUSD(r.cumRevenue)}</td><td class="dlt${d!=null&&d<0?' bad':''}">${d!=null?signedUSD(d):'—'}</td></tr>`;
   });
   document.getElementById('ecoTable').innerHTML=html;
+
+  // 経済台帳（作ったばかり。行が入るまでは「入口開通・データ待ち」）
+  const eco=DATA.eco||{}, rows=eco.rows||[];
+  const box=document.getElementById('ecoLedger');
+  if(!box) return;
+  if(!rows.length){
+    box.innerHTML='<div class="waiting"><b>入口開通・データ待ち</b><br>'+
+      'Googleドライブに「経済台帳」フォルダと「'+esc(eco.baseName||'経済台帳_base')+'」を作りました。'+
+      '列は 記録日／口座・資産名／区分／評価額／通貨／出所 の6つです。<br>'+
+      '口座や資産を1行書き込んでもらえれば、次の更新からここに全体像が出ます。</div>';
+    return;
+  }
+  const byCat={};
+  rows.forEach(r=>{ const k=r.cat||'その他'; byCat[k]=(byCat[k]||0)+(r.amount||0); });
+  const total=rows.reduce((a,r)=>a+(r.amount||0),0);
+  box.innerHTML='<div class="mi-row"><span class="mv">'+fmtInt(Math.round(total))+'</span><span class="mu">円</span></div>'+
+    '<div class="pace">'+esc(rows[rows.length-1].date||'')+' 時点・'+rows.length+'件</div>'+
+    Object.keys(byCat).map(k=>
+      `<div class="ri"><span class="rn">${esc(k)}</span><span class="rv">${fmtInt(Math.round(byCat[k]))}</span></div>`).join('');
 }
+var KIND_LABEL=[['初めて','🌱'],['トライ','🔥'],['学び','💡'],['教え','🗣️'],['人','🤝'],['もがき','😣']];
 function renderKnow(){
   const h=DATA.health;
+  // 今週（直近7日）のリミットレス6分類
+  const c=ckKinds(DATA,7), wrows=ckRows(DATA,7);
+  const wk=document.getElementById('knowWeek');
+  if(wk) wk.innerHTML=KIND_LABEL.map(k=>
+    `<div><div class="wl">${k[1]}${k[0]}</div><div class="wv">${c[k[0]]||0}</div></div>`).join('');
+  const wn=document.getElementById('knowWeekNote');
+  if(wn) wn.textContent=wrows.length
+    ? '直近7日で'+wrows.length+'件（'+md(wrows[0].date)+'〜'+md(wrows[wrows.length-1].date)+'）。出どころ: '+
+      ((DATA.limitless&&DATA.limitless.baseName)||'リミットレス台帳')
+    : 'リミットレス台帳にまだ直近7日の記録がありません。';
   document.getElementById('v-days').textContent=h.length;
   const d0=new Date(h[0].date), d1=new Date(h[h.length-1].date);
   document.getElementById('v-span').textContent=Math.round((d1-d0)/86400000)+1;
@@ -1041,6 +1340,15 @@ function renderSpirit(){
   document.getElementById('d-mood').textContent=m
     ? (MOODS[Math.min(4,Math.floor((m.mood-1)/2))]+' '+m.date.slice(5)+' の記録')
     : '記録なし';
+  // ギバー度＝直近7日の🗣️教え。どきどき＝初めて＋トライ
+  const g=ckGiver(DATA,7), c=ckKinds(DATA,7);
+  document.getElementById('v-giver').textContent=g.count;
+  document.getElementById('d-giver').textContent=g.who.length? g.who.length+'組の相手に' : '記録なし';
+  document.getElementById('d-giver').className='md '+(g.count>0?'good':'bad');
+  const doki=(c['初めて']||0)+(c['トライ']||0);
+  document.getElementById('v-doki').textContent=doki;
+  document.getElementById('d-doki').textContent='初めて'+(c['初めて']||0)+'・トライ'+(c['トライ']||0);
+  document.getElementById('d-doki').className='md '+(doki>0?'good':'bad');
   const s=lastWith('sleep',0);
   document.getElementById('v-sleep2').textContent=s? s.sleep : '—';
   const dd=deltaText('sleep','',0,true);
@@ -1057,6 +1365,12 @@ function renderPriv(){
     const used=month.filter(e=>e.cat===c.k).length;
     const pct=Math.min(used/c.max*100,100);
     return`<div class="kb" style="background:${c.bg}${c.wide?';grid-column:span 2':''}"><div class="kl">${c.l}（Max${c.max}）</div><div class="kbar"><div class="kf" style="width:${pct}%"></div></div><span class="kc">${used}</span><span class="km"> / ${c.max}日</span></div>`}).join('');
+  // 次の家族枠：台帳の一言から、これから予定されている家族の楽しみを拾う
+  const nf=ckNextFamily(DATA);
+  const famUsed=month.filter(e=>e.cat==='family').length;
+  document.getElementById('nextFamily').textContent=
+    '👨‍👩‍👧 家族枠は今月'+famUsed+'/4日。'+(nf? '次の予定: '+nf.text+'（'+md(nf.date)+'の台帳より）'
+      : '次の予定は台帳にまだ書かれていません。');
   document.getElementById('klog').innerHTML=list.length?
     list.slice().reverse().map(e=>
       `<div class="e"><div><div style="font-weight:600;font-size:13px">${e.memo}</div><div style="font-size:11px;color:var(--muted)">${e.date}</div></div></div>`).join('')
