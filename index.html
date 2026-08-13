@@ -506,10 +506,12 @@ function signed(d,digits,unit){
   return (d>0?'+':'−')+Math.abs(d).toFixed(digits==null?1:digits)+(unit||'');
 }
 /* 人数の差分。「▲」は使わず ＋/− で書く */
-function signedInt(d){return (d>0?'+':'−')+fmtInt(Math.abs(d))}
-/* 金額の差分。「▲」は使わず ＋/− で書く */
-function signedUSD(d,digits){return (d>0?'+':'−')+'$'+Math.abs(d).toLocaleString('en-US',
-  {minimumFractionDigits:digits==null?2:digits,maximumFractionDigits:digits==null?2:digits})}
+function signedInt(d){return d===0? '±0' : (d>0?'+':'−')+fmtInt(Math.abs(d))}
+/* 金額の差分。「▲」は使わず ＋/− で書く。動いていない日は ±0 とだけ書く */
+function signedUSD(d,digits){
+  if(Math.abs(d)<0.005) return '±$0';
+  return (d>0?'+':'−')+'$'+Math.abs(d).toLocaleString('en-US',
+    {minimumFractionDigits:digits==null?2:digits,maximumFractionDigits:digits==null?2:digits})}
 function deltaText(key,unit,digits,invert){
   const {cur,prev}=latestPair(key);
   if(!cur) return {txt:'記録なし',cls:'md'};
