@@ -105,6 +105,25 @@
   .ut td:first-child{text-align:left;font-weight:600;color:var(--soft);font-size:11px}
   .ut .dlt{font-size:10px;font-weight:700;color:var(--green)}
   .ut .dlt.bad{color:var(--orange)}
+  /* 分析メモ（Udemyの4視点・機械算出） */
+  .amemo{border-left:5px solid var(--orange)}
+  .amemo .ct{margin-bottom:8px}
+  .atag{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.04em;color:#fff;
+    background:var(--orange);border-radius:999px;padding:3px 9px}
+  .atag.warn{background:var(--red)}
+  .al{font-size:13px;line-height:1.85;color:var(--text)}
+  .al+.al{margin-top:6px}
+  .adet{margin-top:10px;border-top:1px solid var(--border)}
+  .adet summary{list-style:none;cursor:pointer;padding:10px 0 2px;font-size:12px;font-weight:800;
+    letter-spacing:.06em;color:var(--soft);display:flex;align-items:center;justify-content:space-between}
+  .adet summary::-webkit-details-marker{display:none}
+  .adet summary::after{content:'▼';font-size:10px;color:var(--muted);transition:transform .2s}
+  .adet[open] summary::after{transform:rotate(180deg)}
+  .av{padding:9px 0;border-bottom:1px solid var(--border)}
+  .av:last-of-type{border-bottom:none}
+  .avn{font-size:11px;font-weight:800;color:var(--orange);margin-bottom:3px}
+  .avb{font-size:12px;line-height:1.8;color:var(--text)}
+  .avd{font-size:11px;line-height:1.75;color:var(--soft);margin-top:3px}
   /* 詳細データ（スプレッドシート）へのリンク */
   .dlink{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;
     padding:12px 14px;border-radius:12px;border:1.5px solid rgba(255,107,53,.35);
@@ -252,6 +271,18 @@
 <!-- WORK -->
 <div class="page" id="pg-work">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🚀 仕事</div></div>
+
+  <!-- 分析メモ（4視点を機械算出し、その日いちばん情報量の多い1つを表示） -->
+  <div class="card amemo">
+    <div class="ct"><span class="dot" style="background:var(--orange)"></span>🔎 分析メモ<span class="atag" id="anaTag"></span></div>
+    <div id="anaBody"><div class="al">読み込み中…</div></div>
+    <details class="adet">
+      <summary>4つの視点をすべて見る</summary>
+      <div id="anaDetail"></div>
+      <a class="dlink off" id="anaLink" target="_blank" rel="noopener">📂 詳細データを開く<span class="arw">→</span></a>
+    </details>
+  </div>
+
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--orange)"></span>Udemy 全10コース（最新スナップショット）</div>
     <div class="mg">
@@ -399,6 +430,8 @@ const MOODS=['😩','😕','😐','🙂','😄'];
 const fmtInt=n=>n==null?'—':n.toLocaleString('ja-JP');
 const md=ds=>ds?(+ds.slice(5,7))+'/'+(+ds.slice(8,10)):'';
 const fmtUSD=n=>n==null?'—':'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+/* 台帳から来た文字列をHTMLに差し込むときのエスケープ */
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 /* ===== state ===== */
 let DATA=null, chart=null, curG='weight';
@@ -674,6 +707,245 @@ function computeNextMove(){
   return 'いい流れです。今日は点呼を1回、いつも通り送るだけでOK。';
 }
 
+/* ===== 分析メモ（4視点）ここから =====
+   Udemyの数字を4つの視点で機械算出する。ここから下の「ここまで」までは DOM に触らない
+   （tools/test/test-analysis.js が、この範囲だけを切り出して検証するため）。
+   各視点は score が高いほど「その日いちばん情報量が多い」。①の警告が出た日は必ず最優先。 */
+
+function aSnap(D,i){const u=D.udemy||[];return u[u.length-1+i]||null}
+function aRow(s,id){return s? (s.rows||[]).find(r=>r.id===id)||null : null}
+function aCourse(D,id){return (D.udemyCourses||[]).find(c=>c.id===id)||null}
+function aLabel(D,id){const c=aCourse(D,id);return c? (id+' '+(c.short||'')).trim() : id}
+function aDays(a,b){return Math.round((new Date(b+'T00:00:00+09:00')-new Date(a+'T00:00:00+09:00'))/86400000)}
+function aMedian(a){const s=a.slice().sort((x,y)=>x-y);if(!s.length)return null;
+  const m=Math.floor(s.length/2);return s.length%2? s[m] : (s[m-1]+s[m])/2}
+function aAsOf(D){return (D.generatedAt||'').slice(0,10)||((aSnap(D,0)||{}).date)}
+function aUSD0(n){return '$'+Math.round(n).toLocaleString('en-US')}
+function aYmdAdd(ds,n){const d=new Date(ds+'T00:00:00+09:00');d.setDate(d.getDate()+n);
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+/* 公開年月（"2026/6"）を "2026-06" にそろえる。無ければ null */
+function aPubYm(c){const m=String((c&&c.published)||'').match(/^(\d{4})[\/\-](\d{1,2})/);
+  return m? m[1]+'-'+('0'+m[2]).slice(-2) : null}
+function aYmAdd(ym,k){let y=+ym.slice(0,4),m=+ym.slice(5,7)+k;
+  y+=Math.floor((m-1)/12);m=((m-1)%12+12)%12+1;return y+'-'+('0'+m).slice(-2)}
+function aYmDiff(a,b){return (+b.slice(0,4)-+a.slice(0,4))*12+(+b.slice(5,7)-+a.slice(5,7))}
+
+/* ① データ健全性。前回の記録と比べて、逆行・欠損・異常な跳ねを探す。
+   1件でも見つかったら他の視点より必ず先に出す（score 100〜）。 */
+function anaHealth(D){
+  const s0=aSnap(D,0), s1=aSnap(D,-1);
+  if(!s0) return null;
+  const asOf=aAsOf(D), warn=[], ids=(D.udemyCourses||[]).map(c=>c.id);
+  const gap=s1? Math.max(1,aDays(s1.date,s0.date)) : null;
+
+  // 台帳が止まっている
+  const stale=aDays(s0.date,asOf);
+  if(stale>=3) warn.push('Udemy台帳が'+stale+'日更新されていません（最新の記録は'+md(s0.date)+'）');
+
+  // 欠損：コース一覧にあるのに最新の記録に居ない／数字が空
+  const missing=ids.filter(id=>!aRow(s0,id));
+  if(missing.length) warn.push(md(s0.date)+'に'+missing.map(id=>aLabel(D,id)).join('・')+'の記録がありません');
+  const blank=(s0.rows||[]).filter(r=>r.cumEnroll==null).map(r=>aLabel(D,r.id));
+  if(blank.length) warn.push(blank.join('・')+'の累計登録が空欄です');
+
+  if(s1){
+    // 跳ねの物差し：直近6区間の「1日あたり増分」をコースごとに集める
+    const hist={}, u=D.udemy||[];
+    for(let i=Math.max(1,u.length-6);i<u.length-1;i++){
+      const a=u[i-1], b=u[i], dd=Math.max(1,aDays(a.date,b.date));
+      ids.forEach(id=>{const x=aRow(a,id), y=aRow(b,id);
+        if(x&&y&&x.cumEnroll!=null&&y.cumEnroll!=null)(hist[id]=hist[id]||[]).push((y.cumEnroll-x.cumEnroll)/dd)});
+    }
+    (s0.rows||[]).forEach(r=>{
+      const p=aRow(s1,r.id); if(!p) return;
+      // 逆行（累計が減る）＝コースIDの取り違えをまず疑う
+      if(r.cumEnroll!=null&&p.cumEnroll!=null&&r.cumEnroll<p.cumEnroll)
+        warn.push(aLabel(D,r.id)+'の累計登録が'+fmtInt(p.cumEnroll)+'→'+fmtInt(r.cumEnroll)+
+                  '人と減っています（コースIDの取り違えを疑ってください）');
+      if(r.cumRevenue!=null&&p.cumRevenue!=null&&r.cumRevenue<p.cumRevenue-0.005)
+        warn.push(aLabel(D,r.id)+'の累計収益が'+fmtUSD(p.cumRevenue)+'→'+fmtUSD(r.cumRevenue)+'と減っています');
+      // 異常な跳ね（普段の5倍超）。少人数のブレを拾わないよう30人以上のときだけ見る
+      if(r.cumEnroll!=null&&p.cumEnroll!=null){
+        const d=r.cumEnroll-p.cumEnroll, per=d/gap, base=aMedian((hist[r.id]||[]).filter(v=>v>0));
+        if(d>=30&&base!=null&&base>0&&per>base*5)
+          warn.push(aLabel(D,r.id)+'が'+gap+'日で'+signedInt(d)+'人（1日'+per.toFixed(0)+
+                    '人＝普段の約'+(per/base).toFixed(0)+'倍）。取り違えでなければ大きな動きです');
+      }
+      // 評価の急変。レビューが増えれば動くが、0.3は動きすぎ
+      if(r.rating!=null&&p.rating!=null&&Math.abs(r.rating-p.rating)>=0.3&&(r.cumEnroll||0)>=500)
+        warn.push(aLabel(D,r.id)+'の評価が'+p.rating+'→'+r.rating+'と大きく動いています');
+    });
+  }
+  if((D.qualityDropped||[]).length)
+    warn.push('健康台帳で範囲外の値を'+D.qualityDropped.length+'件、取り込まずに外しました');
+
+  const total=(s0.rows||[]).reduce((a,r)=>a+(r.cumEnroll||0),0);
+  if(warn.length)
+    return {key:'health',name:'データ健全性',score:100+warn.length*10,warn:true,
+      lines:warn.slice(0,3).map(w=>'⚠️ '+w), detail:warn};
+  return {key:'health',name:'データ健全性',score:5,warn:false,
+    lines:['全'+(s0.rows||[]).length+'コース、'+(s1? md(s1.date)+'→':'')+md(s0.date)+
+           'で欠損・逆行・異常な跳ねはありません（累計'+fmtInt(total)+'人）。'],
+    detail:['欠損なし','累計の逆行なし','異常な跳ねなし','評価の急変なし']};
+}
+
+/* ② 評価×収益のギャップ。公開12ヶ月未満（＝③で見る新作）は土俵が違うので外す。
+     改善優先＝(平均評価−評価)×月あたり収益 が最大のコース
+     告知不足＝(評価−平均評価)÷月あたり登録 が最大のコース */
+function anaGap(D){
+  const s0=aSnap(D,0); if(!s0) return null;
+  const ym=aAsOf(D).slice(0,7);
+  const list=(s0.rows||[]).map(r=>{
+    const c=aCourse(D,r.id), p=aPubYm(c), age=p? aYmDiff(p,ym)+1 : null;
+    return {id:r.id, rating:r.rating, age:age,
+      revPm:(r.cumRevenue!=null&&age)? r.cumRevenue/age : null,
+      enrPm:(r.cumEnroll!=null&&age)? r.cumEnroll/age : null};
+  }).filter(x=>x.rating!=null&&x.age!=null&&x.age>=12&&x.revPm!=null&&x.enrPm!=null);
+  if(list.length<4) return null;
+
+  const avg=list.reduce((a,x)=>a+x.rating,0)/list.length;
+  const medPm=aMedian(list.map(x=>x.enrPm));
+  const low=list.filter(x=>x.rating<avg).sort((a,b)=>(avg-b.rating)*b.revPm-(avg-a.rating)*a.revPm)[0];
+  const high=list.filter(x=>x.rating>avg&&x.enrPm<medPm)
+                 .sort((a,b)=>(b.rating-avg)/b.enrPm-(a.rating-avg)/a.enrPm)[0];
+  if(!low&&!high) return null;
+
+  const lines=[];
+  if(low) lines.push('改善優先：'+aLabel(D,low.id)+'は評価'+low.rating.toFixed(2)+
+    '（'+list.length+'コースの平均'+avg.toFixed(2)+'を下回る）のに、月あたり収益'+aUSD0(low.revPm)+
+    'と稼ぎ頭。ここを直すのが一番効きます。');
+  if(high) lines.push('告知不足：'+aLabel(D,high.id)+'は評価'+high.rating.toFixed(2)+
+    'と平均より高いのに、月あたり登録'+Math.round(high.enrPm)+'人（中央値'+Math.round(medPm)+
+    '人を下回る）。知られていないだけです。');
+
+  const spread=(low? avg-low.rating:0)+(high? high.rating-avg:0);
+  return {key:'gap',name:'評価×収益のギャップ',score:22+Math.min(30,spread*60),lines:lines,
+    detail:lines.concat(['対象は公開12ヶ月以上の'+list.length+'コース（新作は「新作の立ち上がり」で見ます）',
+      '平均評価 '+avg.toFixed(2)+'／月あたり登録の中央値 '+Math.round(medPm)+'人',
+      '月あたりの数字＝累計 ÷ 公開からの月数'])};
+}
+
+/* ③ 新作の立ち上がりペース。いちばん新しいコースを、過去作の「公開後おなじ月齢」と比べる。 */
+function anaLaunch(D){
+  const m=D.udemyMonthly||[], cs=(D.udemyCourses||[]).filter(c=>aPubYm(c));
+  if(!m.length||cs.length<3) return null;
+  const newest=cs.slice().sort((a,b)=>aPubYm(a)<aPubYm(b)?1:-1)[0];
+  const pub=aPubYm(newest), asOf=aAsOf(D), lastYm=m[m.length-1].ym;
+  const valAt=(id,y)=>{const x=m.find(z=>z.ym===y);
+    return (x&&x.byCourse&&x.byCourse[id]&&x.byCourse[id].enroll!=null)? x.byCourse[id].enroll : null};
+
+  const k=aYmDiff(pub,lastYm);              // 0始まりの経過月。表示は「◯ヶ月目」＝k+1
+  if(k<0||k>18) return null;                // 公開から1年半を過ぎたら「新作」とは呼ばない
+  const cur=valAt(newest.id,lastYm);
+  if(cur==null) return null;
+  const peers=cs.filter(c=>c.id!==newest.id)
+    .map(c=>({id:c.id,v:valAt(c.id,aYmAdd(aPubYm(c),k))})).filter(x=>x.v!=null);
+  if(peers.length<3) return null;
+
+  const med=aMedian(peers.map(x=>x.v)), ratio=cur/med;
+  const best=peers.slice().sort((a,b)=>b.v-a.v)[0];
+  const partial=(lastYm===asOf.slice(0,7));
+  const line=aLabel(D,newest.id)+'は公開'+(k+1)+'ヶ月目で累計'+fmtInt(cur)+'人。過去'+peers.length+
+    '作の同じ月齢の中央値'+fmtInt(med)+'人に対して'+Math.round(ratio*100)+'%'+
+    (ratio>=1.1? 'と速いペースです。' : ratio<=0.9? 'のペースです。' : 'とほぼ同じペースです。')+
+    (partial? '（今月は'+md(asOf)+'時点で途中）' : '');
+  const detail=[line,'同じ月齢でいちばん伸びていたのは'+aLabel(D,best.id)+'の'+fmtInt(best.v)+'人'];
+  if(k>=1){    // ひとつ前の「まるまる1ヶ月あった月齢」でも比べておく
+    const pv=valAt(newest.id,aYmAdd(pub,k-1));
+    const pp=peers.map(x=>valAt(x.id,aYmAdd(aPubYm(aCourse(D,x.id)),k-1))).filter(v=>v!=null);
+    if(pv!=null&&pp.length>=3) detail.push(k+'ヶ月目（まるまる1ヶ月）では '+fmtInt(pv)+'人 対 中央値'+
+      fmtInt(aMedian(pp))+'人＝'+Math.round(pv/aMedian(pp)*100)+'%');
+  }
+  return {key:'launch',name:'新作の立ち上がり',score:18+Math.min(40,Math.abs(1-ratio)*55),
+    lines:[line],detail:detail};
+}
+
+/* ④ 前回からの変化点。いちばん動いたコースと増分を出し、
+     GOKIGEN台帳の「今日の一言」から施策名を日付一致で拾って紐づける。 */
+var A_ACTIONS=[
+  {re:/感謝祭/,name:'感謝祭'},
+  {re:/セール|値下げ|割引|クーポン/,name:'セール・割引'},
+  {re:/キャンペーン|プロモ/,name:'キャンペーン'},
+  {re:/新規公開|新講座|新作公開|リリース|公開しました/,name:'新規公開'},
+  {re:/メルマガ|一斉配信|アナウンス|告知/,name:'告知・メルマガ'},
+  {re:/note投稿|noteに投稿|note公開|note更新|noteの月間アクセス/,name:'note発信'},
+  {re:/LinkedIn|リンクトイン|SNS|X投稿/,name:'SNS発信'},
+  {re:/ウェビナー|セミナー|登壇|講演/,name:'登壇・セミナー'},
+  {re:/レビュー依頼|口コミ依頼/,name:'レビュー依頼'},
+  {re:/刷新|撮り直し|再収録|改訂/,name:'講座の刷新'},
+  {re:/収録|撮影/,name:'収録'}
+];
+/* from〜to の一言から施策名を拾う。優先順位の高いものを採り、同じ順位なら
+   いちばん古い日付（＝その施策を打ち始めた日に近い方）を返す。 */
+function aFindAction(D,from,to){
+  const rows=(D.health||[]).filter(r=>r.note&&r.date>=from&&r.date<=to).sort((a,b)=>a.date<b.date?-1:1);
+  let hit=null;
+  rows.forEach(r=>{
+    A_ACTIONS.forEach((a,pri)=>{
+      if(!a.re.test(r.note)) return;
+      if(!hit||pri<hit.pri) hit={pri:pri,name:a.name,date:r.date};
+    });
+  });
+  return hit;
+}
+function anaMove(D){
+  const s0=aSnap(D,0), s1=aSnap(D,-1);
+  if(!s0||!s1) return null;
+  const gap=Math.max(1,aDays(s1.date,s0.date));
+  const ds=(s0.rows||[]).map(r=>{const p=aRow(s1,r.id);
+    return (p&&r.cumEnroll!=null&&p.cumEnroll!=null)? {id:r.id,d:r.cumEnroll-p.cumEnroll}:null}).filter(Boolean);
+  if(!ds.length) return null;
+  const total=ds.reduce((a,x)=>a+x.d,0);
+  const top=ds.slice().sort((a,b)=>b.d-a.d)[0];
+  const share=total>0? top.d/total : 0;
+  // 施策は少し遅れて効くので、前回の記録の7日前から今回までを見る
+  const act=aFindAction(D,aYmdAdd(s1.date,-7),s0.date);
+  const line=md(s1.date)+'→'+md(s0.date)+'の'+gap+'日で'+signedInt(total)+'人'+
+    (gap>1? '（1日'+(total/gap).toFixed(0)+'人）':'')+'。いちばん動いたのは'+aLabel(D,top.id)+'の'+
+    signedInt(top.d)+'人'+(total>0? '（全体の'+Math.round(share*100)+'%）':'')+'。'+
+    (act? '直近の施策は台帳'+md(act.date)+'の「'+act.name+'」です。'
+        : '台帳の一言に施策の記載はありません。');
+  return {key:'move',name:'前回からの変化点',score:14+Math.min(24,share*34)+(act?14:0),
+    lines:[line],
+    detail:[line].concat(ds.slice().sort((a,b)=>b.d-a.d).slice(0,5)
+      .map(x=>'　'+aLabel(D,x.id)+' '+signedInt(x.d)+'人'))};
+}
+
+/* 4視点をまとめて算出し、その日いちばん情報量の多いものを先頭にして返す */
+function computeUdemyAnalysis(D){
+  if(!D||!D.udemy||!D.udemy.length) return [];
+  return [anaHealth(D),anaGap(D),anaLaunch(D),anaMove(D)]
+    .filter(Boolean).sort((a,b)=>b.score-a.score);
+}
+/* ===== 分析メモ ここまで ===== */
+
+function renderAnalysis(){
+  const body=document.getElementById('anaBody');
+  const tag=document.getElementById('anaTag');
+  const det=document.getElementById('anaDetail');
+  const link=document.getElementById('anaLink');
+  const list=computeUdemyAnalysis(DATA);
+  if(!list.length){
+    tag.textContent=''; det.innerHTML='';
+    body.innerHTML='<div class="al">まだ判断できるだけの記録がありません。</div>';
+    return;
+  }
+  const top=list[0];
+  tag.textContent=top.name;
+  tag.className='atag'+(top.warn?' warn':'');
+  body.innerHTML=top.lines.slice(0,3).map(t=>'<div class="al">'+esc(t)+'</div>').join('');
+  det.innerHTML=list.map(x=>
+    '<div class="av"><div class="avn">'+esc(x.name)+(x.warn?'（要確認）':'')+'</div>'+
+    x.lines.map(t=>'<div class="avb">'+esc(t)+'</div>').join('')+
+    x.detail.filter(t=>x.lines.indexOf(t)<0).map(t=>'<div class="avd">・'+esc(t)+'</div>').join('')+
+    '</div>').join('')+
+    '<div class="avd" style="padding-top:8px">算出のもとは data.json（'+esc(DATA.generatedAt||'')+' 生成）。'+
+    '4つの視点を毎回すべて計算し、その日いちばん情報量の多い1つを上に出しています。</div>';
+  if(DATA.udemyBaseUrl){link.href=DATA.udemyBaseUrl;link.className='dlink'}
+  else{link.removeAttribute('href');link.className='dlink off';
+    link.innerHTML='📂 詳細データ（準備中）<span class="arw">→</span>'}
+}
+
 /* ===== 各部屋 ===== */
 function renderHealth(){
   setMetric('weight','weight','kg',1,false);
@@ -691,6 +963,7 @@ function renderHealth(){
   ).join('');
 }
 function renderWork(){
+  renderAnalysis();
   const s0=uSnap(0), s1=uSnap(-1);
   const e0=uSum(s0,'cumEnroll'), e1=uSum(s1,'cumEnroll');
   document.getElementById('v-enroll').textContent=fmtInt(e0);
