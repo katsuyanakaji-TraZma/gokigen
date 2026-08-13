@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T20:25:06+09:00",
+  "generatedAt": "2026-08-13T22:34:36+09:00",
   "version": "1.2",
   "source": {
     "gokigenFolderId": "1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
@@ -59,6 +59,10 @@
       {
         "name": "経済台帳_base",
         "rows": 0
+      },
+      {
+        "name": "経済台帳ログ_2026-08-13",
+        "rows": 8
       }
     ]
   },
@@ -5491,14 +5495,83 @@
     "baseName": "経済台帳_base",
     "baseUrl": "https://docs.google.com/spreadsheets/d/10iB35m83Jr3swAhHPGQghEmvE6PZrwzcwERoz4Iay8k/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/1koH3sVzVu2sqyJvSv5DDXh1MBwShKmAL",
-    "asOf": null,
+    "asOf": "2026-08-13",
     "used": [
       {
         "name": "経済台帳_base",
         "rows": 0
+      },
+      {
+        "name": "経済台帳ログ_2026-08-13",
+        "rows": 8
       }
     ],
-    "rows": []
+    "rows": [
+      {
+        "date": "2026-08-13",
+        "name": "SBI証券 外貨建債券",
+        "cat": "外国債券",
+        "amount": 4977928,
+        "currency": "JPY",
+        "src": "アプリスクショ20:39"
+      },
+      {
+        "date": "2026-08-13",
+        "name": "SBI証券 米国株式",
+        "cat": "米国株式",
+        "amount": 5819015,
+        "currency": "JPY",
+        "src": "アプリスクショ20:39"
+      },
+      {
+        "date": "2026-08-13",
+        "name": "SBI証券 預り金(円)",
+        "cat": "現金",
+        "amount": 9981,
+        "currency": "JPY",
+        "src": "アプリスクショ20:41"
+      },
+      {
+        "date": "2026-08-13",
+        "name": "SBI証券 預り金(米ドル)",
+        "cat": "現金",
+        "amount": 2261603,
+        "currency": "JPY",
+        "src": "アプリスクショ20:41"
+      },
+      {
+        "date": "2026-08-13",
+        "name": "野村證券 MRF・お預り金",
+        "cat": "現金",
+        "amount": 133546,
+        "currency": "JPY",
+        "src": "アプリスクショ20:37"
+      },
+      {
+        "date": "2026-08-13",
+        "name": "野村證券 国内投信",
+        "cat": "投資信託",
+        "amount": 10150245,
+        "currency": "JPY",
+        "src": "アプリスクショ20:37"
+      },
+      {
+        "date": "2026-08-13",
+        "name": "野村證券 国内株式",
+        "cat": "国内株式",
+        "amount": 612800,
+        "currency": "JPY",
+        "src": "アプリスクショ20:37"
+      },
+      {
+        "date": "2026-08-13",
+        "name": "野村證券 外国債券",
+        "cat": "外国債券",
+        "amount": 157313,
+        "currency": "JPY",
+        "src": "アプリスクショ20:37"
+      }
+    ]
   },
   "links": {
     "health": {
