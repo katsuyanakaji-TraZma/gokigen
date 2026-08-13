@@ -1,9 +1,11 @@
 {
-  "generatedAt": "2026-08-13T08:30:18+09:00",
+  "generatedAt": "2026-08-13T20:25:06+09:00",
   "version": "1.2",
   "source": {
     "gokigenFolderId": "1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
     "udemyFolderId": "1g3hrPVRIYB_GOYho36DLRnITG_c5-elx",
+    "limitlessFolderId": "1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
+    "ecoFolderId": "1koH3sVzVu2sqyJvSv5DDXh1MBwShKmAL",
     "rule": "全ファイルを読み、重複したら新しいファイルを優先",
     "udemyFiles": [
       {
@@ -37,6 +39,26 @@
       {
         "name": "Udemy台帳ログ_2026-08-13",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-08-13",
+        "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-08-13",
+        "rows": 10
+      }
+    ],
+    "limitlessFiles": [
+      {
+        "name": "リミットレス台帳_base_v2",
+        "rows": 51
+      }
+    ],
+    "ecoFiles": [
+      {
+        "name": "経済台帳_base",
+        "rows": 0
       }
     ]
   },
@@ -1264,7 +1286,7 @@
     },
     {
       "date": "2026-07-10",
-      "time": "4:00",
+      "time": "11:00",
       "rows": [
         {
           "id": "C01",
@@ -1340,7 +1362,7 @@
     },
     {
       "date": "2026-07-12",
-      "time": "1:00",
+      "time": "8:00",
       "rows": [
         {
           "id": "C01",
@@ -1416,7 +1438,7 @@
     },
     {
       "date": "2026-07-17",
-      "time": "0:00",
+      "time": "7:00",
       "rows": [
         {
           "id": "C01",
@@ -1492,7 +1514,7 @@
     },
     {
       "date": "2026-08-01",
-      "time": "14:18",
+      "time": "21:18",
       "rows": [
         {
           "id": "C01",
@@ -1568,7 +1590,7 @@
     },
     {
       "date": "2026-08-09",
-      "time": "1:00",
+      "time": "8:00",
       "rows": [
         {
           "id": "C01",
@@ -1644,7 +1666,7 @@
     },
     {
       "date": "2026-08-11",
-      "time": "10:00",
+      "time": "17:00",
       "rows": [
         {
           "id": "C01",
@@ -1720,7 +1742,7 @@
     },
     {
       "date": "2026-08-12",
-      "time": "2:36",
+      "time": "9:36",
       "rows": [
         {
           "id": "C01",
@@ -1796,18 +1818,18 @@
     },
     {
       "date": "2026-08-13",
-      "time": "23:30",
+      "time": "19:40",
       "rows": [
         {
           "id": "C01",
-          "cumEnroll": 328,
+          "cumEnroll": 329,
           "monthEnroll": null,
           "cumRevenue": 235.23,
           "rating": 4.63
         },
         {
           "id": "C02",
-          "cumEnroll": 4824,
+          "cumEnroll": 4827,
           "monthEnroll": null,
           "cumRevenue": 7862.18,
           "rating": 4
@@ -1824,25 +1846,25 @@
           "cumEnroll": 3980,
           "monthEnroll": null,
           "cumRevenue": 3839.26,
-          "rating": 4.09
+          "rating": 4.07
         },
         {
           "id": "C05",
-          "cumEnroll": 4512,
+          "cumEnroll": 4513,
           "monthEnroll": null,
           "cumRevenue": 7354.36,
           "rating": 4.16
         },
         {
           "id": "C06",
-          "cumEnroll": 7648,
+          "cumEnroll": 7649,
           "monthEnroll": null,
           "cumRevenue": 14896.8,
           "rating": 4.16
         },
         {
           "id": "C07",
-          "cumEnroll": 4854,
+          "cumEnroll": 4855,
           "monthEnroll": null,
           "cumRevenue": 11282.77,
           "rating": 4.03
@@ -1856,17 +1878,17 @@
         },
         {
           "id": "C09",
-          "cumEnroll": 14967,
+          "cumEnroll": 14966,
           "monthEnroll": null,
           "cumRevenue": 48683.47,
           "rating": 4.02
         },
         {
           "id": "C10",
-          "cumEnroll": 17817,
+          "cumEnroll": 17819,
           "monthEnroll": null,
           "cumRevenue": 67512.44,
-          "rating": 4.18
+          "rating": 4.19
         }
       ]
     }
@@ -4832,19 +4854,19 @@
     },
     {
       "ym": "2026-08",
-      "enroll": 69814,
-      "newEnroll": 1386,
+      "enroll": 69822,
+      "newEnroll": 1394,
       "revenue": 192533.4,
       "from": "2026-07-17",
       "to": "2026-08-13",
       "records": 5,
       "byCourse": {
         "C01": {
-          "enroll": 328,
+          "enroll": 329,
           "revenue": 235.23
         },
         "C02": {
-          "enroll": 4824,
+          "enroll": 4827,
           "revenue": 7862.18
         },
         "C03": {
@@ -4856,15 +4878,15 @@
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4512,
+          "enroll": 4513,
           "revenue": 7354.36
         },
         "C06": {
-          "enroll": 7648,
+          "enroll": 7649,
           "revenue": 14896.8
         },
         "C07": {
-          "enroll": 4854,
+          "enroll": 4855,
           "revenue": 11282.77
         },
         "C08": {
@@ -4872,11 +4894,11 @@
           "revenue": 26405.16
         },
         "C09": {
-          "enroll": 14967,
+          "enroll": 14966,
           "revenue": 48683.47
         },
         "C10": {
-          "enroll": 17817,
+          "enroll": 17819,
           "revenue": 67512.44
         }
       }
@@ -4986,11 +5008,11 @@
   },
   "limitless": {
     "baseName": "リミットレス台帳_base_v2",
-    "baseUrl": "https://docs.google.com/spreadsheets/d/1F2zCqmFHtHBgJMcAe6BxgQ5PnHlIyl3dL_sZ9aLqE40/edit",
+    "baseUrl": "https://docs.google.com/spreadsheets/d/1F2zCqmFHtHBgJMcAe6BxgQ5PnHlIyl3dL_sZ9aLqE40/edit?usp=drivesdk",
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 49
+        "rows": 51
       }
     ],
     "rows": [
@@ -5035,19 +5057,19 @@
       {
         "date": "2026-07-23",
         "kinds": [
-          "教え"
+          "学び"
         ],
-        "text": "モチベーションの3本柱(物語・成長・承認)とレジリエンス=物語の再構築力",
-        "who": "OJTトレーナー研修受講生",
+        "text": "AIによるVlog完全自動編集の可能性を知る(チャエン氏のX投稿から)→NKS工場化の種",
+        "who": "NKS",
         "src": "遡り抽出v2"
       },
       {
         "date": "2026-07-23",
         "kinds": [
-          "学び"
+          "教え"
         ],
-        "text": "AIによるVlog完全自動編集の可能性を知る(チャエン氏のX投稿から頂)→NKS工場化の種",
-        "who": "NKS",
+        "text": "モチベーションの3本柱(物語・成長・承認)とレジリエンス=物語の再構築力",
+        "who": "OJTトレーナー研修受講生",
         "src": "遡り抽出v2"
       },
       {
@@ -5057,15 +5079,6 @@
         ],
         "text": "ABCモデル・行動継続5ステップ・焚き火理論・予祝を体系伝授",
         "who": "三井化学LDP STEP3受講生",
-        "src": "遡り抽出v2"
-      },
-      {
-        "date": "2026-07-25",
-        "kinds": [
-          "トライ"
-        ],
-        "text": "実務の全自動化構想に着手 — Udemy→Kindle工場・Driveダッシュボード・FB自動化ライン横展開",
-        "who": "GOKIGEN OS・NKS",
         "src": "遡り抽出v2"
       },
       {
@@ -5084,6 +5097,15 @@
         ],
         "text": "「今日この瞬間から世界が変わるかもしれない。僕の実務の全自動」— パラダイムシフトの手応え",
         "who": "GOKIGEN OS",
+        "src": "遡り抽出v2"
+      },
+      {
+        "date": "2026-07-25",
+        "kinds": [
+          "トライ"
+        ],
+        "text": "実務の全自動化構想に着手 — Udemy→Kindle工場・Driveダッシュボード・FB自動化ライン横展開",
+        "who": "GOKIGEN OS・NKS",
         "src": "遡り抽出v2"
       },
       {
@@ -5126,19 +5148,19 @@
       {
         "date": "2026-07-27",
         "kinds": [
-          "学び"
+          "トライ"
         ],
-        "text": "「幸福のバスは定期便ではない」— チャンスに飛び乗る準備の哲学を自ら言語化",
-        "who": "人生哲学・メルマガ鉱脈",
+        "text": "Udemy受講チャート(ナビ)を考案 → のちの「夜明けから頂へ」に発展",
+        "who": "Udemy",
         "src": "遡り抽出v2"
       },
       {
         "date": "2026-07-27",
         "kinds": [
-          "トライ"
+          "学び"
         ],
-        "text": "Udemy受講チャート(ナビ)を考案 → のちの「夜明けから頂へ」に発展",
-        "who": "Udemy",
+        "text": "「幸福のバスは定期便ではない」— チャンスに飛び乗る準備の哲学を自ら言語化",
+        "who": "人生哲学・メルマガ鉱脈",
         "src": "遡り抽出v2"
       },
       {
@@ -5180,10 +5202,10 @@
       {
         "date": "2026-07-31",
         "kinds": [
-          "トライ"
+          "学び"
         ],
-        "text": "家族で箱根・天山湯治郷へゆるりんちょ3本目ロケ(猛暑の2km・高低差90m踏破)",
-        "who": "ゆるりんちょ・家族",
+        "text": "13年前(独立1年目・不安いっぱい)の自分と、家族と挑戦を楽しむ今の対比を内省",
+        "who": "人生哲学",
         "src": "遡り抽出v2"
       },
       {
@@ -5207,10 +5229,10 @@
       {
         "date": "2026-07-31",
         "kinds": [
-          "学び"
+          "トライ"
         ],
-        "text": "13年前(独立1年目・不安いっぱい)の自分と、家族と挑戦を楽しむ今の対比を内省",
-        "who": "人生哲学・メルマガ鉱脈",
+        "text": "家族で箱根・天山湯治郷へゆるりんちょ3本目ロケ(猛暑の2km・高低差90m踏破)",
+        "who": "ゆるりんちょ・家族",
         "src": "遡り抽出v2"
       },
       {
@@ -5234,20 +5256,20 @@
       {
         "date": "2026-08-02",
         "kinds": [
-          "学び"
-        ],
-        "text": "天山湯治郷=師匠に勧められた「自分と向き合う原点」・お水取り=地面を踏みしめる時間の再確認",
-        "who": "精神",
-        "src": "遡り抽出v2"
-      },
-      {
-        "date": "2026-08-02",
-        "kinds": [
           "学び",
           "もがき"
         ],
         "text": "動画テロップの手戻りループで時間が溶ける→「編集スタイルガイド」事前定義の教訓",
         "who": "NKS・仕組み化",
+        "src": "遡り抽出v2"
+      },
+      {
+        "date": "2026-08-02",
+        "kinds": [
+          "学び"
+        ],
+        "text": "天山湯治郷=師匠に勧められた「自分と向き合う原点」・お水取り=地面を踏みしめる時間の再確認",
+        "who": "精神",
         "src": "遡り抽出v2"
       },
       {
@@ -5282,16 +5304,6 @@
       {
         "date": "2026-08-04",
         "kinds": [
-          "教え",
-          "人"
-        ],
-        "text": "鈴木さん(宣言とFBの予約を設計)・エトーさん(目標を12〜15の行動に超具体化)をコーチング",
-        "who": "鈴木さん・エトーさん",
-        "src": "遡り抽出v2"
-      },
-      {
-        "date": "2026-08-04",
-        "kinds": [
           "教え"
         ],
         "text": "Whyでなく「何が障害?」と聞く質問法/怒りを抑える孫の寝返り写真スイッチの実例",
@@ -5308,6 +5320,16 @@
         "src": "遡り抽出v2"
       },
       {
+        "date": "2026-08-04",
+        "kinds": [
+          "教え",
+          "人"
+        ],
+        "text": "鈴木さん(宣言とFBの予約を設計)・エトーさん(目標を12〜15の行動に超具体化)をコーチング",
+        "who": "鈴木さん・エトーさん",
+        "src": "遡り抽出v2"
+      },
+      {
         "date": "2026-08-05",
         "kinds": [
           "教え"
@@ -5319,11 +5341,10 @@
       {
         "date": "2026-08-06",
         "kinds": [
-          "初めて",
-          "もがき"
+          "学び"
         ],
-        "text": "研修中のZoom大規模障害→昼休み中にTeamsへ緊急移行を初経験し午後を成功させる",
-        "who": "ピットイン研修",
+        "text": "AIに名経営者(柳井・稲盛・松下)の思考をインストールし脳内シミュレーション会議をする着想",
+        "who": "AI活用",
         "src": "遡り抽出v2"
       },
       {
@@ -5338,10 +5359,11 @@
       {
         "date": "2026-08-06",
         "kinds": [
-          "学び"
+          "初めて",
+          "もがき"
         ],
-        "text": "AIに名経営者(柳井・稲盛・松下)の思考をインストールし脳内シミュレーション会議をする着想",
-        "who": "AI活用",
+        "text": "研修中のZoom大規模障害→昼休み中にTeamsへ緊急移行を初経験し午後を成功させる",
+        "who": "ピットイン研修",
         "src": "遡り抽出v2"
       },
       {
@@ -5351,15 +5373,6 @@
         ],
         "text": "「夏服で冬山を登らない」「偏差値38の初心者OS」「完璧主義には張り紙」— OS講義で伝授",
         "who": "OS講義の受講生",
-        "src": "遡り抽出v2"
-      },
-      {
-        "date": "2026-08-08",
-        "kinds": [
-          "学び"
-        ],
-        "text": "完璧主義OSの暴走で新作を1年出せなかった、と講義中の自己開示から再認識",
-        "who": "OSシリーズ・自己理解",
         "src": "遡り抽出v2"
       },
       {
@@ -5382,21 +5395,12 @@
         "src": "遡り抽出v2"
       },
       {
-        "date": "2026-08-10",
+        "date": "2026-08-08",
         "kinds": [
-          "トライ"
+          "学び"
         ],
-        "text": "AI社員10人の「一人経営企画室」構想 — Slackハブ・毎週水曜承認モデル",
-        "who": "NAKAJI AI COMPANY",
-        "src": "遡り抽出v2"
-      },
-      {
-        "date": "2026-08-10",
-        "kinds": [
-          "トライ"
-        ],
-        "text": "受講生Q&Aの「金鉱脈」化とステップメール資産化を始勓",
-        "who": "質問鉱脈",
+        "text": "完璧主義OSの暴走で新作を1年出せなかった、と講義中の自己開示から再認識",
+        "who": "OSシリーズ・自己理解",
         "src": "遡り抽出v2"
       },
       {
@@ -5411,10 +5415,28 @@
       {
         "date": "2026-08-10",
         "kinds": [
+          "トライ"
+        ],
+        "text": "AI社員10人の「一人経営企画室」構想 — Slackハブ・毎週水曜承認モデル",
+        "who": "NAKAJI AI COMPANY",
+        "src": "遡り抽出v2"
+      },
+      {
+        "date": "2026-08-10",
+        "kinds": [
           "人"
         ],
         "text": "加絵さん駐車特訓・功介さんスカイライン購入(中古140万)・家族お盆スペシャル宅飲み",
         "who": "家族",
+        "src": "遡り抽出v2"
+      },
+      {
+        "date": "2026-08-10",
+        "kinds": [
+          "トライ"
+        ],
+        "text": "受講生Q&Aの「金鉱脈」化とステップメール資産化を始動",
+        "who": "質問鉱脈",
         "src": "遡り抽出v2"
       },
       {
@@ -5443,14 +5465,39 @@
         "text": "コーチング源流の歴史(CTI和解・ゴーン氏2400人研修)/感謝日記100日の臨界点/もごもご実況リーダーシップ",
         "who": "もんじゃ会の榊原君・大崎君ら後輩6名",
         "src": "遡り抽出v2"
+      },
+      {
+        "date": "2026-08-11",
+        "kinds": [
+          "人",
+          "初めて"
+        ],
+        "text": "上野・月島もんじゃ三九で6名会食(初訪問の店なら🌱確定)",
+        "who": "榊原君・大崎君ら(恩送り)",
+        "src": "遡り抽出v2"
+      },
+      {
+        "date": "2026-08-11",
+        "kinds": [
+          "人"
+        ],
+        "text": "京香ちゃん(3歳)にアンパンマンリュック贈呈/村上さんと共同制作/大石さん(同じ四緑木星)/ウクライナ留学生の「家族」の漢字に感動",
+        "who": "人脈・恩送り",
+        "src": "遡り抽出v2"
       }
     ]
   },
   "eco": {
     "baseName": "経済台帳_base",
-    "baseUrl": "https://docs.google.com/spreadsheets/d/10iB35m83Jr3swAhHPGQghEmvE6PZrwzcwERoz4Iay8k/edit",
+    "baseUrl": "https://docs.google.com/spreadsheets/d/10iB35m83Jr3swAhHPGQghEmvE6PZrwzcwERoz4Iay8k/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/1koH3sVzVu2sqyJvSv5DDXh1MBwShKmAL",
-    "used": [],
+    "asOf": null,
+    "used": [
+      {
+        "name": "経済台帳_base",
+        "rows": 0
+      }
+    ],
     "rows": []
   },
   "links": {
@@ -5458,25 +5505,25 @@
       "label": "GOKIGEN台帳フォルダ",
       "url": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
     },
+    "priv": {
+      "label": "GOKIGEN台帳フォルダ",
+      "url": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
+    },
     "know": {
       "label": "リミットレス台帳_base_v2",
-      "url": "https://docs.google.com/spreadsheets/d/1F2zCqmFHtHBgJMcAe6BxgQ5PnHlIyl3dL_sZ9aLqE40/edit"
+      "url": "https://docs.google.com/spreadsheets/d/1F2zCqmFHtHBgJMcAe6BxgQ5PnHlIyl3dL_sZ9aLqE40/edit?usp=drivesdk"
     },
     "spirit": {
       "label": "リミットレス台帳_base_v2",
-      "url": "https://docs.google.com/spreadsheets/d/1F2zCqmFHtHBgJMcAe6BxgQ5PnHlIyl3dL_sZ9aLqE40/edit"
+      "url": "https://docs.google.com/spreadsheets/d/1F2zCqmFHtHBgJMcAe6BxgQ5PnHlIyl3dL_sZ9aLqE40/edit?usp=drivesdk"
     },
     "work": {
       "label": "Udemy台帳_base",
       "url": "https://docs.google.com/spreadsheets/d/1LnBZZQ2I0HBlGr4hcfffizAJQl-WNybIBOefX9ZZBOw/edit?usp=drivesdk"
     },
-    "priv": {
-      "label": "GOKIGEN台帳フォルダ",
-      "url": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
-    },
     "eco": {
       "label": "経済台帳_base",
-      "url": "https://docs.google.com/spreadsheets/d/10iB35m83Jr3swAhHPGQghEmvE6PZrwzcwERoz4Iay8k/edit"
+      "url": "https://docs.google.com/spreadsheets/d/10iB35m83Jr3swAhHPGQghEmvE6PZrwzcwERoz4Iay8k/edit?usp=drivesdk"
     },
     "future": {
       "label": "未来ビジョン台帳_2026-08-13",
