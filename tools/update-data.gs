@@ -470,6 +470,7 @@ function readLedgerSheet_(sheet, srcName) {
   var values = sheet.getDataRange().getValues();
   var hd = findLedgerHeader_(values);
   if (!hd) return [];
+  var tz = sheetTimeZone_(sheet);   // 時刻セルは、このシートのタイムゾーンで書き戻す
   var out = [];
   for (var i = hd.row + 1; i < values.length; i++) {
     var row = values[i];
@@ -478,7 +479,7 @@ function readLedgerSheet_(sheet, srcName) {
     if (!date || !id) continue;
     out.push({
       date:        date,
-      time:        timeStr_(cell('time')),
+      time:        timeStr_(cell('time'), tz),
       id:          id,
       name:        str_(cell('name')),
       published:   ymStr_(cell('published')),
@@ -1026,9 +1027,23 @@ function mood_(v) {
   if (n >= 1 && n <= 5) return n * 2;
   return (n > 5 && n <= 10) ? n : null;
 }
-function timeStr_(v) {
-  if (v instanceof Date) return Utilities.formatDate(v, 'Asia/Tokyo', 'H:mm');
+/**
+ * 基準時刻を「9:36」の形にする。
+ *
+ * 時刻だけのセルは、そのスプレッドシートのタイムゾーンで作られた Date として渡ってくる。
+ * これを 'Asia/Tokyo' 固定で書き出すと時差のぶんだけズレる
+ * （2026-08-13の台帳の 6:30 が、アプリでは 23:30 と表示されていた）。
+ * 作られたときと同じタイムゾーンで書き戻せば、台帳で見たままの時刻になる。
+ */
+function timeStr_(v, tz) {
+  if (v instanceof Date) return Utilities.formatDate(v, tz || sheetTimeZone_(null), 'H:mm');
   return str_(v);
+}
+/** そのシートのタイムゾーン。取れないときはスクリプトのもの、それも無ければ東京 */
+function sheetTimeZone_(sheet) {
+  try { if (sheet) return sheet.getParent().getSpreadsheetTimeZone(); } catch (e) { /* 続けて次を試す */ }
+  try { return Session.getScriptTimeZone(); } catch (e) { /* テスト環境など */ }
+  return 'Asia/Tokyo';
 }
 function ymStr_(v) {
   if (v instanceof Date) return Utilities.formatDate(v, 'Asia/Tokyo', 'yyyy/M');

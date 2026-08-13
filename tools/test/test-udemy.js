@@ -14,10 +14,11 @@ const src = fs.readFileSync(path.join(__dirname, "..", "update-data.gs"), "utf8"
 const pick = (a, b) => src.slice(src.indexOf(a), b ? src.indexOf(b) : undefined);
 
 // Apps Script 側の道具を、テスト用に最小限だけ用意する
+const tzUsed = [];                       // 時刻をどのタイムゾーンで書き出したかを記録する
 const Utilities = {
   formatDate: (d, tz, fmt) => {
     const p = n => String(n).padStart(2, "0");
-    if (fmt === "H:mm") return d.getHours() + ":" + p(d.getMinutes());
+    if (fmt === "H:mm") { tzUsed.push(tz); return d.getHours() + ":" + p(d.getMinutes()); }
     if (fmt === "yyyy/M") return d.getFullYear() + "/" + (d.getMonth() + 1);
     return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
   }
@@ -28,7 +29,12 @@ eval(pick("var CONFIG", "// ===== STEP1"));
 eval(pick("// ===== Udemy台帳（base + デルタの合算） =====", "// 今公開中の data.json"));
 eval(pick("// ===== 変換ヘルパー =====", "// ===== GitHub ====="));
 
-const sheet = values => ({ getDataRange: () => ({ getValues: () => values }) });
+// 台帳のタイムゾーンは東京ではない（Apps Scriptの既定はロサンゼルス）。ここがズレの元だった。
+const SHEET_TZ = "America/Los_Angeles";
+const sheet = values => ({
+  getDataRange: () => ({ getValues: () => values }),
+  getParent: () => ({ getSpreadsheetTimeZone: () => SHEET_TZ })
+});
 
 let fail = 0;
 const ok = (cond, name, detail) => {
@@ -229,6 +235,21 @@ eq(M["2026-07"].from + "〜" + M["2026-07"].to, "2026-06-05〜2026-07-17",
   "★ルール①: 実測区間が data.json に残る（表示側が期間を明示できる）");
 ok(M["2026-08"].newEnroll !== M["2026-08"].enroll,
   "月間新規と累計を取り違えていない");
+
+/* ---------- 9. 基準時刻のタイムゾーン（6:30 が 23:30 になっていた件） ---------- */
+// 時刻だけのセルは、そのシートのタイムゾーンで作られたDateとして渡ってくる。
+// これを Asia/Tokyo 固定で書き出すと時差ぶんズレる。作られたときと同じ zone で書き戻すのが正しい。
+tzUsed.length = 0;
+const timeRows = readLedgerSheet_(sheet(DELTA_HEAD.concat(
+  [["2026-08-13", new Date(2026, 7, 13, 6, 30), "C10", "部下と組織の…", 17817, 67512.44, 4.18, "アプリスクショ"]])),
+  "Udemy台帳ログ_2026-08-13");
+eq(timeRows[0].time, "6:30", "★時刻セルが台帳で見たまま（6:30）で読める");
+eq(tzUsed[0], SHEET_TZ, "★時刻はそのシートのタイムゾーンで書き戻す");
+ok(tzUsed.indexOf("Asia/Tokyo") < 0,
+  "時刻の書き出しに Asia/Tokyo 固定を使っていない（使うと6:30が23:30になる）", tzUsed.join(","));
+eq(readLedgerSheet_(sheet(DELTA_HEAD.concat(
+  [["2026-08-13", "6:30", "C10", "コース", 17817, 67512.44, 4.18, "台帳"]])), "delta")[0].time, "6:30",
+  "文字で「6:30」と入っている台帳はそのまま読む");
 
 console.log(fail === 0 ? "\n全ケース合格 ✅" : "\n" + fail + "件 不一致 ❌");
 process.exit(fail === 0 ? 0 : 1);
