@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T08:29:51+09:00",
+  "generatedAt": "2026-08-15T12:42:09+09:00",
   "version": "1.2",
   "source": {
     "gokigenFolderId": "1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
@@ -51,6 +51,10 @@
       {
         "name": "Udemy台帳ログ_2026-08-15",
         "rows": 6
+      },
+      {
+        "name": "Udemy台帳ログ_2026-08-15",
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -1923,7 +1927,7 @@
     },
     {
       "date": "2026-08-15",
-      "time": "6:50",
+      "time": "8:40",
       "rows": [
         {
           "id": "C01",
@@ -1952,6 +1956,34 @@
           "monthEnroll": null,
           "cumRevenue": 3839.26,
           "rating": 4.06
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4517,
+          "monthEnroll": null,
+          "cumRevenue": 7354.36,
+          "rating": 4.16
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7659,
+          "monthEnroll": null,
+          "cumRevenue": 14896.8,
+          "rating": 4.16
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4860,
+          "monthEnroll": null,
+          "cumRevenue": 11282.77,
+          "rating": 4.04
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8113,
+          "monthEnroll": null,
+          "cumRevenue": 26405.16,
+          "rating": 3.88
         },
         {
           "id": "C09",
@@ -4931,8 +4963,8 @@
     },
     {
       "ym": "2026-08",
-      "enroll": 69905,
-      "newEnroll": 1477,
+      "enroll": 69931,
+      "newEnroll": 1503,
       "revenue": 192535.62,
       "from": "2026-07-17",
       "to": "2026-08-15",
@@ -4955,19 +4987,19 @@
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4513,
+          "enroll": 4517,
           "revenue": 7354.36
         },
         "C06": {
-          "enroll": 7649,
+          "enroll": 7659,
           "revenue": 14896.8
         },
         "C07": {
-          "enroll": 4855,
+          "enroll": 4860,
           "revenue": 11282.77
         },
         "C08": {
-          "enroll": 8106,
+          "enroll": 8113,
           "revenue": 26405.16
         },
         "C09": {
