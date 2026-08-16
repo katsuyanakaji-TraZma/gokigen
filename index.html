@@ -1273,14 +1273,21 @@ function wkChanges(D){
   /* 前週の起点が今週の起点と同じ記録だと、前週の増分がぜんぶ0になり、
      全コースが「前週は動きなし＝急変」になってしまう。その週は前週比を出さない。 */
   const canPrev=!!(prevStart&&prevStart.date<start.date);
+  /* 台帳の記録は毎日とはかぎらない（週1回の月もある）。今週ぶんと前週ぶんで
+     測った日数が違うまま割り算すると、日曜の朝は必ず「−95%の急変」になってしまう。
+     そこで前週比は「1日あたり」にそろえて比べ、今週が3日に満たないうちは出さない。 */
+  const days=(a,b)=>Math.max(1,Math.round((new Date(b+'T00:00:00+09:00')-new Date(a+'T00:00:00+09:00'))/86400000));
+  const curDays=days(start.date,end.date);
+  const prevDays=canPrev? days(prevStart.date,start.date) : null;
   const rows=(end.rows||[]).map(r=>{
     const e=enr(end,r.id), s=enr(start,r.id), p=canPrev? enr(prevStart,r.id) : null;
     const cur=(e!=null&&s!=null)? e-s : null;
     const prv=(s!=null&&p!=null)? s-p : null;
     let spike=null;
-    if(cur!=null&&prv!=null){
+    if(cur!=null&&prv!=null&&curDays>=3){
+      const rate=cur/curDays, prate=prv/prevDays;
       // 少人数のブレで毎週「急変」と言わないよう、どちらかが10人以上のときだけ見る
-      if(prv>0){ const ch=(cur-prv)/prv; if(Math.abs(ch)>=0.5&&(cur>=10||prv>=10)) spike={ratio:ch}; }
+      if(prate>0){ const ch=(rate-prate)/prate; if(Math.abs(ch)>=0.5&&(cur>=10||prv>=10)) spike={ratio:ch}; }
       else if(cur>=10) spike={ratio:null};      // 前週は動きなし → 動き出した
     }
     return {id:r.id, cur:cur, prev:prv, spike:spike, notes:wkNotes(D,r.id,w)};
@@ -1289,6 +1296,7 @@ function wkChanges(D){
   const top=rows.slice().sort((a,b)=>b.cur-a.cur).slice(0,3);
   const spikes=rows.filter(x=>x.spike&&top.indexOf(x)<0);
   return {ok:true, week:w, from:start.date, to:end.date, canPrev:canPrev,
+          curDays:curDays, prevDays:prevDays,
           prevFrom: canPrev? prevStart.date : null,
           total: rows.reduce((a,x)=>a+x.cur,0), top:top, spikes:spikes, rows:rows};
 }
@@ -1585,9 +1593,10 @@ function renderChanges(){
              if(n) n.textContent=''; return; }
   const names={};DATA.udemyCourses.forEach(x=>names[x.id]=x.short);
   const line=(x,rank)=>{
-    const sp=x.spike? '<span class="spike'+((x.prev==null||x.cur>=x.prev)?' up':'')+'">'+
-      (x.prev>0? '前週比'+(x.cur>=x.prev?'+':'−')+Math.round(Math.abs((x.cur-x.prev)/x.prev)*100)+'%'
-               : '前週は動きなし')+'</span>' : '';
+    const sp=x.spike? '<span class="spike'+((x.spike.ratio==null||x.spike.ratio>=0)?' up':'')+'">'+
+      (x.spike.ratio!=null
+        ? '1日あたり前週比'+(x.spike.ratio>=0?'+':'−')+Math.round(Math.abs(x.spike.ratio)*100)+'%'
+        : '前週は動きなし')+'</span>' : '';
     return '<div class="chg"><div class="cn">'+(rank? rank+'位 ':'')+
       esc(x.id+' '+(names[x.id]||''))+sp+'</div>'+
       '<div class="cv'+(x.cur<0?' bad':'')+'">'+signedInt(x.cur)+'人'+
@@ -1598,12 +1607,14 @@ function renderChanges(){
     (c.spikes.length? '<div class="cm" style="margin-top:8px">前週比±50%以上の急変</div>'+
                       c.spikes.map(x=>line(x,0)).join('')
                     : '<div class="cm" style="margin-top:8px">'+
-                      (c.canPrev? '前週比±50%以上の急変はありません。'
-                                : '前週にあたる記録がまだ無いので、前週比はお休みです（毎日デルタが入ると出ます）。')+
+                      (!c.canPrev? '前週にあたる記録がまだ無いので、前週比はお休みです（毎日デルタが入ると出ます）。'
+                       : c.curDays<3? '今週はまだ'+c.curDays+'日ぶんなので、前週比は週の後半から出します。'
+                       : '前週比±50%以上の急変はありません。')+
                       '</div>');
   if(n) n.textContent='今週は '+md(c.week.from)+'（日）〜'+md(c.week.to)+'（土）。'+
-    '実際に台帳で測れた区間は '+md(c.from)+'→'+md(c.to)+'で'+signedInt(c.total)+'人'+
-    (c.prevFrom? '（前週の起点 '+md(c.prevFrom)+'）' : '')+'。';
+    '実際に台帳で測れた区間は '+md(c.from)+'→'+md(c.to)+'（'+c.curDays+'日）で'+signedInt(c.total)+'人'+
+    (c.prevFrom? '。前週は '+md(c.prevFrom)+'→'+md(c.from)+'（'+c.prevDays+'日）' : '')+'。'+
+    '記録の間隔がまちまちなので、前週比は「1日あたり」にそろえて比べています。';
 }
 /* 新作の立ち上がり。棒＝新作の累計、灰色の縦線＝過去作の同じ月齢の平均 */
 function renderLaunch(){
