@@ -1089,8 +1089,8 @@ function buildWarnings_(ledger, courses, asOf) {
     for (var i = 0; i < list.length; i++) {
       if (sameCourseName_(list[i].name, last.name)) continue;
       add('warn', 'nameMismatch', id, last.date,
-        id + 'のコース名が食い違っています（' + list[i].date + '「' + shortName_(list[i].name) +
-        '」 ／ ' + last.date + '「' + shortName_(last.name) + '」）。IDの割当を確かめてください');
+        id + 'のコース名が食い違っています（' + list[i].date + '「' + nameForWarn_(list[i].name) +
+        '」 ／ ' + last.date + '「' + nameForWarn_(last.name) + '」）。IDの割当を確かめてください');
       break;      // 1コースにつき1件でよい
     }
   });
@@ -1118,7 +1118,20 @@ function sameCourseName_(a, b) {
   var x = norm(a), y = norm(b);
   if (!x || !y) return true;
   if (x === y) return true;
-  return x.indexOf(y) >= 0 || y.indexOf(x) >= 0;   // 片方がもう片方の一部＝略称とみなす
+  if (x.indexOf(y) >= 0 || y.indexOf(x) >= 0) return true;   // 片方がもう片方の一部＝略称
+  /* 台帳によっては、同じ講座でも「真ん中を省いた」書き方になっている。
+       base   『老害』と呼ばせない！40代・50代から始める 自己アップデート＆…
+       デルタ 『老害』と呼ばせない！自己アップデート＆…
+     これは片方がもう片方に含まれないので、頭がしっかり一致していれば同じ講座とみなす。
+     コースIDが入れ替わっていれば、頭の8文字から違うので取り違えは今までどおり見つかる。 */
+  var HEAD = 8;
+  if (x.length < HEAD || y.length < HEAD) return false;      // 短すぎる名前は頭一致で判断しない
+  return x.slice(0, HEAD) === y.slice(0, HEAD);
+}
+/** 警告文に出すコース名。短く切りすぎると「どこが違うのか」が分からなくなるので少し長めに残す */
+function nameForWarn_(s) {
+  var t = String(s == null ? '' : s).trim();
+  return t.length > 28 ? t.slice(0, 28) + '…' : t;
 }
 
 function uniqueIds_(byMonth) {
