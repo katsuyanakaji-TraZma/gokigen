@@ -5,8 +5,9 @@
  *   1. Googleドライブの「GOKIGEN台帳」「Udemy台帳」「リミットレス台帳」「経済台帳」の全ファイルと、
  *      GOKIGEN台帳フォルダの中の「未来ビジョン台帳」（Googleドキュメント）を読む
  *   2. 全期間を1つに統合する（日付が重複したら「新しいファイル」を優先）
- *   3. GitHub の katsuyanakaji-TraZma/gokigen に data.json を書き込む
- *   4. Vercel が自動でデプロイ → アプリが最新になる
+ *   3. 知識の部屋の集計（knowledge）と、取込時の異常（warnings）を作る
+ *   4. GitHub の katsuyanakaji-TraZma/gokigen に data.json を書き込む
+ *   5. Vercel が自動でデプロイ → アプリが最新になる
  *
  * 1日4回（8時・12時・18時・22時）自動実行。Google側のサーバーで動くので Mac mini の電源は関係ありません。
  * 前回の実行以降にどちらのフォルダにも新規/更新ファイルが無ければ、作り直さずスキップします。
@@ -17,6 +18,11 @@
  */
 
 // ===== 設定 =====
+// リミットレス台帳フォルダ（GOKIGENフォルダの中の「リミットレス台帳」）
+// この中のスプレッドシートを全部読む：土台の「リミットレス台帳_base_v2」と、
+// 日々増えていく「リミットレス台帳ログ_YYYY-MM-DD」。
+var LIMITLESS_FOLDER_ID = '1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg';
+
 var CONFIG = {
   gokigenFolderId: '1vJ7ddquLREjntkRUy235nv5FXaas2IoV',
   udemyFolderId:   '1g3hrPVRIYB_GOYho36DLRnITG_c5-elx',
@@ -24,7 +30,7 @@ var CONFIG = {
   udemyBaseName:    'Udemy台帳_base',
   udemyArchiveName: 'Udemyグラフ vol2_アーカイブ.xlsx',
   // v1.2で追加：リミットレス台帳（知識・精神）と経済台帳、未来ビジョン台帳
-  limitlessFolderId: '1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg',
+  limitlessFolderId: LIMITLESS_FOLDER_ID,
   limitlessBaseName: 'リミットレス台帳_base_v2',
   limitlessKeepDays: 180,          // data.jsonに残す日数（肥大化させない）
   ecoFolderId:  '1koH3sVzVu2sqyJvSv5DDXh1MBwShKmAL',
@@ -218,6 +224,21 @@ function dryRun() {
     (d.limitless.rows.length ? '（' + d.limitless.rows[0].date + '〜' +
       d.limitless.rows[d.limitless.rows.length - 1].date + '）' : '') +
     ' 読込元: ' + d.limitless.used.map(function (u) { return u.name + '(' + u.rows + ')'; }).join(' / '));
+  // v1.3の2つ
+  if (d.knowledge) {
+    var kw = d.knowledge;
+    var fmt = function (c) {
+      return kw.kinds.map(function (k) { return k + c[k]; }).join(' ');
+    };
+    Logger.log('知識（今週 ' + kw.week.from + '〜' + kw.week.to + '／' + kw.week.rows + '行）: ' + fmt(kw.week.counts));
+    Logger.log('知識（今月 ' + kw.month.from + '〜' + kw.month.to + '／' + kw.month.rows + '行）: ' + fmt(kw.month.counts));
+    Logger.log('　直近5行: ' + kw.recent.map(function (r) {
+      return r.date + '[' + (r.kindsText || '') + ']'; }).join(' / '));
+  }
+  var wn = d.warnings || [];
+  Logger.log('健全性: 警告' + wn.filter(function (w) { return w.level === 'warn'; }).length +
+             '件 / 情報' + wn.filter(function (w) { return w.level === 'info'; }).length + '件');
+  wn.forEach(function (w) { Logger.log('   [' + w.level + '] ' + w.text); });
   Logger.log('経済台帳: ' + d.eco.rows.length + '件' + (d.eco.asOf ? '（' + d.eco.asOf + '時点）' : '（データ待ち）'));
   Logger.log('📂リンク: ' + Object.keys(d.links).map(function (k) {
     return k + (d.links[k].url ? '✓' : '✗'); }).join(' '));
@@ -255,9 +276,22 @@ function buildData_(previous) {
   catch (e) { Logger.log('⚠️ 経済台帳を読めませんでした（前回の内容を維持します）: ' + e);
               eco = (previous && previous.eco) || { rows: [], used: [] }; }
 
+  var asOf = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
+
+  // v1.3：取込時の異常（累計の減少・日付異常・コース名不一致）を1本にまとめる
+  var warnings = [];
+  try { warnings = buildWarnings_(ledger, u.courses, asOf); }
+  catch (e) { Logger.log('⚠️ 健全性チェックでエラー（先に進みます）: ' + e); }
+
+  // v1.3：知識の部屋にそのまま出す形（今週＝日曜〜土曜／今月／直近5行）
+  var knowledge = null;
+  try { knowledge = buildKnowledge_(limitless, asOf); }
+  catch (e) { Logger.log('⚠️ knowledgeを作れませんでした（前回の内容を維持します）: ' + e);
+              knowledge = (previous && previous.knowledge) || null; }
+
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.2',
+    version: '1.3',
     source: {
       gokigenFolderId: CONFIG.gokigenFolderId,
       udemyFolderId: CONFIG.udemyFolderId,
@@ -275,8 +309,10 @@ function buildData_(previous) {
     udemyCourses: u.courses,
     udemy: u.snapshots,
     udemyMonthly: u.monthly,
+    warnings: warnings,
     future: future,
     limitless: limitless,
+    knowledge: knowledge,
     eco: eco,
     links: buildLinks_(base, limitless, eco, future, previous)
   };
@@ -293,8 +329,13 @@ function buildLinks_(udemyBase, limitless, eco, future, previous) {
   return {
     health: { label: 'GOKIGEN台帳フォルダ', url: gok },
     priv:   { label: 'GOKIGEN台帳フォルダ', url: gok },
-    know:   { label: CONFIG.limitlessBaseName, url: keep('know', limitless && limitless.baseUrl) },
-    spirit: { label: CONFIG.limitlessBaseName, url: keep('spirit', limitless && limitless.baseUrl) },
+    // 知識・精神は台帳フォルダごと開く（base だけでなく日々のログも見たいため）
+    know:   { label: 'リミットレス台帳フォルダ',
+              url: keep('know', (limitless && limitless.folderUrl) ||
+                                'https://drive.google.com/drive/folders/' + CONFIG.limitlessFolderId) },
+    spirit: { label: 'リミットレス台帳フォルダ',
+              url: keep('spirit', (limitless && limitless.folderUrl) ||
+                                  'https://drive.google.com/drive/folders/' + CONFIG.limitlessFolderId) },
     work:   { label: CONFIG.udemyBaseName,
               url: udemyBase ? udemyBase.getUrl() : ((previous && previous.udemyBaseUrl) || null) },
     eco:    { label: CONFIG.ecoBaseName, url: keep('eco', eco && eco.baseUrl) },
@@ -438,10 +479,14 @@ var LEDGER_COLS = {
   published:   ['公開年月', '公開月'],
   cumEnroll:   ['累計登録', '累計登録者', '累計受講生'],
   monthEnroll: ['月間登録'],
-  cumRevenue:  ['累計収益'],          // 「累計収益(USD)」「累計収益USD」も正規化すると同じになる
+  cumRevenue:  ['累計収益', '収益'],  // 「累計収益(USD)」「累計収益USD」も正規化すると同じになる
   rating:      ['評価'],
+  note:        ['施策メモ', '施策', 'メモ'],
   src:         ['出所']
 };
+/* v1.3：デルタ（Udemy台帳ログ_YYYY-MM-DD）に「評価」「収益」「施策メモ」が入るようになった。
+   ただし列が無い月も必ずある。列が無ければ hd.map にキーが入らず、cell() が null を返し、
+   その項目だけ空になって残りはこれまでどおり動く（＝あっても無くても壊れない）。 */
 
 // 見出しのゆらぎを吸収する（空白・かっこ・USD を落とす）
 function normHead_(v) {
@@ -487,6 +532,7 @@ function readLedgerSheet_(sheet, srcName) {
       monthEnroll: num_(cell('monthEnroll')),
       cumRevenue:  money_(cell('cumRevenue')),
       rating:      num_(cell('rating')),
+      note:        str_(cell('note')),      // 施策メモ（無い月は null）
       src:         str_(cell('src')) || srcName
     });
   }
@@ -546,7 +592,7 @@ function readUdemyLedger_() {
 // 同じ記録日×コースIDがぶつかったとき。強い（後から読んだ）方を採用し、空欄だけ弱い方で埋める。
 function mergeLedger_(prev, next) {
   if (!prev) return next;
-  ['time','name','published','cumEnroll','monthEnroll','cumRevenue','rating','src'].forEach(function (f) {
+  ['time','name','published','cumEnroll','monthEnroll','cumRevenue','rating','note','src'].forEach(function (f) {
     if (next[f] == null && prev[f] != null) next[f] = prev[f];
   });
   return next;
@@ -591,6 +637,15 @@ function buildUdemy_(ledger, previous) {
   Object.keys(extra).sort().forEach(function (id) {
     courses.push({ id: id, short: shortName_(extra[id].name) || id, published: extra[id].published || null });
   });
+  /* 発売月は base の「公開年月」を正とする。書かれていないコースは、
+     台帳にいちばん最初に現れた月を発売月とみなす（③新作の立ち上がりで使う）。 */
+  var firstYm = {};
+  rows.forEach(function (r) {
+    var ym = r.date.slice(0, 7);
+    if (!firstYm[r.id] || ym < firstYm[r.id]) firstYm[r.id] = ym;
+  });
+  courses.forEach(function (c) { if (firstYm[c.id]) c.firstYm = firstYm[c.id]; });
+
   var ids = courses.map(function (c) { return c.id; });
 
   // スナップショット（直近だけ。全部入れるとdata.jsonが肥大するため）
@@ -600,8 +655,10 @@ function buildUdemy_(ledger, previous) {
       date: d,
       time: (list[0] && list[0].time) || null,
       rows: list.map(function (r) {
-        return { id: r.id, cumEnroll: r.cumEnroll, monthEnroll: r.monthEnroll,
-                 cumRevenue: r.cumRevenue, rating: r.rating };
+        var o = { id: r.id, cumEnroll: r.cumEnroll, monthEnroll: r.monthEnroll,
+                  cumRevenue: r.cumRevenue, rating: r.rating };
+        if (r.note) o.note = r.note;      // 施策メモ。書かれた日だけ入れる（無駄に膨らませない）
+        return o;
       })
     };
   });
@@ -699,6 +756,117 @@ function checkCumulative_(rows) {
   });
   return bad;
 }
+/**
+ * v1.3【健全性】取り込みのときに見つけた異常を1本の配列にまとめる。
+ * アプリはこれを仕事タブの先頭に「⚠️バッジ」として出す（タップで中身が開く）。
+ *
+ * 2段階に分ける：
+ *   warn（警告）… 数字が信用できない可能性があるもの。IDの取り違え・大きな逆行・名前の食い違い・未来日付
+ *   info（情報）… 起きても不思議ではない小さな揺らぎ。C04の返金のような数人・数ドルの目減りなど
+ * 判断に迷う「小さな負のデルタ」を警告にすると、毎日⚠️が出て誰も見なくなるため分けている。
+ */
+var WARN_ENROLL_BIG = 10;      // 累計登録がこの人数以上減ったら「警告」
+var WARN_REVENUE_BIG = 50;     // 累計収益がこのドル以上減ったら「警告」
+var WARN_STALE_DAYS = 3;       // 台帳が何日止まったら知らせるか（7日以上で「警告」）
+var WARN_LIMIT = 20;           // data.jsonに残す件数の上限
+
+function buildWarnings_(ledger, courses, asOf) {
+  var rows = (ledger && ledger.rows) || [];
+  var out = [];
+  var label = {};
+  (courses || []).forEach(function (c) { label[c.id] = (c.id + ' ' + (c.short || '')).trim(); });
+  var nameOf = function (id) { return label[id] || id; };
+  var add = function (level, kind, course, date, text) {
+    out.push({ level: level, kind: kind, course: course || null, date: date || null, text: text });
+  };
+
+  // ① 累計の減少（累計は減らないはず）
+  var seen = {};
+  rows.forEach(function (r) {
+    var p = seen[r.id];
+    if (p) {
+      if (r.cumEnroll != null && p.e != null && r.cumEnroll < p.e) {
+        var de = p.e - r.cumEnroll;
+        add(de >= WARN_ENROLL_BIG ? 'warn' : 'info', 'enrollDrop', r.id, r.date,
+          nameOf(r.id) + 'の累計登録が ' + p.d + ' の ' + p.e + '人 → ' + r.date + ' の ' +
+          r.cumEnroll + '人 と' + de + '人減っています' +
+          (de >= WARN_ENROLL_BIG ? '（コースIDの取り違え・列の読み違えを疑ってください）'
+                                 : '（返金などの小さな揺らぎとみられます）'));
+      }
+      if (r.cumRevenue != null && p.r != null && r.cumRevenue < p.r - 0.005) {
+        var dr = round2_(p.r - r.cumRevenue);
+        add(dr >= WARN_REVENUE_BIG ? 'warn' : 'info', 'revenueDrop', r.id, r.date,
+          nameOf(r.id) + 'の累計収益が ' + p.d + ' の $' + round2_(p.r) + ' → ' + r.date + ' の $' +
+          round2_(r.cumRevenue) + ' と $' + dr + ' 減っています' +
+          (dr >= WARN_REVENUE_BIG ? '（列の読み違えを疑ってください）' : '（返金とみられます）'));
+      }
+    }
+    if (!p || r.date >= p.d) {
+      seen[r.id] = { d: r.date,
+                     e: r.cumEnroll != null ? r.cumEnroll : (p ? p.e : null),
+                     r: r.cumRevenue != null ? r.cumRevenue : (p ? p.r : null) };
+    }
+  });
+
+  // ② 日付の異常
+  var dates = rows.map(function (r) { return r.date; }).sort();
+  if (dates.length) {
+    var latest = dates[dates.length - 1];
+    if (latest > asOf) {
+      add('warn', 'futureDate', null, latest,
+        '台帳に未来の日付（' + latest + '）の記録があります。記録日の書き間違いを疑ってください');
+    } else {
+      var stale = Math.round((new Date(asOf + 'T00:00:00Z') - new Date(latest + 'T00:00:00Z')) / 86400000);
+      if (stale >= WARN_STALE_DAYS) {
+        add(stale >= 7 ? 'warn' : 'info', 'stale', null, latest,
+          'Udemy台帳が' + stale + '日更新されていません（最新の記録は ' + latest + '）');
+      }
+    }
+  }
+
+  // ③ コース名の不一致（同じIDに、別ものとしか思えない名前が付いている）
+  var names = {};
+  rows.forEach(function (r) {
+    if (!r.name) return;
+    (names[r.id] = names[r.id] || []).push({ date: r.date, name: r.name });
+  });
+  Object.keys(names).sort().forEach(function (id) {
+    var list = names[id], last = list[list.length - 1];
+    for (var i = 0; i < list.length; i++) {
+      if (sameCourseName_(list[i].name, last.name)) continue;
+      add('warn', 'nameMismatch', id, last.date,
+        id + 'のコース名が食い違っています（' + list[i].date + '「' + shortName_(list[i].name) +
+        '」 ／ ' + last.date + '「' + shortName_(last.name) + '」）。IDの割当を確かめてください');
+      break;      // 1コースにつき1件でよい
+    }
+  });
+
+  // 警告を先に、新しい日付から。多すぎるときは切って、切ったことも伝える
+  out.sort(function (a, b) {
+    if (a.level !== b.level) return a.level === 'warn' ? -1 : 1;
+    return (b.date || '') < (a.date || '') ? -1 : 1;
+  });
+  var total = out.length;
+  if (total > WARN_LIMIT) {
+    out = out.slice(0, WARN_LIMIT);
+    out.push({ level: 'info', kind: 'truncated', course: null, date: null,
+               text: 'ほかにも ' + (total - WARN_LIMIT) + '件（古いものは省きました）' });
+  }
+  Logger.log('健全性チェック: 警告' + out.filter(function (w) { return w.level === 'warn'; }).length +
+             '件 / 情報' + out.filter(function (w) { return w.level === 'info'; }).length + '件');
+  return out;
+}
+/** コース名が「同じものを指している」とみなせるか。略称と正式名の差では警告を出さない */
+function sameCourseName_(a, b) {
+  var norm = function (s) {
+    return String(s || '').replace(/[\s　【】『』「」（）()［］\[\]、。・,.\-—ー"'!！?？＆&／\/]/g, '');
+  };
+  var x = norm(a), y = norm(b);
+  if (!x || !y) return true;
+  if (x === y) return true;
+  return x.indexOf(y) >= 0 || y.indexOf(x) >= 0;   // 片方がもう片方の一部＝略称とみなす
+}
+
 function uniqueIds_(byMonth) {
   var s = {};
   Object.keys(byMonth).forEach(function (ym) { Object.keys(byMonth[ym]).forEach(function (id) { s[id] = 1; }); });
@@ -866,16 +1034,29 @@ var LIMITLESS_COLS = {
   date: ['日付', '記録日'], kind: ['種別', '分類'], text: ['内容'],
   who: ['関連'], src: ['出所']
 };
-/** 種別セルは「🔥トライ,🌱初めて」のように複数入ることがある。絵文字ではなく言葉で判定する */
-function limitlessKinds_(v) {
-  var out = [];
+/**
+ * 種別セルを「確定タグ」と「未確定タグ」に分ける。
+ *   ・「🔥トライ,🌱初めて」のように複数入ることがある → それぞれ1つとして数える
+ *   ・「🌱初めて?」のように「?」が付いたものは本人がまだ決めかねている印。
+ *     集計からは外し、詳細の行にはそのまま（?付きで）表示する。
+ * 絵文字は増減しうるので、絵文字ではなく言葉（教え/トライ/初めて/学び/人/もがき）で判定する。
+ */
+function limitlessTags_(v) {
+  var sure = [], unsure = [];
   String(v == null ? '' : v).split(/[,、\/／]/).forEach(function (tok) {
+    var q = /[?？]/.test(tok);                        // このタグに「?」が付いているか
     LIMITLESS_KINDS.forEach(function (k) {
-      if (tok.indexOf(k) >= 0 && out.indexOf(k) < 0) out.push(k);
+      if (tok.indexOf(k) < 0) return;
+      var arr = q ? unsure : sure;
+      if (arr.indexOf(k) < 0) arr.push(k);
     });
   });
-  return out;
+  // 同じタグが確定と未確定の両方で出てきたら、確定を採る
+  unsure = unsure.filter(function (k) { return sure.indexOf(k) < 0; });
+  return { kinds: sure, unsure: unsure };
 }
+/** 集計に使う確定タグだけを返す（従来の呼び出し用） */
+function limitlessKinds_(v) { return limitlessTags_(v).kinds; }
 function readLimitless_() {
   var srcs = ledgerFiles_(CONFIG.limitlessFolderId, CONFIG.limitlessBaseName,
                           /^リミットレス台帳ログ_\d{4}-\d{2}-\d{2}/);
@@ -893,10 +1074,14 @@ function readLimitless_() {
       var date = toDate_(row[hd.map.date]);
       var text = hd.map.text != null ? str_(row[hd.map.text]) : null;
       if (!date || !text) continue;
+      var raw = hd.map.kind != null ? str_(row[hd.map.kind]) : null;
+      var tags = limitlessTags_(raw);
       // 同じ日付×内容はデルタ（後から読んだ方）が勝つ
       byKey[date + '|' + text] = {
         date: date,
-        kinds: hd.map.kind != null ? limitlessKinds_(row[hd.map.kind]) : [],
+        kinds: tags.kinds,          // 集計に数えるタグ（「?」なし）
+        unsure: tags.unsure,        // 「?」付き＝未確定。数えないが画面には出す
+        kindsText: raw,             // 種別セルの原文（詳細行の表示用）
         text: text,
         who: hd.map.who != null ? str_(row[hd.map.who]) : null,
         src: (hd.map.src != null ? str_(row[hd.map.src]) : null) || s.name
@@ -910,7 +1095,70 @@ function readLimitless_() {
     new Date(new Date().getTime() - CONFIG.limitlessKeepDays * 86400000), 'Asia/Tokyo', 'yyyy-MM-dd');
   rows = rows.filter(function (r) { return r.date >= cutoff; });
   Logger.log('リミットレス台帳: ' + rows.length + '行（' + CONFIG.limitlessKeepDays + '日以内）');
-  return { baseName: CONFIG.limitlessBaseName, baseUrl: baseUrl, used: used, rows: rows };
+  return { baseName: CONFIG.limitlessBaseName, baseUrl: baseUrl,
+           folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.limitlessFolderId,
+           used: used, rows: rows };
+}
+
+/**
+ * 知識の部屋にそのまま出す形（data.json の knowledge）。
+ *   week  … 今週＝日曜0:00〜土曜24:00（基準日を含む週）の6分類カウント
+ *   month … 今月（1日〜末日）の6分類カウント
+ *   recent… 直近5行（新しい順）
+ *   folderUrl … 「リミットレス台帳」フォルダへのリンク
+ * 「?」付きタグは kinds に入っていないので、ここで数えれば自動的に集計から外れる。
+ * 1行に2つタグがあれば、それぞれのタグで1カウントずつ数える。
+ */
+function buildKnowledge_(limitless, asOf) {
+  var rows = (limitless && limitless.rows) || [];
+  var week = weekWindow_(asOf), month = monthWindow_(asOf);
+  var count = function (win) {
+    var c = {};
+    LIMITLESS_KINDS.forEach(function (k) { c[k] = 0; });
+    rows.forEach(function (r) {
+      if (r.date < win.from || r.date > win.to) return;
+      (r.kinds || []).forEach(function (k) { if (c[k] != null) c[k]++; });
+    });
+    return c;
+  };
+  var inWin = function (win) {
+    return rows.filter(function (r) { return r.date >= win.from && r.date <= win.to; }).length;
+  };
+  var recent = rows.slice(-5).reverse().map(function (r) {
+    return { date: r.date, kinds: r.kinds, unsure: r.unsure,
+             kindsText: r.kindsText, text: r.text, who: r.who };
+  });
+  return {
+    asOf: asOf,
+    kinds: LIMITLESS_KINDS,
+    week:  { from: week.from,  to: week.to,  rows: inWin(week),  counts: count(week) },
+    month: { from: month.from, to: month.to, rows: inWin(month), counts: count(month) },
+    recent: recent,
+    total: rows.length,
+    folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.limitlessFolderId,
+    baseName: CONFIG.limitlessBaseName
+  };
+}
+
+/** 日付文字列の曜日番号（0=日 … 6=土）。タイムゾーンに左右されないようUTCで計算する */
+function dowNum_(ds) {
+  return new Date(Date.UTC(+ds.slice(0, 4), +ds.slice(5, 7) - 1, +ds.slice(8, 10))).getUTCDay();
+}
+/** 日付文字列に n 日足す */
+function addDays_(ds, n) {
+  var d = new Date(Date.UTC(+ds.slice(0, 4), +ds.slice(5, 7) - 1, +ds.slice(8, 10) + n));
+  return d.getUTCFullYear() + '-' + ('0' + (d.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + d.getUTCDate()).slice(-2);
+}
+/** その日を含む週（日曜0:00〜土曜24:00） */
+function weekWindow_(ds) {
+  var from = addDays_(ds, -dowNum_(ds));
+  return { from: from, to: addDays_(from, 6) };
+}
+/** その日を含む月（1日〜末日） */
+function monthWindow_(ds) {
+  var first = ds.slice(0, 7) + '-01';
+  var d = new Date(Date.UTC(+ds.slice(0, 4), +ds.slice(5, 7), 0));   // 翌月0日＝今月末日
+  return { from: first, to: ds.slice(0, 7) + '-' + ('0' + d.getUTCDate()).slice(-2) };
 }
 
 // ===== v1.2: 経済台帳（経済の部屋） =====

@@ -274,7 +274,10 @@ console.log("\n【Apps Script: 台帳の読み分け】");
 
   eq(JSON.stringify(limitlessKinds_("🔥トライ,🌱初めて")), JSON.stringify(["トライ", "初めて"]),
      "★種別が2つ入ったセルを両方拾う");
-  eq(JSON.stringify(limitlessKinds_("🌱初めて?")), JSON.stringify(["初めて"]), "「?」付きでも拾う");
+  // v1.3から：「?」付きは本人がまだ決めかねている印なので集計に数えない（詳細行には残す）
+  eq(JSON.stringify(limitlessKinds_("🌱初めて?")), JSON.stringify([]), "「?」付きは数えない");
+  eq(JSON.stringify(limitlessTags_("🌱初めて?").unsure), JSON.stringify(["初めて"]),
+     "「?」付きは未確定として取っておく");
   eq(JSON.stringify(limitlessKinds_("🗣️教え")), JSON.stringify(["教え"]), "絵文字ではなく言葉で判定する");
   eq(JSON.stringify(limitlessKinds_("🤝人,🌱初めて")), JSON.stringify(["人", "初めて"]), "🤝人を拾う");
   eq(JSON.stringify(limitlessKinds_("")), JSON.stringify([]), "空セルは空");

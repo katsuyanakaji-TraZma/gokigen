@@ -149,13 +149,65 @@
   .voice .vi{font-size:19px;flex:none;line-height:1.3}
   .voice .vt{font-size:12.5px;line-height:1.75;font-weight:700;color:var(--text)}
   .voice .vx{font-size:10px;color:var(--muted);font-weight:700;margin-top:4px}
-  /* 週間カウント（知識・精神） */
-  .wk{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
-  .wk div{background:var(--bg);border:1.5px solid var(--border);border-radius:11px;padding:9px 6px;text-align:center}
-  .wk .wl{font-size:10.5px;color:var(--soft);font-weight:700}
-  .wk .wv{font-size:19px;font-weight:800;margin-top:2px}
   .waiting{background:rgba(155,89,255,.07);border:1.5px dashed rgba(155,89,255,.45);border-radius:12px;
     padding:12px;font-size:12.5px;line-height:1.8;color:var(--soft)}
+  /* 6分類カウンター（今週／今月） */
+  .kwt{width:100%;border-collapse:collapse;font-size:13px}
+  .kwt th{font-size:10px;color:var(--muted);font-weight:700;padding:4px 3px;border-bottom:1.5px solid var(--border);text-align:right}
+  .kwt th:first-child{text-align:left}
+  .kwt td{padding:8px 3px;border-bottom:1px solid var(--border);text-align:right;font-size:17px;font-weight:800}
+  .kwt tr:last-child td{border-bottom:none}
+  .kwt td:first-child{text-align:left;font-size:12.5px;font-weight:700;color:var(--soft)}
+  .kwt td.z{color:var(--muted);font-weight:700}
+  .kwt td.mo{color:var(--soft);font-size:15px}
+  /* 直近5件（折りたたみの中） */
+  .lmr{padding:9px 0;border-bottom:1px solid var(--border)}
+  .lmr:last-child{border-bottom:none}
+  .lmr .lmd{font-size:11px;color:var(--muted);font-weight:700}
+  .lmr .lmk{font-size:11px;font-weight:800;color:var(--green);margin-left:6px}
+  .lmr .lmt{font-size:12.5px;line-height:1.75;margin-top:3px}
+  .lmr .lmw{font-size:11px;color:var(--muted);margin-top:2px}
+  /* ⚠️ 健全性バッジ（仕事タブの先頭） */
+  .wcard{border-left:5px solid var(--red)}
+  .wcard.info{border-left-color:var(--yellow)}
+  .wsum{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800}
+  .wsum::-webkit-details-marker{display:none}
+  .wsum::after{content:'▼';margin-left:auto;font-size:10px;color:var(--muted);transition:transform .2s}
+  details[open]>.wsum::after{transform:rotate(180deg)}
+  .wpill{font-size:10px;font-weight:800;color:#fff;background:var(--red);border-radius:999px;padding:3px 9px}
+  .wpill.info{background:var(--yellow);color:#4a3000}
+  .witem{padding:9px 0;border-bottom:1px solid var(--border);font-size:12px;line-height:1.75}
+  .witem:last-child{border-bottom:none}
+  .witem b{font-size:10px;font-weight:800;border-radius:999px;padding:2px 7px;margin-right:6px;
+    color:#fff;background:var(--red)}
+  .witem b.info{background:var(--yellow);color:#4a3000}
+  /* 4象限のラベル */
+  .qb{display:inline-block;font-size:10px;font-weight:800;border-radius:999px;padding:2px 7px;margin-left:4px;white-space:nowrap}
+  .qb.ace{background:rgba(34,199,122,.15);color:#128550}
+  .qb.fix{background:rgba(255,107,53,.15);color:#c0410f}
+  .qb.pr{background:rgba(74,126,255,.15);color:#2a53c0}
+  .qb.grow{background:rgba(155,89,255,.15);color:#6b32c0}
+  .qb.wait{background:var(--bg);color:var(--muted)}
+  .qleg{font-size:11px;color:var(--muted);line-height:1.8;margin-top:8px}
+  /* 新作の立ち上がり（過去作の同月齢平均と比べる） */
+  .lg{margin-top:8px}
+  .lg .lgh{font-size:12px;font-weight:800;margin-bottom:5px}
+  .lgrow{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px}
+  .lgrow .lgk{width:44px;color:var(--muted);font-weight:700;flex:none}
+  .lgrow .lgbar{flex:1;height:14px;background:var(--bg);border-radius:7px;overflow:hidden;position:relative}
+  .lgrow .lgf{position:absolute;left:0;top:0;height:100%;border-radius:7px;background:linear-gradient(90deg,#4a7eff,#9b59ff)}
+  .lgrow .lgavg{position:absolute;top:-2px;width:2px;height:18px;background:var(--muted)}
+  .lgrow .lgv{width:96px;text-align:right;font-weight:700;flex:none}
+  /* 今週の変化点 */
+  .chg{padding:9px 0;border-bottom:1px solid var(--border)}
+  .chg:last-of-type{border-bottom:none}
+  .chg .cn{font-size:12.5px;font-weight:700}
+  .chg .cv{font-size:12px;font-weight:800;color:var(--green)}
+  .chg .cv.bad{color:var(--orange)}
+  .chg .cm{font-size:11px;color:var(--muted);line-height:1.7;margin-top:2px}
+  .chg .spike{font-size:10px;font-weight:800;border-radius:999px;padding:2px 7px;margin-left:6px;
+    background:rgba(255,107,53,.15);color:#c0410f}
+  .chg .spike.up{background:rgba(34,199,122,.15);color:#128550}
   /* kaishoku */
   .kg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
   .kb{border-radius:12px;padding:12px}
@@ -301,6 +353,14 @@
 <div class="page" id="pg-work">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🚀 仕事</div></div>
 
+  <!-- 取込時の異常（data.jsonのwarnings）。何も無い日は表示しない -->
+  <div class="card wcard" id="warnCard" style="display:none">
+    <details>
+      <summary class="wsum" id="warnSummary"></summary>
+      <div id="warnList"></div>
+    </details>
+  </div>
+
   <!-- 分析メモ（4視点を機械算出し、その日いちばん情報量の多い1つを表示） -->
   <div class="card amemo">
     <div class="ct"><span class="dot" style="background:var(--orange)"></span>🔎 分析メモ<span class="atag" id="anaTag"></span></div>
@@ -325,6 +385,11 @@
     <div class="pace" id="udemyAsOf"></div>
   </div>
   <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--green)"></span>今週の変化点</div>
+    <div id="chgBody"></div>
+    <div class="pace" id="chgNote"></div>
+  </div>
+  <div class="card">
     <div class="ct"><span class="dot" style="background:var(--pink)"></span>累計登録者の推移（2021年10月〜）</div>
     <div class="csel" id="courseSel"></div>
     <canvas id="chart5y" height="200"></canvas>
@@ -332,10 +397,16 @@
     <a class="dlink off" id="udemyDetail" target="_blank" rel="noopener">📂 詳細データを開く<span class="arw">→</span></a>
   </div>
   <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--blue)"></span>コース別（前回比）</div>
+    <div class="ct"><span class="dot" style="background:var(--purple)"></span>新作の立ち上がり（過去作の同じ月齢と比べる）</div>
+    <div id="lgBody"></div>
+    <div class="pace" id="lgNote"></div>
+  </div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--blue)"></span>コース別（前回比・4象限）</div>
     <div style="overflow-x:auto">
       <table class="ut" id="udemyTable"></table>
     </div>
+    <div class="qleg" id="quadLegend"></div>
   </div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--purple)"></span>2030年4月29日への進捗</div>
@@ -383,13 +454,17 @@
     </div>
   </div>
   <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--green)"></span>今週のリミットレス（直近7日）</div>
-    <div class="wk" id="knowWeek"></div>
+    <div class="ct"><span class="dot" style="background:var(--green)"></span>リミットレス6分類（今週・今月）</div>
+    <table class="kwt" id="knowKinds"></table>
     <div class="pace" id="knowWeekNote"></div>
-  </div>
-  <div class="card"><div class="ct"><span class="dot" style="background:var(--purple)"></span>直近の学び・出来事（台帳より）</div>
-    <div id="knowLog"></div>
+    <details class="adet">
+      <summary>直近5件を見る</summary>
+      <div id="knowRecent"></div>
+    </details>
     <div id="dl-know"></div>
+  </div>
+  <div class="card"><div class="ct"><span class="dot" style="background:var(--purple)"></span>直近の学び・出来事（GOKIGEN台帳の一言より）</div>
+    <div id="knowLog"></div>
   </div>
   <div class="card fut" id="fut-know"></div>
 </div>
@@ -411,7 +486,7 @@
       <div class="mb"><div class="ml">💍 睡眠スコア</div>
         <div class="mi-row"><span class="mv" id="v-sleep2">—</span><span class="mu">点</span></div>
         <div class="md" id="d-sleep2"></div></div>
-      <div class="mb"><div class="ml">🌱 今週の初めて・トライ</div>
+      <div class="mb"><div class="ml">🌱 直近7日の初めて・トライ</div>
         <div class="mi-row"><span class="mv" id="v-doki">—</span><span class="mu">件</span></div>
         <div class="md" id="d-doki"></div></div>
     </div>
@@ -1019,6 +1094,206 @@ function computeUdemyAnalysis(D){
 }
 /* ===== 分析メモ ここまで ===== */
 
+/* ===== 知識の部屋（リミットレス台帳の集計）ここから =====
+   ここから下の「ここまで」までは DOM に触らない（tools/test/test-knowledge.js が切り出して検証する）。
+   ・種別は「🤝人,🌱初めて」のように複数入ることがある。それぞれ1つとして数える
+   ・「🌱初めて?」のように「?」が付いたものは本人がまだ決めかねている印。
+     数えないが、直近5件の行にはそのまま（?付きで）出す
+   ・今週＝日曜0:00〜土曜24:00（基準日を含む週）／今月＝その月の1日〜末日 */
+var LM_KINDS=[['トライ','🔥'],['初めて','🌱'],['学び','💡'],['教え','🗣️'],['人','🤝'],['もがき','🌀']];
+/* リミットレス台帳フォルダ（📂の行き先）。data.jsonが古くてもここが開けるように控えを持つ */
+var LM_FOLDER_URL='https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg';
+var LM_NAMES=LM_KINDS.map(k=>k[0]);
+
+/* 曜日番号（0=日 … 6=土）。端末のタイムゾーンに左右されないようUTCで計算する */
+function lmDow(ds){return new Date(Date.UTC(+ds.slice(0,4),+ds.slice(5,7)-1,+ds.slice(8,10))).getUTCDay()}
+/* その日を含む週（日曜〜土曜） */
+function lmWeekWin(ds){const from=aYmdAdd(ds,-lmDow(ds));return {from:from,to:aYmdAdd(from,6)}}
+/* その日を含む月（1日〜末日） */
+function lmMonthWin(ds){
+  const d=new Date(Date.UTC(+ds.slice(0,4),+ds.slice(5,7),0));   // 翌月0日＝今月末日
+  return {from:ds.slice(0,7)+'-01', to:ds.slice(0,7)+'-'+pad(d.getUTCDate())};
+}
+/* 種別セルの原文を、数える（確定）タグと数えない（?付き）タグに分ける。
+   update-data.gs の limitlessTags_ と同じ規則にしてある */
+function lmSplit(text){
+  const sure=[],unsure=[];
+  String(text==null?'':text).split(/[,、\/／]/).forEach(tok=>{
+    const q=/[?？]/.test(tok);
+    LM_NAMES.forEach(k=>{ if(tok.indexOf(k)<0) return;
+      const a=q?unsure:sure; if(a.indexOf(k)<0) a.push(k); });
+  });
+  return {kinds:sure, unsure:unsure.filter(k=>sure.indexOf(k)<0)};
+}
+/* 1行から「数えるタグ」を取り出す。新しいdata.jsonは種別の原文(kindsText)を持っているので
+   そこから数え直す。古いdata.jsonには原文が無いので kinds をそのまま使う */
+function lmKindsOf(r){ return (r&&r.kindsText!=null)? lmSplit(r.kindsText).kinds : ((r&&r.kinds)||[]); }
+function lmRows(D){ return ((D.limitless||{}).rows)||[]; }
+function lmAsOf(D){
+  return (D.generatedAt||'').slice(0,10) ||
+         ((D.health&&D.health.length)? D.health[D.health.length-1].date : '');
+}
+function lmCount(rows,win){
+  const c={}; LM_NAMES.forEach(k=>c[k]=0);
+  let n=0;
+  rows.forEach(r=>{
+    if(r.date<win.from||r.date>win.to) return;
+    n++;
+    lmKindsOf(r).forEach(k=>{ if(c[k]!=null) c[k]++; });   // 2つ付いていれば2つとも数える
+  });
+  return {counts:c, rows:n};
+}
+/* 画面に出す形。data.jsonに knowledge があればそれを使い、
+   無い（＝Apps Scriptがまだ古い）ときは台帳の行からその場で同じ計算をする */
+function computeKnowledge(D){
+  const asOf=lmAsOf(D), k=D&&D.knowledge;
+  if(k&&k.week&&k.month)
+    return {asOf:k.asOf||asOf, week:k.week, month:k.month, recent:k.recent||[],
+            folderUrl:k.folderUrl||LM_FOLDER_URL, total:k.total!=null?k.total:lmRows(D).length, from:'data.json'};
+  const rows=lmRows(D), w=lmWeekWin(asOf), m=lmMonthWin(asOf);
+  const wc=lmCount(rows,w), mc=lmCount(rows,m);
+  return {asOf:asOf,
+    week: {from:w.from, to:w.to, rows:wc.rows, counts:wc.counts},
+    month:{from:m.from, to:m.to, rows:mc.rows, counts:mc.counts},
+    recent: rows.slice(-5).reverse(),
+    folderUrl:((D.limitless||{}).folderUrl)||LM_FOLDER_URL,
+    total:rows.length, from:'アプリ側で集計'};
+}
+/* ===== 知識の部屋 ここまで ===== */
+
+/* ===== 仕事タブ v1.3（健全性バッジ／4象限／新作／今週の変化点）ここから =====
+   ここから下の「ここまで」までは DOM に触らない（tools/test/test-work.js が切り出して検証する）。 */
+
+/* 発売月。base のコースマスタの「公開年月」を正とし、
+   書かれていないコースは台帳にいちばん最初に現れた月（firstYm）を発売月とみなす */
+function wkPubYm(c){ return aPubYm(c) || ((c&&c.firstYm)||null); }
+
+/* ①【健全性】取込時の異常。data.json の warnings をそのまま使う。
+   warnings が無い古い data.json のときは、分析メモの健全性チェックから作る（画面が空にならないように）。 */
+function wkWarnings(D){
+  let all=Array.isArray(D&&D.warnings)? D.warnings.slice() : null;
+  if(!all){
+    const h=(typeof anaHealth==='function')? anaHealth(D) : null;
+    all=(h&&h.warn)? h.detail.map(t=>({level:'warn',kind:'legacy',text:t})) : [];
+  }
+  const warn=all.filter(w=>w.level!=='info'), info=all.filter(w=>w.level==='info');
+  return {all:all, warn:warn, info:info, level: warn.length? 'warn' : (info.length? 'info' : null)};
+}
+
+/* ②【評価×収益のギャップ】4象限。評価と「月あたり収益」を、それぞれ中央値で切って仕分ける。
+   累計のままだと古いコースが必ず上に来てしまうので、発売からの月数で割ってそろえる。 */
+var WK_QUAD={
+  fix: {icon:'⭐',label:'改善優先',note:'収益は高いのに評価が低い。手を入れると一番効く'},
+  ace: {icon:'🏆',label:'看板',    note:'評価も収益も高い。看板として押し出す'},
+  pr:  {icon:'📣',label:'告知不足',note:'評価は高いのに登録・収益が少ない。知られていないだけ'},
+  grow:{icon:'🌱',label:'育成中',  note:'評価も収益もこれから'},
+  wait:{icon:'⌛',label:'データ待ち',note:'評価か収益がまだ台帳に入っていない'}
+};
+function wkQuadrant(D){
+  const s0=aSnap(D,0);
+  if(!s0) return {ok:false, items:[], reason:'まだUdemyの記録がありません'};
+  const ym=aAsOf(D).slice(0,7);
+  const list=(s0.rows||[]).map(r=>{
+    const c=aCourse(D,r.id), p=wkPubYm(c), age=p? Math.max(1,aYmDiff(p,ym)+1) : null;
+    return {id:r.id, rating:r.rating, rev:r.cumRevenue, enr:r.cumEnroll, age:age,
+      revPm:(r.cumRevenue!=null&&age)? r.cumRevenue/age : null,
+      enrPm:(r.cumEnroll!=null&&age)? r.cumEnroll/age : null, q:'wait'};
+  });
+  const full=list.filter(x=>x.rating!=null&&x.revPm!=null&&x.enrPm!=null);
+  if(full.length<4)
+    return {ok:false, items:list,
+      reason:'評価と収益がそろったコースが'+full.length+'件です（4件そろってから仕分けます）'};
+  const mr=aMedian(full.map(x=>x.rating)),
+        mv=aMedian(full.map(x=>x.revPm)),
+        me=aMedian(full.map(x=>x.enrPm));
+  list.forEach(x=>{
+    if(x.rating==null||x.revPm==null){ x.q='wait'; return; }
+    const hiR=x.rating>=mr, hiV=x.revPm>=mv;
+    x.q = hiV? (hiR?'ace':'fix') : (hiR?'pr':'grow');
+  });
+  return {ok:true, items:list, medRating:mr, medRevPm:mv, medEnrPm:me, judged:full.length};
+}
+
+/* ③【新作の立ち上がり】直近12ヶ月に発売したコースを、過去作の「同じ月齢」の平均と比べる。
+   月齢＝発売月を1ヶ月目とした経過月数。累計をそのまま並べても古い講座が有利なだけなので、
+   発売からの経過月数でそろえてから比べる。 */
+function wkLaunch(D){
+  const m=D.udemyMonthly||[];
+  const cs=(D.udemyCourses||[]).map(c=>({id:c.id, pub:wkPubYm(c)})).filter(x=>x.pub);
+  const asOfYm=aAsOf(D).slice(0,7);
+  if(!m.length||cs.length<4) return {ok:false, items:[], reason:'比べられるだけの月次データがまだありません'};
+  const valAt=(id,ym)=>{const x=m.find(z=>z.ym===ym);
+    return (x&&x.byCourse&&x.byCourse[id]&&x.byCourse[id].enroll!=null)? x.byCourse[id].enroll : null};
+  const news=cs.filter(x=>{const k=aYmDiff(x.pub,asOfYm); return k>=0&&k<12;});
+  const olds=cs.filter(x=>aYmDiff(x.pub,asOfYm)>=12);
+  if(!news.length) return {ok:false, items:[], reason:'直近12ヶ月に発売した新作はありません'};
+  if(olds.length<3) return {ok:false, items:[], reason:'比べる過去作が3作に足りません'};
+  const items=news.map(n=>{
+    const k=aYmDiff(n.pub,asOfYm), pts=[];
+    for(let i=0;i<=k;i++){
+      const v=valAt(n.id,aYmAdd(n.pub,i));
+      const peer=olds.map(o=>valAt(o.id,aYmAdd(o.pub,i))).filter(x=>x!=null);
+      if(v==null||peer.length<3) continue;
+      pts.push({k:i+1, v:v, avg:peer.reduce((a,b)=>a+b,0)/peer.length, n:peer.length});
+    }
+    if(!pts.length) return null;
+    const last=pts[pts.length-1];
+    return {id:n.id, pub:n.pub, months:last.k, points:pts,
+            ratio: last.avg? last.v/last.avg : null,
+            partial: aYmAdd(n.pub,last.k-1)===asOfYm};
+  }).filter(Boolean);
+  if(!items.length) return {ok:false, items:[], reason:'新作の月次がまだそろっていません'};
+  return {ok:true, items:items, peers:olds.length};
+}
+
+/* ④【変化点】今週（日曜〜土曜）の新規登録トップ3と、前週比±50%以上の急変コース。
+   台帳の「施策メモ」列が入っていれば、その週のぶんを併記する。 */
+function wkSnapAt(D,ds){
+  let best=null;
+  (D.udemy||[]).forEach(s=>{ if(s.date<=ds&&(!best||s.date>best.date)) best=s; });
+  return best;
+}
+function wkNotes(D,id,win){
+  const out=[];
+  (D.udemy||[]).forEach(s=>{
+    if(s.date<win.from||s.date>win.to) return;
+    (s.rows||[]).forEach(r=>{ if(r.id===id&&r.note&&out.indexOf(r.note)<0) out.push(r.note); });
+  });
+  return out;
+}
+function wkChanges(D){
+  const asOf=aAsOf(D), w=lmWeekWin(asOf), u=D.udemy||[];
+  const end=wkSnapAt(D,w.to)||u[u.length-1]||null;      // 土曜がまだ来ていなければ直近の記録
+  const start=wkSnapAt(D,aYmdAdd(w.from,-1));           // 先週の土曜まで＝今週の起点
+  const prevStart=wkSnapAt(D,aYmdAdd(w.from,-8));       // 前週の起点
+  if(!end||end.date<w.from) return {ok:false, week:w, reason:'今週はまだUdemyの記録がありません'};
+  if(!start) return {ok:false, week:w, reason:'先週までの記録が無いので、まだ前週と比べられません'};
+  const enr=(s,id)=>{const r=s? (s.rows||[]).find(x=>x.id===id):null;
+    return (r&&r.cumEnroll!=null)? r.cumEnroll : null};
+  /* 前週の起点が今週の起点と同じ記録だと、前週の増分がぜんぶ0になり、
+     全コースが「前週は動きなし＝急変」になってしまう。その週は前週比を出さない。 */
+  const canPrev=!!(prevStart&&prevStart.date<start.date);
+  const rows=(end.rows||[]).map(r=>{
+    const e=enr(end,r.id), s=enr(start,r.id), p=canPrev? enr(prevStart,r.id) : null;
+    const cur=(e!=null&&s!=null)? e-s : null;
+    const prv=(s!=null&&p!=null)? s-p : null;
+    let spike=null;
+    if(cur!=null&&prv!=null){
+      // 少人数のブレで毎週「急変」と言わないよう、どちらかが10人以上のときだけ見る
+      if(prv>0){ const ch=(cur-prv)/prv; if(Math.abs(ch)>=0.5&&(cur>=10||prv>=10)) spike={ratio:ch}; }
+      else if(cur>=10) spike={ratio:null};      // 前週は動きなし → 動き出した
+    }
+    return {id:r.id, cur:cur, prev:prv, spike:spike, notes:wkNotes(D,r.id,w)};
+  }).filter(x=>x.cur!=null);
+  if(!rows.length) return {ok:false, week:w, reason:'今週の増減を出せる記録がありません'};
+  const top=rows.slice().sort((a,b)=>b.cur-a.cur).slice(0,3);
+  const spikes=rows.filter(x=>x.spike&&top.indexOf(x)<0);
+  return {ok:true, week:w, from:start.date, to:end.date, canPrev:canPrev,
+          prevFrom: canPrev? prevStart.date : null,
+          total: rows.reduce((a,x)=>a+x.cur,0), top:top, spikes:spikes, rows:rows};
+}
+/* ===== 仕事タブ v1.3 ここまで ===== */
+
 function renderAnalysis(){
   const body=document.getElementById('anaBody');
   const tag=document.getElementById('anaTag');
@@ -1249,7 +1524,12 @@ function renderFuture(room){
 function renderDlink(room){
   const el=document.getElementById('dl-'+room);
   if(!el) return;
-  const l=(DATA.links&&DATA.links[room])||null;
+  let l=(DATA.links&&DATA.links[room])||null;
+  // 知識・精神は台帳フォルダごと開く（baseだけでなく日々のログも見たいため）
+  if(room==='know'||room==='spirit'){
+    const fu=(DATA.knowledge&&DATA.knowledge.folderUrl)||((DATA.limitless||{}).folderUrl)||LM_FOLDER_URL;
+    l={label:'リミットレス台帳フォルダ', url:fu};
+  }
   if(!l||!l.url){
     el.innerHTML='<a class="dlink off">📂 詳細データ（準備中）<span class="arw">→</span></a>';
     return;
@@ -1278,8 +1558,82 @@ function renderHealth(){
     `<div class="ri"><span class="rn">${r.date.slice(5)}（${r.dow}）</span><span class="rv">${r.weight.toFixed(1)}kg</span><span class="rv" style="color:var(--muted);font-size:12px;width:56px;text-align:right">睡眠${r.sleep??'—'}</span></div>`
   ).join('');
 }
+/* 取込時の異常。何も無い日はカードごと消す（毎日⚠️が出ると誰も見なくなるため） */
+function renderWarnings(){
+  const card=document.getElementById('warnCard');
+  const sum=document.getElementById('warnSummary');
+  const list=document.getElementById('warnList');
+  if(!card) return;
+  const w=wkWarnings(DATA);
+  if(!w.all.length){ card.style.display='none'; return; }
+  card.style.display='';
+  card.className='card wcard'+(w.warn.length? '' : ' info');
+  sum.innerHTML='<span class="wpill'+(w.warn.length?'':' info')+'">'+
+    (w.warn.length? '⚠️ 警告 '+w.warn.length+'件' : 'ℹ️ 情報 '+w.info.length+'件')+'</span>'+
+    '<span>'+(w.warn.length? '数字がずれているかもしれません' : '小さな揺らぎがありました')+
+    (w.warn.length&&w.info.length? '（ほかに情報'+w.info.length+'件）' : '')+'</span>';
+  list.innerHTML=w.all.map(x=>
+    '<div class="witem"><b class="'+(x.level==='info'?'info':'')+'">'+(x.level==='info'?'情報':'警告')+'</b>'+
+    esc(x.text)+'</div>').join('');
+}
+/* 今週の変化点（新規登録トップ3＋前週比±50%以上） */
+function renderChanges(){
+  const b=document.getElementById('chgBody'), n=document.getElementById('chgNote');
+  if(!b) return;
+  const c=wkChanges(DATA);
+  if(!c.ok){ b.innerHTML='<div class="waiting">'+esc(c.reason)+'</div>';
+             if(n) n.textContent=''; return; }
+  const names={};DATA.udemyCourses.forEach(x=>names[x.id]=x.short);
+  const line=(x,rank)=>{
+    const sp=x.spike? '<span class="spike'+((x.prev==null||x.cur>=x.prev)?' up':'')+'">'+
+      (x.prev>0? '前週比'+(x.cur>=x.prev?'+':'−')+Math.round(Math.abs((x.cur-x.prev)/x.prev)*100)+'%'
+               : '前週は動きなし')+'</span>' : '';
+    return '<div class="chg"><div class="cn">'+(rank? rank+'位 ':'')+
+      esc(x.id+' '+(names[x.id]||''))+sp+'</div>'+
+      '<div class="cv'+(x.cur<0?' bad':'')+'">'+signedInt(x.cur)+'人'+
+      (x.prev!=null? '（前週 '+signedInt(x.prev)+'人）' : '（前週 —）')+'</div>'+
+      (x.notes.length? '<div class="cm">📝 施策メモ: '+x.notes.map(esc).join(' ／ ')+'</div>' : '')+'</div>';
+  };
+  b.innerHTML='<div class="cm">新規登録トップ3</div>'+c.top.map((x,i)=>line(x,i+1)).join('')+
+    (c.spikes.length? '<div class="cm" style="margin-top:8px">前週比±50%以上の急変</div>'+
+                      c.spikes.map(x=>line(x,0)).join('')
+                    : '<div class="cm" style="margin-top:8px">'+
+                      (c.canPrev? '前週比±50%以上の急変はありません。'
+                                : '前週にあたる記録がまだ無いので、前週比はお休みです（毎日デルタが入ると出ます）。')+
+                      '</div>');
+  if(n) n.textContent='今週は '+md(c.week.from)+'（日）〜'+md(c.week.to)+'（土）。'+
+    '実際に台帳で測れた区間は '+md(c.from)+'→'+md(c.to)+'で'+signedInt(c.total)+'人'+
+    (c.prevFrom? '（前週の起点 '+md(c.prevFrom)+'）' : '')+'。';
+}
+/* 新作の立ち上がり。棒＝新作の累計、灰色の縦線＝過去作の同じ月齢の平均 */
+function renderLaunch(){
+  const b=document.getElementById('lgBody'), n=document.getElementById('lgNote');
+  if(!b) return;
+  const L=wkLaunch(DATA);
+  if(!L.ok){ b.innerHTML='<div class="waiting">'+esc(L.reason)+'</div>';
+             if(n) n.textContent=''; return; }
+  const names={};DATA.udemyCourses.forEach(x=>names[x.id]=x.short);
+  b.innerHTML=L.items.map(it=>{
+    const max=it.points.reduce((a,p)=>Math.max(a,p.v,p.avg),0)||1;
+    return '<div class="lg"><div class="lgh">'+esc(it.id+' '+(names[it.id]||''))+'（'+
+      it.pub.replace('-','/')+'発売・'+it.months+'ヶ月目'+(it.partial? '・今月は途中':'')+'）</div>'+
+      it.points.map(p=>
+        '<div class="lgrow"><span class="lgk">'+p.k+'ヶ月目</span>'+
+        '<span class="lgbar"><span class="lgf" style="width:'+Math.round(p.v/max*100)+'%"></span>'+
+        '<span class="lgavg" style="left:'+Math.round(p.avg/max*100)+'%"></span></span>'+
+        '<span class="lgv">'+fmtInt(p.v)+'人 / 平均'+fmtInt(Math.round(p.avg))+'</span></div>').join('')+
+      (it.ratio!=null? '<div class="cm">同じ月齢の過去作平均の'+Math.round(it.ratio*100)+'%'+
+        (it.ratio>=1.1? 'と速いペースです。' : it.ratio<=0.9? 'のペースです。' : 'とほぼ同じペースです。')+'</div>' : '')+
+      '</div>';
+  }).join('');
+  if(n) n.textContent='灰色の縦線が、過去'+L.peers+'作の「同じ月齢（発売からの経過月数）」の平均です。'+
+    '棒がその線より右まで伸びていれば、過去作より速い立ち上がりです。';
+}
 function renderWork(){
+  renderWarnings();
   renderAnalysis();
+  renderChanges();
+  renderLaunch();
   const s0=uSnap(0), s1=uSnap(-1);
   const e0=uSum(s0,'cumEnroll'), e1=uSum(s1,'cumEnroll');
   document.getElementById('v-enroll').textContent=fmtInt(e0);
@@ -1296,13 +1650,24 @@ function renderWork(){
   document.getElementById('udemyAsOf').textContent='基準日: '+s0.date+' '+s0.time+'（前回: '+(s1?s1.date:'—')+'）';
 
   const names={};DATA.udemyCourses.forEach(c=>names[c.id]=c.short);
+  // 4象限（評価×月あたり収益）のラベルをコース別カードに出す
+  const quad=wkQuadrant(DATA), qmap={};
+  (quad.items||[]).forEach(x=>qmap[x.id]=x.q);
   let html='<tr><th>コース</th><th>累計登録</th><th>前回比</th><th>評価</th></tr>';
   s0.rows.forEach(r=>{
     const p=s1? s1.rows.find(x=>x.id===r.id):null;
     const d=p? r.cumEnroll-p.cumEnroll : null;
-    html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtInt(r.cumEnroll)}</td><td class="dlt${d!=null&&d<0?' bad':''}">${d!=null?signedInt(d):'—'}</td><td>${r.rating??'—'}</td></tr>`;
+    const qk=qmap[r.id]||'wait', q=WK_QUAD[qk];
+    html+=`<tr><td>${r.id} ${names[r.id]||''}<span class="qb ${qk}">${q.icon}${q.label}</span></td><td>${fmtInt(r.cumEnroll)}</td><td class="dlt${d!=null&&d<0?' bad':''}">${d!=null?signedInt(d):'—'}</td><td>${r.rating??'—'}</td></tr>`;
   });
   document.getElementById('udemyTable').innerHTML=html;
+  const leg=document.getElementById('quadLegend');
+  if(leg) leg.innerHTML=quad.ok
+    ? '⭐改善優先＝収益高×評価低／📣告知不足＝評価高×収益低（＝登録が少ない）／🏆看板＝両方高い／🌱育成中＝両方これから。<br>'+
+      '仕分けは'+quad.judged+'コースの中央値（評価 '+quad.medRating.toFixed(2)+'／月あたり収益 '+
+      aUSD0(quad.medRevPm)+'／月あたり登録 '+fmtInt(Math.round(quad.medEnrPm))+'人）を境目にしています。'+
+      '「月あたり」＝累計 ÷ 発売からの月数（古い講座ほど有利にならないようにそろえています）。'
+    : '⌛ データ待ち：'+esc(quad.reason);
   renderCourseSel();
   draw5y();
 
@@ -1356,19 +1721,31 @@ function renderEco(){
     Object.keys(byCat).map(k=>
       `<div class="ri"><span class="rn">${esc(k)}</span><span class="rv">${fmtInt(Math.round(byCat[k]))}</span></div>`).join('');
 }
-var KIND_LABEL=[['初めて','🌱'],['トライ','🔥'],['学び','💡'],['教え','🗣️'],['人','🤝'],['もがき','😣']];
 function renderKnow(){
   const h=DATA.health;
-  // 今週（直近7日）のリミットレス6分類
-  const c=ckKinds(DATA,7), wrows=ckRows(DATA,7);
-  const wk=document.getElementById('knowWeek');
-  if(wk) wk.innerHTML=KIND_LABEL.map(k=>
-    `<div><div class="wl">${k[1]}${k[0]}</div><div class="wv">${c[k[0]]||0}</div></div>`).join('');
+  // リミットレス6分類（今週＝日曜〜土曜／今月）。「?」付きの種別は数えない
+  const k=computeKnowledge(DATA);
+  const tb=document.getElementById('knowKinds');
+  if(tb) tb.innerHTML='<tr><th>分類</th><th>今週</th><th>今月</th></tr>'+
+    LM_KINDS.map(x=>{
+      const w=(k.week.counts||{})[x[0]]||0, m=(k.month.counts||{})[x[0]]||0;
+      return `<tr><td>${x[1]} ${x[0]}</td><td class="${w?'':'z'}">${w}</td><td class="mo">${m}</td></tr>`;
+    }).join('');
   const wn=document.getElementById('knowWeekNote');
-  if(wn) wn.textContent=wrows.length
-    ? '直近7日で'+wrows.length+'件（'+md(wrows[0].date)+'〜'+md(wrows[wrows.length-1].date)+'）。出どころ: '+
-      ((DATA.limitless&&DATA.limitless.baseName)||'リミットレス台帳')
-    : 'リミットレス台帳にまだ直近7日の記録がありません。';
+  if(wn) wn.textContent='今週（'+md(k.week.from)+'（日）〜'+md(k.week.to)+'（土））'+k.week.rows+'件／'+
+    '今月（'+md(k.month.from)+'〜'+md(k.month.to)+'）'+k.month.rows+'件。'+
+    '種別が2つ付いた記録は、それぞれの分類で1件ずつ数えます。'+
+    '「?」付き（例: 🌱初めて?）は未確定なので数えず、下の直近5件にはそのまま出しています。';
+  const rc=document.getElementById('knowRecent');
+  if(rc) rc.innerHTML=(k.recent||[]).length
+    ? k.recent.map(r=>{
+        const tag=r.kindsText||((r.kinds||[]).join(','));
+        return '<div class="lmr"><div><span class="lmd">'+md(r.date)+'</span>'+
+          (tag? '<span class="lmk">'+esc(tag)+'</span>' : '')+'</div>'+
+          '<div class="lmt">'+esc(r.text||'')+'</div>'+
+          (r.who? '<div class="lmw">関連: '+esc(r.who)+'</div>' : '')+'</div>';
+      }).join('')
+    : '<div class="lmw">リミットレス台帳にまだ記録がありません。</div>';
   document.getElementById('v-days').textContent=h.length;
   const d0=new Date(h[0].date), d1=new Date(h[h.length-1].date);
   document.getElementById('v-span').textContent=Math.round((d1-d0)/86400000)+1;

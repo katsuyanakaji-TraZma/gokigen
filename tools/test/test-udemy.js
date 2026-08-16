@@ -25,7 +25,7 @@ const Utilities = {
 };
 const Logger = { log: () => {} };
 
-eval(pick("var CONFIG", "// ===== STEP1"));
+eval(pick("var LIMITLESS_FOLDER_ID", "// ===== STEP1"));
 eval(pick("// ===== Udemy台帳（base + デルタの合算） =====", "// 今公開中の data.json"));
 eval(pick("// ===== 変換ヘルパー =====", "// ===== GitHub ====="));
 
