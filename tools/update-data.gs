@@ -15,6 +15,12 @@
  * 初回だけ、この2つを1回ずつ実行してください：
  *   ① setupUdemyBase()  … Udemyの5年分履歴（xlsx）をスプレッドシート「Udemy台帳_base」に移植する
  *   ② setupTrigger()    … 1日4回の自動実行を予約する
+ *
+ * v1.2.1で、台帳ファイルが増えすぎて6分の実行制限に当たったため、次を足しました：
+ *   ③ runConsolidateOnce() … 古い日次台帳を1本にまとめ、元ファイルは「圧縮済み」フォルダへ移す
+ *                            （削除はしません。何度実行しても壊れません）
+ *      まとめる範囲は CONFIG.consolidateBefore。まだ重いときは、この日付を先へ進めて
+ *      もう一度実行すれば、その日付までの日次台帳がさらにまとまります。
  */
 
 // ===== 設定 =====
@@ -22,6 +28,10 @@
 // この中のスプレッドシートを全部読む：土台の「リミットレス台帳_base_v2」と、
 // 日々増えていく「リミットレス台帳ログ_YYYY-MM-DD」。
 var LIMITLESS_FOLDER_ID = '1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg';
+
+// 経済台帳フォルダ（GOKIGENフォルダの中の「経済台帳（株式・債券・貴金属）」）
+// v1.2.1でこちらに引っ越した。旧フォルダ 1koH3sVzVu2sqyJvSv5DDXh1MBwShKmAL はもう読まない。
+var ECO_FOLDER_ID = '13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR';
 
 var CONFIG = {
   gokigenFolderId: '1vJ7ddquLREjntkRUy235nv5FXaas2IoV',
@@ -33,9 +43,13 @@ var CONFIG = {
   limitlessFolderId: LIMITLESS_FOLDER_ID,
   limitlessBaseName: 'リミットレス台帳_base_v2',
   limitlessKeepDays: 180,          // data.jsonに残す日数（肥大化させない）
-  ecoFolderId:  '1koH3sVzVu2sqyJvSv5DDXh1MBwShKmAL',
+  ecoFolderId:  ECO_FOLDER_ID,
   ecoBaseName:  '経済台帳_base',
   futureDocPrefix: '未来ビジョン台帳',  // GOKIGEN台帳フォルダの中のGoogleドキュメント
+  // v1.2.1：台帳ファイルが増えすぎて6分の実行制限に当たったため、古い日次ファイルを1本にまとめる
+  gokigenBaseName:  'GOKIGEN台帳_base',   // まとめ先（この1本だけ読めば7月以前が全部入る）
+  consolidateBefore: '2026-07-31',        // この日付以前の日次ファイルをまとめる（ファイル名の日付で判定）
+  archiveFolderName: '圧縮済み',           // まとめ終わった元ファイルの引っ越し先（削除はしない）
   updateHours:  [8, 12, 18, 22],   // 自動実行する時刻
   snapshotLimit: 30,               // data.jsonに残す「記録日ごとのスナップショット」の日数
   repoOwner: 'katsuyanakaji-TraZma',
@@ -194,6 +208,248 @@ function findUdemyBase_() {
   return it.hasNext() ? it.next() : null;
 }
 
+// ===== v1.2.1: 台帳の整理（6分の実行制限に当たったための対策） =====
+/**
+ * 台帳ファイルが増えすぎて runNow が6分で止まったので、古いファイルを1本にまとめる。
+ *
+ *   ① GOKIGEN台帳フォルダ … CONFIG.consolidateBefore 以前の日次ファイルの全行を
+ *      「GOKIGEN台帳_base」に統合し、元ファイルは「圧縮済み」フォルダへ移す
+ *   ② Udemy台帳フォルダ  … 同じ名前のログが複数あるものを、中身が同じなら1本だけ残し、
+ *      違えば全部の行をマージした「〜_統合」を作って元ファイルは「圧縮済み」へ移す
+ *   ③ リミットレス・経済・未来ビジョンは数が少ないのでさわらない
+ *
+ * **ファイルは1つも削除しない。**「圧縮済み」フォルダに移すだけで、中身はいつでも見られる。
+ * GASはフォルダの直下しか読まないので、移した時点で自動的に読み込み対象から外れる。
+ * 何度実行しても壊れない（すでにある base も読み直してまとめ直す）。
+ */
+function runConsolidateOnce() {
+  var t0 = new Date().getTime();
+  var lines = ['🧹 台帳の整理をはじめます（削除はしません。「圧縮済み」フォルダへ移すだけです）'];
+  lines.push(consolidateGokigen_());
+  lines.push(consolidateUdemyDuplicates_());
+  lines.push('⏱ 整理にかかった時間: ' + ((new Date().getTime() - t0) / 1000).toFixed(1) + '秒');
+  lines.push('このあと runNow() を1回実行して、data.json が作り直せることを確かめてください。');
+  var out = lines.join('\n');
+  Logger.log(out);
+  return out;
+}
+
+/** フォルダの中の「圧縮済み」サブフォルダ。無ければ作る */
+function archiveFolder_(folder) {
+  var it = folder.getFoldersByName(CONFIG.archiveFolderName);
+  return it.hasNext() ? it.next() : folder.createFolder(CONFIG.archiveFolderName);
+}
+/** ファイルを別フォルダへ移す（削除はしない） */
+function moveFile_(file, dest) {
+  try { file.moveTo(dest); }
+  catch (e) {                                  // 古い実行環境向けの言い換え
+    dest.addFile(file);
+    file.getParents().next().removeFile(file);
+  }
+}
+/** ファイル名から台帳の日付（YYYY-MM-DD）を取り出す */
+function nameDate_(name) {
+  var m = String(name || '').match(/(\d{4}-\d{2}-\d{2})/);
+  return m ? m[1] : null;
+}
+/** フォルダ直下から名前ちょうど一致のファイルを1つ返す */
+function fileInFolder_(folder, name) {
+  var it = folder.getFilesByName(name);
+  while (it.hasNext()) { var f = it.next(); if (f.getName() === name) return f; }
+  return null;
+}
+/** 「=」で始まる文字列を数式と誤解されないようにする（読み戻すと元の文字列に戻る） */
+function safeCell_(v) {
+  if (v == null) return '';
+  if (typeof v === 'string' && /^[=+@]/.test(v)) return "'" + v;
+  return v;
+}
+
+// GOKIGEN台帳_base に書き出す列。readGokigen_ は位置で読むので、この並びを変えないこと。
+var GOKIGEN_BASE_HEAD = ['日付', '曜日', '体重', '体脂肪率', '筋肉量', '内臓脂肪', '体年齢',
+  '血圧上', '血圧下', 'ご機嫌度', '睡眠', '運動', '会食', 'ルーティン', '一言'];
+
+function gokigenBaseRow_(r) {
+  return [
+    r.date, r.dow, r.weight, r.fat, r.muscle, r.visceral, r.bodyAge, r.bpHigh, r.bpLow,
+    // ご機嫌度は5段階と10段階が混ざる。読み戻すときに取り違えないよう必ず「8/10」の形で書く
+    r.mood == null ? '' : (r.mood + '/10'),
+    r.sleep, r.exercise, r.dining, r.routine, r.note
+  ].map(safeCell_);
+}
+
+function consolidateGokigen_() {
+  var folder = DriveApp.getFolderById(CONFIG.gokigenFolderId);
+  var cutoff = CONFIG.consolidateBefore;
+
+  // 対象＝直下のスプレッドシートのうち、GOKIGEN台帳で、名前の日付が cutoff 以前のもの
+  var targets = [];
+  var it = folder.getFiles();
+  while (it.hasNext()) {
+    var f = it.next();
+    if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue;
+    var n = f.getName();
+    if (n === CONFIG.gokigenBaseName) continue;
+    if (!/^GOKIGEN[_ ]?台帳/.test(n)) continue;      // 関係ないファイルは絶対にさわらない
+    var d = nameDate_(n);
+    if (!d || d > cutoff) continue;
+    targets.push({ file: f, name: n, t: f.getLastUpdated().getTime() });
+  }
+  var base = fileInFolder_(folder, CONFIG.gokigenBaseName);
+  if (!targets.length) {
+    return '① GOKIGEN台帳: ' + cutoff + ' 以前のまとめ対象はありませんでした' +
+           (base ? '（baseはすでにあります）' : '');
+  }
+  targets.sort(function (a, b) { return a.t - b.t; });   // 古い順＝弱い順に読む
+
+  // すでにある base を最初に読み、そのあと日次を古い順に重ねる（＝ふだんの読み方と同じ順番）
+  var out = {};
+  if (base) readGokigenInto_(base, out);
+  targets.forEach(function (x) { readGokigenInto_(x.file, out); });
+  var dates = Object.keys(out).sort();
+  dates.forEach(function (d) { delete out[d]._ok; });
+  if (!dates.length) return '① GOKIGEN台帳: 対象' + targets.length + '本から1行も読めなかったので、何も移しませんでした';
+
+  // 書き出し（base が無ければ作ってフォルダへ入れる）
+  var ss;
+  if (base) { ss = SpreadsheetApp.openById(base.getId()); }
+  else {
+    ss = SpreadsheetApp.create(CONFIG.gokigenBaseName);
+    moveFile_(DriveApp.getFileById(ss.getId()), folder);
+  }
+  var sheet = ss.getSheets()[0];
+  sheet.clear();
+  var values = [GOKIGEN_BASE_HEAD].concat(dates.map(function (d) { return gokigenBaseRow_(out[d]); }));
+  sheet.getRange(1, 1, values.length, GOKIGEN_BASE_HEAD.length).setValues(values);
+  SpreadsheetApp.flush();
+
+  // 読めたことを確かめてから元ファイルを移す（ここで失敗したら1本も移さない）
+  var check = {};
+  readGokigenInto_(DriveApp.getFileById(ss.getId()), check);
+  var checkDates = Object.keys(check);
+  if (checkDates.length < dates.length) {
+    throw new Error('まとめた base を読み直したら ' + checkDates.length + '日分しかありません（元は ' +
+                    dates.length + '日分）。元ファイルはそのままにしました。');
+  }
+
+  var arch = archiveFolder_(folder);
+  targets.forEach(function (x) { moveFile_(x.file, arch); });
+
+  return '① GOKIGEN台帳: ' + targets.length + '本を「' + CONFIG.gokigenBaseName + '」に統合しました（' +
+         dates[0] + '〜' + dates[dates.length - 1] + ' の' + dates.length + '日分）。' +
+         '元の' + targets.length + '本は「' + CONFIG.archiveFolderName + '」へ移動（削除していません）';
+}
+
+/** 1ファイル分のGOKIGEN台帳を out（日付→レコード）に重ねる。readGokigen_ と同じ規則 */
+function readGokigenInto_(file, out) {
+  var values;
+  try { values = SpreadsheetApp.openById(file.getId()).getSheets()[0].getDataRange().getValues(); }
+  catch (e) { Logger.log('読めませんでした: ' + file.getName() + ' / ' + e); return; }
+  var head = findHeader_(values, '日付');
+  if (head < 0) return;
+  for (var i = head + 1; i < values.length; i++) {
+    var row = values[i];
+    var date = toDate_(row[0]);
+    if (!date) continue;
+    var rec = {
+      date: date,
+      dow: String(row[1] || '').trim() || dowOf_(date),
+      weight:   num_(row[2]),
+      fat:      num_(row[3]),
+      muscle:   num_(row[4]),
+      visceral: num_(row[5]),
+      bodyAge:  num_(row[6]),
+      bpHigh:   num_(row[7]),
+      bpLow:    num_(row[8]),
+      mood:     mood_(row[9]),
+      sleep:    num_(row[10]),
+      exercise: str_(row[11]),
+      dining:   str_(row[12]),
+      routine:  num_(row[13]),
+      note:     str_(row[14])
+    };
+    rec._ok = wellFormed_(row);
+    out[date] = mergeRow_(out[date], rec);
+  }
+}
+
+// 統合したUdemyログに書き出す列（名前で読むので並びは自由だが、分かりやすい順にしておく）
+var UDEMY_MERGE_HEAD = ['記録日', '基準時刻', 'コースID', 'コース名', '公開年月',
+  '累計登録', '月間登録', '累計収益USD', '評価', '施策メモ', '出所'];
+
+function consolidateUdemyDuplicates_() {
+  var folder = DriveApp.getFolderById(CONFIG.udemyFolderId);
+  var byName = {};
+  var it = folder.getFiles();
+  while (it.hasNext()) {
+    var f = it.next();
+    if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue;
+    var n = f.getName();
+    if (n === CONFIG.udemyBaseName) continue;                       // 土台はさわらない
+    if (!/^Udemy台帳ログ_\d{4}-\d{2}-\d{2}/.test(n)) continue;      // 対象は日々のログだけ
+    (byName[n] = byName[n] || []).push({ file: f, t: f.getLastUpdated().getTime() });
+  }
+  var dupNames = Object.keys(byName).filter(function (n) { return byName[n].length > 1; }).sort();
+  if (!dupNames.length) return '② Udemy台帳: 同じ名前のログの重複はありませんでした';
+
+  var arch = archiveFolder_(folder);
+  var report = [];
+  dupNames.forEach(function (name) {
+    var list = byName[name].sort(function (a, b) { return a.t - b.t; });   // 古い順＝弱い順
+    var read = list.map(function (x) {
+      var rows = [];
+      try { rows = readLedgerSheet_(SpreadsheetApp.openById(x.file.getId()).getSheets()[0], name); }
+      catch (e) { Logger.log('読めませんでした: ' + name + ' / ' + e); }
+      return { x: x, rows: rows, sig: ledgerSignature_(rows) };
+    });
+    var same = read.every(function (r) { return r.sig === read[0].sig; });
+
+    if (same) {
+      // 中身が同じ → いちばん新しい1本だけ残して、残りを圧縮済みへ
+      read.slice(0, -1).forEach(function (r) { moveFile_(r.x.file, arch); });
+      report.push('　' + name + ': ' + list.length + '本とも中身が同じ → 1本残して' +
+                  (list.length - 1) + '本を「' + CONFIG.archiveFolderName + '」へ');
+      return;
+    }
+    // 中身が違う → 全行をマージして「〜_統合」を作り、元は全部圧縮済みへ
+    var byKey = {};
+    read.forEach(function (r) {
+      r.rows.forEach(function (row) {
+        var k = row.date + '|' + row.id;
+        byKey[k] = mergeLedger_(byKey[k], row);
+      });
+    });
+    var keys = Object.keys(byKey).sort();
+    if (!keys.length) {
+      report.push('　' + name + ': 中身が違いますが1行も読めなかったので、そのままにしました');
+      return;
+    }
+    var ss = SpreadsheetApp.create(name + '_統合');
+    var values = [UDEMY_MERGE_HEAD].concat(keys.map(function (k) {
+      var r = byKey[k];
+      return [r.date, r.time == null ? '' : "'" + r.time, r.id, r.name, r.published,
+              r.cumEnroll, r.monthEnroll, r.cumRevenue, r.rating, r.note, r.src].map(safeCell_);
+    }));
+    ss.getSheets()[0].getRange(1, 1, values.length, UDEMY_MERGE_HEAD.length).setValues(values);
+    SpreadsheetApp.flush();
+    moveFile_(DriveApp.getFileById(ss.getId()), folder);
+    read.forEach(function (r) { moveFile_(r.x.file, arch); });
+    report.push('　' + name + ': ' + list.length + '本の中身が違ったので全部の行をマージ → 「' +
+                name + '_統合」（' + keys.length + '行）を作り、元' + list.length +
+                '本を「' + CONFIG.archiveFolderName + '」へ');
+  });
+  return '② Udemy台帳: 同じ名前のログが' + dupNames.length + '組ありました\n' + report.join('\n');
+}
+
+/** 台帳の中身が同じかどうかを見分けるための指紋 */
+function ledgerSignature_(rows) {
+  return JSON.stringify(rows.slice().sort(function (a, b) {
+    return (a.date + '|' + a.id) < (b.date + '|' + b.id) ? -1 : 1;
+  }).map(function (r) {
+    return [r.date, r.id, r.cumEnroll, r.cumRevenue, r.rating, r.monthEnroll, r.note];
+  }));
+}
+
 // 動作確認用：GitHubに書かず、中身だけログに出す
 function dryRun() {
   var d = buildData_(fetchCurrentJson_());
@@ -245,9 +501,24 @@ function dryRun() {
   return d;
 }
 
+/**
+ * v1.2.1：どのフォルダの読み込みに何秒かかっているかをログに出す。
+ * 6分の実行制限に当たったとき、どこが重いのかを推測ではなく数字で見るため。
+ */
+function timeIt_(label, fn) {
+  var t0 = new Date().getTime();
+  try {
+    return fn();
+  } finally {
+    var sec = ((new Date().getTime() - t0) / 1000).toFixed(1);
+    Logger.log('⏱ ' + label + ': ' + sec + '秒');
+  }
+}
+
 // ===== データ構築 =====
 function buildData_(previous) {
-  var health = readGokigen_();
+  var tAll = new Date().getTime();
+  var health = timeIt_('GOKIGEN台帳', readGokigen_);
 
   var dates = Object.keys(health).sort();
   var dropped = [];
@@ -256,7 +527,7 @@ function buildData_(previous) {
   // Udemyは「Udemy台帳_base の台帳ログ」＋「Udemy台帳ログ_YYYY-MM-DD（デルタ）」の合算
   var ledger = { rows: [], courses: [], used: [] };
   try {
-    ledger = readUdemyLedger_();
+    ledger = timeIt_('Udemy台帳', readUdemyLedger_);
   } catch (e) {
     Logger.log('⚠️ Udemy台帳を読めませんでした（前回の内容を維持します）: ' + e);
   }
@@ -266,13 +537,13 @@ function buildData_(previous) {
 
   // v1.2：6部屋コックピットの材料。1つ失敗しても他を巻き込まないよう、それぞれtryで囲む
   var future = null, limitless = { rows: [], used: [] }, eco = { rows: [], used: [] };
-  try { future = readFuture_(); }
+  try { future = timeIt_('未来ビジョン台帳', readFuture_); }
   catch (e) { Logger.log('⚠️ 未来ビジョン台帳を読めませんでした（前回の内容を維持します）: ' + e); }
   if (!future) future = (previous && previous.future) || null;
-  try { limitless = readLimitless_(); }
+  try { limitless = timeIt_('リミットレス台帳', readLimitless_); }
   catch (e) { Logger.log('⚠️ リミットレス台帳を読めませんでした（前回の内容を維持します）: ' + e);
               limitless = (previous && previous.limitless) || { rows: [], used: [] }; }
-  try { eco = readEco_(); }
+  try { eco = timeIt_('経済台帳', readEco_); }
   catch (e) { Logger.log('⚠️ 経済台帳を読めませんでした（前回の内容を維持します）: ' + e);
               eco = (previous && previous.eco) || { rows: [], used: [] }; }
 
@@ -288,6 +559,8 @@ function buildData_(previous) {
   try { knowledge = buildKnowledge_(limitless, asOf); }
   catch (e) { Logger.log('⚠️ knowledgeを作れませんでした（前回の内容を維持します）: ' + e);
               knowledge = (previous && previous.knowledge) || null; }
+
+  Logger.log('⏱ データ作成の合計: ' + ((new Date().getTime() - tAll) / 1000).toFixed(1) + '秒');
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
@@ -358,57 +631,38 @@ function gate_(rec, dropped) {
   return rec;
 }
 
-// 古い順にファイルを返す（後から読んだもので上書き = 新しいファイル優先）
-function filesOldestFirst_(folderId) {
-  var it = DriveApp.getFolderById(folderId).getFiles();
+/**
+ * 古い順にファイルを返す（後から読んだもので上書き = 新しいファイル優先）。
+ *
+ * ・DriveApp の getFiles() は **そのフォルダの直下だけ** を返す。サブフォルダの中は見ない。
+ *   v1.2.1でこの性質を利用して、まとめ終わった古い台帳を「圧縮済み」フォルダへ移し、
+ *   読み込み対象から自然に外している（1件も削除していない）。
+ * ・まとめ先の「GOKIGEN台帳_base」は、更新日時がいちばん新しくても **必ず最初に読む**。
+ *   そうしないと「新しいファイル優先」の順番がひっくり返り、まとめる前と結果が変わってしまう。
+ */
+function filesOldestFirst_(folderId, baseName) {
+  var it = DriveApp.getFolderById(folderId).getFiles();   // 直下のみ（サブフォルダは対象外）
   var list = [];
   while (it.hasNext()) {
     var f = it.next();
     if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue; // スプレッドシート以外は無視
-    list.push({ file: f, t: f.getLastUpdated().getTime() });
+    var rank = (baseName && f.getName() === baseName) ? 0 : 1;
+    list.push({ file: f, rank: rank, t: f.getLastUpdated().getTime() });
   }
-  list.sort(function (a, b) { return a.t - b.t; });
+  list.sort(function (a, b) { return (a.rank - b.rank) || (a.t - b.t); });
   return list.map(function (x) { return x.file; });
 }
 
 // ===== GOKIGEN台帳 =====
 function readGokigen_() {
-  var out = {};
-  filesOldestFirst_(CONFIG.gokigenFolderId).forEach(function (file) {
-    var values;
-    try { values = SpreadsheetApp.openById(file.getId()).getSheets()[0].getDataRange().getValues(); }
-    catch (e) { Logger.log('読めませんでした: ' + file.getName() + ' / ' + e); return; }
-
-    var head = findHeader_(values, '日付');
-    if (head < 0) return;
-
-    for (var i = head + 1; i < values.length; i++) {
-      var row = values[i];
-      var date = toDate_(row[0]);
-      if (!date) continue;
-      var rec = {
-        date: date,
-        dow: String(row[1] || '').trim() || dowOf_(date),
-        weight:   num_(row[2]),
-        fat:      num_(row[3]),
-        muscle:   num_(row[4]),
-        visceral: num_(row[5]),
-        bodyAge:  num_(row[6]),
-        bpHigh:   num_(row[7]),
-        bpLow:    num_(row[8]),
-        mood:     mood_(row[9]),
-        sleep:    num_(row[10]),
-        exercise: str_(row[11]),
-        dining:   str_(row[12]),
-        routine:  num_(row[13]),
-        note:     str_(row[14])
-      };
-      rec._ok = wellFormed_(row);
-      out[date] = mergeRow_(out[date], rec);
-    }
+  var out = {}, n = 0;
+  filesOldestFirst_(CONFIG.gokigenFolderId, CONFIG.gokigenBaseName).forEach(function (file) {
+    readGokigenInto_(file, out);            // 1ファイルぶんを重ねる（統合処理と同じ規則）
+    n++;
   });
   // 内部フラグを外す
   Object.keys(out).forEach(function (d) { delete out[d]._ok; });
+  Logger.log('GOKIGEN台帳: ' + n + 'ファイル → ' + Object.keys(out).length + '日分');
   return out;
 }
 
@@ -931,54 +1185,89 @@ function futureRoom_(t) {
   if (/経済/.test(t)) return 'eco';
   return null;
 }
+/**
+ * ドキュメントの中身を「ただの文章」として取り出す。
+ *
+ * DocumentApp.openById は documents スコープが要る。このスクリプトは drive と
+ * external_request しか持っておらず、スコープを増やすと本人に再承認を求めることになるので使わない。
+ * 代わりに Drive の書き出し（export）を、いまのスコープのまま UrlFetch で叩く。
+ */
+function fetchDocText_(fileId) {
+  var url = 'https://www.googleapis.com/drive/v3/files/' + fileId +
+            '/export?mimeType=text/plain&supportsAllDrives=true';
+  var res = UrlFetchApp.fetch(url, {
+    headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() },
+    muteHttpExceptions: true
+  });
+  if (res.getResponseCode() !== 200) {
+    throw new Error('ドキュメントを書き出せませんでした: ' + res.getResponseCode() + ' ' +
+                    res.getContentText().slice(0, 200));
+  }
+  return res.getContentText();
+}
+
+/** 行頭の箇条書き記号・見出し記号・空白を落とす（書き出し方が変わっても拾えるように） */
+function futureLine_(s) {
+  return String(s == null ? '' : s)
+    .replace(/^﻿/, '')
+    .replace(/^[\s\t]+/, '')
+    .replace(/^#+\s*/, '')                       // マークダウン風の見出し記号
+    .replace(/^[-*•◦○●▪‣・]\s*/, '')             // 箇条書きの記号
+    .replace(/\s+$/, '');
+}
+/** 「1. 87歳(2056年)の完成図」のような章見出しか。章は必ず番号で始まる決まり */
+function futureIsSection_(line) {
+  return /^\d+\s*[.．、]\s*\S/.test(line);
+}
+/** 「1階・健康(大黒柱)」のような部屋の見出しか */
+function futureIsRoomHead_(line) {
+  if (/^\d階\s*[・･]/.test(line)) return true;          // いまの台帳の書き方
+  // 書き方が変わったとき用の保険：短くて、文になっていない行だけ見出しとみなす
+  return line.length <= 24 && !/[。]/.test(line) && futureRoom_(line) != null;
+}
+
 function readFuture_() {
   var doc = findFutureDoc_();
   if (!doc) { Logger.log('未来ビジョン台帳が見つかりません'); return null; }
-  var body = DocumentApp.openById(doc.getId()).getBody();
+  var docText = fetchDocText_(doc.getId());
   var out = {
     docTitle: doc.getName(), docId: doc.getId(), docUrl: doc.getUrl(),
     asOf: (doc.getName().match(/(\d{4}-\d{2}-\d{2})/) || [null, null])[1],
     ladder: [], axes: [], rooms: {}, flag: null, principle: null, tone: null
   };
-  var H = DocumentApp.ParagraphHeading;
   var section = null, room = null;
-  var n = body.getNumChildren();
-  for (var i = 0; i < n; i++) {
-    var el = body.getChild(i), type = el.getType();
-    var isPara = (type === DocumentApp.ElementType.PARAGRAPH);
-    var isItem = (type === DocumentApp.ElementType.LIST_ITEM);
-    if (!isPara && !isItem) continue;
-    var text = String((isPara ? el.asParagraph() : el.asListItem()).getText() || '').trim();
-    if (!text) continue;
-    var heading = (isPara ? el.asParagraph() : el.asListItem()).getHeading();
+  var lines = String(docText).split(/\r\n|\r|\n|/);
+  for (var i = 0; i < lines.length; i++) {
+    var line = futureLine_(lines[i]);
+    if (!line) continue;
 
-    if (isPara && (heading === H.TITLE || heading === H.HEADING1 || heading === H.HEADING2)) {
-      section = futureSection_(text); room = null; continue;
+    if (futureIsSection_(line)) {
+      section = futureSection_(line); room = null; continue;
     }
-    if (isPara && (heading === H.HEADING3 || heading === H.HEADING4)) {
-      room = (section === 'rooms') ? futureRoom_(text) : null;
-      if (room) out.rooms[room] = { heading: text, bullets: [] };
+    if (section === 'rooms' && futureIsRoomHead_(line)) {
+      room = futureRoom_(line);
+      if (room && !out.rooms[room]) out.rooms[room] = { heading: line, bullets: [] };
       continue;
     }
     if (section === 'rooms' && room) {
-      if (out.rooms[room].bullets.length < 8) out.rooms[room].bullets.push(text);
+      if (out.rooms[room].bullets.length < 8) out.rooms[room].bullets.push(line);
       continue;
     }
     if (section === 'ladder') {
-      var m = text.match(/^(\d{2})歳\s*[(（](\d{4})[)）]\s*[:：]\s*(.+)$/);
+      var m = line.match(/^(\d{2})歳\s*[(（](\d{4})[)）]\s*[:：]\s*(.+)$/);
       if (m) { out.ladder.push({ age: parseInt(m[1], 10), year: parseInt(m[2], 10), text: m[3].trim() }); continue; }
-      var f = text.match(/^(\d{2})歳[^:：]*[(（]([\d\/\-]+)[)）]\s*[:：]\s*(.+)$/);   // 61歳最後の日(2030/4/29)
+      var f = line.match(/^(\d{2})歳[^:：]*[(（]([\d\/\-]+)[)）]\s*[:：]\s*(.+)$/);   // 61歳最後の日(2030/4/29)
       if (f) { out.flag = { date: f[2].replace(/\//g, '-'), text: f[3].trim() }; continue; }
-      var p = text.match(/^原則\s*[:：]\s*(.+)$/);
+      var p = line.match(/^原則\s*[:：]\s*(.+)$/);
       if (p) { out.principle = p[1].trim(); continue; }
     }
     if (section === 'weekly') {
-      if (/採点軸/.test(text)) {
-        out.axes = text.split(/[①②③④⑤⑥]/).slice(1)
+      if (/採点軸/.test(line)) {
+        out.axes = line.split(/[①②③④⑤⑥]/).slice(1)
           .map(function (s) { return s.trim(); }).filter(function (s) { return s; });
         continue;
       }
-      var t2 = text.match(/^口調\s*[:：]\s*(.+)$/);
+      var t2 = line.match(/^口調\s*[:：]\s*(.+)$/);
       if (t2) { out.tone = t2[1].trim(); continue; }
     }
   }
@@ -1162,10 +1451,31 @@ function monthWindow_(ds) {
 }
 
 // ===== v1.2: 経済台帳（経済の部屋） =====
+/* v1.2.1：引っ越し先の「経済台帳（株式・債券・貴金属）」は列の名前が少し違う。
+     旧: 記録日 / 口座・資産名 / 区分 / 評価額 / 通貨 / 出所
+     新: 日付   / 区分 / 項目 / 数量・額面 / 評価額円 / 評価損益円 / 損益率 / 備考
+   どちらでも読めるように別名を足す（先頭一致なので「評価額円」は「評価額」で拾える）。 */
 var ECO_COLS = {
-  date: ['記録日', '日付'], name: ['口座', '資産名', '口座/資産名'], cat: ['区分'],
-  amount: ['評価額', '金額'], currency: ['通貨'], src: ['出所']
+  date: ['記録日', '日付'], name: ['口座', '資産名', '口座/資産名', '項目'], cat: ['区分'],
+  amount: ['評価額', '金額'], currency: ['通貨'], src: ['出所', '備考']
 };
+
+/**
+ * 新しい台帳は1つの記録日に「総括 → 資産クラス → 個別銘柄」の3段が入っている。
+ * 全部足すと同じ資産を3回数えてしまうので、行がどの段のものかを見分ける。
+ *   total … 総括（口座合計・総資産）… 足さない
+ *   class … 資産クラス（米国株式・外貨建債券・預り金・貴金属）… これを足すと総資産になる
+ *   item  … 個別の銘柄や口座（旧台帳の1行もここ）
+ *   memo  … 参考為替などのメモ … 足さない
+ */
+function ecoLevel_(cat) {
+  var s = String(cat == null ? '' : cat);
+  if (!s) return 'item';
+  if (/総括|総資産|合計/.test(s)) return 'total';
+  if (/資産クラス/.test(s)) return 'class';
+  if (/メモ|参考/.test(s)) return 'memo';
+  return 'item';
+}
 function readEco_() {
   var srcs = ledgerFiles_(CONFIG.ecoFolderId, CONFIG.ecoBaseName, /^経済台帳ログ_\d{4}-\d{2}-\d{2}/);
   var byKey = {}, used = [], baseUrl = null;
@@ -1183,9 +1493,11 @@ function readEco_() {
       var name = hd.map.name != null ? str_(row[hd.map.name]) : null;
       if (!date || !name) continue;
       // 同じ記録日×口座はデルタが勝つ
+      var cat = hd.map.cat != null ? str_(row[hd.map.cat]) : null;
       byKey[date + '|' + name] = {
         date: date, name: name,
-        cat: hd.map.cat != null ? str_(row[hd.map.cat]) : null,
+        cat: cat,
+        level: ecoLevel_(cat),
         amount: hd.map.amount != null ? money_(row[hd.map.amount]) : null,
         currency: (hd.map.currency != null ? str_(row[hd.map.currency]) : null) || 'JPY',
         src: (hd.map.src != null ? str_(row[hd.map.src]) : null) || s.name
@@ -1198,10 +1510,22 @@ function readEco_() {
   var all = Object.keys(byKey).sort().map(function (k) { return byKey[k]; });
   var latest = all.length ? all[all.length - 1].date : null;
   var rows = latest ? all.filter(function (r) { return r.date === latest; }) : [];
-  Logger.log('経済台帳: ' + rows.length + '件' + (latest ? '（' + latest + '時点）' : '（データ待ち）'));
+
+  /* 合計に使う段を決める。「資産クラス」の行があればそれだけを足す（＝二重計上しない）。
+     旧台帳のように1行1口座しかない場合は、総括とメモ以外を全部足す。 */
+  var sumLevel = rows.some(function (r) { return r.level === 'class'; }) ? 'class' : 'item';
+  var sumRows = rows.filter(function (r) {
+    return sumLevel === 'class' ? r.level === 'class' : (r.level !== 'total' && r.level !== 'memo');
+  });
+  var total = sumRows.reduce(function (a, r) { return a + (r.amount || 0); }, 0);
+
+  Logger.log('経済台帳: ' + rows.length + '件' + (latest ? '（' + latest + '時点）' : '（データ待ち）') +
+             ' 合計 ' + Math.round(total) + '円（' +
+             (sumLevel === 'class' ? '資産クラス' : '各行') + ' ' + sumRows.length + '行を合算）');
   return { baseName: CONFIG.ecoBaseName, baseUrl: baseUrl,
            folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.ecoFolderId,
-           asOf: latest, used: used, rows: rows };
+           asOf: latest, used: used, rows: rows,
+           sumLevel: sumLevel, total: Math.round(total) };
 }
 
 // ===== 変換ヘルパー =====

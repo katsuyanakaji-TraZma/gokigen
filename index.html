@@ -1481,11 +1481,19 @@ function ckVoicePriv(D){
     return {tone:'yell',text:'「'+nf.text+'」が決まってるね。それでいい。孫が大きくなる前の時間は、あとから買い戻せないからね。'};
   return {tone:'yell',text:'今月は家族と'+fam+'回。回数より、決まっていることが大事だよ。次の1つも決めておこうか。'};
 }
+/* 経済台帳の合計。新しい台帳は「総括／資産クラス／個別銘柄」の3段が入っているので、
+   資産クラスの行があればそれだけを足す（そうしないと同じ資産を3回数えてしまう）。 */
+function ckEcoTotal(D){
+  const rows=((D.eco||{}).rows)||[];
+  const cls=rows.filter(r=>r.level==='class');
+  const use=cls.length? cls : rows.filter(r=>r.level!=='total'&&r.level!=='memo');
+  return use.reduce((a,r)=>a+(r.amount||0),0);
+}
 function ckVoiceEco(D){
   const rows=((D.eco||{}).rows)||[];
   if(!rows.length)
     return {tone:'alarm',text:'経済台帳の入口ができたね。まずは口座を1つ、名前と金額を書き込むところからでいい。数えられないものは、増やせないんだよ。'};
-  const total=rows.reduce((a,r)=>a+(r.amount||0),0);
+  const total=ckEcoTotal(D);
   return {tone:'yell',text:'資産は'+fmtInt(Math.round(total))+'。年1,000万の資産型まで、あわてず一段ずつでいい。一番裏切らないのは金融資産だよ。'};
 }
 function ckVoice(D,room){
@@ -1724,13 +1732,25 @@ function renderEco(){
       '口座や資産を1行書き込んでもらえれば、次の更新からここに全体像が出ます。</div>';
     return;
   }
+  /* 新しい経済台帳は1つの記録日に「総括 → 資産クラス → 個別銘柄」の3段が入っている。
+     そのまま全部足すと同じ資産を3回数えてしまうので、資産クラスの行があればそれだけを合計する。
+     旧台帳のように1行1口座しか無いときは、今までどおり全部を足す。 */
+  const cls=rows.filter(r=>r.level==='class');
+  const sumRows=cls.length? cls : rows.filter(r=>r.level!=='total'&&r.level!=='memo');
+  const total=sumRows.reduce((a,r)=>a+(r.amount||0),0);
   const byCat={};
-  rows.forEach(r=>{ const k=r.cat||'その他'; byCat[k]=(byCat[k]||0)+(r.amount||0); });
-  const total=rows.reduce((a,r)=>a+(r.amount||0),0);
+  sumRows.forEach(r=>{ const k=(cls.length? (r.name||'その他') : (r.cat||'その他'));
+    byCat[k]=(byCat[k]||0)+(r.amount||0); });
+  const items=cls.length? rows.filter(r=>r.level==='item'&&r.amount!=null)
+                              .sort((a,b)=>b.amount-a.amount) : [];
   box.innerHTML='<div class="mi-row"><span class="mv">'+fmtInt(Math.round(total))+'</span><span class="mu">円</span></div>'+
-    '<div class="pace">'+esc(rows[rows.length-1].date||'')+' 時点・'+rows.length+'件</div>'+
+    '<div class="pace">'+esc(eco.asOf||rows[rows.length-1].date||'')+' 時点・'+
+      (cls.length? '資産クラス'+cls.length+'区分の合計（個別'+items.length+'件は内訳）' : rows.length+'件')+'</div>'+
     Object.keys(byCat).map(k=>
-      `<div class="ri"><span class="rn">${esc(k)}</span><span class="rv">${fmtInt(Math.round(byCat[k]))}</span></div>`).join('');
+      `<div class="ri"><span class="rn">${esc(k)}</span><span class="rv">${fmtInt(Math.round(byCat[k]))}</span></div>`).join('')+
+    (items.length? '<details class="adet"><summary>個別の内訳を見る</summary>'+
+      items.map(r=>`<div class="ri"><span class="rn">${esc(r.cat||'')} ${esc(r.name)}</span>`+
+        `<span class="rv">${fmtInt(Math.round(r.amount))}</span></div>`).join('')+'</details>' : '');
 }
 function renderKnow(){
   const h=DATA.health;
