@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T00:35:44+09:00",
+  "generatedAt": "2026-08-17T08:28:53+09:00",
   "version": "1.3",
   "source": {
     "gokigenFolderId": "1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
@@ -47,6 +47,10 @@
       {
         "name": "Udemy台帳ログ_2026-08-15_統合",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-08-17",
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -57,6 +61,10 @@
       {
         "name": "リミットレス台帳ログ_2026-08-16",
         "rows": 18
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-08-17",
+        "rows": 6
       }
     ],
     "ecoFiles": [
@@ -656,6 +664,23 @@
       "dining": null,
       "routine": null,
       "note": "那須岳家族旅行から帰宅後の朝。Oura睡眠88・コンディション74「大丈夫ですか?」(全体的に整っているが体表温がわずかに上昇=登山と温泉の余韻か。今日は楽なことだけをとOuraが提案)・アクティビティ91・レジリエンスやや不足(夜間の回復:適切・日中の回復:適切・日中ストレス:中)。7:10測定で体重83.7kg(8/14比+0.5・旅2日分)・体脂肪率30.5%・体内年齢61歳・あすけん成果-0.3kg。昨日8/15は茶臼岳リベンジ登山(詳報は週報にて)。Udemy7:10時点: 累計69,963人(7万人まであと37人!)・8月登録752人・累計収益$192,578。評価の動き: C02 4.00→4.01・C03 4.08→4.13・C04 4.06→4.08と回復基調、C08は3.87。今日は週報創刊号(3週間総集計+87歳の声初登場)→家族枠決め→夜19時中部電力テキスト作り。"
+    },
+    {
+      "date": "2026-08-17",
+      "dow": "月",
+      "weight": 83.2,
+      "fat": 30.3,
+      "muscle": 55.1,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 74,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Udemy累計70,002人——7万人の大台を突破した朝(8月登録792人・累計収益$192,578・講師評価4.12)。新作C01は365人・★4.64と最高評価を更新。睡眠アプリ: 就床1:07・入眠1:31・起床7:00・睡眠5h28m・入眠潜時23分45秒・中途覚醒0・効率92.9%・快眠93.1。Oura睡眠74・コンディション81「心に耳を傾けましょう」(心拍は回復十分・休息と定期的なアクティビティが鍵)・アクティビティ78・レジリエンスやや不足(夜間の回復:適切・日中の回復:適切・日中ストレス:中)。7:38測定で体重83.2kg(前日比-0.5)・体脂肪率30.3%・体内年齢61歳。今日は8:00目標セッション(6部屋の測定可能な目標=v2の燃料・ピンコロ地蔵など行きたいリストの種を注入)→GAS修理3分→v2工事→夜19:00にC08進化編の収録(台本・pptx納品済み)。"
     }
   ],
   "udemyCourses": [
@@ -731,75 +756,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2025-09-28",
-      "time": null,
-      "rows": [
-        {
-          "id": "C02",
-          "cumEnroll": 1412,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 1996,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3241,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 3660,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 6229,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 3898,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 7490,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 10772,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 15510,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2025-10-02",
       "time": null,
@@ -2081,6 +2037,82 @@
         {
           "id": "C10",
           "cumEnroll": 17831,
+          "monthEnroll": null,
+          "cumRevenue": 67512.44,
+          "rating": 4.2
+        }
+      ]
+    },
+    {
+      "date": "2026-08-17",
+      "time": "7:30",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 365,
+          "monthEnroll": null,
+          "cumRevenue": 235.23,
+          "rating": 4.64
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 4859,
+          "monthEnroll": null,
+          "cumRevenue": 7864.4,
+          "rating": 4.01
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2788,
+          "monthEnroll": null,
+          "cumRevenue": 4461.73,
+          "rating": 4.13
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 3988,
+          "monthEnroll": null,
+          "cumRevenue": 3839.26,
+          "rating": 4.08
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4521,
+          "monthEnroll": null,
+          "cumRevenue": 7354.36,
+          "rating": 4.16
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7663,
+          "monthEnroll": null,
+          "cumRevenue": 14896.8,
+          "rating": 4.17
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4862,
+          "monthEnroll": null,
+          "cumRevenue": 11282.77,
+          "rating": 4.04
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8116,
+          "monthEnroll": null,
+          "cumRevenue": 26405.16,
+          "rating": 3.87
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15006,
+          "monthEnroll": null,
+          "cumRevenue": 48685.69,
+          "rating": 4.03
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17834,
           "monthEnroll": null,
           "cumRevenue": 67512.44,
           "rating": 4.2
@@ -5049,35 +5081,35 @@
     },
     {
       "ym": "2026-08",
-      "enroll": 69963,
-      "newEnroll": 1535,
+      "enroll": 70002,
+      "newEnroll": 1574,
       "revenue": 192537.84,
       "from": "2026-07-17",
-      "to": "2026-08-16",
-      "records": 7,
+      "to": "2026-08-17",
+      "records": 8,
       "byCourse": {
         "C01": {
-          "enroll": 358,
+          "enroll": 365,
           "revenue": 235.23
         },
         "C02": {
-          "enroll": 4852,
+          "enroll": 4859,
           "revenue": 7864.4
         },
         "C03": {
-          "enroll": 2785,
+          "enroll": 2788,
           "revenue": 4461.73
         },
         "C04": {
-          "enroll": 3984,
+          "enroll": 3988,
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4519,
+          "enroll": 4521,
           "revenue": 7354.36
         },
         "C06": {
-          "enroll": 7662,
+          "enroll": 7663,
           "revenue": 14896.8
         },
         "C07": {
@@ -5085,15 +5117,15 @@
           "revenue": 11282.77
         },
         "C08": {
-          "enroll": 8113,
+          "enroll": 8116,
           "revenue": 26405.16
         },
         "C09": {
-          "enroll": 14997,
+          "enroll": 15006,
           "revenue": 48685.69
         },
         "C10": {
-          "enroll": 17831,
+          "enroll": 17834,
           "revenue": 67512.44
         }
       }
@@ -5222,6 +5254,10 @@
       {
         "name": "リミットレス台帳ログ_2026-08-16",
         "rows": 18
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-08-17",
+        "rows": 6
       }
     ],
     "rows": [
@@ -5959,6 +5995,60 @@
         "text": "茶臼岳リベンジ登頂成功!「いつか登りたいね」を現実に変えた(アキさんはマウンテンクルーザー400で快調・着用数回目)",
         "who": "家族",
         "src": "本人報告8/16"
+      },
+      {
+        "date": "2026-08-16",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "💡",
+        "text": "2027年蛍光灯生産終了→中島マンション・自宅のLED化ロードマップが必要と気づく(住まいのごきげんアップデート構想)",
+        "who": "家族",
+        "src": "ダイジェスト8/16"
+      },
+      {
+        "date": "2026-08-16",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "C08台本修正・リハーサルを前倒しで実施(ロールプレイ相手役=佐藤くんと実践的な掛け合い)",
+        "who": null,
+        "src": "ダイジェスト8/16"
+      },
+      {
+        "date": "2026-08-16",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️,💡",
+        "text": "「助けてと言われたら、周りは逆に嬉しいんだよ」— 頼る技術(ヘルプシーキング)の核心フレーズをロープレで言語化・教材化候補",
+        "who": null,
+        "src": "ダイジェスト8/16"
+      },
+      {
+        "date": "2026-08-16",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🤝",
+        "text": "アキさんと次の旅先「山梨・大菩薩嶺&雲峰荘」一泊二日プランをAIと策定・目的地決定(上日川峠周回・勝沼ワイナリー・ほうとう)",
+        "who": "アキさん",
+        "src": "ダイジェスト8/16"
+      },
+      {
+        "date": "2026-08-16",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🤝",
+        "text": "夜は家族でバスケ観戦とラーメン(「ブロッコリーを食べずにラーメンを食べることは許されない」の愛あるやり取り)",
+        "who": "家族",
+        "src": "ダイジェスト8/16"
+      },
+      {
+        "date": "2026-08-16",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "週報創刊号発行・6部屋の過去ログ参照リンク設計を採用・虎島屋開店(雑誌・ZINE横丁)・『月刊GOKIGEN』創刊決定",
+        "who": null,
+        "src": "当日ログ"
       }
     ]
   },
@@ -5975,7 +6065,7 @@
     "week": {
       "from": "2026-08-16",
       "to": "2026-08-22",
-      "rows": 0,
+      "rows": 6,
       "counts": {
         "教え": 0,
         "トライ": 0,
@@ -5988,7 +6078,7 @@
     "month": {
       "from": "2026-08-01",
       "to": "2026-08-31",
-      "rows": 45,
+      "rows": 51,
       "counts": {
         "教え": 10,
         "トライ": 4,
@@ -6000,47 +6090,47 @@
     },
     "recent": [
       {
-        "date": "2026-08-15",
-        "kinds": [],
-        "unsure": [],
-        "kindsText": "🔥,🌱",
-        "text": "茶臼岳リベンジ登頂成功!「いつか登りたいね」を現実に変えた(アキさんはマウンテンクルーザー400で快調・着用数回目)",
-        "who": "家族"
-      },
-      {
-        "date": "2026-08-15",
+        "date": "2026-08-16",
         "kinds": [],
         "unsure": [],
         "kindsText": "🔥",
-        "text": "note「AIに忘れないでくれと頼んだ3つのこと」を終戦記念日に配信(メメント・モリ)",
+        "text": "週報創刊号発行・6部屋の過去ログ参照リンク設計を採用・虎島屋開店(雑誌・ZINE横丁)・『月刊GOKIGEN』創刊決定",
         "who": null
       },
       {
-        "date": "2026-08-14",
+        "date": "2026-08-16",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🤝",
+        "text": "夜は家族でバスケ観戦とラーメン(「ブロッコリーを食べずにラーメンを食べることは許されない」の愛あるやり取り)",
+        "who": "家族"
+      },
+      {
+        "date": "2026-08-16",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🤝",
+        "text": "アキさんと次の旅先「山梨・大菩薩嶺&雲峰荘」一泊二日プランをAIと策定・目的地決定(上日川峠周回・勝沼ワイナリー・ほうとう)",
+        "who": "アキさん"
+      },
+      {
+        "date": "2026-08-16",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️,💡",
+        "text": "「助けてと言われたら、周りは逆に嬉しいんだよ」— 頼る技術(ヘルプシーキング)の核心フレーズをロープレで言語化・教材化候補",
+        "who": null
+      },
+      {
+        "date": "2026-08-16",
         "kinds": [],
         "unsure": [],
         "kindsText": "🔥",
-        "text": "茶臼岳は濃いガスと雨で「勇気ある撤退」→翌朝9時リトライを即決",
-        "who": "家族"
-      },
-      {
-        "date": "2026-08-14",
-        "kinds": [],
-        "unsure": [],
-        "kindsText": "💡",
-        "text": "日本酒の磨き順(大吟醸→吟醸→純米) — 正論のクリアさより適度な雑味(人間味)が深い信頼を生む",
+        "text": "C08台本修正・リハーサルを前倒しで実施(ロールプレイ相手役=佐藤くんと実践的な掛け合い)",
         "who": null
-      },
-      {
-        "date": "2026-08-14",
-        "kinds": [],
-        "unsure": [],
-        "kindsText": "🌱",
-        "text": "大丸温泉旅館に初宿泊 — 川そのものが温泉の大露天風呂を貸切状態で。三福団子も初",
-        "who": "家族"
       }
     ],
-    "total": 69,
+    "total": 75,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
