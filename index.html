@@ -229,6 +229,48 @@
   .report.show{display:block}
   .steps{font-size:13px;line-height:2;color:var(--soft)}
   .err{background:rgba(255,68,68,.08);border:1.5px solid rgba(255,68,68,.35);color:var(--red);border-radius:12px;padding:12px;font-size:13px;font-weight:700;line-height:1.7}
+  /* 🎯目標（WANT台帳）— 各部屋の先頭 */
+  .goal{border-left:5px solid var(--green)}
+  .gr{padding:11px 0;border-bottom:1px solid var(--border)}
+  .gr:last-of-type{border-bottom:none}
+  .gn{font-size:13.5px;font-weight:800;display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:1.5}
+  .gmode{font-size:10px;font-weight:800;border-radius:999px;padding:2px 7px;background:var(--bg);color:var(--muted);white-space:nowrap}
+  .gmode.auto{background:rgba(34,199,122,.15);color:#128550}
+  .gmode.semi{background:rgba(255,184,0,.20);color:#7a5200}
+  .gg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:8px}
+  .gg>div{background:var(--bg);border:1.5px solid var(--border);border-radius:11px;padding:8px 9px;min-width:0}
+  .gl{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:3px}
+  .gv{font-size:16px;font-weight:800;line-height:1.3;word-break:break-word}
+  .gv.sm{font-size:11.5px;font-weight:700;line-height:1.6;color:var(--soft)}
+  .gv.done{color:var(--green)}
+  .gv.gap{color:var(--purple)}
+  .gsub{font-size:11px;color:var(--muted);line-height:1.75;margin-top:6px}
+  .gsub b{color:var(--soft)}
+  /* 📎3点セット（全部屋共通のフッター） */
+  .kit .krow{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:var(--bg);
+    font-size:13px;font-weight:800;color:var(--soft);margin-top:8px;text-decoration:none;
+    width:100%;font-family:inherit;cursor:pointer;text-align:left}
+  .kit .krow .arw{font-size:15px;color:var(--muted);flex:none}
+  .kit .krow.off{opacity:.55;pointer-events:none;border-style:dashed}
+  .kit details.krow{display:block;cursor:default}
+  .kit details.krow summary{list-style:none;cursor:pointer;display:flex;align-items:center;
+    justify-content:space-between;gap:8px;font-weight:800}
+  .kit details.krow summary::-webkit-details-marker{display:none}
+  .kit details.krow summary::after{content:'▼';font-size:10px;color:var(--muted);transition:transform .2s}
+  .kit details.krow[open] summary::after{transform:rotate(180deg)}
+  .kit .kbody{margin-top:9px;padding-top:9px;border-top:1px solid var(--border);font-weight:400}
+  .kit .kline{display:flex;gap:9px;padding:5px 0;font-size:12.5px;line-height:1.7;color:var(--text)}
+  .kit .kline .kk{flex:none;width:82px;color:var(--muted);font-size:11px;font-weight:700;padding-top:2px}
+  .kit .kline .kvv{flex:1;font-weight:700;word-break:break-word}
+  .kit .knum{font-size:11px;color:var(--muted);font-weight:700;line-height:1.7;margin-top:2px}
+  /* 📖週報書棚 */
+  .wk .wkname{font-size:12.5px;font-weight:800;line-height:1.6;word-break:break-word}
+  .wk .wkdate{font-size:11px;color:var(--muted);font-weight:700;margin-top:2px}
+  /* ver57.x（バナー右上） */
+  .b-ver{position:absolute;top:16px;right:14px;font-size:12px;font-weight:800;color:#fff;
+    background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.42);
+    border-radius:999px;padding:4px 11px;letter-spacing:.04em}
 </style>
 </head>
 <body>
@@ -237,8 +279,9 @@
 <div class="page on" id="pg-home">
   <div class="banner" style="margin:-8px -14px 0">
     <div class="b-date" id="dateStr"></div>
+    <div class="b-ver" id="selfVer">—</div>
     <div class="b-title">GO<span>KIGEN</span></div>
-    <div class="b-sub">中島克也 — 6つの部屋</div>
+    <div class="b-sub" id="verSub">中島克也 — 6つの部屋</div>
   </div>
   <div class="roof"><span>2030.4.29 へ</span></div>
   <div class="floor"><div class="fl">3F</div>
@@ -313,6 +356,7 @@
 <!-- HEALTH -->
 <div class="page" id="pg-health">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">💪 健康</div></div>
+  <div class="card goal" id="goal-health" style="display:none"></div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--blue)"></span>最新の数値（台帳より）</div>
     <div class="mg">
@@ -346,12 +390,14 @@
     <div id="dl-health"></div>
   </div>
   <div class="card fut" id="fut-health"></div>
+  <div class="card kit" id="kit-health"></div>
   <div class="note">数値はすべてGoogleドライブの「GOKIGEN台帳」が出どころです。点呼でClaudeにスクショを送ると、次の更新（8時・12時・18時・22時）でここへ反映されます。</div>
 </div>
 
 <!-- WORK -->
 <div class="page" id="pg-work">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🚀 仕事</div></div>
+  <div class="card goal" id="goal-work" style="display:none"></div>
 
   <!-- 取込時の異常（data.jsonのwarnings）。何も無い日は表示しない -->
   <div class="card wcard" id="warnCard" style="display:none">
@@ -415,11 +461,13 @@
     <div class="pace" id="pace"></div>
   </div>
   <div class="card fut" id="fut-work"></div>
+  <div class="card kit" id="kit-work"></div>
 </div>
 
 <!-- ECO -->
 <div class="page" id="pg-eco">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">💰 経済</div></div>
+  <div class="card goal" id="goal-eco" style="display:none"></div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--yellow)"></span>Udemy 累計収益（最新スナップショット）</div>
     <div class="mi-row"><span class="mv" id="v-rev" style="font-size:28px">—</span><span class="mu">USD</span></div>
@@ -437,13 +485,21 @@
     <div id="ecoLedger"></div>
     <div id="dl-eco"></div>
   </div>
+  <!-- 総資産の推移（経済台帳の記録日ごと）。記録が1日だけのうちは数値だけ出す -->
+  <div class="card" id="ecoTrendCard">
+    <div class="ct"><span class="dot" style="background:var(--yellow)"></span>📊 総資産の推移（全期間）</div>
+    <canvas id="chartEcoTotal" height="170"></canvas>
+    <div class="pace" id="ecoTrendNote"></div>
+  </div>
   <div class="card fut" id="fut-eco"></div>
+  <div class="card kit" id="kit-eco"></div>
   <div class="note">会社の現金4,000〜5,000万円。米国国債4.5%なら年約200万円。</div>
 </div>
 
 <!-- KNOW -->
 <div class="page" id="pg-know">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">📚 知識</div></div>
+  <div class="card goal" id="goal-know" style="display:none"></div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--blue)"></span>記録の継続</div>
     <div class="mg">
@@ -467,11 +523,14 @@
     <div id="knowLog"></div>
   </div>
   <div class="card fut" id="fut-know"></div>
+  <div class="card wk" id="weekly-know"></div>
+  <div class="card kit" id="kit-know"></div>
 </div>
 
 <!-- SPIRIT -->
 <div class="page" id="pg-spirit">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🧘 精神</div></div>
+  <div class="card goal" id="goal-spirit" style="display:none"></div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--purple)"></span>コンディション（最新）</div>
     <div class="mg">
@@ -496,12 +555,15 @@
   <div class="card"><div class="ct"><span class="dot" style="background:var(--green)"></span>今日の一言（台帳より）</div>
     <div class="ib" id="spiritNote" style="font-size:13px;line-height:1.85"></div>
   </div>
+  <div class="card wk" id="weekly-spirit"></div>
+  <div class="card kit" id="kit-spirit"></div>
   <div class="note">ご機嫌度は点呼でClaudeに伝えた内容が台帳に記帳され、ここに反映されます。アプリでのタップ入力は廃止しました。</div>
 </div>
 
 <!-- PRIV / KAISHOKU -->
 <div class="page" id="pg-priv">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🍶 会食・家族</div></div>
+  <div class="card goal" id="goal-priv" style="display:none"></div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--orange)"></span>会食マネジメント（今月）</div>
     <div class="kg" id="kgrid"></div>
@@ -512,6 +574,7 @@
     <div id="dl-priv"></div>
   </div>
   <div class="card fut" id="fut-priv"></div>
+  <div class="card kit" id="kit-priv"></div>
 </div>
 
 <!-- GRAPH -->
@@ -688,6 +751,7 @@ function showLoadedAt(suffix){
 async function init(){
   const d=new Date();
   document.getElementById('dateStr').textContent=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日（'+DOWS[d.getDay()]+'）';
+  renderSelfVersion();          // data.jsonを待たずに ver57.x を出す（今日の日付だけで決まるため）
   await loadData(true);
   // アプリを前面に戻したとき／別タブから戻ったとき／進む戻るで復帰したときに取り直す
   document.addEventListener('visibilitychange',function(){ if(!document.hidden) loadData(); });
@@ -700,6 +764,8 @@ function renderAll(){
   renderHouse(); renderInsight(); renderHealth(); renderWork();
   renderEco(); renderKnow(); renderSpirit(); renderPriv(); renderSettings();
   renderCockpit();
+  // v1.4：目標×差分／3点セット／週報書棚／総資産の推移／ver57.x
+  renderSelfVersion(); renderGoals(); renderKits(); renderWeekly(); renderEcoTrend();
 }
 
 /* ===== house ===== */
@@ -1302,6 +1368,301 @@ function wkChanges(D){
 }
 /* ===== 仕事タブ v1.3 ここまで ===== */
 
+/* ===== v1.4 目標×差分（WANT台帳）ここから =====
+   ここから下の「ここまで」までは DOM に触らない（tools/test/test-want.js が切り出して検証する）。
+
+   考え方：
+     ・data.json の want.rows は WANT台帳を**書いてあるまま**写したもの。判定はここで全部やる。
+     ・仕分けのキーは「項目名」ではなく「現状の取り方」の文。項目名を変えても壊れないし、
+       台帳に行が増えたときも、書き方さえ同じなら勝手に拾われる。
+     ・「自動:」で始まる行だけ現状値を機械算出して 目標−現状＝差分 を出す。
+       「手動:」「半自動:」は目標と備考を出すだけ（差分は出さない）。
+     ・「自動:」でも、まだ対応する現状の取り方が無い行（例「自動: exerciseログ」）や、
+       目標値がまだ数字でない行（例「(目標額は次回セッションで設定)」）は、
+       差分を出さずに目標と備考だけ出す。**空欄にはするが、絶対に落ちない。** */
+
+/* WANT台帳の「部屋」列 → アプリの部屋。表記ゆれは含み一致で吸収する */
+var WT_ROOMS=[['健康','health'],['仕事','work'],['経済','eco'],
+              ['知識','know'],['精神','spirit'],['家族','priv']];
+function wtRoomKey(s){
+  var t=String(s==null?'':s);
+  for(var i=0;i<WT_ROOMS.length;i++) if(t.indexOf(WT_ROOMS[i][0])>=0) return WT_ROOMS[i][1];
+  if(/趣味|会食/.test(t)) return 'priv';
+  if(/心|メンタル/.test(t)) return 'spirit';
+  return null;
+}
+/* 「現状の取り方」の頭で自動／半自動／手動を見分ける。
+   知らない書き方は「手動」に倒す（勝手に差分を出して間違えるより、出さない方が安全） */
+function wtMode(how){
+  var t=String(how==null?'':how).replace(/^[\s　]+/,'');
+  if(/^半自動/.test(t)) return 'semi';      // 「半自動」は「自動」より先に見る
+  if(/^自動/.test(t))   return 'auto';
+  return 'manual';
+}
+var WT_MODE_LABEL={auto:'自動',semi:'半自動',manual:'手動'};
+
+/* 「現状の取り方」の文から、どの現状値を使うかを決める。
+   ここに無い書き方は null＝差分なし（項目が増えたらこの表に1行足すだけでよい） */
+var WT_METRICS=[
+  {key:'weight',   re:/体重|weight/i},
+  {key:'courses',  re:/udemycourses|コース数|コース本数|コースの本数/i},
+  {key:'teach',    re:/教え/},
+  {key:'ecoTotal', re:/総資産/}
+];
+function wtMetric(how){
+  var t=String(how==null?'':how);
+  for(var i=0;i<WT_METRICS.length;i++) if(WT_METRICS[i].re.test(t)) return WT_METRICS[i].key;
+  return null;
+}
+/* 経済台帳の総資産。data.json に総額があればそれを使い、無ければ同じ規則でその場で足す */
+function wtEcoTotal(D){
+  var e=(D&&D.eco)||{}, rows=e.rows||[];
+  if(e.total!=null) return e.total;
+  if(!rows.length) return null;
+  var cls=rows.filter(r=>r.level==='class');
+  var use=cls.length? cls : rows.filter(r=>r.level!=='total'&&r.level!=='memo');
+  return use.length? use.reduce((a,r)=>a+(r.amount||0),0) : null;
+}
+/* 現状値。取れないときは null を返し、呼び出し側は「現状 —」と出すだけにする */
+function wtCurrent(D,key){
+  if(key==='weight'){
+    var ws=((D&&D.health)||[]).filter(r=>r.weight!=null);
+    var r=ws[ws.length-1];
+    return r? {value:r.weight,unit:'kg',digits:1,asOf:r.date,src:'GOKIGEN台帳の直近の体重'} : null;
+  }
+  if(key==='courses'){
+    var n=((D&&D.udemyCourses)||[]).length;
+    return n? {value:n,unit:'本',digits:0,asOf:aAsOf(D),src:'登録済みコース本数'} : null;
+  }
+  if(key==='teach'){
+    var k=computeKnowledge(D);
+    var v=(k&&k.month&&k.month.counts)? k.month.counts['教え'] : null;
+    if(v==null) return null;
+    // 基準日は月末ではなく、いま集計できている日（月末を出すと未来の日付に見えてしまう）
+    return {value:v,unit:'回',digits:0,asOf:k.asOf||aAsOf(D),
+            src:'リミットレス🗣️教え（'+md(k.month.from)+'〜'+md(k.month.to)+'の今月分）'};
+  }
+  if(key==='ecoTotal'){
+    var t=wtEcoTotal(D);
+    if(t==null) return null;
+    return {value:t,unit:'円',digits:0,asOf:((D&&D.eco)||{}).asOf||null,src:'経済台帳の最新合計'};
+  }
+  return null;
+}
+
+/* 目標値の文字列から数字を取り出す。
+     「78kg(理想)〜72kg(本音)」→ 幅つき目標 [78,72]（かっこ書きは注釈なので外す）
+     「3〜5km/日」            → 幅つき目標 [3,5]
+     「100本」                → 1点の目標 [100]
+     「(目標額は次回セッションで設定)」→ 数字なし（ok:false＝差分は出さない） */
+function wtGoal(text){
+  var raw=String(text==null?'':text).trim();
+  var s=raw.replace(/[(（][^)）]*[)）]/g,'');
+  var nums=s.match(/-?\d+(?:\.\d+)?/g);
+  if(!nums||!nums.length) return {raw:raw,ok:false,values:[],unit:''};
+  var m=s.match(/(-?\d+(?:\.\d+)?)[^\d]*[〜~～][^\d]*(-?\d+(?:\.\d+)?)/);
+  var values=m? [Number(m[1]),Number(m[2])] : [Number(nums[0])];
+  var last=String(values[values.length-1]);
+  var i=s.lastIndexOf(last);
+  var unit=(i>=0? s.slice(i+last.length) : '').trim().slice(0,8);
+  return {raw:raw,ok:true,values:values,unit:unit,range:values.length>=2};
+}
+/* 目標−現状＝差分。
+   幅のある目標（78〜72）は、いまの数字に近い方を基準にする（83.7kgなら78が基準）。
+   幅の中に入っていれば達成（差分0）。 */
+function wtDiff(goal,cur){
+  if(!goal||!goal.ok||cur==null) return null;
+  if(goal.values.length>=2){
+    var a=goal.values[0], b=goal.values[1];
+    var lo=Math.min(a,b), hi=Math.max(a,b);
+    if(cur>=lo&&cur<=hi) return {base:cur,diff:0,done:true,inRange:true,lo:lo,hi:hi};
+    var base=Math.abs(a-cur)<=Math.abs(b-cur)? a : b;
+    return {base:base,diff:base-cur,done:false,inRange:false,lo:lo,hi:hi};
+  }
+  var g=goal.values[0];
+  return {base:g,diff:g-cur,done:Math.abs(g-cur)<1e-9,inRange:false,lo:g,hi:g};
+}
+/* 部屋ごとに並べた目標の一覧。台帳に行が増えれば、ここは何も直さずに増える */
+function computeGoals(D){
+  var w=(D&&D.want)||null;
+  var rooms={health:[],work:[],eco:[],know:[],spirit:[],priv:[]};
+  ((w&&w.rows)||[]).forEach(function(r){
+    var room=wtRoomKey(r.room);
+    if(!room||!rooms[room]) return;
+    var mode=wtMode(r.how);
+    var metric=(mode==='auto')? wtMetric(r.how) : null;
+    var cur=metric? wtCurrent(D,metric) : null;
+    var goal=wtGoal(r.goal);
+    rooms[room].push({room:room,item:r.item,goalText:r.goal,goal:goal,due:r.due,
+      how:r.how,note:r.note,mode:mode,metric:metric,cur:cur,
+      diff:(mode==='auto'&&cur)? wtDiff(goal,cur.value) : null});
+  });
+  var n=0; Object.keys(rooms).forEach(k=>n+=rooms[k].length);
+  return {rooms:rooms,count:n,total:((w&&w.rows)||[]).length,
+          asOf:(w&&w.asOf)||null,url:(w&&w.fileUrl)||null,title:(w&&w.title)||null};
+}
+
+/* 誕生日を起点にした自己バージョン ver57.x。
+   誕生月を .00 とし、月がひとつ進むごとに .01 上がる（12ヶ月で整数部が1つ＝満年齢）。
+   1969-04-30生まれなら 2026年8月＝ver57.04。日にちは見ない（誕生月はまるごと .00）。 */
+var SELF_BIRTH='1969-04-30';
+function selfVersion(ds,birth){
+  var b=String(birth||SELF_BIRTH);
+  var t=(+String(ds).slice(0,4)-+b.slice(0,4))*12+(+String(ds).slice(5,7)-+b.slice(5,7));
+  if(!(t>0)) t=0;
+  var major=Math.floor(t/12), minor=t%12;
+  return {birth:b,asOf:ds,major:major,minor:minor,months:t,
+          version:'ver'+major+'.'+pad(minor)};
+}
+/* ===== v1.4 目標×差分 ここまで ===== */
+
+/* ===== v1.4 3点セット（📖最新を読む／🗄書棚／📊全期間）ここから =====
+   ここから下の「ここまで」までは DOM に触らない（tools/test/test-want.js が切り出して検証する）。
+   部屋ごとに「その部屋の直近レコード1件」「書棚（台帳フォルダ）」「全期間の見え方」を返す。 */
+
+var KIT_SHELF={health:'GOKIGEN台帳',work:'Udemy台帳',know:'リミットレス台帳',
+               spirit:'リミットレス台帳',eco:'経済台帳',priv:'GOKIGEN台帳'};
+/* 部屋 → 書棚（台帳フォルダ）のURL。data.jsonが古くて links.folders が無くても開けるよう控えを持つ */
+var KIT_FALLBACK={
+  health:'https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV',
+  priv:  'https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV',
+  know:  LM_FOLDER_URL, spirit:LM_FOLDER_URL,
+  work:  'https://drive.google.com/drive/folders/1g3hrPVRIYB_GOYho36DLRnITG_c5-elx',
+  eco:   'https://drive.google.com/drive/folders/13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR',
+  weekly:'https://drive.google.com/drive/folders/1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk'
+};
+function kitShelf(D,room){
+  var f=((D&&D.links)||{}).folders||{};
+  return {label:KIT_SHELF[room]||'台帳', url:f[room]||KIT_FALLBACK[room]||null};
+}
+/* リミットレス台帳の直近1行 */
+function kitLastLimitless(D){
+  var rows=((D&&D.limitless)||{}).rows||[];
+  return rows.length? rows[rows.length-1] : null;
+}
+/* その部屋の直近レコード1件。{title, lines:[{k,v}]} を返す。無ければ null */
+function kitLatest(D,room){
+  var push=(a,k,v)=>{ if(v!=null&&v!=='') a.push({k:k,v:String(v)}); return a; };
+  if(room==='health'||room==='priv'){
+    var h=(D&&D.health)||[];
+    var r=(room==='priv')
+      ? h.filter(x=>x.dining&&!/^なし/.test(x.dining)).slice(-1)[0]
+      : h[h.length-1];
+    if(!r) return null;
+    var L=[];
+    if(room==='priv'){
+      push(L,'会食',r.dining); push(L,'一言',r.note);
+      return {title:r.date+'（'+r.dow+'）の会食',lines:L};
+    }
+    push(L,'体重',r.weight!=null? r.weight.toFixed(1)+'kg':null);
+    push(L,'睡眠',r.sleep!=null? r.sleep+'点':null);
+    push(L,'体脂肪率',r.fat!=null? r.fat.toFixed(1)+'%':null);
+    push(L,'筋肉量',r.muscle!=null? r.muscle.toFixed(1)+'kg':null);
+    push(L,'血圧',r.bpHigh!=null? r.bpHigh+' / '+(r.bpLow!=null?r.bpLow:'—'):null);
+    push(L,'ご機嫌度',r.mood!=null? r.mood+'/10':null);
+    push(L,'運動',r.exercise); push(L,'会食',r.dining); push(L,'一言',r.note);
+    return {title:r.date+'（'+r.dow+'）の記録',lines:L};
+  }
+  if(room==='work'){
+    var s=aSnap(D,0); if(!s) return null;
+    var rows=s.rows||[];
+    var enr=rows.reduce((a,x)=>a+(x.cumEnroll||0),0);
+    var rev=rows.reduce((a,x)=>a+(x.cumRevenue||0),0);
+    var rated=rows.filter(x=>x.rating!=null);
+    var top=rows.slice().sort((a,b)=>(b.cumEnroll||0)-(a.cumEnroll||0)).slice(0,3);
+    var L=[];
+    push(L,'累計登録',fmtInt(enr)+'人');
+    push(L,'平均評価',rated.length? (rated.reduce((a,x)=>a+x.rating,0)/rated.length).toFixed(2):null);
+    push(L,'累計収益',fmtUSD(rev));
+    top.forEach((x,i)=>push(L,(i+1)+'位',aLabel(D,x.id)+' '+fmtInt(x.cumEnroll)+'人'));
+    return {title:s.date+(s.time? ' '+s.time:'')+' のスナップショット（全'+rows.length+'コース）',lines:L};
+  }
+  if(room==='eco'){
+    var e=(D&&D.eco)||{}, rows=e.rows||[];
+    if(!rows.length) return null;
+    var cls=rows.filter(r=>r.level==='class');
+    var use=cls.length? cls : rows.filter(r=>r.level!=='total'&&r.level!=='memo');
+    var L=[];
+    push(L,'総資産',fmtInt(Math.round(wtEcoTotal(D)||0))+'円');
+    use.slice().sort((a,b)=>(b.amount||0)-(a.amount||0)).slice(0,6)
+       .forEach(r=>push(L,r.name||r.cat||'—',fmtInt(Math.round(r.amount||0))+'円'));
+    return {title:(e.asOf||rows[rows.length-1].date)+' 時点（'+
+      (cls.length? '資産クラス'+cls.length+'区分':rows.length+'件')+'）',lines:L};
+  }
+  if(room==='know'||room==='spirit'){
+    var r2=kitLastLimitless(D);
+    if(!r2) return null;
+    var L2=[];
+    push(L2,'種別',r2.kindsText||((r2.kinds||[]).join(',')));
+    push(L2,'内容',r2.text); push(L2,'関連',r2.who); push(L2,'出所',r2.src);
+    if(room==='spirit'){
+      var ms=((D&&D.health)||[]).filter(x=>x.mood!=null);
+      var m=ms[ms.length-1];
+      if(m) push(L2,'ご機嫌度',m.mood+'/10（'+md(m.date)+'）');
+    }
+    return {title:r2.date+' のリミットレス台帳',lines:L2};
+  }
+  return null;
+}
+/* 📊全期間の見え方。kind:'tab'＝推移タブへ、'scroll'＝同じ画面のグラフへ、'text'＝数字だけ */
+var KIT_GRAPH={
+  health:{kind:'tab',series:'weight',label:'⚖️ 体重の全期間グラフを見る'},
+  work:  {kind:'tab',series:'udemy', label:'🚀 累計登録者の全期間グラフを見る'},
+  eco:   {kind:'scroll',target:'ecoTrendCard',label:'💰 総資産の推移を見る'},
+  know:  {kind:'text',label:'📊 全期間の記録'},
+  spirit:{kind:'text',label:'📊 全期間の記録'},
+  priv:  {kind:'text',label:'📊 全期間の記録'}
+};
+/* kind:'text' の部屋に出す「全期間の数字」 */
+function kitAllTime(D,room){
+  var h=(D&&D.health)||[];
+  if(room==='know'){
+    if(!h.length) return '記録がまだありません';
+    var lm=((D&&D.limitless)||{}).rows||[];
+    return 'GOKIGEN台帳 '+h.length+'日分（'+h[0].date+'〜'+h[h.length-1].date+'）／'+
+           'リミットレス台帳 '+lm.length+'行';
+  }
+  if(room==='spirit'){
+    var ms=h.filter(r=>r.mood!=null);
+    if(!ms.length) return 'ご機嫌度の記録がまだありません';
+    var avg=ms.reduce((a,r)=>a+r.mood,0)/ms.length;
+    return 'ご機嫌度 '+ms.length+'回の記録・平均 '+avg.toFixed(1)+'/10（直近 '+
+           ms[ms.length-1].mood+'/10）';
+  }
+  if(room==='priv'){
+    var list=h.filter(r=>r.dining&&!/^なし/.test(r.dining));
+    if(!list.length) return '会食の記録がまだありません';
+    var fam=list.filter(r=>/家族|妻|長女|アキさん/.test(r.dining)).length;
+    return '会食 '+list.length+'回（'+list[0].date+'〜'+list[list.length-1].date+
+           '）／うち家族 '+fam+'回';
+  }
+  return '';
+}
+/* 総資産の推移。記録日が2つ以上そろってから線を描く（1点のときは数値だけ） */
+function computeEcoTrend(D){
+  var e=(D&&D.eco)||{};
+  var pts=(e.history||[]).filter(x=>x&&x.date&&x.total!=null);
+  if(!pts.length){
+    var t=wtEcoTotal(D);
+    return (t==null)? {ok:false,points:[],reason:'経済台帳にまだ記録がありません'}
+                    : {ok:false,points:[{date:e.asOf||'',total:Math.round(t)}],
+                       reason:'記録日が1日ぶんなので、線はまだ引けません（2日目から出ます）'};
+  }
+  if(pts.length<2)
+    return {ok:false,points:pts,
+            reason:'記録日が1日ぶんなので、線はまだ引けません（2日目から出ます）'};
+  return {ok:true,points:pts,first:pts[0],last:pts[pts.length-1],
+          delta:pts[pts.length-1].total-pts[0].total};
+}
+/* 📖最新週報。フォルダの中でいちばん新しい1本のリンクだけを扱う（中身は読まない） */
+function computeWeekly(D){
+  var w=(D&&D.weekly)||null;
+  var url=(w&&w.folderUrl)||(((D&&D.links)||{}).folders||{}).weekly||KIT_FALLBACK.weekly;
+  return {folderUrl:url,count:(w&&w.count)||0,latest:(w&&w.latest)||null,
+          known:!!w};
+}
+/* ===== v1.4 3点セット ここまで ===== */
+
 function renderAnalysis(){
   const body=document.getElementById('anaBody');
   const tag=document.getElementById('anaTag');
@@ -1556,6 +1917,181 @@ function renderDlink(room){
 }
 function renderCockpit(){
   ['health','know','spirit','work','priv','eco'].forEach(r=>{ renderDlink(r); renderFuture(r); });
+}
+
+/* ===== v1.4 🎯目標（各部屋の先頭） ===== */
+function renderGoals(){
+  const G=computeGoals(DATA);
+  ['health','work','eco','know','spirit','priv'].forEach(room=>{
+    const el=document.getElementById('goal-'+room);
+    if(!el) return;
+    const list=G.rooms[room]||[];
+    if(!list.length){ el.style.display='none'; el.innerHTML=''; return; }   // 行が無い部屋は出さない
+    el.style.display='';
+    el.innerHTML='<div class="ct"><span class="dot" style="background:var(--green)"></span>🎯 目標'+
+      '<span style="margin-left:auto;font-size:10px;color:var(--muted);font-weight:700">WANT台帳'+
+      (G.asOf? '（'+esc(G.asOf)+' 更新）':'')+'</span></div>'+
+      list.map(goalRowHtml).join('')+
+      '<div class="gsub">「現状の取り方」が<b>自動</b>の行だけ、いまの数字と差分を出しています。'+
+      '<b>手動</b>・<b>半自動</b>の行は目標と備考だけです。'+
+      'WANT台帳に行を足したり目標値を書き換えたりすれば、次の更新でそのままここに出ます。</div>'+
+      (G.url? '<a class="dlink" href="'+esc(G.url)+'" target="_blank" rel="noopener">'+
+              '📂 WANT台帳を開く<span class="arw">→</span></a>' : '');
+  });
+}
+function goalRowHtml(g){
+  const unit=(g.cur&&g.cur.unit)||'';
+  const dig=(g.cur&&g.cur.digits!=null)? g.cur.digits : 0;
+  const fmt=v=>(unit==='円')? fmtInt(Math.round(v))+'円'
+                            : (dig? Number(v).toFixed(dig) : fmtInt(Math.round(v)))+unit;
+  /* 3列に並べるので、桁の多い数字（13,704,370円など）は文字を1段小さくして折り返さないようにする */
+  const cell=(t,cls)=>'<div class="gv'+(String(t).length>8? ' sm':'')+(cls? ' '+cls:'')+'">'+esc(t)+'</div>';
+  // 現状
+  let curHtml='<div class="gv sm">—</div>';
+  if(g.mode!=='auto') curHtml='<div class="gv sm">'+esc(WT_MODE_LABEL[g.mode])+'で確認</div>';
+  else if(g.cur) curHtml=cell(fmt(g.cur.value));
+  else curHtml='<div class="gv sm">まだ取れていません</div>';
+  // 差分
+  let dHtml='<div class="gv sm">—</div>', hint='';
+  if(g.diff){
+    if(g.diff.done||g.diff.diff===0){
+      dHtml='<div class="gv done">✅ 達成</div>';
+      hint=g.diff.inRange? '目標の幅（'+g.diff.lo+'〜'+g.diff.hi+'）の中にいます。' : '';
+    }else{
+      const d=g.diff.diff;
+      dHtml=cell((d>0?'+':'−')+fmt(Math.abs(d)).replace(/^-/,''),'gap');
+      hint='目標'+fmt(g.diff.base)+(g.diff.lo!==g.diff.hi
+            ? '（'+g.diff.lo+'〜'+g.diff.hi+'のうち、いまの数字に近い方）':'')+
+           ' まで あと '+fmt(Math.abs(d))+(d>0? ' 増やす':' 減らす')+'。';
+    }
+  }else if(g.mode==='auto'){
+    // 差分が出せない理由は3つある。どれなのかを、そのまま日本語で書く
+    if(!g.metric) hint='この項目の現状は、まだ自動では取れません（WANT台帳の「現状の取り方」に'+
+                       '対応を足すと、ここに出るようになります）。';
+    else if(!g.cur) hint='現状はまだ台帳から取れていません。';
+    else hint='目標値がまだ数字で決まっていないので、差分はお休みです。';
+  }
+  return '<div class="gr">'+
+    '<div class="gn">'+esc(g.item||'')+
+      '<span class="gmode '+g.mode+'">'+esc(WT_MODE_LABEL[g.mode])+'</span>'+
+      (g.due? '<span class="gmode">期限 '+esc(g.due)+'</span>':'')+'</div>'+
+    '<div class="gg">'+
+      '<div><div class="gl">目標</div><div class="gv sm">'+esc(g.goalText||'—')+'</div></div>'+
+      '<div><div class="gl">現状</div>'+curHtml+'</div>'+
+      '<div><div class="gl">差分</div>'+dHtml+'</div>'+
+    '</div>'+
+    '<div class="gsub">'+(hint? esc(hint)+' ':'')+
+      (g.cur&&g.cur.src? '出どころ: '+esc(g.cur.src)+(g.cur.asOf? '（'+esc(g.cur.asOf)+'）':'')+' ':'')+
+      (g.note? '<br>📝 '+esc(g.note):'')+'</div>'+
+  '</div>';
+}
+
+/* ===== v1.4 📎3点セット（全部屋共通のフッター） ===== */
+function renderKits(){
+  ['health','work','eco','know','spirit','priv'].forEach(room=>{
+    const el=document.getElementById('kit-'+room);
+    if(!el) return;
+    const shelf=kitShelf(DATA,room), latest=kitLatest(DATA,room), g=KIT_GRAPH[room]||{};
+    // ① 📖最新を読む（その場に展開）
+    const body=latest
+      ? '<div class="knum">'+esc(latest.title)+'</div>'+
+        latest.lines.map(x=>'<div class="kline"><span class="kk">'+esc(x.k)+'</span>'+
+          '<span class="kvv">'+esc(x.v)+'</span></div>').join('')
+      : '<div class="knum">この部屋の台帳にまだ記録がありません。</div>';
+    // ③ 📊全期間グラフ
+    let graph='';
+    if(g.kind==='tab')
+      graph='<button class="krow" onclick="goGraph(\''+g.series+'\')">'+esc(g.label)+
+            '<span class="arw">→</span></button>';
+    else if(g.kind==='scroll')
+      graph='<button class="krow" onclick="scrollToCard(\''+g.target+'\')">'+esc(g.label)+
+            '<span class="arw">↓</span></button>';
+    else
+      graph='<div class="krow" style="cursor:default;display:block">'+esc(g.label)+
+            '<div class="knum" style="margin-top:4px">'+esc(kitAllTime(DATA,room))+'</div></div>';
+    el.innerHTML='<div class="ct"><span class="dot" style="background:var(--blue)"></span>📎 3点セット</div>'+
+      '<details class="krow"><summary>📖 最新を読む</summary>'+
+        '<div class="kbody">'+body+'</div></details>'+
+      (shelf.url
+        ? '<a class="krow" href="'+esc(shelf.url)+'" target="_blank" rel="noopener">🗄 書棚を開く（'+
+          esc(shelf.label)+'）<span class="arw">→</span></a>'
+        : '<div class="krow off">🗄 書棚（準備中）<span class="arw">→</span></div>')+
+      graph;
+  });
+}
+/* 推移タブの、指定した系列を開く */
+function goGraph(series){
+  const tabs=[...document.querySelectorAll('.gt div')];
+  const i={weight:0,sleep:1,fat:2,bodyAge:3,udemy:4}[series];
+  go('graph');
+  if(tabs[i]) sw(series,tabs[i]);
+  else setTimeout(draw,80);
+}
+function scrollToCard(id){
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ===== v1.4 📖週報書棚（知識・精神） ===== */
+function renderWeekly(){
+  const w=computeWeekly(DATA);
+  ['know','spirit'].forEach(room=>{
+    const el=document.getElementById('weekly-'+room);
+    if(!el) return;
+    el.innerHTML='<div class="ct"><span class="dot" style="background:var(--pink)"></span>📖 週報</div>'+
+      (w.latest
+        ? '<a class="dlink" href="'+esc(w.latest.url)+'" target="_blank" rel="noopener" '+
+          'style="border-color:rgba(255,77,141,.35);background:rgba(255,77,141,.07);color:var(--pink);'+
+          'align-items:flex-start"><span><span class="wkname">📖 最新週報を読む</span>'+
+          '<span class="wkdate" style="display:block">'+esc(w.latest.name)+'</span>'+
+          '<span class="wkdate" style="display:block">'+esc(w.latest.modified||'')+' 更新'+
+          (w.count>1? '／書棚に'+w.count+'本':'')+'</span></span><span class="arw">→</span></a>'
+        : '<div class="waiting">週報書棚はまだ空です。1本目を置くと、ここに「最新週報」が出ます。</div>')+
+      '<a class="dlink" href="'+esc(w.folderUrl)+'" target="_blank" rel="noopener">'+
+      '🗄 週報書棚を開く<span class="arw">→</span></a>'+
+      '<div class="pace">週報の中身はアプリでは開きません（リンクを置くだけです）。</div>';
+  });
+}
+
+/* ===== v1.4 総資産の推移（経済） ===== */
+let chartEco=null;
+function renderEcoTrend(){
+  const note=document.getElementById('ecoTrendNote');
+  const cv=document.getElementById('chartEcoTotal');
+  if(!note||!cv) return;
+  const t=computeEcoTrend(DATA);
+  if(chartEco){chartEco.destroy();chartEco=null}
+  if(!t.ok){
+    cv.style.display='none';
+    note.textContent=(t.points.length
+      ? t.points[0].date+' 時点の総資産は '+fmtInt(t.points[0].total)+'円。' : '')+t.reason;
+    return;
+  }
+  note.textContent=t.first.date+' の '+fmtInt(t.first.total)+'円 → '+t.last.date+' の '+
+    fmtInt(t.last.total)+'円（'+(t.delta>=0?'+':'−')+fmtInt(Math.abs(t.delta))+'円／記録'+
+    t.points.length+'日分）。記録日ごとの残高をつないだ線です（積み上げではありません）。';
+  if(typeof Chart==='undefined'){cv.style.display='none';return}
+  cv.style.display='';
+  chartEco=new Chart(cv.getContext('2d'),{type:'line',
+    data:{labels:t.points.map(p=>p.date.slice(5)),
+          datasets:[{data:t.points.map(p=>p.total),borderColor:'#ffb800',
+            backgroundColor:'rgba(255,184,0,.12)',fill:true,tension:.3,
+            pointRadius:3,pointBackgroundColor:'#ffb800',borderWidth:2.5}]},
+    options:{responsive:true,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#9aa0b8',font:{size:9},maxRotation:0,autoSkip:true,maxTicksLimit:6},grid:{display:false}},
+              y:{ticks:{color:'#9aa0b8',font:{size:10}},grid:{color:'#e2e8f8'}}}}});
+}
+
+/* ===== v1.4 ver57.x（バナー） ===== */
+function renderSelfVersion(){
+  const el=document.getElementById('selfVer'), sub=document.getElementById('verSub');
+  if(!el) return;
+  const d=new Date();
+  const ds=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  const birth=((DATA&&DATA.selfVersion&&DATA.selfVersion.birth))||SELF_BIRTH;
+  const v=selfVersion(ds,birth);      // 今日の日付から出すので、data.jsonが古くても月替わりでずれない
+  el.textContent=v.version;
+  if(sub) sub.textContent='中島克也 — 6つの部屋　'+v.version+'（'+v.major+'歳'+v.minor+'ヶ月）';
 }
 
 /* ===== 各部屋 ===== */
@@ -1834,13 +2370,19 @@ function renderPriv(){
 function renderSettings(){
   const hrs=DATA.updateHours&&DATA.updateHours.length? DATA.updateHours : [8,12,18,22];
   document.getElementById('updHours').textContent='1日'+hrs.length+'回（'+hrs.join('時・')+'時）';
-  document.getElementById('genInfo').textContent='最終生成: '+(DATA.generatedAt||'—');
+  document.getElementById('genInfo').textContent='最終生成: '+(DATA.generatedAt||'—')+
+    '　形式: v'+(DATA.version||'—');
   const h=DATA.health;
   const files=(DATA.source&&DATA.source.udemyFiles)||[];
+  const G=computeGoals(DATA), W=computeWeekly(DATA);
   document.getElementById('loadState').innerHTML=
     '✅ data.json 読み込み成功<br>健康データ: <b>'+h.length+'日分</b>（'+h[0].date+' 〜 '+h[h.length-1].date+'）<br>'+
     'Udemyスナップショット: <b>'+DATA.udemy.length+'件</b>（'+DATA.udemy[0].date+' 〜 '+DATA.udemy[DATA.udemy.length-1].date+'）'+
-    (files.length? '<br>Udemyの読込元: '+files.map(f=>f.name+'（'+f.rows+'行）').join('、') : '');
+    (files.length? '<br>Udemyの読込元: '+files.map(f=>f.name+'（'+f.rows+'行）').join('、') : '')+
+    '<br>WANT台帳（目標）: <b>'+G.total+'行</b>'+(G.total? '（部屋に出しているのは'+G.count+'行）':'（まだ読めていません）')+
+    '<br>週報書棚: <b>'+W.count+'本</b>'+(W.latest? '（最新 '+esc(W.latest.name)+'）':'')+
+    '<br>自己バージョン: <b>'+esc(document.getElementById('selfVer').textContent||'')+'</b>'+
+    '<br>月次総括: <b>'+((DATA.monthlyReview||[]).length)+'件</b>（器だけ用意しています）';
 }
 
 /* ===== 5年分の登録者カーブ（全体 / コース別） ===== */

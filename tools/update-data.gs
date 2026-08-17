@@ -9,6 +9,15 @@
  *   4. GitHub の katsuyanakaji-TraZma/gokigen に data.json を書き込む
  *   5. Vercel が自動でデプロイ → アプリが最新になる
  *
+ * v1.4で足したもの（読むファイルは +1本、開くフォルダは +1つだけ）：
+ *   ・WANT台帳（目標×差分の「目標」側）を**書いてあるまま**読む。
+ *     自動／手動の仕分けも差分の計算もアプリ側でやるので、台帳に行が増えても
+ *     目標値が書き換わっても、このスクリプトは1文字も直さなくていい。
+ *   ・週報書棚フォルダの「いちばん新しいファイルの名前とリンク」だけを取る（中身は開かない）。
+ *   ・経済台帳の「記録日ごとの総資産」（eco.history）＝アプリの推移線の材料。
+ *   ・自己バージョン ver57.x（selfVersion）と、月次総括の器（monthlyReview）。
+ *   ※ 新しいOAuthスコープは1つも増やしていない（本人への再承認は起きない）。
+ *
  * 1日4回（8時・12時・18時・22時）自動実行。Google側のサーバーで動くので Mac mini の電源は関係ありません。
  * 前回の実行以降にどちらのフォルダにも新規/更新ファイルが無ければ、作り直さずスキップします。
  *
@@ -33,6 +42,19 @@ var LIMITLESS_FOLDER_ID = '1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg';
 // v1.2.1でこちらに引っ越した。旧フォルダ 1koH3sVzVu2sqyJvSv5DDXh1MBwShKmAL はもう読まない。
 var ECO_FOLDER_ID = '13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR';
 
+// v1.4：WANT台帳（目標×差分の「目標」側）。スプレッドシート1本。
+// 列＝部屋／項目／目標値／期限／現状の取り方／備考。
+// 行が増えても目標値が書き換わっても、コードは直さない（この1本を読むだけ）。
+var WANT_FILE_ID = '1UgAb8OuWpIxvLyeDeuQRHQ2J5E04G3IZV-DMUD_h5k4';
+
+// v1.4：週報書棚フォルダ（📖_週報書棚）。
+// **中身は読まない**。いちばん新しいファイルの「名前とリンク」だけを取り、アプリはリンクを置くだけ。
+// 中を解析しないので、OAuthのスコープは4本のまま増えない（＝再承認が起きない）。
+var WEEKLY_FOLDER_ID = '1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk';
+
+// v1.4：自己バージョン（ver57.x）の起点。誕生月を .00 として、月がひとつ進むごとに .01 上がる。
+var BIRTH_DATE = '1969-04-30';
+
 var CONFIG = {
   gokigenFolderId: '1vJ7ddquLREjntkRUy235nv5FXaas2IoV',
   udemyFolderId:   '1g3hrPVRIYB_GOYho36DLRnITG_c5-elx',
@@ -45,6 +67,10 @@ var CONFIG = {
   limitlessKeepDays: 180,          // data.jsonに残す日数（肥大化させない）
   ecoFolderId:  ECO_FOLDER_ID,
   ecoBaseName:  '経済台帳_base',
+  // v1.4：目標×差分（WANT台帳）と週報書棚
+  wantFileId:      WANT_FILE_ID,
+  weeklyFolderId:  WEEKLY_FOLDER_ID,
+  birthDate:       BIRTH_DATE,
   futureDocPrefix: '未来ビジョン台帳',  // GOKIGEN台帳フォルダの中のGoogleドキュメント
   // v1.2.1：台帳ファイルが増えすぎて6分の実行制限に当たったため、古い日次ファイルを1本にまとめる
   gokigenBaseName:  'GOKIGEN台帳_base',   // まとめ先（この1本だけ読めば7月以前が全部入る）
@@ -113,18 +139,25 @@ function run_(force) {
   return result;
 }
 
-// 2つの台帳フォルダを見て、指定時刻より後に作られた／更新されたファイル名を返す
+// 台帳フォルダを見て、指定時刻より後に作られた／更新されたファイル名を返す
+// v1.4：WANT台帳（目標を書き換えたら次の更新で反映されてほしい）と週報書棚もここに入れる
 function changedFilesSince_(since) {
   var cutoff = since.getTime() - 2 * 60 * 1000;   // 取りこぼし防止に2分の余裕を見る
   var out = [];
   [CONFIG.gokigenFolderId, CONFIG.udemyFolderId,
-   CONFIG.limitlessFolderId, CONFIG.ecoFolderId].forEach(function (id) {
-    var it = DriveApp.getFolderById(id).getFiles();
-    while (it.hasNext()) {
-      var f = it.next();
-      if (f.getLastUpdated().getTime() > cutoff) out.push(f.getName());
-    }
+   CONFIG.limitlessFolderId, CONFIG.ecoFolderId, CONFIG.weeklyFolderId].forEach(function (id) {
+    try {
+      var it = DriveApp.getFolderById(id).getFiles();
+      while (it.hasNext()) {
+        var f = it.next();
+        if (f.getLastUpdated().getTime() > cutoff) out.push(f.getName());
+      }
+    } catch (e) { Logger.log('フォルダを見られませんでした（先に進みます）: ' + id + ' / ' + e); }
   });
+  try {
+    var w = DriveApp.getFileById(CONFIG.wantFileId);
+    if (w.getLastUpdated().getTime() > cutoff) out.push(w.getName());
+  } catch (e) { Logger.log('WANT台帳を見られませんでした（先に進みます）: ' + e); }
   return out;
 }
 
@@ -495,9 +528,20 @@ function dryRun() {
   Logger.log('健全性: 警告' + wn.filter(function (w) { return w.level === 'warn'; }).length +
              '件 / 情報' + wn.filter(function (w) { return w.level === 'info'; }).length + '件');
   wn.forEach(function (w) { Logger.log('   [' + w.level + '] ' + w.text); });
-  Logger.log('経済台帳: ' + d.eco.rows.length + '件' + (d.eco.asOf ? '（' + d.eco.asOf + '時点）' : '（データ待ち）'));
-  Logger.log('📂リンク: ' + Object.keys(d.links).map(function (k) {
-    return k + (d.links[k].url ? '✓' : '✗'); }).join(' '));
+  Logger.log('経済台帳: ' + d.eco.rows.length + '件' + (d.eco.asOf ? '（' + d.eco.asOf + '時点）' : '（データ待ち）') +
+    ' 総資産の推移' + ((d.eco.history || []).length) + '点');
+  // v1.4の3つ
+  Logger.log('自己バージョン: ' + d.selfVersion.version + '（' + d.selfVersion.birth + '生まれ／' +
+    d.selfVersion.asOf + '時点）');
+  Logger.log('WANT台帳: ' + (d.want ? d.want.rows.length + '行（' + d.want.title + '）' : '読めていません'));
+  (d.want ? d.want.rows : []).forEach(function (r) {
+    Logger.log('   ' + r.room + ' / ' + r.item + ' → ' + r.goal + '  [' + (r.how || '') + ']');
+  });
+  Logger.log('週報書棚: ' + (d.weekly
+    ? d.weekly.count + '本' + (d.weekly.latest ? '／最新 ' + d.weekly.latest.name : '（まだ空）')
+    : '見られていません'));
+  Logger.log('📂リンク: ' + Object.keys(d.links).filter(function (k) { return k !== 'folders'; })
+    .map(function (k) { return k + (d.links[k].url ? '✓' : '✗'); }).join(' '));
   return d;
 }
 
@@ -547,6 +591,16 @@ function buildData_(previous) {
   catch (e) { Logger.log('⚠️ 経済台帳を読めませんでした（前回の内容を維持します）: ' + e);
               eco = (previous && previous.eco) || { rows: [], used: [] }; }
 
+  // v1.4：WANT台帳（目標）と週報書棚（リンクだけ）。
+  // どちらも1つ失敗しても他を巻き込まない。読めなければ前回の内容をそのまま保つ。
+  var want = null, weekly = null;
+  try { want = timeIt_('WANT台帳', readWant_); }
+  catch (e) { Logger.log('⚠️ WANT台帳を読めませんでした（前回の内容を維持します）: ' + e); }
+  if (!want) want = (previous && previous.want) || null;
+  try { weekly = timeIt_('週報書棚', readWeekly_); }
+  catch (e) { Logger.log('⚠️ 週報書棚を見られませんでした（前回の内容を維持します）: ' + e);
+              weekly = (previous && previous.weekly) || null; }
+
   var asOf = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
 
   // v1.3：取込時の異常（累計の減少・日付異常・コース名不一致）を1本にまとめる
@@ -564,12 +618,18 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.3',
+    version: '1.4',
+    selfVersion: selfVersion_(asOf),
+    /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
+       いまは空のまま置いておく（アプリは0件でも壊れない）。 */
+    monthlyReview: (previous && previous.monthlyReview) || [],
     source: {
       gokigenFolderId: CONFIG.gokigenFolderId,
       udemyFolderId: CONFIG.udemyFolderId,
       limitlessFolderId: CONFIG.limitlessFolderId,
       ecoFolderId: CONFIG.ecoFolderId,
+      wantFileId: CONFIG.wantFileId,
+      weeklyFolderId: CONFIG.weeklyFolderId,
       rule: '全ファイルを読み、重複したら新しいファイルを優先',
       udemyFiles: ledger.used,
       limitlessFiles: limitless.used,
@@ -587,6 +647,8 @@ function buildData_(previous) {
     limitless: limitless,
     knowledge: knowledge,
     eco: eco,
+    want: want,
+    weekly: weekly,
     links: buildLinks_(base, limitless, eco, future, previous)
   };
 }
@@ -599,7 +661,18 @@ function buildLinks_(udemyBase, limitless, eco, future, previous) {
   var gok = 'https://drive.google.com/drive/folders/' + CONFIG.gokigenFolderId;
   var prev = (previous && previous.links) || {};
   var keep = function (key, v) { return v || (prev[key] && prev[key].url) || null; };
+  var fld = function (id) { return 'https://drive.google.com/drive/folders/' + id; };
   return {
+    /* v1.4【3点セットの「🗄書棚を開く」】部屋ごとの台帳フォルダ。
+       上の links.* は「そのものズバリのファイル」を開く（例: 仕事＝Udemy台帳_base）が、
+       書棚は日々のログも見たいので、必ず**フォルダ**を開く。 */
+    folders: {
+      health: gok, priv: gok,
+      know:   fld(CONFIG.limitlessFolderId), spirit: fld(CONFIG.limitlessFolderId),
+      work:   fld(CONFIG.udemyFolderId),
+      eco:    fld(CONFIG.ecoFolderId),
+      weekly: fld(CONFIG.weeklyFolderId)
+    },
     health: { label: 'GOKIGEN台帳フォルダ', url: gok },
     priv:   { label: 'GOKIGEN台帳フォルダ', url: gok },
     // 知識・精神は台帳フォルダごと開く（base だけでなく日々のログも見たいため）
@@ -1532,13 +1605,112 @@ function readEco_() {
   });
   var total = sumRows.reduce(function (a, r) { return a + (r.amount || 0); }, 0);
 
+  // v1.4：記録日ごとの総資産（アプリの「総資産の推移」線）。合計の出し方は上と同じ規則。
+  var history = ecoHistory_(all);
+
   Logger.log('経済台帳: ' + rows.length + '件' + (latest ? '（' + latest + '時点）' : '（データ待ち）') +
              ' 合計 ' + Math.round(total) + '円（' +
-             (sumLevel === 'class' ? '資産クラス' : '各行') + ' ' + sumRows.length + '行を合算）');
+             (sumLevel === 'class' ? '資産クラス' : '各行') + ' ' + sumRows.length + '行を合算）' +
+             ' 推移' + history.length + '点');
   return { baseName: CONFIG.ecoBaseName, baseUrl: baseUrl,
            folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.ecoFolderId,
-           asOf: latest, used: used, rows: rows,
+           asOf: latest, used: used, rows: rows, history: history,
            sumLevel: sumLevel, total: Math.round(total) };
+}
+
+/**
+ * v1.4：記録日ごとの総資産を出す（アプリの「総資産の推移」用）。
+ * 日ごとに、その日の行だけを見て「資産クラスの行があればそれだけ」を足す。
+ * 記録日をまたいで足し込まない（資産は積み上げではなく、その日の残高のため）。
+ * 記録が1日しかなければ1点だけ返す。アプリは2点目から線を描く。
+ */
+function ecoHistory_(all) {
+  var byDate = {};
+  (all || []).forEach(function (r) { (byDate[r.date] = byDate[r.date] || []).push(r); });
+  return Object.keys(byDate).sort().map(function (d) {
+    var list = byDate[d];
+    var lvl = list.some(function (r) { return r.level === 'class'; }) ? 'class' : 'item';
+    var use = list.filter(function (r) {
+      return lvl === 'class' ? r.level === 'class' : (r.level !== 'total' && r.level !== 'memo');
+    });
+    return { date: d, level: lvl, rows: use.length,
+             total: Math.round(use.reduce(function (a, r) { return a + (r.amount || 0); }, 0)) };
+  });
+}
+
+// ===== v1.4: WANT台帳（目標×差分の「目標」側） =====
+/* 列の見出しはゆらぎうるので別名も用意する。findColumns_ は先頭一致なので、
+   「現状の取り方」を先に置く（「現状」だけでも拾えるが、正式名を優先させる）。 */
+var WANT_COLS = {
+  room: ['部屋'], item: ['項目'], goal: ['目標値', '目標'], due: ['期限'],
+  how:  ['現状の取り方', '現状'], note: ['備考']
+};
+/**
+ * WANT台帳を「書いてあるまま」読む。
+ *
+ * ここでは判定を一切しない（自動／手動の仕分けも、差分の計算も、アプリ側でやる）。
+ * そうしておけば、差分の出し方を直したいときに Apps Script を貼り替えずに済み、
+ * 台帳に行が増えたときも、この関数は何も変えずにそのまま通る。
+ */
+function readWant_() {
+  var file = DriveApp.getFileById(CONFIG.wantFileId);
+  var values = SpreadsheetApp.openById(CONFIG.wantFileId).getSheets()[0].getDataRange().getValues();
+  var hd = findColumns_(values, WANT_COLS, 'room');
+  if (!hd) { Logger.log('⚠️ WANT台帳の見出し（部屋／項目／目標値…）が見つかりません'); return null; }
+  var rows = [];
+  for (var i = hd.row + 1; i < values.length; i++) {
+    var row = values[i];
+    var cell = function (f) { var c = hd.map[f]; return c == null ? null : str_(row[c]); };
+    var room = cell('room'), item = cell('item');
+    if (!room || !item) continue;                     // 部屋と項目が無い行は見出しの続きや空行
+    rows.push({ room: room, item: item, goal: cell('goal'), due: cell('due'),
+                how: cell('how'), note: cell('note') });
+  }
+  Logger.log('WANT台帳: ' + rows.length + '行（' + file.getName() + '）');
+  return { fileId: CONFIG.wantFileId, fileUrl: file.getUrl(), title: file.getName(),
+           asOf: Utilities.formatDate(file.getLastUpdated(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm'),
+           rows: rows };
+}
+
+// ===== v1.4: 週報書棚（リンクだけ・中身は読まない） =====
+/**
+ * 📖_週報書棚 フォルダの中で、更新日時がいちばん新しいファイルの「名前とリンク」を返す。
+ *
+ * **中身は開かない。** アプリは受け取ったリンクを置くだけなので、
+ * 週報がGoogleドキュメントでもPDFでも、形式を問わずそのまま扱える。
+ * 中を解析しないぶん、OAuthのスコープは今の4本のまま増えない（＝本人に再承認が出ない）。
+ */
+function readWeekly_() {
+  var folderUrl = 'https://drive.google.com/drive/folders/' + CONFIG.weeklyFolderId;
+  var it = DriveApp.getFolderById(CONFIG.weeklyFolderId).getFiles();   // 直下のみ
+  var best = null, n = 0;
+  while (it.hasNext()) {
+    var f = it.next();
+    n++;
+    var t = f.getLastUpdated().getTime();
+    if (!best || t > best.t) {
+      best = { t: t, name: f.getName(), url: f.getUrl(),
+               modified: Utilities.formatDate(f.getLastUpdated(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm') };
+    }
+  }
+  if (best) delete best.t;
+  Logger.log('週報書棚: ' + n + '本' + (best ? '／最新 ' + best.name + '（' + best.modified + '）' : '（まだ空）'));
+  return { folderId: CONFIG.weeklyFolderId, folderUrl: folderUrl, count: n, latest: best };
+}
+
+// ===== v1.4: 自己バージョン（ver57.x） =====
+/**
+ * 誕生日を起点にした自己バージョン。誕生月を .00 とし、月がひとつ進むごとに .01 上がる。
+ * 12ヶ月で整数部が1つ上がる（＝満年齢）。1969-04-30生まれなら 2026年8月＝ver57.04。
+ * 日にちは見ない（誕生月はまるごと .00）。
+ */
+function selfVersion_(ds, birth) {
+  var b = String(birth || CONFIG.birthDate);
+  var t = (+ds.slice(0, 4) - +b.slice(0, 4)) * 12 + (+ds.slice(5, 7) - +b.slice(5, 7));
+  if (t < 0) t = 0;
+  var major = Math.floor(t / 12), minor = t % 12;
+  return { birth: b, asOf: ds, major: major, minor: minor, months: t,
+           version: 'ver' + major + '.' + ('0' + minor).slice(-2) };
 }
 
 // ===== 変換ヘルパー =====
