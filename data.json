@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-17T10:32:11+09:00",
+  "generatedAt": "2026-08-18T08:29:40+09:00",
   "version": "1.4",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-08-17",
+    "asOf": "2026-08-18",
     "major": 57,
     "minor": 4,
     "months": 688,
@@ -62,6 +62,10 @@
       {
         "name": "Udemy台帳ログ_2026-08-17",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-08-18",
+        "rows": 11
       }
     ],
     "limitlessFiles": [
@@ -76,6 +80,10 @@
       {
         "name": "リミットレス台帳ログ_2026-08-17",
         "rows": 6
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-08-18",
+        "rows": 10
       }
     ],
     "ecoFiles": [
@@ -86,6 +94,10 @@
       {
         "name": "経済台帳ログ_2026-08-13",
         "rows": 8
+      },
+      {
+        "name": "経済台帳ログ_2026-08-18",
+        "rows": 22
       }
     ]
   },
@@ -692,6 +704,23 @@
       "dining": null,
       "routine": null,
       "note": "Udemy累計70,002人——7万人の大台を突破した朝(8月登録792人・累計収益$192,578・講師評価4.12)。新作C01は365人・★4.64と最高評価を更新。睡眠アプリ: 就床1:07・入眠1:31・起床7:00・睡眠5h28m・入眠潜時23分45秒・中途覚醒0・効率92.9%・快眠93.1。Oura睡眠74・コンディション81「心に耳を傾けましょう」(心拍は回復十分・休息と定期的なアクティビティが鍵)・アクティビティ78・レジリエンスやや不足(夜間の回復:適切・日中の回復:適切・日中ストレス:中)。7:38測定で体重83.2kg(前日比-0.5)・体脂肪率30.3%・体内年齢61歳。今日は8:00目標セッション(6部屋の測定可能な目標=v2の燃料・ピンコロ地蔵など行きたいリストの種を注入)→GAS修理3分→v2工事→夜19:00にC08進化編の収録(台本・pptx納品済み)。"
+    },
+    {
+      "date": "2026-08-18",
+      "dow": "火",
+      "weight": 82.5,
+      "fat": 30,
+      "muscle": 54.9,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 82,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Ouraコンディション71・レジリエンスやや不足。BMI27.6・基礎代謝1617kcal・骨格筋率45.2%"
     }
   ],
   "udemyCourses": [
@@ -764,22 +793,15 @@
       "published": "2021/10",
       "title": "部下と組織の可能性を開くリーダーになる！理論と事例で即実践できるコーチング＆リーダーシップ講座決定版（日本語・英語字幕）",
       "firstYm": "2021-10"
+    },
+    {
+      "id": "全体",
+      "short": "講師サマリー",
+      "published": "-",
+      "firstYm": "2026-08"
     }
   ],
   "udemy": [
-    {
-      "date": "2025-10-02",
-      "time": null,
-      "rows": [
-        {
-          "id": "C02",
-          "cumEnroll": 1460,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2025-10-07",
       "time": null,
@@ -2129,6 +2151,89 @@
           "rating": 4.2
         }
       ]
+    },
+    {
+      "date": "2026-08-18",
+      "time": "6:50",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 374,
+          "monthEnroll": 183,
+          "cumRevenue": 235.23,
+          "rating": 4.64
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 4869,
+          "monthEnroll": 130,
+          "cumRevenue": 7864.4,
+          "rating": 4.01
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2791,
+          "monthEnroll": 52,
+          "cumRevenue": 4461.73,
+          "rating": 4.13
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 3989,
+          "monthEnroll": 34,
+          "cumRevenue": 3839.26,
+          "rating": 4.08
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4523,
+          "monthEnroll": 45,
+          "cumRevenue": 7354.36,
+          "rating": 4.16
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7667,
+          "monthEnroll": 52,
+          "cumRevenue": 14896.8,
+          "rating": 4.18
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4862,
+          "monthEnroll": 22,
+          "cumRevenue": 11282.77,
+          "rating": 4.04
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8116,
+          "monthEnroll": 29,
+          "cumRevenue": 26405.16,
+          "rating": 3.87
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15020,
+          "monthEnroll": 173,
+          "cumRevenue": 48685.69,
+          "rating": 4.03
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17841,
+          "monthEnroll": 122,
+          "cumRevenue": 67512.44,
+          "rating": 4.2
+        },
+        {
+          "id": "全体",
+          "cumEnroll": 70052,
+          "monthEnroll": 842,
+          "cumRevenue": 192578.02,
+          "rating": 4.12
+        }
+      ]
     }
   ],
   "udemyMonthly": [
@@ -2179,6 +2284,10 @@
         },
         "C10": {
           "enroll": 675,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -2231,6 +2340,10 @@
         "C10": {
           "enroll": 1533,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -2281,6 +2394,10 @@
         },
         "C10": {
           "enroll": 2080,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -2333,6 +2450,10 @@
         "C10": {
           "enroll": 2500,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -2383,6 +2504,10 @@
         },
         "C10": {
           "enroll": 2648,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -2435,6 +2560,10 @@
         "C10": {
           "enroll": 2877,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -2485,6 +2614,10 @@
         },
         "C10": {
           "enroll": 3128,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -2537,6 +2670,10 @@
         "C10": {
           "enroll": 3351,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -2587,6 +2724,10 @@
         },
         "C10": {
           "enroll": 3540,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -2639,6 +2780,10 @@
         "C10": {
           "enroll": 3719,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -2689,6 +2834,10 @@
         },
         "C10": {
           "enroll": 3910,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -2741,6 +2890,10 @@
         "C10": {
           "enroll": 4070,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -2791,6 +2944,10 @@
         },
         "C10": {
           "enroll": 4262,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -2843,6 +3000,10 @@
         "C10": {
           "enroll": 4477,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -2893,6 +3054,10 @@
         },
         "C10": {
           "enroll": 4724,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -2945,6 +3110,10 @@
         "C10": {
           "enroll": 4989,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -2995,6 +3164,10 @@
         },
         "C10": {
           "enroll": 5245,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3047,6 +3220,10 @@
         "C10": {
           "enroll": 5496,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -3097,6 +3274,10 @@
         },
         "C10": {
           "enroll": 5909,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3149,6 +3330,10 @@
         "C10": {
           "enroll": 6287,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -3199,6 +3384,10 @@
         },
         "C10": {
           "enroll": 6715,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3251,6 +3440,10 @@
         "C10": {
           "enroll": 7158,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -3301,6 +3494,10 @@
         },
         "C10": {
           "enroll": 7461,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3353,6 +3550,10 @@
         "C10": {
           "enroll": 7980,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -3403,6 +3604,10 @@
         },
         "C10": {
           "enroll": 8323,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3455,6 +3660,10 @@
         "C10": {
           "enroll": 8946,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -3505,6 +3714,10 @@
         },
         "C10": {
           "enroll": 9407,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3557,6 +3770,10 @@
         "C10": {
           "enroll": 9739,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -3607,6 +3824,10 @@
         },
         "C10": {
           "enroll": 9966,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3659,6 +3880,10 @@
         "C10": {
           "enroll": 10311,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -3709,6 +3934,10 @@
         },
         "C10": {
           "enroll": 10601,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3761,6 +3990,10 @@
         "C10": {
           "enroll": 10910,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -3811,6 +4044,10 @@
         },
         "C10": {
           "enroll": 11224,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3863,6 +4100,10 @@
         "C10": {
           "enroll": 11485,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -3913,6 +4154,10 @@
         },
         "C10": {
           "enroll": 11755,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -3965,6 +4210,10 @@
         "C10": {
           "enroll": 12107,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4015,6 +4264,10 @@
         },
         "C10": {
           "enroll": 12523,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4067,6 +4320,10 @@
         "C10": {
           "enroll": 12647,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4117,6 +4374,10 @@
         },
         "C10": {
           "enroll": 12849,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4169,6 +4430,10 @@
         "C10": {
           "enroll": 13231,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4219,6 +4484,10 @@
         },
         "C10": {
           "enroll": 13591,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4271,6 +4540,10 @@
         "C10": {
           "enroll": 13872,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4321,6 +4594,10 @@
         },
         "C10": {
           "enroll": 14125,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4373,6 +4650,10 @@
         "C10": {
           "enroll": 14125,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4423,6 +4704,10 @@
         },
         "C10": {
           "enroll": 14455,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4475,6 +4760,10 @@
         "C10": {
           "enroll": 14770,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4525,6 +4814,10 @@
         },
         "C10": {
           "enroll": 15215,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4577,6 +4870,10 @@
         "C10": {
           "enroll": 15510,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4627,6 +4924,10 @@
         },
         "C10": {
           "enroll": 15597,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4679,6 +4980,10 @@
         "C10": {
           "enroll": 15863,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4729,6 +5034,10 @@
         },
         "C10": {
           "enroll": 15863,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4781,6 +5090,10 @@
         "C10": {
           "enroll": 15863,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4831,6 +5144,10 @@
         },
         "C10": {
           "enroll": 16539,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4883,6 +5200,10 @@
         "C10": {
           "enroll": 16539,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -4933,6 +5254,10 @@
         },
         "C10": {
           "enroll": 17094,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -4985,6 +5310,10 @@
         "C10": {
           "enroll": 17094,
           "revenue": null
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
@@ -5035,6 +5364,10 @@
         },
         "C10": {
           "enroll": 17312,
+          "revenue": null
+        },
+        "全体": {
+          "enroll": null,
           "revenue": null
         }
       }
@@ -5087,40 +5420,44 @@
         "C10": {
           "enroll": 17617,
           "revenue": 67055.92
+        },
+        "全体": {
+          "enroll": null,
+          "revenue": null
         }
       }
     },
     {
       "ym": "2026-08",
-      "enroll": 70002,
-      "newEnroll": 1574,
-      "revenue": 192537.84,
+      "enroll": 140104,
+      "newEnroll": 71676,
+      "revenue": 385115.86,
       "from": "2026-07-17",
-      "to": "2026-08-17",
-      "records": 8,
+      "to": "2026-08-18",
+      "records": 9,
       "byCourse": {
         "C01": {
-          "enroll": 365,
+          "enroll": 374,
           "revenue": 235.23
         },
         "C02": {
-          "enroll": 4859,
+          "enroll": 4869,
           "revenue": 7864.4
         },
         "C03": {
-          "enroll": 2788,
+          "enroll": 2791,
           "revenue": 4461.73
         },
         "C04": {
-          "enroll": 3988,
+          "enroll": 3989,
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4521,
+          "enroll": 4523,
           "revenue": 7354.36
         },
         "C06": {
-          "enroll": 7663,
+          "enroll": 7667,
           "revenue": 14896.8
         },
         "C07": {
@@ -5132,17 +5469,35 @@
           "revenue": 26405.16
         },
         "C09": {
-          "enroll": 15006,
+          "enroll": 15020,
           "revenue": 48685.69
         },
         "C10": {
-          "enroll": 17834,
+          "enroll": 17841,
           "revenue": 67512.44
+        },
+        "全体": {
+          "enroll": 70052,
+          "revenue": 192578.02
         }
       }
     }
   ],
   "warnings": [
+    {
+      "level": "warn",
+      "kind": "nameMismatch",
+      "course": "C04",
+      "date": "2026-08-18",
+      "text": "C04のコース名が食い違っています（2026-07-10「【耳から学ぶビジネストレンド】人生100年時代。リスキリ…」 ／ 2026-08-18「【耳から学ぶ】人生100年時代のリスキリング」）。IDの割当を確かめてください"
+    },
+    {
+      "level": "warn",
+      "kind": "nameMismatch",
+      "course": "C08",
+      "date": "2026-08-18",
+      "text": "C08のコース名が食い違っています（2026-07-10「人生100年時代 経営者・リーダーが不機嫌では困ります『…」 ／ 2026-08-18「ご機嫌ルーティン」）。IDの割当を確かめてください"
+    },
     {
       "level": "info",
       "kind": "enrollDrop",
@@ -5269,6 +5624,10 @@
       {
         "name": "リミットレス台帳ログ_2026-08-17",
         "rows": 6
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-08-18",
+        "rows": 10
       }
     ],
     "rows": [
@@ -6060,11 +6419,101 @@
         "text": "週報創刊号発行・6部屋の過去ログ参照リンク設計を採用・虎島屋開店(雑誌・ZINE横丁)・『月刊GOKIGEN』創刊決定",
         "who": null,
         "src": "当日ログ"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "10/31までに戦国時代テーマの「AI独学術」(AIにQ&Aを作らせて暗記)を実践すると決定",
+        "who": "知識の部屋",
+        "src": "ダイジェスト08:20-08:24"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "💡",
+        "text": "AIにQ&A問題集+解答を作らせて暗記する「超効率的・独学術」の型を着想",
+        "who": "AI独学術",
+        "src": "ダイジェスト08:20-08:21"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "Udemy受講生累計7万人突破の節目＆Kindle39冊目到達。「AI×設計思想」動画収録も実施",
+        "who": "C08進化編・70000人",
+        "src": "ダイジェスト本文"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "Want大賞のブラッシュアップ=6部屋全方位の目標を測定可能な数値まで言語化(体重78kg・体脂肪20%への段階/週3時間読書/AI独学術/家族食事会/年内Udemy+5・Kindle+5)",
+        "who": "v2構想・WANT台帳",
+        "src": "ダイジェスト08:15-08:54"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🤝",
+        "text": "ギバーへの恩送り食事会を丸の内「OCA」で企画(まっちゃん・カルビさん・マサシナさんに感謝を手渡す)",
+        "who": "恩送り枠・会食",
+        "src": "ダイジェスト08:26-08:27"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "ドライブ削除待ちフォルダの整理を8割方完了",
+        "who": "ドライブ大整頓",
+        "src": "ダイジェスト本文"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "💡",
+        "text": "ビジョンは油絵=乾く前に上書きする。アップデートなし=「油が乾いてきている」状態。乾き検知トリガーをアプリに組み込む着想",
+        "who": "WANT台帳・油絵運用",
+        "src": "ダイジェスト09:39-11:18"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🌱?",
+        "text": "会津若松・東山温泉「向瀧」など歴史的名宿を巡る旅を計画に追加(初めて系の候補・要本人確認)",
+        "who": "行きたい場所リスト",
+        "src": "ダイジェスト08:31-08:34"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🤝",
+        "text": "子どもたちとの食事会を人間関係の目標に明記",
+        "who": "家族枠",
+        "src": "ダイジェスト本文"
+      },
+      {
+        "date": "2026-08-17",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "秋冬の予定を確定=パスポート申請9/29・富士山麓ドッグランキャンプ11/21-23・神田鳥鍋12〜1月",
+        "who": "家族・旅行",
+        "src": "ダイジェスト08:42-08:47"
       }
     ]
   },
   "knowledge": {
-    "asOf": "2026-08-17",
+    "asOf": "2026-08-18",
     "kinds": [
       "教え",
       "トライ",
@@ -6076,7 +6525,7 @@
     "week": {
       "from": "2026-08-16",
       "to": "2026-08-22",
-      "rows": 6,
+      "rows": 16,
       "counts": {
         "教え": 0,
         "トライ": 0,
@@ -6089,7 +6538,7 @@
     "month": {
       "from": "2026-08-01",
       "to": "2026-08-31",
-      "rows": 51,
+      "rows": 61,
       "counts": {
         "教え": 10,
         "トライ": 4,
@@ -6101,47 +6550,47 @@
     },
     "recent": [
       {
-        "date": "2026-08-16",
+        "date": "2026-08-17",
         "kinds": [],
         "unsure": [],
         "kindsText": "🔥",
-        "text": "週報創刊号発行・6部屋の過去ログ参照リンク設計を採用・虎島屋開店(雑誌・ZINE横丁)・『月刊GOKIGEN』創刊決定",
-        "who": null
+        "text": "秋冬の予定を確定=パスポート申請9/29・富士山麓ドッグランキャンプ11/21-23・神田鳥鍋12〜1月",
+        "who": "家族・旅行"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-17",
         "kinds": [],
         "unsure": [],
         "kindsText": "🤝",
-        "text": "夜は家族でバスケ観戦とラーメン(「ブロッコリーを食べずにラーメンを食べることは許されない」の愛あるやり取り)",
-        "who": "家族"
+        "text": "子どもたちとの食事会を人間関係の目標に明記",
+        "who": "家族枠"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-17",
         "kinds": [],
         "unsure": [],
-        "kindsText": "🤝",
-        "text": "アキさんと次の旅先「山梨・大菩薩嶺&雲峰荘」一泊二日プランをAIと策定・目的地決定(上日川峠周回・勝沼ワイナリー・ほうとう)",
-        "who": "アキさん"
+        "kindsText": "🌱?",
+        "text": "会津若松・東山温泉「向瀧」など歴史的名宿を巡る旅を計画に追加(初めて系の候補・要本人確認)",
+        "who": "行きたい場所リスト"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-17",
         "kinds": [],
         "unsure": [],
-        "kindsText": "🗣️,💡",
-        "text": "「助けてと言われたら、周りは逆に嬉しいんだよ」— 頼る技術(ヘルプシーキング)の核心フレーズをロープレで言語化・教材化候補",
-        "who": null
+        "kindsText": "💡",
+        "text": "ビジョンは油絵=乾く前に上書きする。アップデートなし=「油が乾いてきている」状態。乾き検知トリガーをアプリに組み込む着想",
+        "who": "WANT台帳・油絵運用"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-17",
         "kinds": [],
         "unsure": [],
         "kindsText": "🔥",
-        "text": "C08台本修正・リハーサルを前倒しで実施(ロールプレイ相手役=佐藤くんと実践的な掛け合い)",
-        "who": null
+        "text": "ドライブ削除待ちフォルダの整理を8割方完了",
+        "who": "ドライブ大整頓"
       }
     ],
-    "total": 75,
+    "total": 85,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
@@ -6149,7 +6598,7 @@
     "baseName": "経済台帳_base",
     "baseUrl": "https://docs.google.com/spreadsheets/d/1gka3Kxiiv2oTt5mvS8tr7wtRzfqwHSoRtHBdLfQXaQ4/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR",
-    "asOf": "2026-08-16",
+    "asOf": "2026-08-18",
     "used": [
       {
         "name": "経済台帳_base",
@@ -6158,287 +6607,210 @@
       {
         "name": "経済台帳ログ_2026-08-13",
         "rows": 8
+      },
+      {
+        "name": "経済台帳ログ_2026-08-18",
+        "rows": 22
       }
     ],
     "rows": [
       {
-        "date": "2026-08-16",
-        "name": "MQ354 4.750% 2037/2/15満期",
-        "cat": "米国債",
-        "level": "item",
-        "amount": 1091976,
-        "currency": "JPY",
-        "src": "取得107.08→現在144.56"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "MQ355 4.750% 2041/2/15満期",
-        "cat": "米国債",
-        "level": "item",
-        "amount": 1125013,
-        "currency": "JPY",
-        "src": "取得105.38→現在144.54"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "MR434 4.875% 2030/10/31満期",
-        "cat": "米国債",
-        "level": "item",
-        "amount": 828568,
-        "currency": "JPY",
-        "src": "取得104.00→現在158.97"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "MR441 4.875% 2028/10/31満期",
-        "cat": "米国債",
-        "level": "item",
-        "amount": 820760,
-        "currency": "JPY",
-        "src": "取得103.02→現在158.97"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "MY956 4.750% 2045/2/15満期",
-        "cat": "米国債",
-        "level": "item",
-        "amount": 1109427,
-        "currency": "JPY",
-        "src": "取得103.92→現在144.54"
-      },
-      {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "ORロイヤルティーズ OR",
         "cat": "米国株式",
         "level": "item",
-        "amount": 106311,
+        "amount": 106049,
         "currency": "JPY",
-        "src": "金ロイヤルティ"
+        "src": "現在値33.33"
       },
       {
-        "date": "2026-08-16",
-        "name": "SBI証券口座 合計",
+        "date": "2026-08-18",
+        "name": "SBI My資産 合計",
         "cat": "総括",
         "level": "total",
-        "amount": 13104897,
+        "amount": 13094607,
         "currency": "JPY",
-        "src": "前日比0円・23:15時点"
+        "src": "前日比-10290円"
       },
       {
-        "date": "2026-08-16",
-        "name": "SPDRゴールドミニ GLDM",
+        "date": "2026-08-18",
+        "name": "SBI 外貨建債券",
+        "cat": "外国債券",
+        "level": "item",
+        "amount": 4967936,
+        "currency": "JPY",
+        "src": "経済台帳ログ_2026-08-18"
+      },
+      {
+        "date": "2026-08-18",
+        "name": "SBI 米国株式 合計",
         "cat": "米国株式",
         "level": "item",
-        "amount": 110365,
+        "amount": 5859627,
         "currency": "JPY",
-        "src": "金現物ETF"
+        "src": "為替159.09円(8/17 14:31)"
       },
       {
-        "date": "2026-08-16",
-        "name": "アグニコイーグル AEM",
+        "date": "2026-08-18",
+        "name": "SBI 預り金(円)",
+        "cat": "現金",
+        "level": "item",
+        "amount": 9981,
+        "currency": "JPY",
+        "src": "経済台帳ログ_2026-08-18"
+      },
+      {
+        "date": "2026-08-18",
+        "name": "SBI 預り金(米ドル)",
+        "cat": "現金",
+        "level": "item",
+        "amount": 2257063,
+        "currency": "JPY",
+        "src": "経済台帳ログ_2026-08-18"
+      },
+      {
+        "date": "2026-08-18",
+        "name": "SPDRゴールドミニシェアーズ GLDM",
         "cat": "米国株式",
         "level": "item",
-        "amount": 683342,
+        "amount": 111299,
         "currency": "JPY",
-        "src": "金鉱株"
+        "src": "現在値87.45"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
+        "name": "アグニコイーグルマインズ AEM",
+        "cat": "米国株式",
+        "level": "item",
+        "amount": 690759,
+        "currency": "JPY",
+        "src": "現在値188.78"
+      },
+      {
+        "date": "2026-08-18",
         "name": "アリスタネットワークス ANET",
         "cat": "米国株式",
         "level": "item",
-        "amount": 126719,
+        "amount": 128417,
         "currency": "JPY",
-        "src": "経済台帳_base"
+        "src": "現在値201.80"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "アルファベットA GOOGL",
         "cat": "米国株式",
         "level": "item",
-        "amount": 275578,
+        "amount": 273634,
         "currency": "JPY",
-        "src": "経済台帳_base"
+        "src": "現在値344.00"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "インタラクティブブローカーズ IBKR",
         "cat": "米国株式",
         "level": "item",
-        "amount": 234701,
+        "amount": 240111,
         "currency": "JPY",
-        "src": "経済台帳_base"
+        "src": "現在値94.33"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "ウィートンプレシャスメタルズ WPM",
         "cat": "米国株式",
         "level": "item",
-        "amount": 235235,
+        "amount": 239066,
         "currency": "JPY",
-        "src": "貴金属ロイヤルティ"
+        "src": "現在値136.61"
       },
       {
-        "date": "2026-08-16",
-        "name": "ウーバー UBER",
+        "date": "2026-08-18",
+        "name": "ウーバーテクノロジーズ UBER",
         "cat": "米国株式",
         "level": "item",
-        "amount": 24203,
+        "amount": 23860,
         "currency": "JPY",
-        "src": "経済台帳_base"
+        "src": "現在値74.99"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "グローバルXウラニウムETF URA",
         "cat": "米国株式",
         "level": "item",
-        "amount": 35795,
+        "amount": 35994,
         "currency": "JPY",
-        "src": "ウラン"
+        "src": "現在値45.25"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "シーブリッジゴールド SA",
         "cat": "米国株式",
         "level": "item",
-        "amount": 5341,
+        "amount": 5157,
         "currency": "JPY",
-        "src": "一般預り・金鉱株"
+        "src": "一般口座・現在値32.42"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "テックリソーシズB TECK",
         "cat": "米国株式",
         "level": "item",
-        "amount": 10122,
+        "amount": 10315,
         "currency": "JPY",
-        "src": "資源"
+        "src": "現在値64.84"
       },
       {
-        "date": "2026-08-16",
-        "name": "パランティア PLTR",
+        "date": "2026-08-18",
+        "name": "パランティアテクノロジーズ PLTR",
         "cat": "米国株式",
         "level": "item",
-        "amount": 2773153,
+        "amount": 2745097,
         "currency": "JPY",
-        "src": "最大保有・株式の約47%"
+        "src": "現在値172.55"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "フランコネバダ FNV",
         "cat": "米国株式",
         "level": "item",
-        "amount": 37319,
+        "amount": 37952,
         "currency": "JPY",
-        "src": "金ロイヤルティ"
+        "src": "現在値238.56"
       },
       {
-        "date": "2026-08-16",
-        "name": "ロビンフッド HOOD",
+        "date": "2026-08-18",
+        "name": "ロビンフッドマーケッツA HOOD",
         "cat": "米国株式",
         "level": "item",
-        "amount": 532928,
+        "amount": 535934,
         "currency": "JPY",
-        "src": "経済台帳_base"
+        "src": "現在値96.25"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "ヴァンエック中小型金鉱株ETF GDXJ",
         "cat": "米国株式",
         "level": "item",
-        "amount": 188164,
+        "amount": 191512,
         "currency": "JPY",
-        "src": "金鉱株"
+        "src": "現在値120.38"
       },
       {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "ヴァンエック金鉱株ETF GDX",
         "cat": "米国株式",
         "level": "item",
-        "amount": 71679,
+        "amount": 73093,
         "currency": "JPY",
-        "src": "金鉱株"
+        "src": "現在値91.89"
       },
       {
-        "date": "2026-08-16",
-        "name": "参考為替",
-        "cat": "メモ",
-        "level": "memo",
-        "amount": null,
-        "currency": "JPY",
-        "src": "USD/JPY 159.34, EUR/JPY 183.84 (08/14時点表示)"
-      },
-      {
-        "date": "2026-08-16",
+        "date": "2026-08-18",
         "name": "台湾セミコンダクターADR TSM",
         "cat": "米国株式",
         "level": "item",
-        "amount": 407607,
+        "amount": 411378,
         "currency": "JPY",
-        "src": "経済台帳_base"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "外貨建債券(米国債)",
-        "cat": "資産クラス",
-        "level": "class",
-        "amount": 4975744,
-        "currency": "JPY",
-        "src": "経済台帳_base"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "米国株式",
-        "cat": "資産クラス",
-        "level": "class",
-        "amount": 5858562,
-        "currency": "JPY",
-        "src": "経済台帳_base"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "総資産(証券+貴金属)",
-        "cat": "総括",
-        "level": "total",
-        "amount": 13704370,
-        "currency": "JPY",
-        "src": "2口座の合算"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "貴金属(金銀プラチナ)",
-        "cat": "資産クラス",
-        "level": "class",
-        "amount": 599473,
-        "currency": "JPY",
-        "src": "経済台帳_base"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "金・銀・プラチナ口座 合計",
-        "cat": "総括",
-        "level": "total",
-        "amount": 599473,
-        "currency": "JPY",
-        "src": "gold.sbisec側"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "預り金(円)",
-        "cat": "資産クラス",
-        "level": "class",
-        "amount": 9981,
-        "currency": "JPY",
-        "src": "経済台帳_base"
-      },
-      {
-        "date": "2026-08-16",
-        "name": "預り金(米ドル)",
-        "cat": "資産クラス",
-        "level": "class",
-        "amount": 2260610,
-        "currency": "JPY",
-        "src": "USD/JPY 159.34"
+        "src": "現在値430.97"
       }
     ],
     "history": [
@@ -6453,10 +6825,16 @@
         "level": "class",
         "rows": 5,
         "total": 13704370
+      },
+      {
+        "date": "2026-08-18",
+        "level": "item",
+        "rows": 21,
+        "total": 18954234
       }
     ],
-    "sumLevel": "class",
-    "total": 13704370
+    "sumLevel": "item",
+    "total": 18954234
   },
   "want": {
     "fileId": "1UgAb8OuWpIxvLyeDeuQRHQ2J5E04G3IZV-DMUD_h5k4",
