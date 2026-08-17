@@ -1,11 +1,22 @@
 {
-  "generatedAt": "2026-08-17T08:28:53+09:00",
-  "version": "1.3",
+  "generatedAt": "2026-08-17T10:32:11+09:00",
+  "version": "1.4",
+  "selfVersion": {
+    "birth": "1969-04-30",
+    "asOf": "2026-08-17",
+    "major": 57,
+    "minor": 4,
+    "months": 688,
+    "version": "ver57.04"
+  },
+  "monthlyReview": [],
   "source": {
     "gokigenFolderId": "1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
     "udemyFolderId": "1g3hrPVRIYB_GOYho36DLRnITG_c5-elx",
     "limitlessFolderId": "1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "ecoFolderId": "13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR",
+    "wantFileId": "1UgAb8OuWpIxvLyeDeuQRHQ2J5E04G3IZV-DMUD_h5k4",
+    "weeklyFolderId": "1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk",
     "rule": "全ファイルを読み、重複したら新しいファイルを優先",
     "udemyFiles": [
       {
@@ -6430,10 +6441,143 @@
         "src": "USD/JPY 159.34"
       }
     ],
+    "history": [
+      {
+        "date": "2026-08-13",
+        "level": "item",
+        "rows": 8,
+        "total": 24122431
+      },
+      {
+        "date": "2026-08-16",
+        "level": "class",
+        "rows": 5,
+        "total": 13704370
+      }
+    ],
     "sumLevel": "class",
     "total": 13704370
   },
+  "want": {
+    "fileId": "1UgAb8OuWpIxvLyeDeuQRHQ2J5E04G3IZV-DMUD_h5k4",
+    "fileUrl": "https://docs.google.com/spreadsheets/d/1UgAb8OuWpIxvLyeDeuQRHQ2J5E04G3IZV-DMUD_h5k4/edit?usp=drivesdk",
+    "title": "WANT台帳（目標×差分の目標側）",
+    "asOf": "2026-08-17 09:37",
+    "rows": [
+      {
+        "room": "健康",
+        "item": "体重",
+        "goal": "78kg(理想)〜72kg(本音)",
+        "due": "巡航目標",
+        "how": "自動: health直近のweight",
+        "note": "ビジョン台帳より。体重減より筋肉量増を優先"
+      },
+      {
+        "room": "健康",
+        "item": "毎朝の散歩",
+        "goal": "3〜5km/日",
+        "due": "87歳まで継続",
+        "how": "自動: exerciseログ",
+        "note": "太もも・脚力=健康の大黒柱"
+      },
+      {
+        "room": "健康",
+        "item": "100kmウォーク",
+        "goal": "現役続行",
+        "due": "65歳ごろまで",
+        "how": "手動: 大会エントリー実績",
+        "note": "10月尾張三河・3月東京物語"
+      },
+      {
+        "room": "仕事",
+        "item": "Udemyコース数",
+        "goal": "100本",
+        "due": "Mon Apr 29 2030 16:00:00 GMT+0900 (Japan Standard Time)",
+        "how": "自動: udemyCoursesの本数",
+        "note": "現状10本。61歳最後の日の中間旗"
+      },
+      {
+        "room": "仕事",
+        "item": "Kindle冊数",
+        "goal": "100冊",
+        "due": "Mon Apr 29 2030 16:00:00 GMT+0900 (Japan Standard Time)",
+        "how": "手動: 現状39冊(2026/8時点・本人申告)",
+        "note": "発電所建設"
+      },
+      {
+        "room": "経済",
+        "item": "資産型収入(コンテンツ+不動産+金融)",
+        "goal": "年1000万円水準",
+        "due": "62歳=資産化工事の年に本格化",
+        "how": "半自動: Udemy収益は自動・他は経済台帳",
+        "note": "87歳は月75万規模で十分ご機嫌"
+      },
+      {
+        "room": "経済",
+        "item": "金融資産の積み上げ",
+        "goal": "(目標額は次回セッションで設定)",
+        "due": null,
+        "how": "自動: 経済台帳の総資産推移",
+        "note": "ねんきん定期便の見込み額が宿題"
+      },
+      {
+        "room": "精神",
+        "item": "ギバー度(教えた人数)",
+        "goal": "(基準値は週報数週分の実測後に設定)",
+        "due": "87歳まで",
+        "how": "自動: リミットレス🗣️教えカウント",
+        "note": "俺が俺が→ギバーへ"
+      },
+      {
+        "room": "精神",
+        "item": "百クラブ(楽しい100)",
+        "goal": "常に1つ以上進行中",
+        "due": "87歳まで",
+        "how": "手動: 週報で確認",
+        "note": "低山100座・ゴルフ100切りなど"
+      },
+      {
+        "room": "家族",
+        "item": "月次ノルマ",
+        "goal": "山2回+おでかけ1回+家族食事1回/月",
+        "due": "毎月",
+        "how": "半自動: 会食ログ+山決めの日",
+        "note": "7-8月・12-3月は低山1回+おでかけ振替OK"
+      },
+      {
+        "room": "家族",
+        "item": "日本絶景ランキング10",
+        "goal": "上から順に踏破",
+        "due": "終わったら次の10",
+        "how": "手動: リスト初回作成が宿題",
+        "note": "アキさんと"
+      },
+      {
+        "room": "知識",
+        "item": "積読→作品化ライン",
+        "goal": "読了が作品になる流れの常設",
+        "due": null,
+        "how": "手動: 積読台帳(未着工)と連動",
+        "note": "ジェイ・エイブラハム/ダン・ケネディ→Udemy化"
+      }
+    ]
+  },
+  "weekly": {
+    "folderId": "1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk",
+    "folderUrl": "https://drive.google.com/drive/folders/1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk",
+    "count": 0,
+    "latest": null
+  },
   "links": {
+    "folders": {
+      "health": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
+      "priv": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV",
+      "know": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
+      "spirit": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
+      "work": "https://drive.google.com/drive/folders/1g3hrPVRIYB_GOYho36DLRnITG_c5-elx",
+      "eco": "https://drive.google.com/drive/folders/13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR",
+      "weekly": "https://drive.google.com/drive/folders/1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk"
+    },
     "health": {
       "label": "GOKIGEN台帳フォルダ",
       "url": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
