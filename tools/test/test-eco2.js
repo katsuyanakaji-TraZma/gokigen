@@ -384,6 +384,20 @@ has(html, "未記帳", "空表示は「未記帳」と書く");
 has(html, "の棚卸しで初記帳予定", "いつ初記帳するかを書く");
 ok(!/法人.{0,40}(見込|概算|仮)/.test(html), "法人に見込み額・概算を書いていない", "書いてある");
 
+console.log("\n【2026-08-18 追加】本人メモは法人メーターの中で、実測が入るまでだけ出す");
+eq(corpMemoVisible({ eco: {} }), "true", "★実測がまだ無いうちは本人メモを出す");
+eq(corpMemoVisible(mkData(ALL)), "true", "法人の行が1件も無ければ出す");
+eq(corpMemoVisible(mkData(WITH_CORP)), "false",
+   "★区分「法人」の実測行が入った月以降は、本人メモを自動で消す");
+ok(!/<div class="note">会社の現金/.test(html),
+   "★経済タブ末尾の固定メモ（出どころ不明の金額）は無くなっている", "まだ残っている");
+const iCorpCard = html.indexOf('id="corpCard"'), iMemo = html.indexOf('id="corpMemo"');
+const iTrend = html.indexOf('id="ecoTrendCard"');
+ok(iCorpCard < iMemo && iMemo < iTrend, "★本人メモは法人メーターカードの中にある",
+   iCorpCard + "/" + iMemo + "/" + iTrend);
+has(html, "📝本人メモ（実測前の感覚値・2026/8月時点）", "実測値でないことを明示している");
+has(html, "会社の現金4,000〜5,000万円", "メモの中身は消さずに残している");
+
 console.log("\n【2026-08-18 追加】Udemyの累計収益は仕事タブへ");
 const iWork = html.indexOf('id="pg-work"'), iEco = html.indexOf('id="pg-eco"');
 const iRev = html.indexOf('id="v-rev"'), iTbl = html.indexOf('id="revTable"');

@@ -233,6 +233,11 @@
   .gt div.on{background:var(--blue);border-color:var(--blue);color:#fff}
   .msg{font-size:13px;color:var(--green);text-align:center;margin-top:7px;min-height:18px;font-weight:700}
   .note{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.7}
+  /* v1.5 本人メモ。実測値ではないことが一目で分かるよう、点線＋タグつきにする */
+  .memo{margin-top:10px;padding:10px 12px;border:1.5px dashed var(--border);border-radius:12px;
+    background:var(--bg);font-size:12px;line-height:1.8;color:var(--soft)}
+  .memo .mtag{display:inline-block;font-size:10.5px;font-weight:800;color:var(--muted);
+    letter-spacing:.02em;margin-bottom:3px}
   .report{background:var(--bg);border:1.5px dashed var(--border);border-radius:12px;padding:12px;font-size:12px;line-height:1.8;white-space:pre-wrap;word-break:break-all;display:none;margin-top:10px}
   .report.show{display:block}
   .steps{font-size:13px;line-height:2;color:var(--soft)}
@@ -510,6 +515,8 @@
     <div class="ct"><span class="dot" style="background:var(--soft)"></span>2階 🏢法人メーター（会社の現金）</div>
     <div id="corpBody"></div>
     <div class="pace" id="corpNote"></div>
+    <!-- 実測が入るまでのあいだだけ出す本人メモ。実測行が台帳に入ったら自動で消える -->
+    <div class="memo" id="corpMemo" style="display:none"></div>
   </div>
   <!-- v1.5【要件5】個人資産の推移（SBI線／野村線／合計線の3系列） -->
   <div class="card" id="ecoTrendCard">
@@ -520,7 +527,6 @@
   </div>
   <div class="card fut" id="fut-eco"></div>
   <div class="card kit" id="kit-eco"></div>
-  <div class="note">会社の現金4,000〜5,000万円。米国国債4.5%なら年約200万円。</div>
 </div>
 
 <!-- KNOW -->
@@ -1806,6 +1812,13 @@ function ecoCorpMeter(D){
           delta:(latest&&prev)? latest.amount-prev.amount : null};
 }
 
+/* 法人メーターに添える本人メモを出すか。
+   区分「法人」の実測行が台帳に1件でも入っていれば、もう出さない（感覚値の役目が終わる）。 */
+function corpMemoVisible(D){
+  var m=ecoCorpMeter(D).monthly;
+  return !(m && m.length);
+}
+
 /* 経済台帳の取り込みで見つけた異常（出所の書きもれ・合算と総括行の乖離） */
 function ecoWarn(D){
   var w=(((D&&D.eco)||{}).warnings)||[];
@@ -2513,11 +2526,24 @@ function renderEco(){
         `<span class="rv">${fmtYen(r.amount)}</span></div>`).join('') : '')+'</details>' : '');
 }
 
+/* v1.5 法人メーターに添える本人メモ。
+   もとは経済タブのいちばん下に固定文として置いてあったもの。実測の金額と並ぶと
+   どちらが台帳由来か分からなくなるので、法人メーターの中に「本人メモ」と明示して入れた。
+   **区分「法人」の実測行が台帳に1件でも入ったら自動で消える**（感覚値の役目が終わるため）。 */
+var CORP_MEMO='会社の現金4,000〜5,000万円。米国国債4.5%なら年約200万円。';
+var CORP_MEMO_TAG='📝本人メモ（実測前の感覚値・2026/8月時点）';
+
 /* v1.5【要件6】法人メーター。個人資産にも合計線にも1円も足さない、独立したメーター。 */
 function renderCorp(){
   const body=document.getElementById('corpBody'), note=document.getElementById('corpNote');
   if(!body) return;
   const c=ecoCorpMeter(DATA);
+  const memo=document.getElementById('corpMemo');
+  if(memo){
+    const show=corpMemoVisible(DATA);
+    memo.style.display=show? '' : 'none';
+    if(show) memo.innerHTML='<span class="mtag">'+esc(CORP_MEMO_TAG)+'</span><br>'+esc(CORP_MEMO);
+  }
   if(!c.latest){
     /* まだ台帳に区分「法人」の行が1件も無い状態。
        ここに仮の数字や見込み額を出さない（実台帳に無い数字は画面に出さない）。 */
