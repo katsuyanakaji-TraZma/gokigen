@@ -371,6 +371,30 @@ eq(wkMonthNew({ udemyMonthly: [{ ym: "2026-05", officialNew: null, newEnroll: 90
    "そのとき累計の差を控えとして持つ");
 eq(wkMonthNew({}), null, "月次が無くても落ちない");
 
+console.log("\n【2026-08-18 追加】法人メーターの空表示は「未記帳」（仮の数字を出さない）");
+eq(nextStocktake("2026-08-18"), "2026-08-22", "★棚卸しは毎月第4土曜。8/18の次は 8/22");
+eq(nextStocktake("2026-08-22"), "2026-08-22", "当日はその日を指す");
+eq(nextStocktake("2026-08-23"), "2026-09-26", "★過ぎたら翌月の第4土曜（9/26）");
+eq(nextStocktake("2026-09-01"), "2026-09-26", "月初でもその月の第4土曜");
+eq(nextStocktake("2026-12-27"), "2027-01-23", "★年をまたいでも落ちない");
+eq(nextStocktake("2026-02-01"), "2026-02-28", "2月（第4土曜が末日）");
+ok(!/4[,]?800[,]?0000?|46800000/.test(html),
+   "★確認用にでっち上げた金額（¥46,800,000）がアプリに1件も残っていない", "残っている");
+has(html, "未記帳", "空表示は「未記帳」と書く");
+has(html, "の棚卸しで初記帳予定", "いつ初記帳するかを書く");
+ok(!/法人.{0,40}(見込|概算|仮)/.test(html), "法人に見込み額・概算を書いていない", "書いてある");
+
+console.log("\n【2026-08-18 追加】Udemyの累計収益は仕事タブへ");
+const iWork = html.indexOf('id="pg-work"'), iEco = html.indexOf('id="pg-eco"');
+const iRev = html.indexOf('id="v-rev"'), iTbl = html.indexOf('id="revTable"');
+ok(iWork < iRev && iRev < iEco, "★「Udemy 累計収益」は仕事タブの中にある", iWork+"/"+iRev+"/"+iEco);
+ok(iWork < iTbl && iTbl < iEco, "★「コース別 累計収益」も仕事タブの中にある", iWork+"/"+iTbl+"/"+iEco);
+ok(html.indexOf('id="ecoTrendCard"') > iEco, "個人資産の推移は経済タブに残っている", "");
+ok(html.indexOf('id="corpCard"') > iEco, "法人メーターは経済タブに残っている", "");
+has(html, "function renderRevenue()", "収益の描画は renderRevenue に切り出した");
+has(html, "  renderRevenue();", "renderWork から呼んでいる");
+ok(!/id="ecoTable"|id="ecoAsOf"/.test(html), "経済タブ側の古いIDは残っていない", "残っている");
+
 console.log("\n【画面の配線】");
 has(html, "const ep=ecoCard(DATA);", "★家画面の経済カードが ecoCard に配線されている");
 ok(!/setRoom\('eco',\s*'\$'/.test(html), "★家画面の経済カードから $ 表記が消えている", "まだ$表記が残っている");

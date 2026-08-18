@@ -1204,22 +1204,18 @@ function buildWarnings_(ledger, courses, asOf, monthly) {
     }
   }
 
-  // ③ コース名の不一致（同じIDに、別ものとしか思えない名前が付いている）
-  var names = {};
-  rows.forEach(function (r) {
-    if (!r.name) return;
-    (names[r.id] = names[r.id] || []).push({ date: r.date, name: r.name });
-  });
-  Object.keys(names).sort().forEach(function (id) {
-    var list = names[id], last = list[list.length - 1];
-    for (var i = 0; i < list.length; i++) {
-      if (sameCourseName_(list[i].name, last.name)) continue;
-      add('warn', 'nameMismatch', id, last.date,
-        id + 'のコース名が食い違っています（' + list[i].date + '「' + nameForWarn_(list[i].name) +
-        '」 ／ ' + last.date + '「' + nameForWarn_(last.name) + '」）。IDの割当を確かめてください');
-      break;      // 1コースにつき1件でよい
-    }
-  });
+  /* ③ コース名の食い違いチェックは廃止した（2026-08-18 本人決定）。
+     デルタ（毎日のログ）は同じ講座でも書き方がその日ごとに違う。
+       base   【耳から学ぶビジネストレンド】人生100年時代。リスキリングなくして生き残れない。…
+       デルタ 【耳から学ぶ】人生100年時代のリスキリング
+     「真ん中を省いた書き方」を頭8文字の一致で救う作りにしていたが、
+     省き方が頭から始まる講座（C04・C08）で誤検知が残り、直しても別の書き方でまた出る。
+     **コースIDが一致していれば、名前の表記揺れは警告しない。**
+
+     IDの取り違えそのものは、これで見逃さない：
+       ・累計登録が減る  → ①の enrollDrop（10人以上の逆行は「警告」）
+       ・累計収益が減る  → ①の revenueDrop（$50以上の逆行は「警告」）
+     講座を入れ替えれば累計が必ず大きく逆行するので、そちらで確実に引っかかる。 */
 
   // ④ v1.5【要件1】ホワイトリストから外れたコースID（「全体」などの集計行）
   ((ledger && ledger.skipped) || []).forEach(function (x) {
@@ -1257,30 +1253,6 @@ function buildWarnings_(ledger, courses, asOf, monthly) {
              '件 / 情報' + out.filter(function (w) { return w.level === 'info'; }).length + '件');
   return out;
 }
-/** コース名が「同じものを指している」とみなせるか。略称と正式名の差では警告を出さない */
-function sameCourseName_(a, b) {
-  var norm = function (s) {
-    return String(s || '').replace(/[\s　【】『』「」（）()［］\[\]、。・,.\-—ー"'!！?？＆&／\/]/g, '');
-  };
-  var x = norm(a), y = norm(b);
-  if (!x || !y) return true;
-  if (x === y) return true;
-  if (x.indexOf(y) >= 0 || y.indexOf(x) >= 0) return true;   // 片方がもう片方の一部＝略称
-  /* 台帳によっては、同じ講座でも「真ん中を省いた」書き方になっている。
-       base   『老害』と呼ばせない！40代・50代から始める 自己アップデート＆…
-       デルタ 『老害』と呼ばせない！自己アップデート＆…
-     これは片方がもう片方に含まれないので、頭がしっかり一致していれば同じ講座とみなす。
-     コースIDが入れ替わっていれば、頭の8文字から違うので取り違えは今までどおり見つかる。 */
-  var HEAD = 8;
-  if (x.length < HEAD || y.length < HEAD) return false;      // 短すぎる名前は頭一致で判断しない
-  return x.slice(0, HEAD) === y.slice(0, HEAD);
-}
-/** 警告文に出すコース名。短く切りすぎると「どこが違うのか」が分からなくなるので少し長めに残す */
-function nameForWarn_(s) {
-  var t = String(s == null ? '' : s).trim();
-  return t.length > 28 ? t.slice(0, 28) + '…' : t;
-}
-
 function uniqueIds_(byMonth) {
   var s = {};
   Object.keys(byMonth).forEach(function (ym) { Object.keys(byMonth[ym]).forEach(function (id) { s[id] = 1; }); });

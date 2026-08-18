@@ -441,6 +441,20 @@
     </div>
     <div class="pace" id="udemyAsOf"></div>
   </div>
+  <!-- v1.5：Udemyの収益は「仕事」の数字。観測定義書v2の経済の観測対象ではないので
+       経済タブからこちらへ移した（家画面の経済カードは個人資産に配線済み） -->
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--yellow)"></span>Udemy 累計収益（最新スナップショット）</div>
+    <div class="mi-row"><span class="mv" id="v-rev" style="font-size:28px">—</span><span class="mu">USD</span></div>
+    <div class="md" id="d-rev"></div>
+    <div class="pace" id="revAsOf"></div>
+  </div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--green)"></span>コース別 累計収益</div>
+    <div style="overflow-x:auto">
+      <table class="ut" id="revTable"></table>
+    </div>
+  </div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--green)"></span>今週の変化点</div>
     <div id="chgBody"></div>
@@ -479,18 +493,6 @@
 <div class="page" id="pg-eco">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">💰 経済</div></div>
   <div class="card goal" id="goal-eco" style="display:none"></div>
-  <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--yellow)"></span>Udemy 累計収益（最新スナップショット）</div>
-    <div class="mi-row"><span class="mv" id="v-rev" style="font-size:28px">—</span><span class="mu">USD</span></div>
-    <div class="md" id="d-rev"></div>
-    <div class="pace" id="ecoAsOf"></div>
-  </div>
-  <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--green)"></span>コース別 累計収益</div>
-    <div style="overflow-x:auto">
-      <table class="ut" id="ecoTable"></table>
-    </div>
-  </div>
   <!-- v1.5 取り込みで見つけた異常（出所の書きもれ・合算と総括行の乖離） -->
   <div class="card wcard" id="ecoWarnCard" style="display:none">
     <details>
@@ -1778,6 +1780,22 @@ function ecoMissing(accounts){
                      .map(function(k){return ECO_ACC_LABEL[k]});
 }
 
+/* 経済の棚卸し日＝毎月第4土曜10:00枠（観測定義書v2「フル版」）。
+   今日以降のいちばん近い回を返す。法人メーターが未記帳のときの案内に使うので、
+   日付を固定で書かず、月が変わっても自然に次の回を指すようにしておく。 */
+function nextStocktake(todayStr){
+  const now=todayStr? new Date(todayStr+'T00:00:00+09:00') : new Date();
+  const y0=now.getFullYear(), m0=now.getMonth(), d0=now.getDate();
+  const fourth=(y,m)=>{
+    const first=new Date(Date.UTC(y,m,1));
+    const off=(6-first.getUTCDay()+7)%7;      // その月の最初の土曜まで
+    return new Date(Date.UTC(y,m,1+off+21));  // その3週間後＝第4土曜
+  };
+  let y=y0, m=m0, s=fourth(y,m);
+  if(s<Date.UTC(y0,m0,d0)){ m++; if(m===12){y++;m=0} s=fourth(y,m); }
+  return s.getUTCFullYear()+'-'+pad(s.getUTCMonth()+1)+'-'+pad(s.getUTCDate());
+}
+
 /* 【要件6】法人メーター（会社の現金）。個人には1円も足さない、独立したメーター。 */
 function ecoCorpMeter(D){
   var c=((D&&D.eco)||{}).corp||null;
@@ -2368,6 +2386,7 @@ function renderLaunch(){
 }
 function renderWork(){
   renderWarnings();
+  renderRevenue();
   renderAnalysis();
   renderChanges();
   renderLaunch();
@@ -2430,7 +2449,9 @@ function renderWork(){
   const dl=new Date('2030-04-29');const mo=Math.max(1,Math.round((dl-new Date())/(2628e6)));
   document.getElementById('pace').textContent='🎯 2030/4/29まで約'+mo+'ヶ月｜必要ペース：Udemy月'+((100-n)/mo).toFixed(1)+'コース';
 }
-function renderEco(){
+/* v1.5：Udemyの累計収益は「仕事」の数字（経済タブから仕事タブへ移した）。
+   観測定義書v2の経済の観測対象は、SBIメイン／SBI貴金属／野村／個人銀行／法人だけ。 */
+function renderRevenue(){
   const s0=uSnap(0), s1=uSnap(-1);
   const r0=uSum(s0,'cumRevenue'), r1=uSum(s1,'cumRevenue');
   document.getElementById('v-rev').textContent=fmtUSD(r0);
@@ -2439,7 +2460,7 @@ function renderEco(){
     de.textContent=signedUSD(d)+' 前回比（'+s1.date.slice(5)+'）';
     de.className='md '+(d>=0?'good':'bad');
   }else{de.textContent='前回比 —';de.className='md';}
-  document.getElementById('ecoAsOf').textContent='基準日: '+s0.date+' '+s0.time;
+  document.getElementById('revAsOf').textContent='基準日: '+s0.date+' '+s0.time;
   const names={};DATA.udemyCourses.forEach(c=>names[c.id]=c.short);
   let html='<tr><th>コース</th><th>累計収益</th><th>前回比</th></tr>';
   s0.rows.slice().sort((a,b)=>b.cumRevenue-a.cumRevenue).forEach(r=>{
@@ -2447,9 +2468,10 @@ function renderEco(){
     const d=p? r.cumRevenue-p.cumRevenue : null;
     html+=`<tr><td>${r.id} ${names[r.id]||''}</td><td>${fmtUSD(r.cumRevenue)}</td><td class="dlt${d!=null&&d<0?' bad':''}">${d!=null?signedUSD(d):'—'}</td></tr>`;
   });
-  document.getElementById('ecoTable').innerHTML=html;
-
-  // 経済台帳（作ったばかり。行が入るまでは「入口開通・データ待ち」）
+  document.getElementById('revTable').innerHTML=html;
+}
+function renderEco(){
+  // 経済タブは個人資産・法人メーター・推移だけ（Udemyの収益は仕事タブへ移した）
   const eco=DATA.eco||{}, rows=eco.rows||[];
   const box=document.getElementById('ecoLedger');
   if(!box) return;
@@ -2497,10 +2519,13 @@ function renderCorp(){
   if(!body) return;
   const c=ecoCorpMeter(DATA);
   if(!c.latest){
-    body.innerHTML='<div class="waiting"><b>データ待ち</b><br>'+
+    /* まだ台帳に区分「法人」の行が1件も無い状態。
+       ここに仮の数字や見込み額を出さない（実台帳に無い数字は画面に出さない）。 */
+    const nx=nextStocktake();
+    body.innerHTML='<div class="waiting"><b>未記帳</b>（'+md(nx)+'の棚卸しで初記帳予定）<br>'+
       '経済台帳に区分「法人」の行（会社の現金残高）が入ると、ここに月次で出ます。<br>'+
       '法人は会社の資産なので、個人の合計にも推移の合計線にも足しません。</div>';
-    if(note) note.textContent='';
+    if(note) note.textContent='棚卸しは毎月第4土曜10:00枠（フル版）。次回は '+nx+' です。';
     return;
   }
   const d=c.delta;
