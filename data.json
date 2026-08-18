@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T08:29:40+09:00",
+  "generatedAt": "2026-08-18T09:26:06+09:00",
   "version": "1.4",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -65,7 +65,7 @@
       },
       {
         "name": "Udemy台帳ログ_2026-08-18",
-        "rows": 11
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -97,7 +97,7 @@
       },
       {
         "name": "経済台帳ログ_2026-08-18",
-        "rows": 22
+        "rows": 20
       }
     ]
   },
@@ -793,12 +793,6 @@
       "published": "2021/10",
       "title": "部下と組織の可能性を開くリーダーになる！理論と事例で即実践できるコーチング＆リーダーシップ講座決定版（日本語・英語字幕）",
       "firstYm": "2021-10"
-    },
-    {
-      "id": "全体",
-      "short": "講師サマリー",
-      "published": "-",
-      "firstYm": "2026-08"
     }
   ],
   "udemy": [
@@ -2225,13 +2219,6 @@
           "monthEnroll": 122,
           "cumRevenue": 67512.44,
           "rating": 4.2
-        },
-        {
-          "id": "全体",
-          "cumEnroll": 70052,
-          "monthEnroll": 842,
-          "cumRevenue": 192578.02,
-          "rating": 4.12
         }
       ]
     }
@@ -2285,10 +2272,6 @@
         "C10": {
           "enroll": 675,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -2339,10 +2322,6 @@
         },
         "C10": {
           "enroll": 1533,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -2395,10 +2374,6 @@
         "C10": {
           "enroll": 2080,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -2449,10 +2424,6 @@
         },
         "C10": {
           "enroll": 2500,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -2505,10 +2476,6 @@
         "C10": {
           "enroll": 2648,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -2559,10 +2526,6 @@
         },
         "C10": {
           "enroll": 2877,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -2615,10 +2578,6 @@
         "C10": {
           "enroll": 3128,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -2669,10 +2628,6 @@
         },
         "C10": {
           "enroll": 3351,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -2725,10 +2680,6 @@
         "C10": {
           "enroll": 3540,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -2779,10 +2730,6 @@
         },
         "C10": {
           "enroll": 3719,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -2835,10 +2782,6 @@
         "C10": {
           "enroll": 3910,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -2889,10 +2832,6 @@
         },
         "C10": {
           "enroll": 4070,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -2945,10 +2884,6 @@
         "C10": {
           "enroll": 4262,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -2999,10 +2934,6 @@
         },
         "C10": {
           "enroll": 4477,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -3055,10 +2986,6 @@
         "C10": {
           "enroll": 4724,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -3109,10 +3036,6 @@
         },
         "C10": {
           "enroll": 4989,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -3165,10 +3088,6 @@
         "C10": {
           "enroll": 5245,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -3219,10 +3138,6 @@
         },
         "C10": {
           "enroll": 5496,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -3275,10 +3190,6 @@
         "C10": {
           "enroll": 5909,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -3329,10 +3240,6 @@
         },
         "C10": {
           "enroll": 6287,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -3385,10 +3292,6 @@
         "C10": {
           "enroll": 6715,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -3439,10 +3342,6 @@
         },
         "C10": {
           "enroll": 7158,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -3495,10 +3394,6 @@
         "C10": {
           "enroll": 7461,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -3549,10 +3444,6 @@
         },
         "C10": {
           "enroll": 7980,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -3605,10 +3496,6 @@
         "C10": {
           "enroll": 8323,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -3659,10 +3546,6 @@
         },
         "C10": {
           "enroll": 8946,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -3715,10 +3598,6 @@
         "C10": {
           "enroll": 9407,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -3769,10 +3648,6 @@
         },
         "C10": {
           "enroll": 9739,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -3825,10 +3700,6 @@
         "C10": {
           "enroll": 9966,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -3879,10 +3750,6 @@
         },
         "C10": {
           "enroll": 10311,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -3935,10 +3802,6 @@
         "C10": {
           "enroll": 10601,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -3989,10 +3852,6 @@
         },
         "C10": {
           "enroll": 10910,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -4045,10 +3904,6 @@
         "C10": {
           "enroll": 11224,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -4099,10 +3954,6 @@
         },
         "C10": {
           "enroll": 11485,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -4155,10 +4006,6 @@
         "C10": {
           "enroll": 11755,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -4209,10 +4056,6 @@
         },
         "C10": {
           "enroll": 12107,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -4265,10 +4108,6 @@
         "C10": {
           "enroll": 12523,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -4319,10 +4158,6 @@
         },
         "C10": {
           "enroll": 12647,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -4375,10 +4210,6 @@
         "C10": {
           "enroll": 12849,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -4429,10 +4260,6 @@
         },
         "C10": {
           "enroll": 13231,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -4485,10 +4312,6 @@
         "C10": {
           "enroll": 13591,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -4539,10 +4362,6 @@
         },
         "C10": {
           "enroll": 13872,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -4595,10 +4414,6 @@
         "C10": {
           "enroll": 14125,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -4649,10 +4464,6 @@
         },
         "C10": {
           "enroll": 14125,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -4705,10 +4516,6 @@
         "C10": {
           "enroll": 14455,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -4759,10 +4566,6 @@
         },
         "C10": {
           "enroll": 14770,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -4815,10 +4618,6 @@
         "C10": {
           "enroll": 15215,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -4869,10 +4668,6 @@
         },
         "C10": {
           "enroll": 15510,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -4925,10 +4720,6 @@
         "C10": {
           "enroll": 15597,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -4979,10 +4770,6 @@
         },
         "C10": {
           "enroll": 15863,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -5035,10 +4822,6 @@
         "C10": {
           "enroll": 15863,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -5089,10 +4872,6 @@
         },
         "C10": {
           "enroll": 15863,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -5145,10 +4924,6 @@
         "C10": {
           "enroll": 16539,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -5199,10 +4974,6 @@
         },
         "C10": {
           "enroll": 16539,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -5255,10 +5026,6 @@
         "C10": {
           "enroll": 17094,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -5309,10 +5076,6 @@
         },
         "C10": {
           "enroll": 17094,
-          "revenue": null
-        },
-        "全体": {
-          "enroll": null,
           "revenue": null
         }
       }
@@ -5365,10 +5128,6 @@
         "C10": {
           "enroll": 17312,
           "revenue": null
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
@@ -5420,18 +5179,14 @@
         "C10": {
           "enroll": 17617,
           "revenue": 67055.92
-        },
-        "全体": {
-          "enroll": null,
-          "revenue": null
         }
       }
     },
     {
       "ym": "2026-08",
-      "enroll": 140104,
-      "newEnroll": 71676,
-      "revenue": 385115.86,
+      "enroll": 70052,
+      "newEnroll": 1624,
+      "revenue": 192537.84,
       "from": "2026-07-17",
       "to": "2026-08-18",
       "records": 9,
@@ -5475,10 +5230,6 @@
         "C10": {
           "enroll": 17841,
           "revenue": 67512.44
-        },
-        "全体": {
-          "enroll": 70052,
-          "revenue": 192578.02
         }
       }
     }
@@ -6610,7 +6361,7 @@
       },
       {
         "name": "経済台帳ログ_2026-08-18",
-        "rows": 22
+        "rows": 20
       }
     ],
     "rows": [
@@ -6625,30 +6376,12 @@
       },
       {
         "date": "2026-08-18",
-        "name": "SBI My資産 合計",
-        "cat": "総括",
-        "level": "total",
-        "amount": 13094607,
-        "currency": "JPY",
-        "src": "前日比-10290円"
-      },
-      {
-        "date": "2026-08-18",
         "name": "SBI 外貨建債券",
         "cat": "外国債券",
         "level": "item",
         "amount": 4967936,
         "currency": "JPY",
         "src": "経済台帳ログ_2026-08-18"
-      },
-      {
-        "date": "2026-08-18",
-        "name": "SBI 米国株式 合計",
-        "cat": "米国株式",
-        "level": "item",
-        "amount": 5859627,
-        "currency": "JPY",
-        "src": "為替159.09円(8/17 14:31)"
       },
       {
         "date": "2026-08-18",
@@ -6666,7 +6399,7 @@
         "level": "item",
         "amount": 2257063,
         "currency": "JPY",
-        "src": "経済台帳ログ_2026-08-18"
+        "src": "為替159.09円(8/17 14:31)・SBI My資産合計13094607円(前日比-10290円・評価損益+2239883円/+20.63%)は個別行の合算に一致"
       },
       {
         "date": "2026-08-18",
@@ -6829,12 +6562,12 @@
       {
         "date": "2026-08-18",
         "level": "item",
-        "rows": 21,
-        "total": 18954234
+        "rows": 20,
+        "total": 13094607
       }
     ],
     "sumLevel": "item",
-    "total": 18954234
+    "total": 13094607
   },
   "want": {
     "fileId": "1UgAb8OuWpIxvLyeDeuQRHQ2J5E04G3IZV-DMUD_h5k4",
