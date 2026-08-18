@@ -237,7 +237,7 @@ ecoFilled.eco.rows = [{ date: "2026-08-13", name: "国債", cat: "債券", amoun
                       { date: "2026-08-13", name: "普通預金", cat: "現金", amount: 2000000, currency: "JPY" }];
 const ve2 = ckVoice(ecoFilled, "eco");
 eq(ve2.tone, "yell", "行が入ればエールに変わる");
-has(ve2.text, "資産は5,000,000", "評価額を合計する");
+has(ve2.text, "資産は¥5,000,000（個人のみ）", "★評価額を合計し、個人だけを円で言う");
 
 console.log("\n【全部屋そろっているか】");
 ["health", "know", "spirit", "work", "priv", "eco"].forEach(r => {

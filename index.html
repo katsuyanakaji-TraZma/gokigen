@@ -51,6 +51,14 @@
   .rm-work{background:linear-gradient(135deg,#ff6b35,#e54b15)}
   .rm-priv{background:linear-gradient(135deg,#ff4d8d,#df2d6d)}
   .rm-eco{background:linear-gradient(135deg,#ffb800,#e09800)}
+  /* v1.5 推移グラフの凡例。タップで線のON/OFF */
+  .eleg{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}
+  .eleg button{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);
+    background:#fff;color:var(--ink);border-radius:999px;padding:5px 11px;font-size:12px;
+    font-weight:800;cursor:pointer;font-family:inherit}
+  .eleg button.off{opacity:.4;text-decoration:line-through}
+  .eleg button[disabled]{opacity:.35;cursor:default;text-decoration:none}
+  .eleg .sw{width:10px;height:10px;border-radius:3px;display:inline-block}
   .found{margin-top:8px;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between}
   .found span{font-size:12px;font-weight:700;color:var(--soft)}
   .found b{font-size:15px;font-weight:800;color:var(--purple)}
@@ -427,6 +435,9 @@
       <div class="mb"><div class="ml">⭐ 平均評価</div>
         <div class="mi-row"><span class="mv" id="v-rating">—</span></div>
         <div class="md" id="d-rating"></div></div>
+      <div class="mb"><div class="ml">📅 今月の新規登録</div>
+        <div class="mi-row"><span class="mv" id="v-mnew">—</span><span class="mu">人</span></div>
+        <div class="md" id="d-mnew"></div></div>
     </div>
     <div class="pace" id="udemyAsOf"></div>
   </div>
@@ -480,14 +491,28 @@
       <table class="ut" id="ecoTable"></table>
     </div>
   </div>
+  <!-- v1.5 取り込みで見つけた異常（出所の書きもれ・合算と総括行の乖離） -->
+  <div class="card wcard" id="ecoWarnCard" style="display:none">
+    <details>
+      <summary class="wsum" id="ecoWarnSummary"></summary>
+      <div id="ecoWarnList"></div>
+    </details>
+  </div>
   <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--purple)"></span>経済台帳（資産の全体像）</div>
+    <div class="ct"><span class="dot" style="background:var(--purple)"></span>1階 👤個人資産（老後を支える自分のお金）</div>
     <div id="ecoLedger"></div>
     <div id="dl-eco"></div>
   </div>
-  <!-- 総資産の推移（経済台帳の記録日ごと）。記録が1日だけのうちは数値だけ出す -->
+  <!-- v1.5【要件6】二階建ての2階。会社の現金は個人と絶対に混ぜない -->
+  <div class="card" id="corpCard">
+    <div class="ct"><span class="dot" style="background:var(--soft)"></span>2階 🏢法人メーター（会社の現金）</div>
+    <div id="corpBody"></div>
+    <div class="pace" id="corpNote"></div>
+  </div>
+  <!-- v1.5【要件5】個人資産の推移（SBI線／野村線／合計線の3系列） -->
   <div class="card" id="ecoTrendCard">
-    <div class="ct"><span class="dot" style="background:var(--yellow)"></span>📊 総資産の推移（全期間）</div>
+    <div class="ct"><span class="dot" style="background:var(--yellow)"></span>📊 個人資産の推移（全期間・3系列）</div>
+    <div class="eleg" id="ecoLegend"></div>
     <canvas id="chartEcoTotal" height="170"></canvas>
     <div class="pace" id="ecoTrendNote"></div>
   </div>
@@ -625,6 +650,9 @@ const MOODS=['😩','😕','😐','🙂','😄'];
 const fmtInt=n=>n==null?'—':n.toLocaleString('ja-JP');
 const md=ds=>ds?(+ds.slice(5,7))+'/'+(+ds.slice(8,10)):'';
 const fmtUSD=n=>n==null?'—':'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+/* 円表記。個人資産はこちら（Udemyの収益＝ドルとは通貨から違う） */
+const fmtYen=n=>n==null?'—':'¥'+Math.round(n).toLocaleString('ja-JP');
+const signedYen=d=>Math.round(d)===0? '±¥0' : (d>0?'+':'−')+'¥'+Math.abs(Math.round(d)).toLocaleString('ja-JP');
 /* 台帳から来た文字列をHTMLに差し込むときのエスケープ */
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -766,6 +794,8 @@ function renderAll(){
   renderCockpit();
   // v1.4：目標×差分／3点セット／週報書棚／総資産の推移／ver57.x
   renderSelfVersion(); renderGoals(); renderKits(); renderWeekly(); renderEcoTrend();
+  // v1.5：経済の二階建て。台帳が空の日でも法人メーターと取込警告は描く
+  renderCorp(); renderEcoWarn();
 }
 
 /* ===== house ===== */
@@ -791,10 +821,12 @@ function renderHouse(){
   const e0=uSum(s0,'cumEnroll'), e1=uSum(s1,'cumEnroll');
   setRoom('work', fmtInt(e0)+'人', e1!=null? (signedInt(e0-e1)+' 前回比'):'前回比 —');
 
-  // 経済 = Udemy累計収益
-  const r0=uSum(s0,'cumRevenue'), r1=uSum(s1,'cumRevenue');
-  setRoom('eco', '$'+Math.round(r0).toLocaleString('en-US'),
-    r1!=null? (signedUSD(r0-r1,0)+' 前回比'):'前回比 —');
+  /* 経済 = 個人資産の合計（円）。
+     v1.5【要件4】ここは長らくUdemyのコース別累計収益の合算（$192,538）を出していた。
+     経済の部屋が見たいのは「老後を支える自分のお金」なので、経済台帳の個人資産合計に配線し直す。
+     法人（会社の現金）はここに足さない。仕事カードのUdemy累計登録はそのまま。 */
+  const ep=ecoCard(DATA);
+  setRoom('eco', ep.total!=null? fmtYen(ep.total) : '—', ep.deltaText);
 
   // 会食 = 今月
   const mk=latest.date.slice(0,7);
@@ -1416,7 +1448,7 @@ function wtMetric(how){
 }
 /* 経済台帳の総資産。data.json に総額があればそれを使い、無ければ同じ規則でその場で足す */
 function wtEcoTotal(D){
-  var e=(D&&D.eco)||{}, rows=e.rows||[];
+  var e=(D&&D.eco)||{}, rows=(e.rows||[]).filter(function(r){return r.account!=='corp'});
   if(e.total!=null) return e.total;
   if(!rows.length) return null;
   var cls=rows.filter(r=>r.level==='class');
@@ -1608,7 +1640,7 @@ function kitLatest(D,room){
 var KIT_GRAPH={
   health:{kind:'tab',series:'weight',label:'⚖️ 体重の全期間グラフを見る'},
   work:  {kind:'tab',series:'udemy', label:'🚀 累計登録者の全期間グラフを見る'},
-  eco:   {kind:'scroll',target:'ecoTrendCard',label:'💰 総資産の推移を見る'},
+  eco:   {kind:'scroll',target:'ecoTrendCard',label:'💰 個人資産の推移を見る'},
   know:  {kind:'text',label:'📊 全期間の記録'},
   spirit:{kind:'text',label:'📊 全期間の記録'},
   priv:  {kind:'text',label:'📊 全期間の記録'}
@@ -1639,20 +1671,53 @@ function kitAllTime(D,room){
   return '';
 }
 /* 総資産の推移。記録日が2つ以上そろってから線を描く（1点のときは数値だけ） */
+/* v1.5【要件5】推移グラフは3系列（観測定義書v2「4. グラフ・表示の読み方」）。
+     SBI線  … SBIメイン口座だけの日次残高（ライト版のたびに更新される）
+     野村線 … 野村由来の行だけ（フル版＝月1で更新）
+     合計線 … 個人の総資産。SBIメイン＋SBI貴金属＋野村＋個人銀行が
+              同じ日に揃った日だけ点を打つ。揃わない日は点なし。
+   揃わない日にも点を打つと、まだ届いていない口座のぶんが「急落」に見えてしまう
+   （8/13は野村1,105万円が入っていて、8/16は入っていない。足して並べると偽の急落になる）。
+   法人（会社の現金）はどの線にも入らない＝別メーター。 */
+var ECO_SERIES=[
+  {key:'sbi',    label:'SBI',  color:'#4a7eff'},
+  {key:'nomura', label:'野村', color:'#22c77a'},
+  {key:'total',  label:'合計', color:'#ffb800'}
+];
 function computeEcoTrend(D){
   var e=(D&&D.eco)||{};
-  var pts=(e.history||[]).filter(x=>x&&x.date&&x.total!=null);
-  if(!pts.length){
+  var hist=(e.history||[]).filter(function(x){return x&&x.date});
+  if(!hist.length){
     var t=wtEcoTotal(D);
-    return (t==null)? {ok:false,points:[],reason:'経済台帳にまだ記録がありません'}
-                    : {ok:false,points:[{date:e.asOf||'',total:Math.round(t)}],
-                       reason:'記録日が1日ぶんなので、線はまだ引けません（2日目から出ます）'};
+    return (t==null)
+      ? {ok:false,points:[],series:[],labels:[],reason:'経済台帳にまだ記録がありません'}
+      : {ok:false,points:[{date:e.asOf||'',total:Math.round(t)}],series:[],labels:[],
+         reason:'記録日が1日ぶんなので、線はまだ引けません（2日目から出ます）'};
   }
-  if(pts.length<2)
-    return {ok:false,points:pts,
-            reason:'記録日が1日ぶんなので、線はまだ引けません（2日目から出ます）'};
-  return {ok:true,points:pts,first:pts[0],last:pts[pts.length-1],
-          delta:pts[pts.length-1].total-pts[0].total};
+  /* 口座別の内訳を持たない古い data.json（v1.4）も素通しできるようにする。
+     そのころの history は「その日の総資産」1本しか無いので、合計線をそのまま引く。 */
+  var hasAcc=hist.some(function(p){
+    return ['sbi','gold','nomura','bank'].some(function(k){return p[k]!=null});
+  });
+  var series=ECO_SERIES.map(function(sp){
+    var vals=hist.map(function(p){
+      // 合計線は「4口座が揃った日」だけ。ほかは記録のある日だけ。
+      if(sp.key==='total') return hasAcc? (p.complete? p.total : null) : (p.total!=null? p.total : null);
+      return p[sp.key]!=null? p[sp.key] : null;
+    });
+    var got=vals.filter(function(v){return v!=null});
+    return {key:sp.key,label:sp.label,color:sp.color,values:vals,count:got.length,
+            first:got.length? got[0]:null, last:got.length? got[got.length-1]:null};
+  });
+  var pts=hist.filter(function(p){return p.total!=null});
+  var res={points:pts,series:series,labels:hist.map(function(p){return p.date}),
+           first:pts.length? pts[0]:null, last:pts.length? pts[pts.length-1]:null,
+           delta:pts.length>1? pts[pts.length-1].total-pts[0].total : 0,
+           byAccount:hasAcc,
+           drawable:series.filter(function(sp){return sp.count>=2})};
+  res.ok=res.drawable.length>0;
+  if(!res.ok) res.reason='記録日が1日ぶんなので、線はまだ引けません（2日目から出ます）';
+  return res;
 }
 /* 📖最新週報。フォルダの中でいちばん新しい1本のリンクだけを扱う（中身は読まない） */
 function computeWeekly(D){
@@ -1662,6 +1727,80 @@ function computeWeekly(D){
           known:!!w};
 }
 /* ===== v1.4 3点セット ここまで ===== */
+
+/* ===== v1.5 経済（個人資産カード／法人メーター）ここから =====
+   正本: Drive「経済の部屋・観測定義書_v2確定版_2026-08-18」
+   大原則は二階建て。1階＝個人資産（合計線はこれだけ）／2階＝法人メーター（会社の現金）。
+   法人は Apps Script 側で eco.corp に切り分けてあり、eco.rows / eco.history には入らない。 */
+
+/* 【要件4】家画面の経済カード。
+   値   … いちばん新しい記録日の個人資産合計（円）
+   前回比… 「比較できる」直近2点の差。口座の顔ぶれ（SBI／貴金属／野村／銀行）が
+           同じ日どうしでしか引き算しない。顔ぶれが違う日を引くと、まだ届いていない
+           口座のぶんが「減った」に見えてしまうため。 */
+function ecoCard(D){
+  var e=(D&&D.eco)||{};
+  var hist=(e.history||[]).filter(function(x){return x&&x.date&&x.total!=null});
+  var out={total:null,asOf:null,accounts:[],complete:false,
+           delta:null,from:null,deltaText:'前回比 —'};
+  if(hist.length){
+    var cur=hist[hist.length-1];
+    out.total=cur.total; out.asOf=cur.date;
+    out.accounts=cur.accounts||[]; out.complete=!!cur.complete;
+    var sig=out.accounts.join(',');
+    for(var i=hist.length-2;i>=0;i--){
+      if((hist[i].accounts||[]).join(',')!==sig) continue;
+      out.delta=cur.total-hist[i].total; out.from=hist[i].date; break;
+    }
+    out.deltaText = out.delta!=null
+      ? signedYen(out.delta)+' 前回比（'+md(out.from)+'）'
+      : '前回比 —（口座の顔ぶれが違う日）';
+  }else{
+    // eco.history がまだ無い古い data.json でも数字は出す（前回比だけ出さない）
+    var t=wtEcoTotal(D);
+    if(t!=null){ out.total=Math.round(t); out.asOf=e.asOf||null; }
+  }
+  return out;
+}
+/* 口座の顔ぶれを日本語にする。合計線が出ない日の「なぜ出ないか」を説明するのに使う */
+var ECO_ACC_LABEL={sbi:'SBIメイン',gold:'SBI貴金属',nomura:'野村',bank:'個人銀行'};
+var ECO_ACC_NEED=['sbi','gold','nomura','bank'];
+function ecoMissing(accounts){
+  var have=accounts||[];
+  return ECO_ACC_NEED.filter(function(k){return have.indexOf(k)<0})
+                     .map(function(k){return ECO_ACC_LABEL[k]});
+}
+
+/* 【要件6】法人メーター（会社の現金）。個人には1円も足さない、独立したメーター。 */
+function ecoCorpMeter(D){
+  var c=((D&&D.eco)||{}).corp||null;
+  var monthly=(c&&c.monthly)||[];
+  var latest=(c&&c.latest)||(monthly.length? monthly[monthly.length-1]:null);
+  var prev=monthly.length>=2? monthly[monthly.length-2]:null;
+  return {known:!!c,monthly:monthly,latest:latest,prev:prev,
+          delta:(latest&&prev)? latest.amount-prev.amount : null};
+}
+
+/* 経済台帳の取り込みで見つけた異常（出所の書きもれ・合算と総括行の乖離） */
+function ecoWarn(D){
+  var w=(((D&&D.eco)||{}).warnings)||[];
+  return {all:w, warn:w.filter(function(x){return x.level==='warn'}),
+                 info:w.filter(function(x){return x.level!=='warn'})};
+}
+
+/* 【④】仕事タブの月間新規登録。台帳の「月間登録」列（＝Udemyの実測）をそのまま出す。
+   列が無い月（〜2026/06）は null になり、画面は「—」と出すだけ。 */
+function wkMonthNew(D){
+  var m=(D&&D.udemyMonthly)||[];
+  var last=m[m.length-1];
+  if(!last) return null;
+  return {ym:last.ym, n:last.officialNew!=null? last.officialNew : null,
+          asOf:last.officialAsOf||null,
+          calc:last.newEnroll!=null? last.newEnroll : null,
+          from:last.from||null, to:last.to||null};
+}
+/* ===== v1.5 経済 ここまで ===== */
+
 
 function renderAnalysis(){
   const body=document.getElementById('anaBody');
@@ -1845,7 +1984,8 @@ function ckVoicePriv(D){
 /* 経済台帳の合計。新しい台帳は「総括／資産クラス／個別銘柄」の3段が入っているので、
    資産クラスの行があればそれだけを足す（そうしないと同じ資産を3回数えてしまう）。 */
 function ckEcoTotal(D){
-  const rows=((D.eco||{}).rows)||[];
+  // v1.5：法人（会社の現金）は個人の合計に足さない。Apps Script側でも除いてあるが二重の歯止め
+  const rows=(((D.eco||{}).rows)||[]).filter(r=>r.account!=='corp');
   const cls=rows.filter(r=>r.level==='class');
   const use=cls.length? cls : rows.filter(r=>r.level!=='total'&&r.level!=='memo');
   return use.reduce((a,r)=>a+(r.amount||0),0);
@@ -1855,7 +1995,7 @@ function ckVoiceEco(D){
   if(!rows.length)
     return {tone:'alarm',text:'経済台帳の入口ができたね。まずは口座を1つ、名前と金額を書き込むところからでいい。数えられないものは、増やせないんだよ。'};
   const total=ckEcoTotal(D);
-  return {tone:'yell',text:'資産は'+fmtInt(Math.round(total))+'。年1,000万の資産型まで、あわてず一段ずつでいい。一番裏切らないのは金融資産だよ。'};
+  return {tone:'yell',text:'資産は'+fmtYen(total)+'（個人のみ）。年1,000万の資産型まで、あわてず一段ずつでいい。一番裏切らないのは金融資産だよ。'};
 }
 function ckVoice(D,room){
   const f={health:ckVoiceHealth,know:ckVoiceKnow,spirit:ckVoiceSpirit,
@@ -2053,33 +2193,67 @@ function renderWeekly(){
   });
 }
 
-/* ===== v1.4 総資産の推移（経済） ===== */
+/* ===== v1.5 個人資産の推移（SBI線／野村線／合計線） ===== */
 let chartEco=null;
+let ecoOff={};          // 凡例でOFFにした系列（タップで切り替え）
+function toggleEcoSeries(key){ ecoOff[key]=!ecoOff[key]; renderEcoTrend(); }
 function renderEcoTrend(){
   const note=document.getElementById('ecoTrendNote');
   const cv=document.getElementById('chartEcoTotal');
+  const leg=document.getElementById('ecoLegend');
   if(!note||!cv) return;
   const t=computeEcoTrend(DATA);
   if(chartEco){chartEco.destroy();chartEco=null}
   if(!t.ok){
     cv.style.display='none';
+    if(leg) leg.innerHTML='';
     note.textContent=(t.points.length
-      ? t.points[0].date+' 時点の総資産は '+fmtInt(t.points[0].total)+'円。' : '')+t.reason;
+      ? t.points[0].date+' 時点の個人資産は '+fmtYen(t.points[0].total)+'。' : '')+t.reason;
     return;
   }
-  note.textContent=t.first.date+' の '+fmtInt(t.first.total)+'円 → '+t.last.date+' の '+
-    fmtInt(t.last.total)+'円（'+(t.delta>=0?'+':'−')+fmtInt(Math.abs(t.delta))+'円／記録'+
-    t.points.length+'日分）。記録日ごとの残高をつないだ線です（積み上げではありません）。';
+
+  // 凡例（3色）。点が2つ以上ある線だけ押せる。重ければ凡例だけ見ればよい。
+  if(leg) leg.innerHTML=t.series.map(sp=>{
+    const on=!ecoOff[sp.key], can=sp.count>=2;
+    return '<button class="'+(on?'':'off')+'"'+(can?'':' disabled')+
+      ' onclick="toggleEcoSeries(\''+sp.key+'\')">'+
+      '<span class="sw" style="background:'+sp.color+'"></span>'+sp.label+
+      '<span style="color:var(--muted);font-weight:600">'+
+      (can? sp.count+'点' : sp.count+'点・線なし')+'</span></button>';
+  }).join('');
+
+  /* 文章はグラフより先に。Chart.jsが読めなくても数字は読める。
+     合計線は4口座が揃った日にしか点が無いので、何点あるかを必ず書く。 */
+  const say=t.series.map(sp=>{
+    if(!sp.count) return sp.label+'線はまだ記録なし';
+    if(sp.count===1) return sp.label+'線は'+fmtYen(sp.last)+'の1点だけ（線は2点目から）';
+    return sp.label+'線は'+fmtYen(sp.first)+'→'+fmtYen(sp.last)+'（'+sp.count+'点）';
+  }).join('／');
+  const tot=t.series.filter(sp=>sp.key==='total')[0];
+  note.textContent=say+'。'+
+    (!t.byAccount ? '（口座別の内訳がまだ入っていない古いデータです。次の更新から3系列になります）'
+     : (tot&&tot.count) ? ''
+     : '合計線は SBIメイン＋SBI貴金属＋野村＋個人銀行 が同じ日に揃った日だけ点を打ちます'+
+       '（まだ揃った日がありません）。揃わない日に点を打つと、届いていない口座のぶんが急落に見えるためです。')+
+    ' 法人（会社の現金）はどの線にも入れていません。';
+
   if(typeof Chart==='undefined'){cv.style.display='none';return}
   cv.style.display='';
+  const sets=t.series.filter(sp=>sp.count>=1&&!ecoOff[sp.key]).map(sp=>({
+    label:sp.label,data:sp.values,borderColor:sp.color,backgroundColor:sp.color,
+    // 合計線は点がとびとび。線でつなぐが、無い日は素通しにする（0に落とさない）
+    spanGaps:true,fill:false,tension:.3,
+    pointRadius:sp.key==='total'?4:3,pointBackgroundColor:sp.color,
+    borderWidth:sp.key==='total'?3:2,
+    borderDash:sp.key==='total'?[]:[]
+  }));
   chartEco=new Chart(cv.getContext('2d'),{type:'line',
-    data:{labels:t.points.map(p=>p.date.slice(5)),
-          datasets:[{data:t.points.map(p=>p.total),borderColor:'#ffb800',
-            backgroundColor:'rgba(255,184,0,.12)',fill:true,tension:.3,
-            pointRadius:3,pointBackgroundColor:'#ffb800',borderWidth:2.5}]},
-    options:{responsive:true,plugins:{legend:{display:false}},
+    data:{labels:t.labels.map(d=>d.slice(5)),datasets:sets},
+    options:{responsive:true,plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:c=>c.dataset.label+' '+fmtYen(c.parsed.y)}}},
       scales:{x:{ticks:{color:'#9aa0b8',font:{size:9},maxRotation:0,autoSkip:true,maxTicksLimit:6},grid:{display:false}},
-              y:{ticks:{color:'#9aa0b8',font:{size:10}},grid:{color:'#e2e8f8'}}}}});
+              y:{ticks:{color:'#9aa0b8',font:{size:10},
+                   callback:v=>(v/10000).toLocaleString('ja-JP')+'万'},grid:{color:'#e2e8f8'}}}}});
 }
 
 /* ===== v1.4 ver57.x（バナー） ===== */
@@ -2202,6 +2376,16 @@ function renderWork(){
   if(a1!=null){const d=a0-a1;
     document.getElementById('d-rating').textContent=signed(d,2,'')+' 前回比';
     document.getElementById('d-rating').className='md '+(d>=0?'good':'bad');}
+  /* v1.5【④】今月の新規登録＝台帳の「月間登録」列（Udemyの実測）をそのまま出す。
+     累計の引き算は前月の最後の記録が基準なので、記録が飛んだ月は窓が1ヶ月より広くなる。
+     どちらの数字なのかが分かるよう、算出の窓も併記する。 */
+  const mn=wkMonthNew(DATA);
+  const mv=document.getElementById('v-mnew'), mdl=document.getElementById('d-mnew');
+  if(mv) mv.textContent = (mn&&mn.n!=null)? fmtInt(mn.n) : '—';
+  if(mdl) mdl.textContent = !mn ? ''
+    : mn.n!=null ? mn.ym+'（台帳の月間登録・'+md(mn.asOf)+'時点）'
+    : (mn.calc!=null? mn.ym+'は累計の差で'+fmtInt(mn.calc)+'人（'+md(mn.from)+'〜'+md(mn.to)+'）'
+                    : mn.ym+'はまだ測れません');
   document.getElementById('udemyAsOf').textContent='基準日: '+s0.date+' '+s0.time+'（前回: '+(s1?s1.date:'—')+'）';
 
   const names={};DATA.udemyCourses.forEach(c=>names[c.id]=c.short);
@@ -2268,25 +2452,82 @@ function renderEco(){
       '口座や資産を1行書き込んでもらえれば、次の更新からここに全体像が出ます。</div>';
     return;
   }
-  /* 新しい経済台帳は1つの記録日に「総括 → 資産クラス → 個別銘柄」の3段が入っている。
-     そのまま全部足すと同じ資産を3回数えてしまうので、資産クラスの行があればそれだけを合計する。
-     旧台帳のように1行1口座しか無いときは、今までどおり全部を足す。 */
+  /* v1.5：合計は Apps Script が口座ごとに出したもの（eco.history の最新点）をそのまま使う。
+     ここで足し直すと、SBIだけ資産クラス行があって野村は個別行だけ、という日に
+     野村が丸ごと落ちる。個別の内訳はこれまでどおり画面に出す。 */
+  const card=ecoCard(DATA);
   const cls=rows.filter(r=>r.level==='class');
   const sumRows=cls.length? cls : rows.filter(r=>r.level!=='total'&&r.level!=='memo');
-  const total=sumRows.reduce((a,r)=>a+(r.amount||0),0);
+  const total=card.total!=null? card.total : sumRows.reduce((a,r)=>a+(r.amount||0),0);
   const byCat={};
   sumRows.forEach(r=>{ const k=(cls.length? (r.name||'その他') : (r.cat||'その他'));
     byCat[k]=(byCat[k]||0)+(r.amount||0); });
   const items=cls.length? rows.filter(r=>r.level==='item'&&r.amount!=null)
                               .sort((a,b)=>b.amount-a.amount) : [];
-  box.innerHTML='<div class="mi-row"><span class="mv">'+fmtInt(Math.round(total))+'</span><span class="mu">円</span></div>'+
-    '<div class="pace">'+esc(eco.asOf||rows[rows.length-1].date||'')+' 時点・'+
-      (cls.length? '資産クラス'+cls.length+'区分の合計（個別'+items.length+'件は内訳）' : rows.length+'件')+'</div>'+
-    Object.keys(byCat).map(k=>
-      `<div class="ri"><span class="rn">${esc(k)}</span><span class="rv">${fmtInt(Math.round(byCat[k]))}</span></div>`).join('')+
-    (items.length? '<details class="adet"><summary>個別の内訳を見る</summary>'+
-      items.map(r=>`<div class="ri"><span class="rn">${esc(r.cat||'')} ${esc(r.name)}</span>`+
-        `<span class="rv">${fmtInt(Math.round(r.amount))}</span></div>`).join('')+'</details>' : '');
+  const hist=(eco.history||[]);
+  const cur=hist.length? hist[hist.length-1] : null;
+  // 口座別の残高（届いている口座だけ）。合計線が出ない日は「何が足りないか」を書く
+  const accLine=cur? ECO_ACC_NEED.filter(k=>cur[k]!=null).map(k=>
+    `<div class="ri"><span class="rn">${ECO_ACC_LABEL[k]}</span><span class="rv">${fmtYen(cur[k])}</span></div>`).join('') : '';
+  const miss=cur? ecoMissing(cur.accounts) : ECO_ACC_NEED.map(k=>ECO_ACC_LABEL[k]);
+  box.innerHTML='<div class="mi-row"><span class="mv">'+fmtYen(total)+'</span></div>'+
+    '<div class="md '+(card.delta!=null&&card.delta<0?'bad':'good')+'">'+esc(card.deltaText)+'</div>'+
+    '<div class="pace">'+esc(card.asOf||eco.asOf||rows[rows.length-1].date||'')+' 時点の個人資産合計'+
+      (miss.length? '（この日は '+esc(miss.join('・'))+' が未着。合計線には点を打ちません）'
+                  : '（4口座そろった日。合計線に点が打たれます）')+'。法人は含みません。</div>'+
+    accLine+
+    (Object.keys(byCat).length? '<details class="adet"><summary>資産の中身を見る</summary>'+
+      Object.keys(byCat).map(k=>
+        `<div class="ri"><span class="rn">${esc(k)}</span><span class="rv">${fmtYen(byCat[k])}</span></div>`).join('')+
+      (items.length? items.map(r=>`<div class="ri"><span class="rn">${esc(r.cat||'')} ${esc(r.name)}</span>`+
+        `<span class="rv">${fmtYen(r.amount)}</span></div>`).join('') : '')+'</details>' : '');
+}
+
+/* v1.5【要件6】法人メーター。個人資産にも合計線にも1円も足さない、独立したメーター。 */
+function renderCorp(){
+  const body=document.getElementById('corpBody'), note=document.getElementById('corpNote');
+  if(!body) return;
+  const c=ecoCorpMeter(DATA);
+  if(!c.latest){
+    body.innerHTML='<div class="waiting"><b>データ待ち</b><br>'+
+      '経済台帳に区分「法人」の行（会社の現金残高）が入ると、ここに月次で出ます。<br>'+
+      '法人は会社の資産なので、個人の合計にも推移の合計線にも足しません。</div>';
+    if(note) note.textContent='';
+    return;
+  }
+  const d=c.delta;
+  body.innerHTML='<div class="mi-row"><span class="mv">'+fmtYen(c.latest.amount)+'</span></div>'+
+    '<div class="md'+(d!=null? (d>=0?' good':' bad'):'')+'">'+
+      (d!=null? signedYen(d)+' 前月比（'+esc(c.prev.ym)+'）' : '前月比 —（1ヶ月目）')+'</div>'+
+    ((c.latest.items||[]).length>1
+      ? (c.latest.items||[]).map(x=>
+          `<div class="ri"><span class="rn">${esc(x.name)}</span><span class="rv">${fmtYen(x.amount)}</span></div>`).join('')
+      : '')+
+    (c.monthly.length>1? '<details class="adet"><summary>月ごとの推移を見る</summary>'+
+      c.monthly.slice().reverse().map(m=>
+        `<div class="ri"><span class="rn">${esc(m.ym)}（${md(m.date)}）</span><span class="rv">${fmtYen(m.amount)}</span></div>`).join('')+
+      '</details>' : '');
+  if(note) note.textContent=c.latest.date+' 時点・事業タンクの燃料残量。'+
+    '個人資産とは足しません（役員報酬・退職金という「橋」で1階に渡ります）。';
+}
+
+/* v1.5 経済台帳の取り込みで見つけた異常 */
+function renderEcoWarn(){
+  const card=document.getElementById('ecoWarnCard');
+  const sum=document.getElementById('ecoWarnSummary');
+  const list=document.getElementById('ecoWarnList');
+  if(!card) return;
+  const w=ecoWarn(DATA);
+  if(!w.all.length){ card.style.display='none'; return; }
+  card.style.display='';
+  card.className='card wcard'+(w.warn.length? '' : ' info');
+  sum.innerHTML='<span class="wpill'+(w.warn.length?'':' info')+'">'+
+    (w.warn.length? '⚠️ 警告 '+w.warn.length+'件' : 'ℹ️ 情報 '+w.info.length+'件')+'</span>'+
+    '<span>'+(w.warn.length? '経済台帳の数字がずれているかもしれません' : '出所が書かれていない行があります')+
+    (w.warn.length&&w.info.length? '（ほかに情報'+w.info.length+'件）' : '')+'</span>';
+  list.innerHTML=w.all.map(x=>
+    '<div class="witem"><b class="'+(x.level==='info'?'info':'')+'">'+(x.level==='info'?'情報':'警告')+'</b>'+
+    esc(x.text)+'</div>').join('');
 }
 function renderKnow(){
   const h=DATA.health;

@@ -605,7 +605,7 @@ function buildData_(previous) {
 
   // v1.3：取込時の異常（累計の減少・日付異常・コース名不一致）を1本にまとめる
   var warnings = [];
-  try { warnings = buildWarnings_(ledger, u.courses, asOf); }
+  try { warnings = buildWarnings_(ledger, u.courses, asOf, u.monthly); }
   catch (e) { Logger.log('⚠️ 健全性チェックでエラー（先に進みます）: ' + e); }
 
   // v1.3：知識の部屋にそのまま出す形（今週＝日曜〜土曜／今月／直近5行）
@@ -618,7 +618,7 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.4',
+    version: '1.5',
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -815,6 +815,15 @@ var LEDGER_COLS = {
    ただし列が無い月も必ずある。列が無ければ hd.map にキーが入らず、cell() が null を返し、
    その項目だけ空になって残りはこれまでどおり動く（＝あっても無くても壊れない）。 */
 
+/* v1.5【要件1】コースIDは C01〜C10 だけを取り込む（ホワイトリスト制）。
+   台帳に「全体」「合計」のような集計行が1行でも混ざると、それが11本目のコースとして
+   数えられ、累計登録も月間新規も丸ごと二重計上になる。知らないIDは黙って捨てず、
+   必ず「未知のコースIDをスキップ」の警告として残す（＝気づけるようにする）。 */
+var UDEMY_COURSE_IDS = ['C01', 'C02', 'C03', 'C04', 'C05', 'C06', 'C07', 'C08', 'C09', 'C10'];
+function isUdemyCourseId_(id) {
+  return UDEMY_COURSE_IDS.indexOf(String(id == null ? '' : id).trim().toUpperCase()) >= 0;
+}
+
 // 見出しのゆらぎを吸収する（空白・かっこ・USD を落とす）
 function normHead_(v) {
   return String(v == null ? '' : v).replace(/[\s　()（）]/g, '').replace(/USD/gi, '').trim();
@@ -885,7 +894,7 @@ function udemySources_() {
 }
 
 function readUdemyLedger_() {
-  var byKey = {}, courses = [], used = [];
+  var byKey = {}, courses = [], used = [], skipped = {};
   udemySources_().forEach(function (s) {
     var ss;
     try { ss = SpreadsheetApp.openById(s.file.getId()); }
@@ -895,7 +904,15 @@ function readUdemyLedger_() {
     var sheet = (s.rank === LEDGER_RANK.base) ? ss.getSheetByName('台帳ログ') : ss.getSheets()[0];
     if (!sheet) { Logger.log('「台帳ログ」シートがありません: ' + s.name); return; }
 
-    var rows = readLedgerSheet_(sheet, s.name);
+    var all = readLedgerSheet_(sheet, s.name);
+    // v1.5【要件1】C01〜C10 以外は取り込まない。落とした行はファイル・ID ごとに数えておく。
+    var rows = all.filter(function (r) {
+      if (isUdemyCourseId_(r.id)) return true;
+      var k = r.id + '|' + s.name;
+      if (!skipped[k]) skipped[k] = { id: r.id, src: s.name, n: 0 };
+      skipped[k].n++;
+      return false;
+    });
     rows.forEach(function (r) {
       var k = r.date + '|' + r.id;
       byKey[k] = mergeLedger_(byKey[k], r);
@@ -906,14 +923,26 @@ function readUdemyLedger_() {
       var mst = ss.getSheetByName('コースマスタ');
       if (mst) {
         mst.getDataRange().getValues().slice(1).forEach(function (r) {
-          if (!str_(r[0])) return;
-          courses.push({ id: str_(r[0]), short: str_(r[1]), published: ymStr_(r[3]), title: str_(r[4]) });
+          var id = str_(r[0]);
+          if (!id) return;
+          // コースマスタ側に「全体」行があっても、そこから11本目のコースを作らない
+          if (!isUdemyCourseId_(id)) {
+            var mk = id + '|' + s.name + '（コースマスタ）';
+            if (!skipped[mk]) skipped[mk] = { id: id, src: s.name + ' のコースマスタ', n: 0 };
+            skipped[mk].n++;
+            return;
+          }
+          courses.push({ id: id, short: str_(r[1]), published: ymStr_(r[3]), title: str_(r[4]) });
         });
       }
     }
   });
   var rows = Object.keys(byKey).sort().map(function (k) { return byKey[k]; });
-  return { rows: rows, courses: courses, used: used };
+  var skips = Object.keys(skipped).sort().map(function (k) { return skipped[k]; });
+  skips.forEach(function (x) {
+    Logger.log('⚠️ 未知のコースIDをスキップ: ' + x.id + '（' + x.src + ' / ' + x.n + '行）');
+  });
+  return { rows: rows, courses: courses, used: used, skipped: skips };
 }
 
 // 同じ記録日×コースIDがぶつかったとき。強い（後から読んだ）方を採用し、空欄だけ弱い方で埋める。
@@ -1003,6 +1032,23 @@ function buildUdemy_(ledger, previous) {
   var monthDays = {};
   rows.forEach(function (r) { (monthDays[r.date.slice(0, 7)] = monthDays[r.date.slice(0, 7)] || {})[r.date] = 1; });
 
+  /* v1.5：Udemyの画面がそのまま出している「月間登録」列を、累計の引き算とは別に持つ。
+     その月でいちばん新しい、列が埋まっている記録日の全コース合計をそのまま使う。
+     累計の引き算（newEnroll）は前月の最後の記録が基準なので、7月の記録が7/17で
+     止まっていると窓が32日間に広がる。officialNew はUdemy自身の「その月の実測」。
+     列が無い月（〜2026/06）は null になるだけで、これまでの表示は変わらない。 */
+  var officialByYm = {};
+  (function () {
+    var byDate = {};
+    rows.forEach(function (r) {
+      if (r.monthEnroll == null) return;
+      byDate[r.date] = (byDate[r.date] || 0) + r.monthEnroll;
+    });
+    Object.keys(byDate).sort().forEach(function (d) {
+      if (byDate[d] > 0) officialByYm[d.slice(0, 7)] = { date: d, n: Math.round(byDate[d]) };
+    });
+  })();
+
   var yms = Object.keys(byMonth).sort();
   var allIds = ids.length ? ids : uniqueIds_(byMonth);
   var cur = {}, monthly = [], prevCum = null, prevAnchor = null;
@@ -1036,8 +1082,11 @@ function buildUdemy_(ledger, previous) {
     // 台帳に記録の無い月があると、この差は1ヶ月ぶんではなくなる。
     // 実際に測った区間（from〜to）を持たせて、表示側が誤解しないようにする。
     var days = monthDays[ym] ? Object.keys(monthDays[ym]).sort() : [];
+    var off = officialByYm[ym] || null;
     monthly.push({
       ym: ym, enroll: Math.round(te), newEnroll: newEnroll, revenue: round2_(tr),
+      officialNew: off ? off.n : null,          // 台帳の「月間登録」列の合計（Udemyの実測）
+      officialAsOf: off ? off.date : null,
       from: prevAnchor, to: days.length ? days[days.length - 1] : prevAnchor,
       records: days.length, byCourse: byCourse
     });
@@ -1097,7 +1146,11 @@ var WARN_REVENUE_BIG = 50;     // 累計収益がこのドル以上減ったら�
 var WARN_STALE_DAYS = 3;       // 台帳が何日止まったら知らせるか（7日以上で「警告」）
 var WARN_LIMIT = 20;           // data.jsonに残す件数の上限
 
-function buildWarnings_(ledger, courses, asOf) {
+/* v1.5【要件3】月間サニティ。月の新規登録がこの人数を超えたら「二重計上疑い」。
+   過去には正当に1,500人を超えた月があるので、見るのは「いま取り込んでいる最新の月」だけ。 */
+var WARN_MONTH_NEW = 1500;
+
+function buildWarnings_(ledger, courses, asOf, monthly) {
   var rows = (ledger && ledger.rows) || [];
   var out = [];
   var label = {};
@@ -1167,6 +1220,27 @@ function buildWarnings_(ledger, courses, asOf) {
       break;      // 1コースにつき1件でよい
     }
   });
+
+  // ④ v1.5【要件1】ホワイトリストから外れたコースID（「全体」などの集計行）
+  ((ledger && ledger.skipped) || []).forEach(function (x) {
+    add('warn', 'unknownCourseId', null, null,
+      '未知のコースID「' + x.id + '」の' + x.n + '行を取り込みませんでした（' + x.src +
+      '）。コースIDは C01〜C10 だけです。「全体」などの集計行が混ざると二重計上になります');
+  });
+
+  /* ⑤ v1.5【要件3】月間サニティ。いま取り込んでいる最新の月だけを見る。
+     台帳に「月間登録」列があればそれ（＝Udemyの実測）を、無ければ累計の差を使う。 */
+  var lastM = (monthly || [])[(monthly || []).length - 1];
+  if (lastM) {
+    var mn = lastM.officialNew != null ? lastM.officialNew : lastM.newEnroll;
+    var how = lastM.officialNew != null ? '台帳の「月間登録」列' :
+              ('累計の差／' + (lastM.from || '?') + '〜' + (lastM.to || '?'));
+    if (mn != null && mn > WARN_MONTH_NEW) {
+      add('warn', 'monthSanity', null, lastM.to || null,
+        lastM.ym + 'の月間新規登録が' + mn + '人（' + how + '）で、目安の' + WARN_MONTH_NEW +
+        '人を超えています。同じ月の台帳ファイルが二重に入っていないか確かめてください');
+    }
+  }
 
   // 警告を先に、新しい日付から。多すぎるときは切って、切ったことも伝える
   out.sort(function (a, b) {
@@ -1549,12 +1623,19 @@ var ECO_COLS = {
 /**
  * 新しい台帳は1つの記録日に「総括 → 資産クラス → 個別銘柄」の3段が入っている。
  * 全部足すと同じ資産を3回数えてしまうので、行がどの段のものかを見分ける。
- *   total … 総括（口座合計・総資産）… 足さない
+ *   total … 総括（口座合計・総資産・My資産）… 足さない
  *   class … 資産クラス（米国株式・外貨建債券・預り金・貴金属）… これを足すと総資産になる
  *   item  … 個別の銘柄や口座（旧台帳の1行もここ）
  *   memo  … 参考為替などのメモ … 足さない
+ *
+ * v1.5【要件2】区分が「総括」でなくても、項目名に「合計」「総額」「My資産」が入っていれば
+ * それは小計行なので item の合算から外す（表示には残す）。
+ * 例：区分「現金」＋項目「SBI My資産合計」のように書かれても二重計上しない。
  */
-function ecoLevel_(cat) {
+var ECO_SUBTOTAL_RE = /合計|総額|My資産/i;
+function ecoLevel_(cat, name) {
+  var n = String(name == null ? '' : name);
+  if (ECO_SUBTOTAL_RE.test(n)) return 'total';
   var s = String(cat == null ? '' : cat);
   if (!s) return 'item';
   if (/総括|総資産|合計/.test(s)) return 'total';
@@ -1562,6 +1643,43 @@ function ecoLevel_(cat) {
   if (/メモ|参考/.test(s)) return 'memo';
   return 'item';
 }
+
+/* v1.5【要件5・6】その行がどの口座のものかを「出所／項目／備考／区分」の文字列から見分ける。
+   観測定義書v2の記帳ルールでは、各行に出所（SBIメイン／SBI貴金属／野村／個人銀行／法人）を書く。
+
+   並び順が大事：
+     ① 法人   … 最優先。銀行にあっても野村にあっても、法人の行は法人（個人と絶対に混ぜない）
+     ② 野村   … 野村由来の行
+     ③ 貴金属 … SBIの別サイト（gold.sbisec.co.jp）。通常アプリのMy資産には出ない
+     ④ 銀行   … 個人銀行の残高
+     ⑤ SBI    … 上のどれでもなくSBIとあればSBIメイン
+   貴金属は「SBI貴金属／貴金属口座／金・銀・プラチナ」のような口座を指す書き方だけを拾う。
+   備考の「貴金属ロイヤルティ」（＝SBIメインで持っている米国株）を金口座と取り違えないため。
+
+   どれにも当たらない行は null（＝判定不能）。呼ぶ側で SBIメインとして扱い、必ず警告に残す。 */
+var ECO_ACCOUNTS = [
+  { key: 'corp',   re: /法人/ },
+  { key: 'nomura', re: /野村/ },
+  { key: 'gold',   re: /SBI\s*貴金属|貴金属口座|金・銀・プラチナ|金銀プラチナ|gold\.sbisec/i },
+  { key: 'bank',   re: /個人銀行|銀行口座|銀行預金|銀行残高|普通預金|ゆうちょ|信用金庫|信金/ },
+  { key: 'sbi',    re: /SBI/i }
+];
+var ECO_ACCOUNT_LABEL = { sbi: 'SBIメイン', gold: 'SBI貴金属', nomura: '野村', bank: '個人銀行', corp: '法人' };
+// 合計線＝この4つが同じ日に揃ったときだけ点を打つ（観測定義書v2）
+var ECO_PERSONAL_ACCOUNTS = ['sbi', 'gold', 'nomura', 'bank'];
+var ECO_DEFAULT_ACCOUNT = 'sbi';
+
+function ecoAccount_(cat, name, src) {
+  var s = [cat, name, src].join(' ');
+  for (var i = 0; i < ECO_ACCOUNTS.length; i++) {
+    if (ECO_ACCOUNTS[i].re.test(s)) return ECO_ACCOUNTS[i].key;
+  }
+  return null;
+}
+function fmtYen_(n) {
+  return String(Math.round(n || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '円';
+}
+
 function readEco_() {
   var srcs = ledgerFiles_(CONFIG.ecoFolderId, CONFIG.ecoBaseName, /^経済台帳ログ_\d{4}-\d{2}-\d{2}/);
   var byKey = {}, used = [], baseUrl = null;
@@ -1580,62 +1698,182 @@ function readEco_() {
       if (!date || !name) continue;
       // 同じ記録日×口座はデルタが勝つ
       var cat = hd.map.cat != null ? str_(row[hd.map.cat]) : null;
+      var src = (hd.map.src != null ? str_(row[hd.map.src]) : null) || s.name;
       byKey[date + '|' + name] = {
         date: date, name: name,
         cat: cat,
-        level: ecoLevel_(cat),
+        level: ecoLevel_(cat, name),
+        account: ecoAccount_(cat, name, src),      // null＝判定不能（あとで警告に出す）
         amount: hd.map.amount != null ? money_(row[hd.map.amount]) : null,
         currency: (hd.map.currency != null ? str_(row[hd.map.currency]) : null) || 'JPY',
-        src: (hd.map.src != null ? str_(row[hd.map.src]) : null) || s.name
+        src: src
       };
       cnt++;
     }
     used.push({ name: s.name, rows: cnt });
   });
-  // 表示は「いちばん新しい記録日の一式」だけでよい（資産は積み上げではなく残高のため）
   var all = Object.keys(byKey).sort().map(function (k) { return byKey[k]; });
-  var latest = all.length ? all[all.length - 1].date : null;
-  var rows = latest ? all.filter(function (r) { return r.date === latest; }) : [];
 
-  /* 合計に使う段を決める。「資産クラス」の行があればそれだけを足す（＝二重計上しない）。
-     旧台帳のように1行1口座しかない場合は、総括とメモ以外を全部足す。 */
-  var sumLevel = rows.some(function (r) { return r.level === 'class'; }) ? 'class' : 'item';
-  var sumRows = rows.filter(function (r) {
-    return sumLevel === 'class' ? r.level === 'class' : (r.level !== 'total' && r.level !== 'memo');
-  });
-  var total = sumRows.reduce(function (a, r) { return a + (r.amount || 0); }, 0);
+  /* v1.5【要件6】二階建て。区分「法人」の行は、ここで個人からきれいに切り離す。
+     以降の合計・推移・家画面の経済カードは personal しか見ないので、混ざりようがない。 */
+  var corpRows = all.filter(function (r) { return r.account === 'corp'; });
+  var personal = all.filter(function (r) { return r.account !== 'corp'; });
 
-  // v1.4：記録日ごとの総資産（アプリの「総資産の推移」線）。合計の出し方は上と同じ規則。
-  var history = ecoHistory_(all);
+  // 表示は「いちばん新しい記録日の一式」だけでよい（資産は積み上げではなく残高のため）
+  var latest = personal.length ? personal[personal.length - 1].date : null;
+  var rows = latest ? personal.filter(function (r) { return r.date === latest; }) : [];
 
-  Logger.log('経済台帳: ' + rows.length + '件' + (latest ? '（' + latest + '時点）' : '（データ待ち）') +
-             ' 合計 ' + Math.round(total) + '円（' +
-             (sumLevel === 'class' ? '資産クラス' : '各行') + ' ' + sumRows.length + '行を合算）' +
-             ' 推移' + history.length + '点');
+  // 記録日ごとの個人資産（口座別＋合計）。合計の出し方はこの1本に集約してある。
+  var history = ecoHistory_(personal);
+  var todayPt = history.length ? history[history.length - 1] : null;
+  var total = todayPt ? todayPt.total : 0;
+
+  var corp = ecoCorp_(corpRows);
+  var warnings = ecoWarnings_(all, history);
+
+  Logger.log('経済台帳: 個人' + rows.length + '件' + (latest ? '（' + latest + '時点）' : '（データ待ち）') +
+             ' 個人資産合計 ' + fmtYen_(total) +
+             '（' + (todayPt ? todayPt.accounts.map(function (k) {
+                return ECO_ACCOUNT_LABEL[k] + ' ' + fmtYen_(todayPt[k]);
+              }).join(' + ') : '—') + '）' +
+             ' 推移' + history.length + '点／合計線' +
+             history.filter(function (p) { return p.complete; }).length + '点' +
+             '／法人' + corp.monthly.length + 'ヶ月' +
+             (corp.latest ? '（最新 ' + corp.latest.date + ' ' + fmtYen_(corp.latest.amount) + '）' : ''));
+
   return { baseName: CONFIG.ecoBaseName, baseUrl: baseUrl,
            folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.ecoFolderId,
            asOf: latest, used: used, rows: rows, history: history,
-           sumLevel: sumLevel, total: Math.round(total) };
+           accounts: todayPt ? todayPt.accounts : [],
+           complete: todayPt ? !!todayPt.complete : false,
+           corp: corp, warnings: warnings,
+           sumLevel: todayPt ? todayPt.level : 'item', total: Math.round(total) };
 }
 
 /**
- * v1.4：記録日ごとの総資産を出す（アプリの「総資産の推移」用）。
- * 日ごとに、その日の行だけを見て「資産クラスの行があればそれだけ」を足す。
+ * 記録日ごとの個人資産を出す（アプリの推移グラフ3系列の材料）。
+ *
+ * 日ごと・口座ごとに、「資産クラスの行があればそれだけ」を足す。総括とメモは足さない。
  * 記録日をまたいで足し込まない（資産は積み上げではなく、その日の残高のため）。
- * 記録が1日しかなければ1点だけ返す。アプリは2点目から線を描く。
+ *
+ * 1点＝{ date, sbi, gold, nomura, bank, total, accounts, complete, level, rows }
+ *   ・sbi/gold/nomura/bank … その日その口座の残高（記録が無い口座はキー自体が無い）
+ *   ・total    … その日に届いている個人の口座を足したもの（＝家画面の経済カードの値）
+ *   ・complete … 4口座が同じ日に揃ったか。合計線はこれが true の日だけ点を打つ
+ *
+ * 口座が書かれていない行は SBIメインとして数える（古い台帳はSBIメインしか無いため）。
+ * 取り違えたままにしないよう、判定不能な行は ecoWarnings_ が必ず警告に出す。
  */
 function ecoHistory_(all) {
   var byDate = {};
-  (all || []).forEach(function (r) { (byDate[r.date] = byDate[r.date] || []).push(r); });
+  (all || []).forEach(function (r) {
+    if (r.account === 'corp') return;                 // 法人は個人の線に混ぜない
+    (byDate[r.date] = byDate[r.date] || []).push(r);
+  });
+  // 合計線の条件。この関数だけで完結させておく（テストが関数単体で動くように）
+  var NEED = ['sbi', 'gold', 'nomura', 'bank'];
   return Object.keys(byDate).sort().map(function (d) {
     var list = byDate[d];
-    var lvl = list.some(function (r) { return r.level === 'class'; }) ? 'class' : 'item';
-    var use = list.filter(function (r) {
-      return lvl === 'class' ? r.level === 'class' : (r.level !== 'total' && r.level !== 'memo');
+    var acc = {};
+    list.forEach(function (r) { var k = r.account || 'sbi'; (acc[k] = acc[k] || []).push(r); });
+    var out = { date: d, rows: 0, total: 0 }, present = [];
+    Object.keys(acc).forEach(function (k) {
+      var L = acc[k];
+      var hasCls = L.some(function (r) { return r.level === 'class'; });
+      var use = L.filter(function (r) {
+        return hasCls ? r.level === 'class' : (r.level !== 'total' && r.level !== 'memo');
+      });
+      if (!use.length) return;
+      out[k] = Math.round(use.reduce(function (a, r) { return a + (r.amount || 0); }, 0));
+      out.rows += use.length;
+      out.total += out[k];
+      present.push(k);
     });
-    return { date: d, level: lvl, rows: use.length,
-             total: Math.round(use.reduce(function (a, r) { return a + (r.amount || 0); }, 0)) };
+    out.level = list.some(function (r) { return r.level === 'class'; }) ? 'class' : 'item';
+    out.accounts = present.sort();
+    out.complete = NEED.every(function (k) { return present.indexOf(k) >= 0; });
+    return out;
   });
+}
+
+/**
+ * v1.5【要件6】法人メーター（会社の現金）。
+ * 月1回の棚卸しで記録する想定なので月次で持つ。同じ月に複数あれば新しい記録を採る。
+ * ここで出した数字は個人の合計にも合計線にも足さない（＝別メーター）。
+ */
+function ecoCorp_(rows) {
+  var byDate = {};
+  (rows || []).forEach(function (r) { (byDate[r.date] = byDate[r.date] || []).push(r); });
+  var byYm = {};
+  Object.keys(byDate).sort().forEach(function (d) {
+    var L = byDate[d];
+    var hasCls = L.some(function (r) { return r.level === 'class'; });
+    var use = L.filter(function (r) {
+      return hasCls ? r.level === 'class' : (r.level !== 'total' && r.level !== 'memo');
+    });
+    byYm[d.slice(0, 7)] = {
+      ym: d.slice(0, 7), date: d, rows: use.length,
+      amount: Math.round(use.reduce(function (a, r) { return a + (r.amount || 0); }, 0)),
+      items: use.map(function (r) { return { name: r.name, amount: Math.round(r.amount || 0) }; })
+    };
+  });
+  var monthly = Object.keys(byYm).sort().map(function (ym) { return byYm[ym]; });
+  return { monthly: monthly, latest: monthly.length ? monthly[monthly.length - 1] : null };
+}
+
+/**
+ * v1.5【要件3・5】経済台帳の健全性チェック。
+ *   ① 口座を判定できない行（＝出所が書かれていない）… 記録日ごとに1件にまとめて info
+ *   ② 同じ日の合算と総括行の乖離が5%を超える     … 二重計上か記帳もれの疑いで warn
+ * 法人の行は個人の合算に入らないので、②の突合からも外す。
+ */
+var ECO_TOTAL_GAP = 0.05;
+function ecoWarnings_(all, history) {
+  var out = [];
+  var add = function (level, kind, date, text) {
+    out.push({ level: level, kind: kind, date: date || null, text: text });
+  };
+
+  // ① 出所が書かれていない行
+  var unknown = {};
+  (all || []).forEach(function (r) {
+    if (r.account) return;
+    (unknown[r.date] = unknown[r.date] || []).push(r.name);
+  });
+  Object.keys(unknown).sort().forEach(function (d) {
+    var names = unknown[d];
+    Logger.log('⚠️ 口座を判定できない行（SBIメインとして扱いました） ' + d + ' / ' + names.length + '件: ' +
+               names.join(' / '));
+    add('info', 'ecoAccountUnknown', d,
+      d + 'の' + names.length + '件は出所（SBIメイン／SBI貴金属／野村／個人銀行／法人）が' +
+      '書かれていないため、SBIメインとして数えました：' + names.slice(0, 3).join('・') +
+      (names.length > 3 ? ' ほか' + (names.length - 3) + '件' : ''));
+  });
+
+  // ② 合算と総括行の乖離
+  var byDate = {};
+  (all || []).forEach(function (r) {
+    if (r.account === 'corp') return;
+    (byDate[r.date] = byDate[r.date] || []).push(r);
+  });
+  (history || []).forEach(function (p) {
+    var tots = (byDate[p.date] || []).filter(function (r) {
+      return r.level === 'total' && r.amount != null;
+    });
+    if (!tots.length) return;
+    var grand = tots.reduce(function (a, r) { return Math.max(a, r.amount); }, 0);
+    if (!grand) return;
+    var gap = Math.abs(p.total - grand) / grand;
+    if (gap <= ECO_TOTAL_GAP) return;
+    var pct = Math.round(gap * 1000) / 10;
+    Logger.log('⚠️ ' + p.date + ' の合算 ' + fmtYen_(p.total) + ' と総括行 ' + fmtYen_(grand) +
+               ' が ' + pct + '% ずれています（二重計上・記帳もれを疑ってください）');
+    add('warn', 'ecoTotalGap', p.date,
+      p.date + 'の個別行の合算（' + fmtYen_(p.total) + '）と台帳の総括行（' + fmtYen_(grand) +
+      '）が' + pct + '%ずれています。同じ資産を二重に書いていないか、記帳もれが無いか確かめてください');
+  });
+
+  return out;
 }
 
 // ===== v1.4: WANT台帳（目標×差分の「目標」側） =====
