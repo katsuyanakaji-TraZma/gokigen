@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-18T14:08:48+09:00",
+  "generatedAt": "2026-08-19T08:29:09+09:00",
   "version": "1.5",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-08-18",
+    "asOf": "2026-08-19",
     "major": 57,
     "minor": 4,
     "months": 688,
@@ -66,6 +66,10 @@
       {
         "name": "Udemy台帳ログ_2026-08-18",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-08-19",
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -84,6 +88,10 @@
       {
         "name": "リミットレス台帳ログ_2026-08-18",
         "rows": 10
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-08-19",
+        "rows": 9
       }
     ],
     "ecoFiles": [
@@ -721,6 +729,23 @@
       "dining": null,
       "routine": null,
       "note": "Ouraコンディション71・レジリエンスやや不足。BMI27.6・基礎代謝1617kcal・骨格筋率45.2%"
+    },
+    {
+      "date": "2026-08-19",
+      "dow": "水",
+      "weight": null,
+      "fat": null,
+      "muscle": null,
+      "visceral": null,
+      "bodyAge": null,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 81,
+      "exercise": null,
+      "dining": "三菱商事懇親会(予定)",
+      "routine": null,
+      "note": "Ouraコンディション79・アクティビティ68・「眠れない夜が続いていますか」の注意あり。体組成計スクショ未受領"
     }
   ],
   "udemyCourses": [
@@ -796,75 +821,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2025-10-07",
-      "time": null,
-      "rows": [
-        {
-          "id": "C02",
-          "cumEnroll": 1518,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2020,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3280,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 3701,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 6277,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 3970,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 7520,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 10880,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 15597,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2025-10-21",
       "time": null,
@@ -2218,6 +2174,82 @@
           "cumEnroll": 17841,
           "monthEnroll": 122,
           "cumRevenue": 67512.44,
+          "rating": 4.2
+        }
+      ]
+    },
+    {
+      "date": "2026-08-19",
+      "time": "6:38",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 389,
+          "monthEnroll": 198,
+          "cumRevenue": 235.23,
+          "rating": 4.64
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 4878,
+          "monthEnroll": 141,
+          "cumRevenue": 7864.4,
+          "rating": 4.01
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2801,
+          "monthEnroll": 62,
+          "cumRevenue": 4461.73,
+          "rating": 4.13
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 3995,
+          "monthEnroll": 40,
+          "cumRevenue": 3839.26,
+          "rating": 4.08
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4528,
+          "monthEnroll": 50,
+          "cumRevenue": 7354.36,
+          "rating": 4.16
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7670,
+          "monthEnroll": 55,
+          "cumRevenue": 14896.8,
+          "rating": 4.18
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4863,
+          "monthEnroll": 23,
+          "cumRevenue": 11282.77,
+          "rating": 4.04
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8114,
+          "monthEnroll": 29,
+          "cumRevenue": 26405.16,
+          "rating": 3.87
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15040,
+          "monthEnroll": 194,
+          "cumRevenue": 48689.73,
+          "rating": 4.03
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17851,
+          "monthEnroll": 133,
+          "cumRevenue": 67517.48,
           "rating": 4.2
         }
       ]
@@ -5300,59 +5332,66 @@
     },
     {
       "ym": "2026-08",
-      "enroll": 70052,
-      "newEnroll": 1624,
-      "revenue": 192537.84,
-      "officialNew": 842,
-      "officialAsOf": "2026-08-18",
+      "enroll": 70129,
+      "newEnroll": 1701,
+      "revenue": 192546.92,
+      "officialNew": 925,
+      "officialAsOf": "2026-08-19",
       "from": "2026-07-17",
-      "to": "2026-08-18",
-      "records": 9,
+      "to": "2026-08-19",
+      "records": 10,
       "byCourse": {
         "C01": {
-          "enroll": 374,
+          "enroll": 389,
           "revenue": 235.23
         },
         "C02": {
-          "enroll": 4869,
+          "enroll": 4878,
           "revenue": 7864.4
         },
         "C03": {
-          "enroll": 2791,
+          "enroll": 2801,
           "revenue": 4461.73
         },
         "C04": {
-          "enroll": 3989,
+          "enroll": 3995,
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4523,
+          "enroll": 4528,
           "revenue": 7354.36
         },
         "C06": {
-          "enroll": 7667,
+          "enroll": 7670,
           "revenue": 14896.8
         },
         "C07": {
-          "enroll": 4862,
+          "enroll": 4863,
           "revenue": 11282.77
         },
         "C08": {
-          "enroll": 8116,
+          "enroll": 8114,
           "revenue": 26405.16
         },
         "C09": {
-          "enroll": 15020,
-          "revenue": 48685.69
+          "enroll": 15040,
+          "revenue": 48689.73
         },
         "C10": {
-          "enroll": 17841,
-          "revenue": 67512.44
+          "enroll": 17851,
+          "revenue": 67517.48
         }
       }
     }
   ],
   "warnings": [
+    {
+      "level": "info",
+      "kind": "enrollDrop",
+      "course": "C08",
+      "date": "2026-08-19",
+      "text": "C08 ご機嫌の累計登録が 2026-08-18 の 8116人 → 2026-08-19 の 8114人 と2人減っています（返金などの小さな揺らぎとみられます）"
+    },
     {
       "level": "info",
       "kind": "enrollDrop",
@@ -5483,6 +5522,10 @@
       {
         "name": "リミットレス台帳ログ_2026-08-18",
         "rows": 10
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-08-19",
+        "rows": 9
       }
     ],
     "rows": [
@@ -6364,11 +6407,92 @@
         "text": "秋冬の予定を確定=パスポート申請9/29・富士山麓ドッグランキャンプ11/21-23・神田鳥鍋12〜1月",
         "who": "家族・旅行",
         "src": "ダイジェスト08:42-08:47"
+      },
+      {
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "💡",
+        "text": "10年日記による「未来ビジョンの呪縛解除」=10年前の記録を振り返り進化を実感(自己効力感の最大化)すると脳のブロックが外れ、目減りしない壮大な未来を描ける",
+        "who": "VARIA・10年日記",
+        "src": "ダイジェスト10:50-10:51"
+      },
+      {
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "💡",
+        "text": "AIとの役割分担の法則を言語化=人間はWhat(何が欲しいか)とWhy(なぜ)を語り続け、Howは制限を入れずAIに世界の英知から持ってこさせる。Howまで指定すると自分の視野に収まり凡庸になる",
+        "who": "役割分担の原則",
+        "src": "ダイジェスト11:14-11:15"
+      },
+      {
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "💡",
+        "text": "「87歳の僕」からのフィードバック例が本人の中で完成形に=「おお、結構楽しそうじゃのう。飲み過ぎじゃぞ。笑って減らせよ。そうしないと未来の俺がいないかもしれん」",
+        "who": "87歳の未来からの視点",
+        "src": "ダイジェスト10:15"
+      },
+      {
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "「中島風AIフィードバックシステム」の成果をセッションで共有=受講生宿題への中島風コメント自動生成、7人目でほぼ修正不要の品質に",
+        "who": "アズビル宿題分析・AIクローン",
+        "src": "ダイジェスト11:20"
+      },
+      {
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "ご機嫌アプリ(GOKIGEN OS)の進化を初めて他者に熱く共有=スクショ送信型DB+87歳フィードバック。お盆2週間「頭から煙を出しながら」開発した成果",
+        "who": "GOKIGEN OS",
+        "src": "ダイジェスト10:10-10:17"
+      },
+      {
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️",
+        "text": "喧嘩の鍛錬論=小さな衝突と和解の反復が健全な組織を作る。「喧嘩したことがない人は一巻の終わりと思って喧嘩できない」",
+        "who": "セッション・研修ネタ",
+        "src": "ダイジェスト10:24"
+      },
+      {
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🤝",
+        "text": "次回・佐宗さんセッションを10/7(水)10:30に確定",
+        "who": "田島ルーフィング",
+        "src": "ダイジェスト11:28"
+      },
+      {
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️",
+        "text": "組織の「共通の敵」の仕立て方を指導=特定部署・個人を敵にすると弱いものいじめになる。課題やシステムのエラー自体を共通の敵に仕立てる",
+        "who": "セッション・研修ネタ",
+        "src": "ダイジェスト10:23"
+      },
+      {
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️",
+        "text": "若手育成の「階段設計(スモールステップ)」論=小さな成功体験で自己効力感を高める、コツコツ登れる階段(アサインの時期・内容)を用意する",
+        "who": "コンテンツ鉱脈候補",
+        "src": "ダイジェスト(成長機会)"
       }
     ]
   },
   "knowledge": {
-    "asOf": "2026-08-18",
+    "asOf": "2026-08-19",
     "kinds": [
       "教え",
       "トライ",
@@ -6380,7 +6504,7 @@
     "week": {
       "from": "2026-08-16",
       "to": "2026-08-22",
-      "rows": 16,
+      "rows": 25,
       "counts": {
         "教え": 0,
         "トライ": 0,
@@ -6393,7 +6517,7 @@
     "month": {
       "from": "2026-08-01",
       "to": "2026-08-31",
-      "rows": 61,
+      "rows": 70,
       "counts": {
         "教え": 10,
         "トライ": 4,
@@ -6405,47 +6529,47 @@
     },
     "recent": [
       {
-        "date": "2026-08-17",
+        "date": "2026-08-18",
         "kinds": [],
         "unsure": [],
-        "kindsText": "🔥",
-        "text": "秋冬の予定を確定=パスポート申請9/29・富士山麓ドッグランキャンプ11/21-23・神田鳥鍋12〜1月",
-        "who": "家族・旅行"
+        "kindsText": "🗣️",
+        "text": "若手育成の「階段設計(スモールステップ)」論=小さな成功体験で自己効力感を高める、コツコツ登れる階段(アサインの時期・内容)を用意する",
+        "who": "コンテンツ鉱脈候補"
       },
       {
-        "date": "2026-08-17",
+        "date": "2026-08-18",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️",
+        "text": "組織の「共通の敵」の仕立て方を指導=特定部署・個人を敵にすると弱いものいじめになる。課題やシステムのエラー自体を共通の敵に仕立てる",
+        "who": "セッション・研修ネタ"
+      },
+      {
+        "date": "2026-08-18",
         "kinds": [],
         "unsure": [],
         "kindsText": "🤝",
-        "text": "子どもたちとの食事会を人間関係の目標に明記",
-        "who": "家族枠"
+        "text": "次回・佐宗さんセッションを10/7(水)10:30に確定",
+        "who": "田島ルーフィング"
       },
       {
-        "date": "2026-08-17",
+        "date": "2026-08-18",
         "kinds": [],
         "unsure": [],
-        "kindsText": "🌱?",
-        "text": "会津若松・東山温泉「向瀧」など歴史的名宿を巡る旅を計画に追加(初めて系の候補・要本人確認)",
-        "who": "行きたい場所リスト"
+        "kindsText": "🗣️",
+        "text": "喧嘩の鍛錬論=小さな衝突と和解の反復が健全な組織を作る。「喧嘩したことがない人は一巻の終わりと思って喧嘩できない」",
+        "who": "セッション・研修ネタ"
       },
       {
-        "date": "2026-08-17",
-        "kinds": [],
-        "unsure": [],
-        "kindsText": "💡",
-        "text": "ビジョンは油絵=乾く前に上書きする。アップデートなし=「油が乾いてきている」状態。乾き検知トリガーをアプリに組み込む着想",
-        "who": "WANT台帳・油絵運用"
-      },
-      {
-        "date": "2026-08-17",
+        "date": "2026-08-18",
         "kinds": [],
         "unsure": [],
         "kindsText": "🔥",
-        "text": "ドライブ削除待ちフォルダの整理を8割方完了",
-        "who": "ドライブ大整頓"
+        "text": "ご機嫌アプリ(GOKIGEN OS)の進化を初めて他者に熱く共有=スクショ送信型DB+87歳フィードバック。お盆2週間「頭から煙を出しながら」開発した成果",
+        "who": "GOKIGEN OS"
       }
     ],
-    "total": 85,
+    "total": 94,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
