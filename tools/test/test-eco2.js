@@ -318,6 +318,15 @@ eq(card2.from, "2026-08-18", "どの日と比べたかを持つ");
 eq(signedYen(card2.delta), "+¥100,000", "前回比も円・カンマ区切り");
 eq(fmtYen(0), "¥0", "0円でも落ちない");
 eq(ecoCard({ eco: {} }).total, null, "経済台帳が空でも落ちない");
+// 口座別の内訳を持たない古い data.json では、前回比を出さない（偽の減少を出さないため）
+const OLDH = { eco: { asOf: "2026-08-18", rows: [], history: [
+  { date: "2026-08-13", total: 24122431, level: "item", rows: 8 },
+  { date: "2026-08-16", total: 13704370, level: "class", rows: 5 },
+  { date: "2026-08-18", total: 13094607, level: "item", rows: 20 }] } };
+eq(ecoCard(OLDH).total, 13094607, "古いdata.jsonでも個人資産合計は出る");
+eq(ecoCard(OLDH).delta, null,
+   "★古い形式では前回比を出さない（8/16との差 −609,763円は偽の減少）");
+has(ecoCard(OLDH).deltaText, "次の更新から", "いつ出るようになるかを画面に書く");
 
 console.log("\n【要件5】アプリ側の3系列");
 const T = computeEcoTrend(D);

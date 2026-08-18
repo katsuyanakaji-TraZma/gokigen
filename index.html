@@ -1748,6 +1748,13 @@ function ecoCard(D){
     out.total=cur.total; out.asOf=cur.date;
     out.accounts=cur.accounts||[]; out.complete=!!cur.complete;
     var sig=out.accounts.join(',');
+    if(!sig){
+      /* 口座別の内訳を持たない古い data.json（v1.4以前）。
+         そのころの点は「その日に届いた口座を足しただけ」なので、引き算すると
+         届かなかった口座のぶんが減ったように見える。だから前回比は出さない。 */
+      out.deltaText='前回比 —（次の更新から出ます）';
+      return out;
+    }
     for(var i=hist.length-2;i>=0;i--){
       if((hist[i].accounts||[]).join(',')!==sig) continue;
       out.delta=cur.total-hist[i].total; out.from=hist[i].date; break;
@@ -2231,7 +2238,8 @@ function renderEcoTrend(){
   }).join('／');
   const tot=t.series.filter(sp=>sp.key==='total')[0];
   note.textContent=say+'。'+
-    (!t.byAccount ? '（口座別の内訳がまだ入っていない古いデータです。次の更新から3系列になります）'
+    (!t.byAccount ? '（口座別の内訳がまだ入っていないので、いまは1本線です。'+
+                    'Apps Scriptを貼り替えて更新すると、SBI線・野村線・合計線の3本に分かれます）'
      : (tot&&tot.count) ? ''
      : '合計線は SBIメイン＋SBI貴金属＋野村＋個人銀行 が同じ日に揃った日だけ点を打ちます'+
        '（まだ揃った日がありません）。揃わない日に点を打つと、届いていない口座のぶんが急落に見えるためです。')+
