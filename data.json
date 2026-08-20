@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T18:36:04+09:00",
+  "generatedAt": "2026-08-20T22:49:41+09:00",
   "version": "1.5",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -114,6 +114,10 @@
       {
         "name": "経済台帳ログ_2026-08-18",
         "rows": 20
+      },
+      {
+        "name": "経済台帳ログ_2026-08-20",
+        "rows": 24
       }
     ]
   },
@@ -6772,7 +6776,7 @@
     "baseName": "経済台帳_base",
     "baseUrl": "https://docs.google.com/spreadsheets/d/1gka3Kxiiv2oTt5mvS8tr7wtRzfqwHSoRtHBdLfQXaQ4/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR",
-    "asOf": "2026-08-18",
+    "asOf": "2026-08-20",
     "used": [
       {
         "name": "経済台帳_base",
@@ -6785,208 +6789,252 @@
       {
         "name": "経済台帳ログ_2026-08-18",
         "rows": 20
+      },
+      {
+        "name": "経済台帳ログ_2026-08-20",
+        "rows": 24
       }
     ],
     "rows": [
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "ORロイヤルティーズ OR",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 106049,
+        "account": "sbi",
+        "amount": 110766,
         "currency": "JPY",
-        "src": "現在値33.33"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "SBI 外貨建債券",
         "cat": "外国債券",
         "level": "item",
         "account": "sbi",
-        "amount": 4967936,
+        "amount": 4955446,
         "currency": "JPY",
-        "src": "経済台帳ログ_2026-08-18"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "SBI 預り金(円)",
         "cat": "現金",
         "level": "item",
         "account": "sbi",
         "amount": 9981,
         "currency": "JPY",
-        "src": "経済台帳ログ_2026-08-18"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "SBI 預り金(米ドル)",
         "cat": "現金",
         "level": "item",
         "account": "sbi",
-        "amount": 2257063,
+        "amount": 2310994,
         "currency": "JPY",
-        "src": "為替159.09円(8/17 14:31)・SBI My資産合計13094607円(前日比-10290円・評価損益+2239883円/+20.63%)は個別行の合算に一致"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "SPDRゴールドミニシェアーズ GLDM",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 111299,
+        "account": "sbi",
+        "amount": 113355,
         "currency": "JPY",
-        "src": "現在値87.45"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "アグニコイーグルマインズ AEM",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 690759,
+        "account": "sbi",
+        "amount": 758151,
         "currency": "JPY",
-        "src": "現在値188.78"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "アリスタネットワークス ANET",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 128417,
+        "account": "sbi",
+        "amount": 118351,
         "currency": "JPY",
-        "src": "現在値201.80"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "アルファベットA GOOGL",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 273634,
+        "account": "sbi",
+        "amount": 273518,
         "currency": "JPY",
-        "src": "現在値344.00"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "インタラクティブブローカーズ IBKR",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 240111,
+        "account": "sbi",
+        "amount": 229885,
         "currency": "JPY",
-        "src": "現在値94.33"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "ウィートンプレシャスメタルズ WPM",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 239066,
+        "account": "sbi",
+        "amount": 257352,
         "currency": "JPY",
-        "src": "現在値136.61"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "ウーバーテクノロジーズ UBER",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 23860,
+        "account": "sbi",
+        "amount": 24768,
         "currency": "JPY",
-        "src": "現在値74.99"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "グローバルXウラニウムETF URA",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 35994,
+        "account": "sbi",
+        "amount": 35713,
         "currency": "JPY",
-        "src": "現在値45.25"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "シーブリッジゴールド SA",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 5157,
+        "account": "sbi",
+        "amount": 5324,
         "currency": "JPY",
-        "src": "一般口座・現在値32.42"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "テックリソーシズB TECK",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 10315,
+        "account": "sbi",
+        "amount": 10466,
         "currency": "JPY",
-        "src": "現在値64.84"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "パランティアテクノロジーズ PLTR",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 2745097,
+        "account": "sbi",
+        "amount": 2780084,
         "currency": "JPY",
-        "src": "現在値172.55"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "フランコネバダ FNV",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 37952,
+        "account": "sbi",
+        "amount": 39842,
         "currency": "JPY",
-        "src": "現在値238.56"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "ロビンフッドマーケッツA HOOD",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 535934,
+        "account": "sbi",
+        "amount": 531921,
         "currency": "JPY",
-        "src": "現在値96.25"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "ヴァンエック中小型金鉱株ETF GDXJ",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 191512,
+        "account": "sbi",
+        "amount": 200822,
         "currency": "JPY",
-        "src": "現在値120.38"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "ヴァンエック金鉱株ETF GDX",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 73093,
+        "account": "sbi",
+        "amount": 77227,
         "currency": "JPY",
-        "src": "現在値91.89"
+        "src": "SBIメイン"
       },
       {
-        "date": "2026-08-18",
+        "date": "2026-08-20",
         "name": "台湾セミコンダクターADR TSM",
         "cat": "米国株式",
         "level": "item",
-        "account": null,
-        "amount": 411378,
+        "account": "sbi",
+        "amount": 392367,
         "currency": "JPY",
-        "src": "現在値430.97"
+        "src": "SBIメイン"
+      },
+      {
+        "date": "2026-08-20",
+        "name": "野村 MRF/お預り金等",
+        "cat": "現金",
+        "level": "item",
+        "account": "nomura",
+        "amount": 133546,
+        "currency": "JPY",
+        "src": "野村"
+      },
+      {
+        "date": "2026-08-20",
+        "name": "野村 国内投信",
+        "cat": "国内投信",
+        "level": "item",
+        "account": "nomura",
+        "amount": 10053924,
+        "currency": "JPY",
+        "src": "野村"
+      },
+      {
+        "date": "2026-08-20",
+        "name": "野村 国内株式",
+        "cat": "国内株式",
+        "level": "item",
+        "account": "nomura",
+        "amount": 673300,
+        "currency": "JPY",
+        "src": "野村"
+      },
+      {
+        "date": "2026-08-20",
+        "name": "野村 外国債券",
+        "cat": "外国債券",
+        "level": "item",
+        "account": "nomura",
+        "amount": 157964,
+        "currency": "JPY",
+        "src": "野村"
       }
     ],
     "history": [
@@ -7026,9 +7074,23 @@
           "sbi"
         ],
         "complete": false
+      },
+      {
+        "date": "2026-08-20",
+        "rows": 24,
+        "total": 24255067,
+        "sbi": 13236333,
+        "nomura": 11018734,
+        "level": "item",
+        "accounts": [
+          "nomura",
+          "sbi"
+        ],
+        "complete": false
       }
     ],
     "accounts": [
+      "nomura",
       "sbi"
     ],
     "complete": false,
@@ -7051,7 +7113,7 @@
       }
     ],
     "sumLevel": "item",
-    "total": 13094607
+    "total": 24255067
   },
   "want": {
     "fileId": "1UgAb8OuWpIxvLyeDeuQRHQ2J5E04G3IZV-DMUD_h5k4",
