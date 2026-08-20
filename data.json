@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-20T22:49:41+09:00",
+  "generatedAt": "2026-08-21T08:31:33+09:00",
   "version": "1.5",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-08-20",
+    "asOf": "2026-08-21",
     "major": 57,
     "minor": 4,
     "months": 688,
@@ -100,6 +100,10 @@
       {
         "name": "リミットレス台帳ログ_2026-08-20",
         "rows": 10
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-08-21",
+        "rows": 9
       }
     ],
     "ecoFiles": [
@@ -118,6 +122,10 @@
       {
         "name": "経済台帳ログ_2026-08-20",
         "rows": 24
+      },
+      {
+        "name": "経済台帳ログ_2026-08-21",
+        "rows": 7
       }
     ]
   },
@@ -775,6 +783,23 @@
       "dining": "正泰苑 新橋店(友人枠・予定)",
       "routine": null,
       "note": "Ouraコンディション59「休憩を取りましょう」安静時心拍高め・アクティビティ84。前日は三菱商事LDP初日(船上+懇親会)で+0.4kgは想定内"
+    },
+    {
+      "date": "2026-08-21",
+      "dow": "金",
+      "weight": 84.4,
+      "fat": 30.7,
+      "muscle": 55.6,
+      "visceral": 11,
+      "bodyAge": 62,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 66,
+      "exercise": null,
+      "dining": "蒼天 南口店(友人枠・楽しみとのこと)",
+      "routine": null,
+      "note": "Ouraコンディション53「無理をしないように」。睡眠3時間56分。体重+1.5kgは正泰苑焼肉+睡眠不足の翌朝スパイク(水分・グリコーゲン由来・想定内)。C08収録は8/24へ延期(グル的セルフケア判断)"
     }
   ],
   "udemyCourses": [
@@ -5635,6 +5660,10 @@
       {
         "name": "リミットレス台帳ログ_2026-08-20",
         "rows": 10
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-08-21",
+        "rows": 9
       }
     ],
     "rows": [
@@ -6687,11 +6716,92 @@
         "text": "行動変容ターゲット3名に「少し押せば変わりそうな1人」を含めるベビーステップ設計を確定・欠席4〜5名へ講義ビデオ共有・週明けメルマガ開始を決定",
         "who": "三菱商事LDP運営",
         "src": "ダイジェスト19:11-20:01"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🌀",
+        "text": "2003年日産プロジェクト・講師特訓工場など育成運営の歴史を虎島メンバーに語った(自分史の鉱脈)",
+        "who": "自分史・コンテンツ候補",
+        "src": "ダイジェスト(スクショ)"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "💡",
+        "text": "「人って自分で話したことに対しては否定しなくなる」=コーチングの核心を一言化",
+        "who": "メタファー・語彙候補",
+        "src": "ダイジェスト(スクショ)"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🤝",
+        "text": "しゅうさんを事務局側へ巻き上げる方針をゆきこさんと連携で決定。「これをやり遂げるとしゅうさん泣くと思いますよ…お前大切なやつじゃんかよ」と激励",
+        "who": "虎島運営",
+        "src": "ダイジェスト(スクショ)"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "💡",
+        "text": "オープン虎島(家族参加型イベント)構想・10年日記ハイブリッド運用(手書き1行+スクショAI取込)・百ラブロードマップの年次月次化と公開バトル",
+        "who": "アイデアの砂場",
+        "src": "ダイジェスト(スクショ)"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️",
+        "text": "プロの「間」と一人笑い(壁打ち)の鍛錬論=300人の前で数秒単位の間を制御する技術はコロナ禍の壁打ちで養われた。「落語の間は0.5秒と0.7秒で違う」(既出ネタと本人確認済み)",
+        "who": "表現技術・鉱脈",
+        "src": "ダイジェスト(スクショ)"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️",
+        "text": "承認vs脅迫の行動強化を尾島さんに指導=ネガティブ・レインフォースメントは短期的でトリガー消失で止まる。自分の中で承認サイクルが回る「自走する組織」が理想",
+        "who": "尾島さんセッション・研修ネタ",
+        "src": "ダイジェスト(スクショ)"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️",
+        "text": "育成のバグをインプット・プロセス・アウトプットで特定する手法=聞いていない/自己解釈/出力できない。正確な文字起こし等の「強制ギブス」で1ヶ月矯正",
+        "who": "尾島さんセッション・研修ネタ",
+        "src": "ダイジェスト(スクショ)"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🤝",
+        "text": "虎島焼肉会(正泰苑)でコミュニティ強化=カルビさん・まっちゃん・ゴッキー・しゅうさん・ゆきこさん・柴田さんら。家族(妻・娘)がジュリさんの店に来訪しコミュニティと家族の接点が誕生",
+        "who": "虎島",
+        "src": "ダイジェスト(スクショ)"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🔥",
+        "text": "虎島落語会を京橋・貸しサロンで開催する構想(※2026/8/21本人訂正: 日程は10/31ではなく「4月の全国大会のとき」にできるかも)",
+        "who": "虎島・落語",
+        "src": "ダイジェスト(スクショ)+本人訂正"
       }
     ]
   },
   "knowledge": {
-    "asOf": "2026-08-20",
+    "asOf": "2026-08-21",
     "kinds": [
       "教え",
       "トライ",
@@ -6703,7 +6813,7 @@
     "week": {
       "from": "2026-08-16",
       "to": "2026-08-22",
-      "rows": 35,
+      "rows": 44,
       "counts": {
         "教え": 0,
         "トライ": 0,
@@ -6716,7 +6826,7 @@
     "month": {
       "from": "2026-08-01",
       "to": "2026-08-31",
-      "rows": 80,
+      "rows": 89,
       "counts": {
         "教え": 10,
         "トライ": 4,
@@ -6728,47 +6838,47 @@
     },
     "recent": [
       {
-        "date": "2026-08-19",
+        "date": "2026-08-20",
         "kinds": [],
         "unsure": [],
         "kindsText": "🔥",
-        "text": "行動変容ターゲット3名に「少し押せば変わりそうな1人」を含めるベビーステップ設計を確定・欠席4〜5名へ講義ビデオ共有・週明けメルマガ開始を決定",
-        "who": "三菱商事LDP運営"
+        "text": "虎島落語会を京橋・貸しサロンで開催する構想(※2026/8/21本人訂正: 日程は10/31ではなく「4月の全国大会のとき」にできるかも)",
+        "who": "虎島・落語"
       },
       {
-        "date": "2026-08-19",
+        "date": "2026-08-20",
         "kinds": [],
         "unsure": [],
-        "kindsText": "🔥",
-        "text": "三菱商事LDP初日(リアル対面・船上イベント+懇親会)を全力ファシリテート。OSハント・宣言の場・1期3期の先輩エール(油野さん・三宅さん)で4ヶ月のコミュニティ地盤が完成",
-        "who": "三菱商事LDP"
+        "kindsText": "🤝",
+        "text": "虎島焼肉会(正泰苑)でコミュニティ強化=カルビさん・まっちゃん・ゴッキー・しゅうさん・ゆきこさん・柴田さんら。家族(妻・娘)がジュリさんの店に来訪しコミュニティと家族の接点が誕生",
+        "who": "虎島"
       },
       {
-        "date": "2026-08-19",
-        "kinds": [],
-        "unsure": [],
-        "kindsText": "💡",
-        "text": "『反応しない練習』(草薙龍瞬)を自身のバイブルとして受講生に推薦=リーダーの器を広げる世界観",
-        "who": "推薦図書"
-      },
-      {
-        "date": "2026-08-19",
+        "date": "2026-08-20",
         "kinds": [],
         "unsure": [],
         "kindsText": "🗣️",
-        "text": "「濡れ木は焚き火の脇で干す」=ローパフォーマーを無理にくべず熱気を感じさせる+新人指導・勉強会講師などモチベーションの押しボタンを探す",
-        "who": "研修ネタ・鉱脈"
+        "text": "育成のバグをインプット・プロセス・アウトプットで特定する手法=聞いていない/自己解釈/出力できない。正確な文字起こし等の「強制ギブス」で1ヶ月矯正",
+        "who": "尾島さんセッション・研修ネタ"
       },
       {
-        "date": "2026-08-19",
+        "date": "2026-08-20",
         "kinds": [],
         "unsure": [],
-        "kindsText": "🌀",
-        "text": "「今日僕、喋りすぎてますからね」と自己認識=語りたい衝動を抑え、問いかけ(インクワイアリー)のレバーを上げる余地",
-        "who": "講師としての成長機会"
+        "kindsText": "🗣️",
+        "text": "承認vs脅迫の行動強化を尾島さんに指導=ネガティブ・レインフォースメントは短期的でトリガー消失で止まる。自分の中で承認サイクルが回る「自走する組織」が理想",
+        "who": "尾島さんセッション・研修ネタ"
+      },
+      {
+        "date": "2026-08-20",
+        "kinds": [],
+        "unsure": [],
+        "kindsText": "🗣️",
+        "text": "プロの「間」と一人笑い(壁打ち)の鍛錬論=300人の前で数秒単位の間を制御する技術はコロナ禍の壁打ちで養われた。「落語の間は0.5秒と0.7秒で違う」(既出ネタと本人確認済み)",
+        "who": "表現技術・鉱脈"
       }
     ],
-    "total": 104,
+    "total": 113,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
@@ -6776,7 +6886,7 @@
     "baseName": "経済台帳_base",
     "baseUrl": "https://docs.google.com/spreadsheets/d/1gka3Kxiiv2oTt5mvS8tr7wtRzfqwHSoRtHBdLfQXaQ4/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR",
-    "asOf": "2026-08-20",
+    "asOf": "2026-08-21",
     "used": [
       {
         "name": "経済台帳_base",
@@ -6793,21 +6903,15 @@
       {
         "name": "経済台帳ログ_2026-08-20",
         "rows": 24
+      },
+      {
+        "name": "経済台帳ログ_2026-08-21",
+        "rows": 7
       }
     ],
     "rows": [
       {
-        "date": "2026-08-20",
-        "name": "ORロイヤルティーズ OR",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 110766,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
+        "date": "2026-08-21",
         "name": "SBI 外貨建債券",
         "cat": "外国債券",
         "level": "item",
@@ -6817,7 +6921,27 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-20",
+        "date": "2026-08-21",
+        "name": "SBI 米国株式(クラス計)",
+        "cat": "米国株式",
+        "level": "item",
+        "account": "sbi",
+        "amount": 5962476,
+        "currency": "JPY",
+        "src": "SBIメイン"
+      },
+      {
+        "date": "2026-08-21",
+        "name": "SBI 金・銀・プラチナ(現物)",
+        "cat": "貴金属",
+        "level": "item",
+        "account": "gold",
+        "amount": 619525,
+        "currency": "JPY",
+        "src": "SBI貴金属"
+      },
+      {
+        "date": "2026-08-21",
         "name": "SBI 預り金(円)",
         "cat": "現金",
         "level": "item",
@@ -6827,7 +6951,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-20",
+        "date": "2026-08-21",
         "name": "SBI 預り金(米ドル)",
         "cat": "現金",
         "level": "item",
@@ -6837,202 +6961,22 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-20",
-        "name": "SPDRゴールドミニシェアーズ GLDM",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 113355,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "アグニコイーグルマインズ AEM",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 758151,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "アリスタネットワークス ANET",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 118351,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "アルファベットA GOOGL",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 273518,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "インタラクティブブローカーズ IBKR",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 229885,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "ウィートンプレシャスメタルズ WPM",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 257352,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "ウーバーテクノロジーズ UBER",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 24768,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "グローバルXウラニウムETF URA",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 35713,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "シーブリッジゴールド SA",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 5324,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "テックリソーシズB TECK",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 10466,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "パランティアテクノロジーズ PLTR",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 2780084,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "フランコネバダ FNV",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 39842,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "ロビンフッドマーケッツA HOOD",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 531921,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "ヴァンエック中小型金鉱株ETF GDXJ",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 200822,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "ヴァンエック金鉱株ETF GDX",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 77227,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "台湾セミコンダクターADR TSM",
-        "cat": "米国株式",
-        "level": "item",
-        "account": "sbi",
-        "amount": 392367,
-        "currency": "JPY",
-        "src": "SBIメイン"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "野村 MRF/お預り金等",
+        "date": "2026-08-21",
+        "name": "個人銀行 普通預金",
         "cat": "現金",
         "level": "item",
-        "account": "nomura",
-        "amount": 133546,
+        "account": "bank",
+        "amount": 7265348,
         "currency": "JPY",
-        "src": "野村"
+        "src": "個人銀行"
       },
       {
-        "date": "2026-08-20",
-        "name": "野村 国内投信",
-        "cat": "国内投信",
+        "date": "2026-08-21",
+        "name": "野村 お預り資産",
+        "cat": "証券口座",
         "level": "item",
         "account": "nomura",
-        "amount": 10053924,
-        "currency": "JPY",
-        "src": "野村"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "野村 国内株式",
-        "cat": "国内株式",
-        "level": "item",
-        "account": "nomura",
-        "amount": 673300,
-        "currency": "JPY",
-        "src": "野村"
-      },
-      {
-        "date": "2026-08-20",
-        "name": "野村 外国債券",
-        "cat": "外国債券",
-        "level": "item",
-        "account": "nomura",
-        "amount": 157964,
+        "amount": 11009599,
         "currency": "JPY",
         "src": "野村"
       }
@@ -7087,13 +7031,32 @@
           "sbi"
         ],
         "complete": false
+      },
+      {
+        "date": "2026-08-21",
+        "rows": 7,
+        "total": 32133369,
+        "sbi": 13238897,
+        "gold": 619525,
+        "bank": 7265348,
+        "nomura": 11009599,
+        "level": "item",
+        "accounts": [
+          "bank",
+          "gold",
+          "nomura",
+          "sbi"
+        ],
+        "complete": true
       }
     ],
     "accounts": [
+      "bank",
+      "gold",
       "nomura",
       "sbi"
     ],
-    "complete": false,
+    "complete": true,
     "corp": {
       "monthly": [],
       "latest": null
@@ -7113,7 +7076,7 @@
       }
     ],
     "sumLevel": "item",
-    "total": 24255067
+    "total": 32133369
   },
   "want": {
     "fileId": "1UgAb8OuWpIxvLyeDeuQRHQ2J5E04G3IZV-DMUD_h5k4",
