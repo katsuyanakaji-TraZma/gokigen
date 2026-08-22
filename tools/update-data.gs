@@ -18,6 +18,14 @@
  *   ・自己バージョン ver57.x（selfVersion）と、月次総括の器（monthlyReview）。
  *   ※ 新しいOAuthスコープは1つも増やしていない（本人への再承認は起きない）。
  *
+ * v1.6で足したもの：
+ *   ・Googleカレンダー（本人の primary）の「🎁ご褒美枠」を**読むだけ**。
+ *     会食の「枠（空き）」と「予約」がここから来る（実績は今までどおり台帳の会食欄）。
+ *     **appsscript.json の oauthScopes に calendar.readonly を1行足して再承認が必要**。
+ *     tools/appsscript.json に貼り付け用の完成形を置いてある。
+ *   ・note台帳（GOKIGEN台帳フォルダの中の「note台帳ログ_YYYY-MM-DD」）→ 仕事タブのnoteカード。
+ *   ・Udemyの月間サニティの目安を 1,500人 → 1,800人 に引き上げ（正当な増加での誤検知を防ぐ）。
+ *
  * 1日4回（8時・12時・18時・22時）自動実行。Google側のサーバーで動くので Mac mini の電源は関係ありません。
  * 前回の実行以降にどちらのフォルダにも新規/更新ファイルが無ければ、作り直さずスキップします。
  *
@@ -55,6 +63,12 @@ var WEEKLY_FOLDER_ID = '1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk';
 // v1.4：自己バージョン（ver57.x）の起点。誕生月を .00 として、月がひとつ進むごとに .01 上がる。
 var BIRTH_DATE = '1969-04-30';
 
+// v1.6：会食の「枠と予約」はGoogleカレンダー（本人の primary）から読む。
+// 今日から何ヶ月先まで見るか。ここを伸ばしても読むのはカレンダー1本だけ。
+var CAL_MONTHS_AHEAD = 6;
+// 1ヶ月に入れてよい会食の上限（本人の決め。アプリの「着地見込み」の物差し）。
+var CAL_MONTH_CAP = 12;
+
 var CONFIG = {
   gokigenFolderId: '1vJ7ddquLREjntkRUy235nv5FXaas2IoV',
   udemyFolderId:   '1g3hrPVRIYB_GOYho36DLRnITG_c5-elx',
@@ -71,6 +85,10 @@ var CONFIG = {
   wantFileId:      WANT_FILE_ID,
   weeklyFolderId:  WEEKLY_FOLDER_ID,
   birthDate:       BIRTH_DATE,
+  // v1.6：Googleカレンダー（会食の枠・予約）と note台帳（GOKIGEN台帳フォルダの中）
+  calMonthsAhead:  CAL_MONTHS_AHEAD,
+  calMonthCap:     CAL_MONTH_CAP,
+  noteDeltaPrefix: 'note台帳ログ_',   // GOKIGEN台帳フォルダ直下の「note台帳ログ_YYYY-MM-DD」
   futureDocPrefix: '未来ビジョン台帳',  // GOKIGEN台帳フォルダの中のGoogleドキュメント
   // v1.2.1：台帳ファイルが増えすぎて6分の実行制限に当たったため、古い日次ファイルを1本にまとめる
   gokigenBaseName:  'GOKIGEN台帳_base',   // まとめ先（この1本だけ読めば7月以前が全部入る）
@@ -158,6 +176,18 @@ function changedFilesSince_(since) {
     var w = DriveApp.getFileById(CONFIG.wantFileId);
     if (w.getLastUpdated().getTime() > cutoff) out.push(w.getName());
   } catch (e) { Logger.log('WANT台帳を見られませんでした（先に進みます）: ' + e); }
+  /* v1.6：会食の枠は台帳ではなくカレンダーで動く（本人がタイトルを「予約済：家族」に
+     書き換えた瞬間が更新のきっかけ）。ここを見ないと、台帳に動きが無い日は
+     予約を入れてもアプリが古いままになる。読むのは今日〜先の「ご褒美枠」だけ。 */
+  try {
+    var from = new Date();
+    var to = new Date(from.getTime());
+    to.setMonth(to.getMonth() + CONFIG.calMonthsAhead);
+    CalendarApp.getDefaultCalendar().getEvents(from, to).forEach(function (e) {
+      if (!CAL_SLOT_RE.test(String(e.getTitle() || ''))) return;
+      if (e.getLastUpdated().getTime() > cutoff) out.push('（カレンダー）' + e.getTitle());
+    });
+  } catch (e) { Logger.log('カレンダーを見られませんでした（先に進みます）: ' + e); }
   return out;
 }
 
@@ -537,6 +567,20 @@ function dryRun() {
   (d.want ? d.want.rows : []).forEach(function (r) {
     Logger.log('   ' + r.room + ' / ' + r.item + ' → ' + r.goal + '  [' + (r.how || '') + ']');
   });
+  // v1.6の2つ
+  Logger.log('カレンダー（会食の枠）: ' + (d.calendar
+    ? d.calendar.count + '件（' + d.calendar.from + '〜' + d.calendar.to + '）　予約' +
+      d.calendar.events.filter(function (e) { return e.kind === 'booked'; }).length + '／空き' +
+      d.calendar.events.filter(function (e) { return e.kind === 'open'; }).length
+    : '読めていません（calendar.readonly の再承認がまだかもしれません）'));
+  ((d.calendar && d.calendar.events) || []).forEach(function (e) {
+    Logger.log('   ' + e.date + ' [' + e.kind + (e.cat ? '/' + e.cat : '') + '] ' + e.title);
+  });
+  Logger.log('note台帳: ' + (d.note && d.note.asOf
+    ? d.note.asOf + '時点　月間' + ((d.note.month && d.note.month.views) || '—') + 'ビュー・' +
+      ((d.note.month && d.note.month.likes) || '—') + 'スキ／全期間' +
+      ((d.note.all && d.note.all.views) || '—') + 'ビュー'
+    : 'まだありません'));
   Logger.log('週報書棚: ' + (d.weekly
     ? d.weekly.count + '本' + (d.weekly.latest ? '／最新 ' + d.weekly.latest.name : '（まだ空）')
     : '見られていません'));
@@ -603,6 +647,19 @@ function buildData_(previous) {
 
   var asOf = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
 
+  /* v1.6：会食の「枠と予約」（Googleカレンダー）と note台帳。
+     どちらも1つ失敗しても他を巻き込まない。読めなければ前回の内容をそのまま保つ。
+     ※ カレンダーは appsscript.json に calendar.readonly を足して**再承認**するまで
+        権限エラーになる。そのときもここで受け止めるので、data.json は壊れない
+        （アプリは「カレンダーがまだつながっていません」と出すだけ）。 */
+  var calendar = null, note = null;
+  try { calendar = timeIt_('Googleカレンダー', function () { return readCalendar_(asOf); }); }
+  catch (e) { Logger.log('⚠️ カレンダーを読めませんでした（前回の内容を維持します）: ' + e); }
+  if (!calendar) calendar = (previous && previous.calendar) || null;
+  try { note = timeIt_('note台帳', readNote_); }
+  catch (e) { Logger.log('⚠️ note台帳を読めませんでした（前回の内容を維持します）: ' + e); }
+  if (!note || !note.asOf) note = (previous && previous.note) || note;
+
   // v1.3：取込時の異常（累計の減少・日付異常・コース名不一致）を1本にまとめる
   var warnings = [];
   try { warnings = buildWarnings_(ledger, u.courses, asOf, u.monthly); }
@@ -618,7 +675,7 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.5',
+    version: '1.6',
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -633,7 +690,8 @@ function buildData_(previous) {
       rule: '全ファイルを読み、重複したら新しいファイルを優先',
       udemyFiles: ledger.used,
       limitlessFiles: limitless.used,
-      ecoFiles: eco.used
+      ecoFiles: eco.used,
+      noteFiles: (note && note.used) || []
     },
     updateHours: CONFIG.updateHours,
     udemyBaseUrl: base ? base.getUrl() : ((previous && previous.udemyBaseUrl) || null),
@@ -649,6 +707,9 @@ function buildData_(previous) {
     eco: eco,
     want: want,
     weekly: weekly,
+    // v1.6：会食の枠・予約（カレンダー）と note台帳。実績はこれまでどおり health[].dining
+    calendar: calendar,
+    note: note,
     links: buildLinks_(base, limitless, eco, future, previous)
   };
 }
@@ -1147,8 +1208,13 @@ var WARN_STALE_DAYS = 3;       // 台帳が何日止まったら知らせるか�
 var WARN_LIMIT = 20;           // data.jsonに残す件数の上限
 
 /* v1.5【要件3】月間サニティ。月の新規登録がこの人数を超えたら「二重計上疑い」。
-   過去には正当に1,500人を超えた月があるので、見るのは「いま取り込んでいる最新の月」だけ。 */
-var WARN_MONTH_NEW = 1500;
+   過去には正当にこの人数を超えた月があるので、見るのは「いま取り込んでいる最新の月」だけ。
+
+   v1.6（2026-08-22 本人決定）で 1,500 → 1,800 に引き上げた。
+   2026年8月の実測が1,500人前後まで伸びており、**正当に増えた月**で毎回⚠️が出ると
+   「またこの警告か」と読まれなくなる。1,800は本人の肌感の上限（これを超えたら
+   さすがに同じ台帳が二重に入っている、という線）。数字を上げただけで判定の仕組みは同じ。 */
+var WARN_MONTH_NEW = 1800;
 
 function buildWarnings_(ledger, courses, asOf, monthly) {
   var rows = (ledger && ledger.rows) || [];
@@ -1846,6 +1912,206 @@ function ecoWarnings_(all, history) {
   });
 
   return out;
+}
+
+// ===== v1.6: Googleカレンダー（会食の「枠」と「予約」） =====
+/**
+ * 会食は3つの数字でできている。
+ *   ・枠   … カレンダーに置いてある「🎁ご褒美枠」（＝会食に使ってよい日）
+ *   ・予約 … その枠のうち、相手が決まってタイトルが書き換わったもの
+ *   ・実績 … GOKIGEN台帳の「会食」欄（＝実際に行った日）
+ * ここで読むのは前の2つ。実績は今までどおり台帳から取る。
+ *
+ * **読むだけ**（CalendarApp の読み取りのみ）。予定を作ったり書き換えたりは一切しない。
+ * そのぶん appsscript.json に足すスコープも calendar.readonly の1本だけで済む。
+ *
+ * 判定はタイトルの言葉だけで行う（色や説明文は見ない）。本人が手で書き換える運用なので、
+ * 実際に置かれているタイトルに合わせてある：
+ *   🎁ご褒美枠｜空き（客/師/恩/友/家族）          → 空き枠
+ *   🎁ご褒美枠｜家族推奨（11月分）                 → 空き枠（家族におすすめ、というだけでまだ空き）
+ *   🎁ご褒美枠（家族枠・確定）｜9/20 …             → 予約（家族）
+ *   予約済：客枠 / 「正泰苑」新橋店 ご褒美枠（友人枠） → 予約（客・友）
+ *   🎁ご褒美枠｜予備（家族9/20確定につき原則不使用） → どちらにも数えない
+ */
+var CAL_SLOT_RE   = /ご褒美枠/;                       // これが無い予定は会食の枠ではない
+var CAL_SKIP_RE   = /予備|不使用|無視でOK|キャンセル|中止|取消/;
+var CAL_BOOKED_RE = /予約済|確定/;
+var CAL_OPEN_RE   = /空き|推奨|候補/;
+
+// 区分。**家族をいちばん先に見る**（「家族」を「客」や「友」に取られないため）
+var CAL_CATS = [
+  { key: 'family', label: '家族', re: /家族|妻|長女|アキさん/ },
+  { key: 'client', label: '客',   re: /客|顧客/ },
+  { key: 'mentor', label: '師',   re: /師/ },
+  { key: 'okuri',  label: '恩',   re: /恩/ },
+  { key: 'friend', label: '友',   re: /友/ }
+];
+
+/**
+ * タイトルから「空き枠 / 予約 / 数えない」を決める。見る順番が命。
+ *   ① 予備・不使用 … 置いてあるだけで使わない枠。空きにも予約にも数えない
+ *   ② 予約済・確定 … 相手が決まっている
+ *   ③ 空き・推奨・候補 … まだ空いている
+ *   ④ それ以外（例「正泰苑 ご褒美枠（友人枠）」）… **予約**として数える。
+ *      店名や相手が書いてある枠は、もう相手が決まっているから。
+ *      空き枠には必ず「空き」か「推奨」が入る運用なので、ここに落ちてくるのは予約だけ。
+ */
+function calKind_(title) {
+  var t = String(title == null ? '' : title);
+  if (!CAL_SLOT_RE.test(t)) return null;      // そもそも会食の枠ではない
+  if (CAL_SKIP_RE.test(t))   return 'skip';
+  if (CAL_BOOKED_RE.test(t)) return 'booked';
+  if (CAL_OPEN_RE.test(t))   return 'open';
+  return 'booked';
+}
+
+/**
+ * 区分（客/師/恩/友/家族）。まずタイトルの括弧の中を見て、無ければタイトル全体を見る。
+ * ただし「空き（客/師/恩/友/家族）」のように括弧の中が**選択肢の一覧**（3つ以上が並ぶ）に
+ * なっているときは、それは区分ではなくメニューなので読み飛ばす。
+ */
+function calCat_(title) {
+  var t = String(title == null ? '' : title);
+  var inner = (t.match(/[（(]([^）)]*)[）)]/g) || [])
+    .map(function (x) { return x.slice(1, -1); }).join(' ');
+  var hits = CAL_CATS.filter(function (c) { return c.re.test(inner); });
+  if (hits.length && hits.length < 3) return hits[0].key;   // 括弧の中に区分が書いてある
+  /* 括弧の中が選択肢の一覧（3つ以上）だったときは、括弧ごと外してから本文を見る。
+     外さずに本文を見ると「空き（客/師/恩/友/家族）」の一覧を区分と読んでしまう。 */
+  var outer = t.replace(/[（(][^）)]*[）)]/g, ' ');
+  for (var i = 0; i < CAL_CATS.length; i++) if (CAL_CATS[i].re.test(outer)) return CAL_CATS[i].key;
+  return null;
+}
+
+/**
+ * primaryカレンダーから、今日〜calMonthsAheadヶ月先の「ご褒美枠」を読む。
+ * アプリ側で月ごとに数え直せるよう、**1件1行のまま**渡す（集計はアプリの仕事）。
+ * 同じ日に同じタイトルの予定が二重にあったら1件として数える。
+ */
+function readCalendar_(asOf) {
+  var from = new Date(asOf + 'T00:00:00+09:00');
+  var to = new Date(from.getTime());
+  to.setMonth(to.getMonth() + CONFIG.calMonthsAhead);
+  var cal = CalendarApp.getDefaultCalendar();
+  var raw = cal.getEvents(from, to);
+
+  var seen = {}, events = [], skipped = [];
+  raw.forEach(function (e) {
+    var title = String(e.getTitle() || '');
+    var kind = calKind_(title);
+    if (!kind) return;                                  // 会食の枠ではない予定
+    var date = Utilities.formatDate(e.getStartTime(), 'Asia/Tokyo', 'yyyy-MM-dd');
+    var key = date + '|' + title;
+    if (seen[key]) return;
+    seen[key] = 1;
+    if (kind === 'skip') { skipped.push({ date: date, title: title }); return; }
+    events.push({ date: date, ym: date.slice(0, 7), title: title,
+                  kind: kind, cat: kind === 'booked' ? calCat_(title) : null });
+  });
+  events.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+
+  var nOpen = events.filter(function (x) { return x.kind === 'open'; }).length;
+  Logger.log('Googleカレンダー: 枠' + events.length + '件（予約' + (events.length - nOpen) +
+             '・空き' + nOpen + '）／数えない枠' + skipped.length + '件　' +
+             asOf + ' 〜 ' + Utilities.formatDate(to, 'Asia/Tokyo', 'yyyy-MM-dd'));
+  return {
+    asOf: asOf,
+    from: asOf,
+    to: Utilities.formatDate(to, 'Asia/Tokyo', 'yyyy-MM-dd'),
+    monthsAhead: CONFIG.calMonthsAhead,
+    monthCap: CONFIG.calMonthCap,
+    calendarName: cal.getName(),
+    count: events.length,
+    events: events,
+    skipped: skipped
+  };
+}
+
+// ===== v1.6: note台帳（仕事タブの note カード） =====
+/* GOKIGEN台帳フォルダ直下の「note台帳ログ_YYYY-MM-DD」を読む。
+   列＝記録日／集計時刻／期間種別／期間／全体ビュー／コメント／スキ／備考。
+   期間種別は「月間」と「全期間」の2行が同じ記録日で並ぶ作りなので、両方を持ち帰る。
+   画面に出すのは**いちばん新しい記録日**のぶんだけ（過去ぶんは推移用に少しだけ残す）。 */
+var NOTE_COLS = {
+  date:  ['記録日', '日付'], time: ['集計時刻'], span: ['期間種別'], period: ['期間'],
+  views: ['全体ビュー', 'ビュー'], comments: ['コメント'], likes: ['スキ'], note: ['備考']
+};
+var NOTE_KEEP = 30;                     // data.jsonに残す行数（肥大化させない）
+
+function readNote_() {
+  var folder = DriveApp.getFolderById(CONFIG.gokigenFolderId);
+  var re = new RegExp('^' + CONFIG.noteDeltaPrefix + '\\d{4}-\\d{2}-\\d{2}');
+  var srcs = [];
+  var it = folder.getFiles();                                  // 直下のみ（圧縮済みフォルダは見ない）
+  while (it.hasNext()) {
+    var f = it.next();
+    if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue;
+    if (!re.test(f.getName())) continue;
+    srcs.push({ file: f, name: f.getName(), t: f.getLastUpdated().getTime() });
+  }
+  if (!srcs.length) {
+    Logger.log('note台帳: まだありません（' + CONFIG.noteDeltaPrefix + 'YYYY-MM-DD を置けば読みます）');
+    return { rows: [], used: [], asOf: null, month: null, all: null,
+             folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.gokigenFolderId };
+  }
+  srcs.sort(function (a, b) { return a.t - b.t; });            // 古い順＝後から読んだ方が勝つ
+
+  var byKey = {}, used = [], latestUrl = null;
+  srcs.forEach(function (s) {
+    var values;
+    try { values = SpreadsheetApp.openById(s.file.getId()).getSheets()[0].getDataRange().getValues(); }
+    catch (e) { Logger.log('読めませんでした: ' + s.name + ' / ' + e); return; }
+    var hd = findColumns_(values, NOTE_COLS, 'date');
+    if (!hd) { Logger.log('見出しが見つかりません: ' + s.name); return; }
+    latestUrl = s.file.getUrl();
+    var cnt = 0;
+    for (var i = hd.row + 1; i < values.length; i++) {
+      var row = values[i];
+      var date = toDate_(row[hd.map.date]);
+      if (!date) continue;
+      var span = hd.map.span != null ? str_(row[hd.map.span]) : null;
+      if (!span) continue;                                     // 期間種別の無い行は読み飛ばす
+      byKey[date + '|' + span] = {
+        date: date,
+        time: hd.map.time != null ? timeStr_(row[hd.map.time], 'Asia/Tokyo') : null,
+        span: span,
+        period: hd.map.period != null ? str_(row[hd.map.period]) : null,
+        views:    num_(row[hd.map.views]),
+        comments: num_(row[hd.map.comments]),
+        likes:    num_(row[hd.map.likes]),
+        note: hd.map.note != null ? str_(row[hd.map.note]) : null,
+        src: s.name
+      };
+      cnt++;
+    }
+    used.push({ name: s.name, rows: cnt });
+  });
+
+  var rows = Object.keys(byKey).sort().map(function (k) { return byKey[k]; });
+  if (!rows.length) {
+    Logger.log('note台帳: ' + srcs.length + '本あるが1行も読めませんでした');
+    return { rows: [], used: used, asOf: null, month: null, all: null,
+             folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.gokigenFolderId };
+  }
+  var asOf = rows[rows.length - 1].date;                       // いちばん新しい記録日を採用
+  var pick = function (re2) {
+    var hit = rows.filter(function (r) { return r.date === asOf && re2.test(r.span); });
+    return hit.length ? hit[hit.length - 1] : null;
+  };
+  var all   = pick(/全期間/);
+  var month = pick(/月間/);
+  Logger.log('note台帳: ' + rows.length + '行（最新 ' + asOf + '／月間 ' +
+             (month ? month.views + 'ビュー・' + month.likes + 'スキ' : '—') + '／全期間 ' +
+             (all ? all.views + 'ビュー' : '—') + '）');
+  return {
+    asOf: asOf,
+    time: (month && month.time) || (all && all.time) || null,
+    month: month, all: all,
+    rows: rows.slice(-NOTE_KEEP),
+    used: used,
+    fileUrl: latestUrl,
+    folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.gokigenFolderId
+  };
 }
 
 // ===== v1.4: WANT台帳（目標×差分の「目標」側） =====

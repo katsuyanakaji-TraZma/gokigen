@@ -25,6 +25,9 @@ const leak = code => code.replace(/^(const|let) /gm, "var ");
 // 「/* ===== init」までを切り出す（見出しの後半は変わることがあるので前方一致で拾う）
 eval(leak(pick("/* ===== util ===== */", "/* ===== init")));
 eval(leak(pick("/* ===== 分析メモ（4視点）ここから =====", "/* ===== 分析メモ ここまで ===== */")));
+// v1.6：会食の分類（catOf）は「v1.6 会食予実」ブロックへ移した。ckDining が使うので先に読む
+eval(leak(pick("/* ===== v1.6 会食予実（枠・予約・実績）ここから =====",
+               "/* ===== v1.6 会食予実 ここまで ===== */")));
 eval(leak(pick("/* ===== 6部屋コックピット ここから =====", "/* ===== 6部屋コックピット ここまで ===== */")));
 
 let fail = 0;
@@ -189,7 +192,8 @@ has(ckVoice(noGive, "spirit").text, "ギバーの電池", "★誰にも教えて
 const lowMood = clone(F); lastHealth(lowMood).mood = 4;
 const vlow = ckVoice(lowMood, "spirit");
 eq(vlow.tone, "alarm", "ご機嫌度が低い日はアラーム");
-has(vlow.text, "ご機嫌度が4/10", "ご機嫌度を責めずに受け止める");
+// v1.6【言葉化】「4/10」→「10点満点で4点」
+has(vlow.text, "ご機嫌度が10点満点で4点", "ご機嫌度を責めずに受け止める");
 has(vlow.text, "無理に上げなくていい", "口調はおおらかで優しい");
 
 console.log("\n【87歳の声・仕事】");

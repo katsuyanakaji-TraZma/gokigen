@@ -217,13 +217,51 @@
     background:rgba(255,107,53,.15);color:#c0410f}
   .chg .spike.up{background:rgba(34,199,122,.15);color:#128550}
   /* kaishoku */
-  .kg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-  .kb{border-radius:12px;padding:12px}
-  .kl{font-size:11px;font-weight:700;margin-bottom:7px;color:rgba(255,255,255,.9)}
-  .kbar{height:8px;background:rgba(255,255,255,.4);border-radius:4px;overflow:hidden;margin-bottom:5px}
-  .kf{height:100%;border-radius:4px;background:rgba(255,255,255,.95)}
-  .kc{font-size:21px;font-weight:800;color:#fff}
-  .km{font-size:11px;color:rgba(255,255,255,.75)}
+  /* v1.6 会食予実：4つの数字（実績・これから・空き席・着地見込み）。分数は使わない */
+  .dnq{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .dnq>div{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:10px 11px;min-width:0}
+  .dnq>div.over{border-color:rgba(255,68,68,.45);background:rgba(255,68,68,.07)}
+  .dnl{font-size:10.5px;color:var(--muted);font-weight:700;margin-bottom:4px}
+  .dnv{font-size:23px;font-weight:800;line-height:1.2}
+  .dnv .dnu{font-size:12px;font-weight:700;color:var(--soft);margin-left:2px}
+  .dnv.over{color:var(--red)}
+  .dnv.good{color:var(--green)}
+  .dnsub{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.6}
+  .dncats{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+  .dnchip{font-size:11px;font-weight:800;border-radius:999px;padding:4px 9px;
+    background:var(--bg);border:1.5px solid var(--border);color:var(--soft);white-space:nowrap}
+  .dnchip.z{color:var(--muted);opacity:.7}
+  .dnrow{display:flex;gap:9px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border);
+    font-size:12.5px;line-height:1.65}
+  .dnrow:last-child{border-bottom:none}
+  .dnrow .dnd{font-weight:800;color:var(--soft);flex:none;width:76px}
+  .dnrow .dnt{flex:1;min-width:0;word-break:break-word}
+  .dnrow .dnt .dnm2{font-size:11px;color:var(--muted);display:block;margin-top:2px}
+  .dnhead{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.06em;margin:12px 0 2px}
+  .dnnext{margin-top:11px;padding:11px 12px;border-radius:12px;background:rgba(255,107,53,.09);
+    border:1.5px solid rgba(255,107,53,.32);font-size:12.5px;line-height:1.75;font-weight:700;
+    display:flex;gap:8px;align-items:flex-start}
+  .dnnext .dnni{flex:none;font-size:15px}
+  /* 未来3ヶ月のストリップ（タップで内訳） */
+  .dnm{border:1.5px solid var(--border);border-radius:12px;background:var(--bg);margin-bottom:9px}
+  .dnm>summary{list-style:none;cursor:pointer;padding:11px 12px;display:flex;align-items:center;
+    gap:7px;flex-wrap:wrap;font-size:13px;font-weight:800;color:var(--soft)}
+  .dnm>summary::-webkit-details-marker{display:none}
+  .dnm>summary::after{content:'▼';margin-left:auto;font-size:10px;color:var(--muted);transition:transform .2s}
+  .dnm[open]>summary::after{transform:rotate(180deg)}
+  .dnpill{font-size:11px;font-weight:800;border-radius:999px;padding:3px 9px;background:#fff;
+    border:1.5px solid var(--border);color:var(--soft);white-space:nowrap}
+  .dnpill.warn{background:rgba(255,68,68,.10);border-color:rgba(255,68,68,.40);color:var(--red)}
+  .dnpill.ok{background:rgba(34,199,122,.12);border-color:rgba(34,199,122,.35);color:#128550}
+  .dnbody{padding:0 12px 12px}
+  /* 直近6ヶ月の実績バー（区分で色分け） */
+  .dnbar{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:11px}
+  .dnbar .dnbk{width:38px;color:var(--muted);font-weight:700;flex:none}
+  .dnbar .dnbt{flex:1;height:16px;border-radius:8px;background:var(--bg);overflow:hidden;display:flex}
+  .dnbar .dnbs{height:100%}
+  .dnbar .dnbv{width:52px;text-align:right;font-weight:800;flex:none;color:var(--soft)}
+  .dnleg{font-size:11px;color:var(--muted);line-height:2;margin-top:9px}
+  .dnleg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:4px;font-style:normal}
   .klog{font-size:13px;color:var(--soft)}
   .klog .e{padding:9px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center}
   .klog .e:last-child{border-bottom:none}
@@ -392,7 +430,7 @@
       <div class="mb"><div class="ml">🧬 体内年齢</div>
         <div class="mi-row"><span class="mv" id="v-bodyAge">—</span><span class="mu">歳</span></div>
         <div class="md" id="d-bodyAge"></div></div>
-      <div class="mb"><div class="ml">❤️ 血圧（上／下）</div>
+      <div class="mb"><div class="ml">❤️ 血圧（上と下）</div>
         <div class="mi-row"><span class="mv" id="v-bp" style="font-size:20px">—</span></div>
         <div class="md" id="d-bp"></div></div>
     </div>
@@ -459,6 +497,12 @@
     <div style="overflow-x:auto">
       <table class="ut" id="revTable"></table>
     </div>
+  </div>
+  <!-- v1.6 note（GOKIGEN台帳フォルダの「note台帳ログ_YYYY-MM-DD」から） -->
+  <div class="card" id="noteCard">
+    <div class="ct"><span class="dot" style="background:var(--pink)"></span>✍️ note（読まれ方）</div>
+    <div id="noteBody"></div>
+    <div class="pace" id="noteAsOf"></div>
   </div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--green)"></span>今週の変化点</div>
@@ -597,11 +641,20 @@
 <div class="page" id="pg-priv">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🍶 会食・家族</div></div>
   <div class="card goal" id="goal-priv" style="display:none"></div>
+  <!-- v1.6 会食予実カード：枠と予約はGoogleカレンダー、実績はGOKIGEN台帳の「会食」欄 -->
   <div class="card">
-    <div class="ct"><span class="dot" style="background:var(--orange)"></span>会食マネジメント（今月）</div>
-    <div class="kg" id="kgrid"></div>
-    <div class="pace" id="nextFamily"></div>
-    <div class="note">台帳の「会食」欄から自動集計しています。</div>
+    <div class="ct"><span class="dot" style="background:var(--orange)"></span>今月の会食（実績・これから・残りの席）</div>
+    <div id="dnNow"></div>
+    <div class="note" id="dnNowNote"></div>
+  </div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--blue)"></span>これから3ヶ月の予約と空き席</div>
+    <div id="dnFuture"></div>
+    <div class="note">タップすると、その月の予約と空き枠の日にちが開きます。</div>
+  </div>
+  <div class="card">
+    <div class="ct"><span class="dot" style="background:var(--purple)"></span>ふりかえり（直近6ヶ月の実績）</div>
+    <div id="dnPast"></div>
   </div>
   <div class="card"><div class="ct"><span class="dot" style="background:var(--pink)"></span>会食の記録（全期間）</div><div class="klog" id="klog"></div>
     <div id="dl-priv"></div>
@@ -716,27 +769,9 @@ function uAvgRating(snap){
   return snap.rows.reduce((a,r)=>a+r.rating,0)/snap.rows.length;
 }
 
-/* ===== 会食 ===== */
-const KCATS=[
-  {k:'client',l:'👔 客',max:5,bg:'linear-gradient(135deg,#4a7eff,#9b59ff)'},
-  {k:'mentor',l:'🎓 師',max:3,bg:'linear-gradient(135deg,#9b59ff,#ff4d8d)'},
-  {k:'okuri',l:'🤝 恩',max:3,bg:'linear-gradient(135deg,#22c77a,#4a7eff)'},
-  {k:'friend',l:'🍻 友',max:3,bg:'linear-gradient(135deg,#ffb800,#ff6b35)'},
-  {k:'family',l:'👨‍👩‍👧 家族',max:4,bg:'linear-gradient(135deg,#ff4d8d,#ff6b35)',wide:true}
-];
-function catOf(s){
-  if(!s)return null;
-  if(/家族|妻|長女|アキさん/.test(s))return 'family';
-  if(/客|研修|懇親|アズビル|三井|ベネッセ|大塚/.test(s))return 'client';
-  if(/師/.test(s))return 'mentor';
-  if(/恩/.test(s))return 'okuri';
-  if(/友|祝い/.test(s))return 'friend';
-  return 'friend';
-}
-function diningList(){
-  return DATA.health.filter(r=>r.dining && !/^なし/.test(r.dining))
-    .map(r=>({date:r.date,memo:r.dining,cat:catOf(r.dining)}));
-}
+/* ===== 会食 =====
+   分類（catOf）と実績の一覧（diningList）は
+   「v1.6 会食予実」ブロックに移した（テストがその範囲だけを切り出して検証するため）。 */
 
 /* ===== init / データの読み直し =====
    ホーム画面から開くアプリ（standalone）は、閉じてもページが生きたまま残る。
@@ -818,7 +853,8 @@ function renderHouse(){
 
   // 精神 = ご機嫌度があればそれ（10段階）、なければ睡眠
   const m=latestPair('mood');
-  if(m.cur){ setRoom('spirit', '機嫌 '+m.cur.mood+'/10', roomDelta('mood','',0,true)); }
+  // v1.6【言葉化】「6/10」をやめ「6点」＋満点を言葉で（頭の中で割り算をさせない）
+  if(m.cur){ setRoom('spirit', '機嫌 '+m.cur.mood+'点', '満点10点・'+roomDelta('mood','',0,true)); }
   else { setRoom('spirit', '睡眠 '+(lastWith('sleep',0)?lastWith('sleep',0).sleep:'—'), roomDelta('sleep','',0,true)); }
 
   // 知識 = 記録日数
@@ -836,10 +872,12 @@ function renderHouse(){
   const ep=ecoCard(DATA);
   setRoom('eco', ep.total!=null? fmtYen(ep.total) : '—', ep.deltaText);
 
-  // 会食 = 今月
-  const mk=latest.date.slice(0,7);
-  const mCnt=diningList().filter(e=>e.date.startsWith(mk)).length;
-  setRoom('priv', '今月 '+mCnt+'日', '月間12日まで');
+  /* 会食 = 今月。v1.6【言葉化】「今月N日／月間12日まで」ではなく、
+     実績と「あと何席」を計算済みで出す（カレンダーが未接続でも実績だけは出る）。 */
+  const dn=dnThisMonth(DATA);
+  setRoom('priv', '実績 '+dn.done+'回',
+    dn.hasCal? ('これから'+dn.upcoming.length+'回・あと'+dn.seats+'席')
+             : ('枠は月'+dn.cap+'回まで'));
 }
 function setRoom(id,main,sub){
   document.getElementById('s-'+id).textContent=main;
@@ -1598,8 +1636,8 @@ function kitLatest(D,room){
     push(L,'睡眠',r.sleep!=null? r.sleep+'点':null);
     push(L,'体脂肪率',r.fat!=null? r.fat.toFixed(1)+'%':null);
     push(L,'筋肉量',r.muscle!=null? r.muscle.toFixed(1)+'kg':null);
-    push(L,'血圧',r.bpHigh!=null? r.bpHigh+' / '+(r.bpLow!=null?r.bpLow:'—'):null);
-    push(L,'ご機嫌度',r.mood!=null? r.mood+'/10':null);
+    push(L,'血圧',r.bpHigh!=null? '上'+r.bpHigh+'・下'+(r.bpLow!=null?r.bpLow:'—'):null);
+    push(L,'ご機嫌度',r.mood!=null? r.mood+'点（満点10点）':null);
     push(L,'運動',r.exercise); push(L,'会食',r.dining); push(L,'一言',r.note);
     return {title:r.date+'（'+r.dow+'）の記録',lines:L};
   }
@@ -1638,7 +1676,7 @@ function kitLatest(D,room){
     if(room==='spirit'){
       var ms=((D&&D.health)||[]).filter(x=>x.mood!=null);
       var m=ms[ms.length-1];
-      if(m) push(L2,'ご機嫌度',m.mood+'/10（'+md(m.date)+'）');
+      if(m) push(L2,'ご機嫌度',m.mood+'点（満点10点・'+md(m.date)+'）');
     }
     return {title:r2.date+' のリミットレス台帳',lines:L2};
   }
@@ -1666,15 +1704,15 @@ function kitAllTime(D,room){
     var ms=h.filter(r=>r.mood!=null);
     if(!ms.length) return 'ご機嫌度の記録がまだありません';
     var avg=ms.reduce((a,r)=>a+r.mood,0)/ms.length;
-    return 'ご機嫌度 '+ms.length+'回の記録・平均 '+avg.toFixed(1)+'/10（直近 '+
-           ms[ms.length-1].mood+'/10）';
+    return 'ご機嫌度 '+ms.length+'回の記録・平均 '+avg.toFixed(1)+'点（直近 '+
+           ms[ms.length-1].mood+'点・満点10点）';
   }
   if(room==='priv'){
     var list=h.filter(r=>r.dining&&!/^なし/.test(r.dining));
     if(!list.length) return '会食の記録がまだありません';
     var fam=list.filter(r=>/家族|妻|長女|アキさん/.test(r.dining)).length;
     return '会食 '+list.length+'回（'+list[0].date+'〜'+list[list.length-1].date+
-           '）／うち家族 '+fam+'回';
+           '）・うち家族 '+fam+'回';
   }
   return '';
 }
@@ -1838,6 +1876,199 @@ function wkMonthNew(D){
           from:last.from||null, to:last.to||null};
 }
 /* ===== v1.5 経済 ここまで ===== */
+/* ===== v1.6 会食予実（枠・予約・実績）ここから =====
+   ここから下の「ここまで」までは DOM に触らない
+   （tools/test/test-dining.js が、この範囲だけを切り出して検証するため）。
+
+   会食は3つの数字でできている。
+     枠   … カレンダーの「🎁ご褒美枠」。会食に使ってよい日
+     予約 … その枠のうち相手が決まったもの（カレンダーのタイトルが書き換わっている）
+     実績 … GOKIGEN台帳の「会食」欄。実際に行った日
+
+   画面には**割り算をさせない**。「9/12」ではなく「あと3席」と書く。
+   数字はここで全部計算して、出す側は受け取った数を並べるだけにする。 */
+
+/* 1ヶ月に入れてよい会食の上限。data.json（カレンダー側）の決めを優先し、無ければ12。 */
+var DN_CAP_DEFAULT=12;
+function dnCap(D){
+  var c=(D&&D.calendar&&D.calendar.monthCap);
+  return (typeof c==='number'&&c>0)? c : DN_CAP_DEFAULT;
+}
+/* 区分。並び順は画面の並び順。家族は最後（いちばん大事なので目に入る位置に置く） */
+var DN_CATS=[
+  {key:'client',label:'客',  icon:'👔',color:'#4a7eff'},
+  {key:'mentor',label:'師',  icon:'🎓',color:'#9b59ff'},
+  {key:'okuri', label:'恩',  icon:'🤝',color:'#22c77a'},
+  {key:'friend',label:'友',  icon:'🍻',color:'#ffb800'},
+  {key:'family',label:'家族',icon:'👪',color:'#ff4d8d'}
+];
+function dnCat(key){
+  for(var i=0;i<DN_CATS.length;i++) if(DN_CATS[i].key===key) return DN_CATS[i];
+  return {key:'other',label:'その他',icon:'🍽',color:'#9aa0b8'};
+}
+function dnCatText(key){var c=dnCat(key);return c.icon+c.label}
+
+/* 台帳の「会食」欄の書き方から区分を当てる（実績側）。
+   カレンダーのタイトルから当てる方は Apps Script 側（calCat_）にある。 */
+function catOf(s){
+  if(!s)return null;
+  if(/家族|妻|長女|アキさん/.test(s))return 'family';
+  if(/客|研修|懇親|アズビル|三井|ベネッセ|大塚/.test(s))return 'client';
+  if(/師/.test(s))return 'mentor';
+  if(/恩/.test(s))return 'okuri';
+  if(/友|祝い/.test(s))return 'friend';
+  return 'friend';
+}
+/* 実績の一覧（台帳の会食欄）。引数を省いたときはこれまでどおり DATA を見る */
+function dnActual(D){
+  return (((D||DATA)||{}).health||[]).filter(r=>r.dining&&!/^なし/.test(r.dining))
+    .map(r=>({date:r.date,ym:r.date.slice(0,7),memo:r.dining,cat:catOf(r.dining)}));
+}
+function diningList(){ return dnActual(DATA) }
+
+/* 月まわりの小道具（月をまたぐ足し算は自前でやる。Dateに任せると月末で1日ずれる） */
+function dnYm(ds){ return String(ds||'').slice(0,7) }
+function dnYmAdd(ym,n){
+  var y=+ym.slice(0,4), m=+ym.slice(5,7)+n;
+  y+=Math.floor((m-1)/12); m=((m-1)%12+12)%12+1;
+  return y+'-'+pad(m);
+}
+function dnYmLabel(ym){ return (+ym.slice(0,4))+'年'+(+ym.slice(5,7))+'月' }
+/* 「9月20日(日)」。日付はスラッシュを使わず、曜日まで出して迷わせない */
+function dnDate(ds){
+  var d=new Date(ds+'T00:00:00+09:00');
+  return (+ds.slice(5,7))+'月'+(+ds.slice(8,10))+'日('+DOWS[d.getDay()]+')';
+}
+/* いまカレンダーがつながっているか。未承認・未設定なら false */
+function dnHasCal(D){
+  var c=(D&&D.calendar)||null;
+  return !!(c&&c.events&&c.events.length!=null);
+}
+function dnEvents(D,kind,ym){
+  return (((D&&D.calendar)||{}).events||[]).filter(function(e){
+    if(kind&&e.kind!==kind) return false;
+    if(ym&&e.ym!==ym) return false;
+    return true;
+  });
+}
+
+/**
+ * 今月の予実。today は「アプリを見ている日」（テストのために引数で渡せる）。
+ *   done      … 実績（台帳）の回数
+ *   upcoming  … これからの予約（今日以降）。**実績のある日は除く**
+ *                （夜の会食を台帳に書いたあと、同じ日を2回数えないため）
+ *   open      … これから使える空き枠（今日以降）
+ *   forecast  … 着地見込み ＝ 実績 ＋ これからの予約
+ *   remain    … 枠の残り ＝ 12 − 着地見込み（マイナスにもなる。超過の合図）
+ *   seats     … まだ入れられる席 ＝ 空き枠と枠の残りの、少ないほう
+ */
+function dnThisMonth(D,today){
+  var t=today||dnTodayStr();
+  var ym=dnYm(t), cap=dnCap(D);
+  var acts=dnActual(D).filter(function(a){return a.ym===ym});
+  var actDates={}; acts.forEach(function(a){actDates[a.date]=1});
+  var upcoming=dnEvents(D,'booked',ym).filter(function(e){return e.date>=t&&!actDates[e.date]});
+  var open=dnEvents(D,'open',ym).filter(function(e){return e.date>=t});
+  var forecast=acts.length+upcoming.length;
+  var remain=cap-forecast;
+  var byCat={};
+  DN_CATS.forEach(function(c){byCat[c.key]={done:0,booked:0}});
+  acts.forEach(function(a){ if(byCat[a.cat]) byCat[a.cat].done++ });
+  upcoming.forEach(function(e){ if(byCat[e.cat]) byCat[e.cat].booked++ });
+  return {ym:ym,today:t,cap:cap,
+    done:acts.length, acts:acts,
+    upcoming:upcoming, open:open,
+    forecast:forecast, remain:remain,
+    seats:Math.max(0,Math.min(open.length,Math.max(0,remain))),
+    over:forecast>cap, overBy:Math.max(0,forecast-cap),
+    byCat:byCat, hasCal:dnHasCal(D)};
+}
+
+/**
+ * 未来の月（来月〜nヶ月先）。予約と空き席だけを見る（実績はまだ無いので数えない）。
+ * 家族の予約がゼロの月は famWarn＝true。ここが「⚠️家族まだ」の点灯条件。
+ */
+function dnFutureMonths(D,today,n){
+  var t=today||dnTodayStr(), cap=dnCap(D);
+  var out=[];
+  for(var i=1;i<=(n||3);i++){
+    var ym=dnYmAdd(dnYm(t),i);
+    var booked=dnEvents(D,'booked',ym);
+    var open=dnEvents(D,'open',ym);
+    var fam=booked.filter(function(e){return e.cat==='family'});
+    out.push({ym:ym,label:dnYmLabel(ym),cap:cap,
+      booked:booked, open:open,
+      seats:Math.max(0,Math.min(open.length,Math.max(0,cap-booked.length))),
+      family:fam.length, famWarn:fam.length===0});
+  }
+  return out;
+}
+
+/** 過去の実績（今月より前の n ヶ月）。区分ごとの回数を月ごとに返す */
+function dnPastMonths(D,today,n){
+  var t=today||dnTodayStr(), months=n||6, out=[];
+  var acts=dnActual(D);
+  for(var i=months;i>=1;i--){
+    var ym=dnYmAdd(dnYm(t),-i);
+    var rows=acts.filter(function(a){return a.ym===ym});
+    var counts={};
+    DN_CATS.forEach(function(c){counts[c.key]=0});
+    rows.forEach(function(a){ if(counts[a.cat]!=null) counts[a.cat]++ });
+    // 年をまたぐときだけ「2025年12月」と年を出す（同じ年なら「12月」で足りる）
+    var lb=((ym.slice(0,4)!==String(t).slice(0,4))? (+ym.slice(0,4))+'年' : '')+(+ym.slice(5,7))+'月';
+    out.push({ym:ym,label:lb,total:rows.length,counts:counts});
+  }
+  return out;
+}
+
+/**
+ * 次の一手（1行）。目標→現状→ギャップまで出したうえで「で、何をするか」を1つだけ言う。
+ * 上から順に、いちばん困っていることを選ぶ。
+ */
+function dnNextMove(D,today){
+  var t=today||dnTodayStr();
+  var m=dnThisMonth(D,t), fut=dnFutureMonths(D,t,3);
+  if(!m.hasCal)
+    return 'カレンダーがまだつながっていません。Apps Scriptの appsscript.json に calendar.readonly を足して、runNow で承認してください。';
+  if(m.over)
+    return '着地見込みが'+m.forecast+'回で、今月の枠'+m.cap+'回を'+m.overBy+'回オーバーします。'+
+           m.overBy+'件を来月に回しましょう。';
+  var famNow=m.byCat.family.done+m.byCat.family.booked;
+  if(famNow===0&&m.open.length)
+    return '今月まだ家族の予定がありません。'+dnDate(m.open[0].date)+'の空き枠を家族に使いましょう。';
+  if(famNow===0)
+    return '今月まだ家族の予定がなく、空き枠も残っていません。来月の家族枠を先に押さえましょう。';
+  var w=fut.filter(function(x){return x.famWarn})[0];
+  if(w)
+    return w.label+'の家族枠がまだ決まっていません。'+
+           (w.open.length? dnDate(w.open[0].date)+'の空き枠が候補です。' : '空き枠を1つ作りましょう。');
+  if(m.seats>0)
+    return 'あと'+m.seats+'席。'+dnDate(m.open[0].date)+'の空き枠に、誰を呼びますか。';
+  return '今月の枠はもう埋まりました。次は'+fut[0].label+'の空き'+fut[0].seats+'席から考えましょう。';
+}
+
+/** 今日（アプリを見ている日）。data.jsonの日付ではなく、いまの日付で数える */
+function dnTodayStr(){
+  var d=new Date();
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+}
+
+/* ===== v1.6 note台帳（仕事タブ）ここから ===== */
+/** data.json の note を、画面に出せる形にそろえる。まだ台帳が無ければ ok:false */
+function dnNote(D){
+  var n=(D&&D.note)||null;
+  if(!n||!n.asOf) return {ok:false,reason:'note台帳ログ_YYYY-MM-DD がまだ台帳フォルダにありません'};
+  var num=function(v){return (typeof v==='number'&&!isNaN(v))? v : null};
+  var m=n.month||{}, a=n.all||{};
+  return {ok:true,asOf:n.asOf,time:n.time||null,
+    month:{period:m.period||null,views:num(m.views),comments:num(m.comments),likes:num(m.likes),note:m.note||null},
+    all:{period:a.period||null,views:num(a.views),comments:num(a.comments),likes:num(a.likes)},
+    url:n.fileUrl||n.folderUrl||null};
+}
+/* ===== v1.6 note台帳 ここまで ===== */
+
+/* ===== v1.6 会食予実 ここまで ===== */
+
 
 
 function renderAnalysis(){
@@ -1989,7 +2220,7 @@ function ckVoiceSpirit(D){
   if(g.count===0)
     return {tone:'alarm',text:'今週は誰にも教えていないねぇ。ギバーの電池はね、人に配ったときに増えるんだよ。ひとりでいい、話を聞いてあげよう。'};
   if(mood&&mood.mood<=5)
-    return {tone:'alarm',text:'ご機嫌度が'+mood.mood+'/10か。無理に上げなくていい。風呂と散歩を先に済ませて、あとは寝てしまいなさい。'};
+    return {tone:'alarm',text:'ご機嫌度が10点満点で'+mood.mood+'点か。無理に上げなくていい。風呂と散歩を先に済ませて、あとは寝てしまいなさい。'};
   if(doki===0)
     return {tone:'alarm',text:'今週は「わくわく」の種が見当たらないねぇ。百クラブの続きでいい、次に登る低山を1つ決めておこうか。'};
   return {tone:'yell',text:'今週は'+g.count+'回、'+g.who.length+'組の相手に手渡したね。おおらかでいい。それが巡り巡って、87歳のわしの周りにいる人たちだよ。'};
@@ -2315,7 +2546,8 @@ function renderHealth(){
   setMetric('muscle','muscle','kg',1,true);
   setMetric('bodyAge','bodyAge','歳',0,false);
   const bp=lastWith('bpHigh',0);
-  document.getElementById('v-bp').textContent=bp? (bp.bpHigh+' / '+(bp.bpLow??'—')) : '—';
+  // v1.6【言葉化】「128 / 82」ではなく「上128・下82」（分数に見えるスラッシュを使わない）
+  document.getElementById('v-bp').textContent=bp? ('上'+bp.bpHigh+'・下'+(bp.bpLow??'—')) : '—';
   document.getElementById('d-bp').textContent=bp? (bp.date.slice(5)+' の測定') : '記録なし';
 
   const rows=DATA.health.filter(r=>r.weight!=null).slice(-10).reverse();
@@ -2399,6 +2631,7 @@ function renderLaunch(){
 }
 function renderWork(){
   renderWarnings();
+  renderNote();
   renderRevenue();
   renderAnalysis();
   renderChanges();
@@ -2457,7 +2690,8 @@ function renderWork(){
     detail.innerHTML='📂 詳細データ（準備中）<span class="arw">→</span>'}
 
   const n=DATA.udemyCourses.length;
-  document.getElementById('uN').textContent=n+' / 100コース';
+  // v1.6【言葉化】「12 / 100コース」ではなく「あと88本（公開ずみ12本）」
+  document.getElementById('uN').textContent='あと'+(100-n)+'本（公開ずみ '+n+'本）';
   document.getElementById('uB').style.width=n+'%';
   const dl=new Date('2030-04-29');const mo=Math.max(1,Math.round((dl-new Date())/(2628e6)));
   document.getElementById('pace').textContent='🎯 2030/4/29まで約'+mo+'ヶ月｜必要ペース：Udemy月'+((100-n)/mo).toFixed(1)+'コース';
@@ -2626,7 +2860,7 @@ function renderKnow(){
 function renderSpirit(){
   const m=lastWith('mood',0);
   document.getElementById('v-mood').textContent=m? m.mood : '—';
-  document.getElementById('u-mood').textContent=m? '/10' : '';
+  document.getElementById('u-mood').textContent=m? '点（満点10点）' : '';
   // 10段階を5つの顔に落として表示（1-2→😩 3-4→😕 5-6→😐 7-8→🙂 9-10→😄）
   document.getElementById('d-mood').textContent=m
     ? (MOODS[Math.min(4,Math.floor((m.mood-1)/2))]+' '+m.date.slice(5)+' の記録')
@@ -2648,24 +2882,119 @@ function renderSpirit(){
   const last=withNote[withNote.length-1];
   document.getElementById('spiritNote').textContent=last?last.note:'—';
 }
+/* v1.6 会食予実カード。
+   数字は全部 dnThisMonth / dnFutureMonths / dnPastMonths が計算済みで返してくる。
+   ここは受け取った数を並べるだけ（画面の中で割り算をしない＝分数を作らない）。 */
 function renderPriv(){
+  const t=dnTodayStr();
+  const m=dnThisMonth(DATA,t);
+  const q=(label,value,unit,cls,sub)=>
+    `<div class="${cls&&cls.indexOf('over')>=0?'over':''}"><div class="dnl">${label}</div>`+
+    `<div class="dnv ${cls||''}">${value}<span class="dnu">${unit||''}</span></div>`+
+    (sub? `<div class="dnsub">${sub}</div>`:'')+`</div>`;
+
+  if(!m.hasCal){
+    document.getElementById('dnNow').innerHTML=
+      `<div class="dnq">${q('✅ 実績（台帳）',m.done,'回','','今月ここまで')}`+
+      `${q('📅 これから','—','','','カレンダー未接続')}`+
+      `${q('🈳 まだ入れられる席','—','','','カレンダー未接続')}`+
+      `${q('🎯 着地見込み','—','','','枠は月'+m.cap+'回')}</div>`+
+      `<div class="dnnext"><span class="dnni">🛠</span><span>${esc(dnNextMove(DATA,t))}</span></div>`;
+    document.getElementById('dnNowNote').textContent=
+      'カレンダーの「🎁ご褒美枠」を読むと、これからの予約と残りの席が出ます。';
+  }else{
+    const overCls=m.over? 'over':'';
+    document.getElementById('dnNow').innerHTML=
+      `<div class="dnq">`+
+      q('✅ 実績（もう行った）',m.done,'回','good',dnYmLabel(m.ym)+'の台帳より')+
+      q('📅 これから（予約ずみ）',m.upcoming.length,'回','',m.upcoming.length? '今日から月末まで':'予約はまだありません')+
+      q('🈳 まだ入れられる席',m.seats,'席','',
+        m.seats ? '空き枠'+m.open.length+'日ぶん・枠の残り'+Math.max(0,m.remain)+'回'
+        : m.remain<=0 ? '今月の枠'+m.cap+'回を使いきりました'
+        : '今月の空き枠はもう残っていません')+
+      q('🎯 着地見込み',m.forecast,'回',overCls,
+        m.over? '枠'+m.cap+'回を'+m.overBy+'回オーバー':'枠は月'+m.cap+'回・あと'+m.remain+'回いける')+
+      `</div>`+
+      `<div class="dncats">`+DN_CATS.map(c=>{
+        const b=m.byCat[c.key], n=b.done+b.booked;
+        return `<span class="dnchip ${n?'':'z'}">${c.icon}${c.label} 実績${b.done}・予約${b.booked}</span>`;
+      }).join('')+`</div>`+
+      (m.upcoming.length? `<div class="dnhead">📅 これからの予定</div>`+
+        m.upcoming.map(e=>
+          `<div class="dnrow"><span class="dnd">${dnDate(e.date)}</span>`+
+          `<span class="dnt">${dnCatText(e.cat)}<span class="dnm2">${esc(e.title)}</span></span></div>`).join('') : '')+
+      (m.open.length? `<div class="dnhead">🈳 今月の空き枠</div>`+
+        `<div class="dnrow"><span class="dnt">${m.open.map(e=>dnDate(e.date)).join(' ・ ')}</span></div>` : '')+
+      `<div class="dnnext"><span class="dnni">👉</span><span>${esc(dnNextMove(DATA,t))}</span></div>`;
+    document.getElementById('dnNowNote').textContent=
+      '枠と予約はGoogleカレンダーの「🎁ご褒美枠」から、実績はGOKIGEN台帳の「会食」欄から数えています。';
+  }
+
+  // これから3ヶ月：予約の回数と、まだ入れられる席。家族の予約がゼロの月は⚠️
+  const fut=dnFutureMonths(DATA,t,3);
+  document.getElementById('dnFuture').innerHTML=!m.hasCal
+    ? '<div class="waiting">カレンダーがまだつながっていません。appsscript.json に calendar.readonly を足して runNow で承認すると、ここに予約と空き席が出ます。</div>'
+    : fut.map(f=>
+      `<details class="dnm"><summary><span class="dnmy">${f.label}</span>`+
+      `<span class="dnpill">📅 予約 ${f.booked.length}回</span>`+
+      `<span class="dnpill">🈳 あと ${f.seats}席</span>`+
+      (f.famWarn? `<span class="dnpill warn">⚠️ 家族まだ</span>`
+                : `<span class="dnpill ok">👪 家族 ${f.family}回</span>`)+
+      `</summary><div class="dnbody">`+
+      (f.booked.length? f.booked.map(e=>
+        `<div class="dnrow"><span class="dnd">${dnDate(e.date)}</span>`+
+        `<span class="dnt">${dnCatText(e.cat)}<span class="dnm2">${esc(e.title)}</span></span></div>`).join('')
+        : `<div class="dnrow"><span class="dnt" style="color:var(--muted)">予約はまだありません</span></div>`)+
+      (f.open.length? `<div class="dnhead">🈳 空き枠（${f.open.length}日ぶん）</div>`+
+        `<div class="dnrow"><span class="dnt">${f.open.map(e=>dnDate(e.date)).join(' ・ ')}</span></div>`
+        : `<div class="dnhead">🈳 空き枠</div><div class="dnrow"><span class="dnt" style="color:var(--muted)">この月の空き枠はありません</span></div>`)+
+      `</div></details>`).join('');
+
+  // 直近6ヶ月の実績バー（区分で色分け）
+  const past=dnPastMonths(DATA,t,6);
+  const mx=Math.max(1,...past.map(x=>x.total));
+  document.getElementById('dnPast').innerHTML=
+    past.map(x=>
+      `<div class="dnbar"><span class="dnbk">${x.label}</span><span class="dnbt">`+
+      DN_CATS.map(c=>{
+        const n=x.counts[c.key];
+        return n? `<span class="dnbs" style="width:${(n/mx*100).toFixed(1)}%;background:${c.color}"></span>`:'';
+      }).join('')+
+      `</span><span class="dnbv">${x.total}回</span></div>`).join('')+
+    `<div class="dnleg">`+DN_CATS.map(c=>
+      `<span style="margin-right:11px"><i style="background:${c.color}"></i>${c.icon}${c.label}</span>`).join('')+
+    `<br>台帳の「会食」欄に書かれた回数です。いちばん多い月にバーの幅を合わせています。</div>`;
+
   const list=diningList();
-  const mk=DATA.health[DATA.health.length-1].date.slice(0,7);
-  const month=list.filter(e=>e.date.startsWith(mk));
-  document.getElementById('kgrid').innerHTML=KCATS.map(c=>{
-    const used=month.filter(e=>e.cat===c.k).length;
-    const pct=Math.min(used/c.max*100,100);
-    return`<div class="kb" style="background:${c.bg}${c.wide?';grid-column:span 2':''}"><div class="kl">${c.l}（Max${c.max}）</div><div class="kbar"><div class="kf" style="width:${pct}%"></div></div><span class="kc">${used}</span><span class="km"> / ${c.max}日</span></div>`}).join('');
-  // 次の家族枠：台帳の一言から、これから予定されている家族の楽しみを拾う
-  const nf=ckNextFamily(DATA);
-  const famUsed=month.filter(e=>e.cat==='family').length;
-  document.getElementById('nextFamily').textContent=
-    '👨‍👩‍👧 家族枠は今月'+famUsed+'/4日。'+(nf? '次の予定: '+nf.text+'（'+md(nf.date)+'の台帳より）'
-      : '次の予定は台帳にまだ書かれていません。');
   document.getElementById('klog').innerHTML=list.length?
     list.slice().reverse().map(e=>
-      `<div class="e"><div><div style="font-weight:600;font-size:13px">${e.memo}</div><div style="font-size:11px;color:var(--muted)">${e.date}</div></div></div>`).join('')
+      `<div class="e"><div><div style="font-weight:600;font-size:13px">${esc(e.memo)}</div><div style="font-size:11px;color:var(--muted)">${e.date}</div></div></div>`).join('')
     :'<div style="text-align:center;padding:16px;color:var(--muted)">記録なし</div>';
+}
+
+/* v1.6 note カード（仕事タブ）。最新の記録日ぶんだけを出す */
+function renderNote(){
+  const n=dnNote(DATA);
+  const body=document.getElementById('noteBody');
+  const asOf=document.getElementById('noteAsOf');
+  if(!body) return;
+  if(!n.ok){
+    body.innerHTML='<div class="waiting">⌛ '+esc(n.reason)+'</div>';
+    if(asOf) asOf.textContent='';
+    return;
+  }
+  const cell=(label,value,unit,sub)=>
+    `<div><div class="dnl">${label}</div><div class="dnv">${value==null?'—':fmtInt(value)}`+
+    `<span class="dnu">${unit}</span></div>`+(sub?`<div class="dnsub">${esc(sub)}</div>`:'')+`</div>`;
+  body.innerHTML=
+    `<div class="dnq">`+
+    cell('📅 月間 ビュー',n.month.views,'ビュー',n.month.period||'')+
+    cell('💚 月間 スキ',n.month.likes,'スキ',n.month.comments!=null? 'コメント'+n.month.comments+'件':'')+
+    cell('🗃 全期間 ビュー',n.all.views,'ビュー',n.all.period||'')+
+    cell('💚 全期間 スキ',n.all.likes,'スキ',n.all.comments!=null? 'コメント'+n.all.comments+'件':'')+
+    `</div>`+
+    (n.month.note? `<div class="dnsub" style="margin-top:10px">📝 ${esc(n.month.note)}</div>`:'');
+  if(asOf) asOf.textContent='基準日: '+n.asOf+(n.time? ' '+n.time:'')+'（note台帳ログより）';
 }
 function renderSettings(){
   const hrs=DATA.updateHours&&DATA.updateHours.length? DATA.updateHours : [8,12,18,22];
@@ -2681,6 +3010,15 @@ function renderSettings(){
     (files.length? '<br>Udemyの読込元: '+files.map(f=>f.name+'（'+f.rows+'行）').join('、') : '')+
     '<br>WANT台帳（目標）: <b>'+G.total+'行</b>'+(G.total? '（部屋に出しているのは'+G.count+'行）':'（まだ読めていません）')+
     '<br>週報書棚: <b>'+W.count+'本</b>'+(W.latest? '（最新 '+esc(W.latest.name)+'）':'')+
+    /* v1.6：カレンダーとnote台帳がつながっているかを、ここで一目で確かめられるようにする */
+    '<br>カレンダー（会食の枠）: '+(dnHasCal(DATA)
+      ? '<b>'+DATA.calendar.count+'件</b>（'+DATA.calendar.from+'〜'+DATA.calendar.to+'／予約'+
+        dnEvents(DATA,'booked').length+'・空き'+dnEvents(DATA,'open').length+'）'
+      : '<b>未接続</b>（appsscript.json に calendar.readonly を足して runNow で承認）')+
+    '<br>note台帳: '+(dnNote(DATA).ok
+      ? '<b>'+dnNote(DATA).asOf+'</b> 時点（月間'+fmtInt(dnNote(DATA).month.views)+'ビュー・全期間'+
+        fmtInt(dnNote(DATA).all.views)+'ビュー）'
+      : '<b>まだありません</b>')+
     '<br>自己バージョン: <b>'+esc(document.getElementById('selfVer').textContent||'')+'</b>'+
     '<br>月次総括: <b>'+((DATA.monthlyReview||[]).length)+'件</b>（器だけ用意しています）';
 }
@@ -2740,7 +3078,7 @@ function copyTemplate(){
 
 体重:
 睡眠:
-ご機嫌度:    /10
+ご機嫌度:    点（満点10点）
 運動:
 会食:
 今日の一言:

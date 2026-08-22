@@ -7,7 +7,9 @@
  * 確かめること（本人が出した修理6点にそのまま対応）：
  *   ①【要件1】UdemyのコースIDは C01〜C10 だけを取り込み、「全体」等は警告つきで無視する
  *   ②【要件2】項目名に「合計／総額／My資産」が入る行は小計扱いで item の合算から外す
- *   ③【要件3】月間サニティ（Udemy 1,500人超／経済 同一日の合算と総括行の乖離5%超）
+ *   ③【要件3】月間サニティ（Udemy は目安超え／経済 同一日の合算と総括行の乖離5%超）
+ *      ※ Udemyの目安は v1.6（2026-08-22）で 1,500 → 1,800 に引き上げた。
+ *        しきい値そのもののテストは tools/test/test-dining.js にある。
  *   ④【要件4】家画面の経済カードが「個人資産合計を円で」出す。前回比は比較できる2点だけ
  *   ⑤【要件5】推移は3系列。合計線は4口座が同じ日に揃った日だけ点を打つ（偽の急落を作らない）
  *   ⑥【要件6】区分「法人」は個人合算・合計線から完全除外し、独立した法人メーターになる
@@ -226,9 +228,14 @@ const M_OK = [{ ym: "2026-07", officialNew: 2185, newEnroll: 2185, to: "2026-07-
 let w1 = buildWarnings_(LED, [], "2026-08-18", M_OK);
 eq(w1.filter(x => x.kind === "monthSanity").length, 0,
    "★8月842人なら警告なし（過去の2,185人には遡らない＝最新の月だけ見る）");
-const M_NG = [{ ym: "2026-08", officialNew: 1684, newEnroll: 1684, to: "2026-08-18" }];
+// v1.6（2026-08-22）で目安が 1,500 → 1,800 になったので、1,684人は「正当な増加」＝警告なし
+let wMid = buildWarnings_(LED, [], "2026-08-18",
+  [{ ym: "2026-08", officialNew: 1684, newEnroll: 1684, to: "2026-08-18" }]);
+eq(wMid.filter(x => x.kind === "monthSanity").length, 0,
+   "★1,684人では警告なし（v1.6で目安を1,800に上げた）");
+const M_NG = [{ ym: "2026-08", officialNew: 1984, newEnroll: 1984, to: "2026-08-18" }];
 let w2 = buildWarnings_(LED, [], "2026-08-18", M_NG);
-eq(w2.filter(x => x.kind === "monthSanity").length, 1, "★1,500人超で「二重計上疑い」の警告");
+eq(w2.filter(x => x.kind === "monthSanity").length, 1, "★目安（1,800人）超で「二重計上疑い」の警告");
 has(w2.filter(x => x.kind === "monthSanity")[0].text, "二重に入っていないか", "警告文が二重計上を指している");
 eq(w2.filter(x => x.kind === "monthSanity")[0].level, "warn", "警告レベル");
 // 「月間登録」列が無い月は累計の差で見る

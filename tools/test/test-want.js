@@ -287,7 +287,8 @@ const lk = kitLatest(D, "know");
 ok(/2026-08-16/.test(lk.title) && lk.lines.some(x => x.v === "大崎君にコーチング"),
    "📖知識の最新（リミットレス台帳の直近1行）", JSON.stringify(lk));
 const ls = kitLatest(D, "spirit");
-ok(ls.lines.some(x => x.k === "ご機嫌度" && /7\/10/.test(x.v)), "📖精神は ご機嫌度も添える", JSON.stringify(ls.lines));
+// v1.6【言葉化】「7/10」→「7点（満点10点・8/16）」
+ok(ls.lines.some(x => x.k === "ご機嫌度" && /7点（満点10点/.test(x.v)), "📖精神は ご機嫌度も添える", JSON.stringify(ls.lines));
 const lp = kitLatest(D, "priv");
 ok(/2026-08-16/.test(lp.title) && lp.lines.some(x => x.v === "家族と焼肉"), "📖家族の最新（直近の会食）", JSON.stringify(lp));
 eq(kitLatest({ health: [] }, "health"), null, "記録が無ければ null（呼び出し側が「記録なし」と出す）");
@@ -299,7 +300,9 @@ eq(KIT_GRAPH.work.kind + ":" + KIT_GRAPH.work.series, "tab:udemy", "仕事＝累
 eq(KIT_GRAPH.eco.kind, "scroll", "経済＝新設した総資産の推移へ");
 ["know", "spirit", "priv"].forEach(r => eq(KIT_GRAPH[r].kind, "text", r + "＝リンク＋最新数値"));
 ok(/リミットレス台帳 1行/.test(kitAllTime(D, "know")), "知識の全期間の数字", kitAllTime(D, "know"));
-ok(/平均 7\.5\/10/.test(kitAllTime(D, "spirit")), "精神の全期間の数字", kitAllTime(D, "spirit"));
+// v1.6【言葉化】「平均 7.5/10」→「平均 7.5点（… 満点10点）」
+ok(/平均 7\.5点/.test(kitAllTime(D, "spirit")) && /満点10点/.test(kitAllTime(D, "spirit")),
+   "精神の全期間の数字", kitAllTime(D, "spirit"));
 ok(/会食 1回/.test(kitAllTime(D, "priv")), "家族の全期間の数字", kitAllTime(D, "priv"));
 
 console.log("\n【PART B】総資産の推移（ログ2点目から線を描く）");
