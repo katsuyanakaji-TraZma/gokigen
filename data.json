@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T16:47:18+09:00",
+  "generatedAt": "2026-08-22T18:38:59+09:00",
   "version": "1.7",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -7559,9 +7559,9 @@
       {
         "date": "2026-09-30",
         "ym": "2026-09",
-        "title": "🎁ご褒美枠｜空き（客/師/恩/友/家族）",
-        "kind": "open",
-        "cat": null
+        "title": "🎁ご褒美枠｜予約済み　友枠　akiyoさん",
+        "kind": "booked",
+        "cat": "friend"
       },
       {
         "date": "2026-10-06",
