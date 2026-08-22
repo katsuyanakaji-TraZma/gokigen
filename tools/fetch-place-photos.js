@@ -17,6 +17,10 @@
  *   2. node tools/fetch-place-photos.js を1回まわす（既に写真のある場所は飛ばす）
  *   3. places-photos.json をコミットして push
  *
+ * v1.7.1：低山台帳（mountains）も同じしくみで拾う。行きたい場所も低山も
+ * 同じ places-photos.json の photos に入れる（キーは名前）。山は英語名が
+ * 「Mount ◯◯」になっていることが多いので MTN_HINTS を別に持つ。
+ *
  * Commons の画像は自由に使えるライセンスだが、作者表示が要るものが多い。
  * artist / license も一緒に持ち帰って、ページの下に小さく出す。
  */
@@ -39,7 +43,7 @@ function queries(p) {
   const area = String(p.area || "").split(/[・]/).pop();           // 「東北・青森」→「青森」
   const q = [];
   const add = x => { x = String(x || "").trim(); if (x && q.indexOf(x) < 0) q.push(x); };
-  if (p.enq) p.enq.forEach(add);          // 手で入れた英語などの検索語（下の HINTS）を最優先
+  if (p.enq) p.enq.forEach(add);          // 手で入れた英語などの検索語（HINTS / MTN_HINTS）を最優先
   add(base);
   if (inner) add(inner + " " + head);
   if (head !== base) add(head);
@@ -109,6 +113,58 @@ const HINTS = {
 /* Commons は無記名だと1秒1回くらいが上限。速く回すと 429 で全部落ちる
    （最初の試行はそれで36件が「見つからず」になった）。待って、断られたら待ち直す。 */
 const GAP = 1100;
+/**
+ * 低山の検索語。Commons は「Mount ◯◯」で登録されていることがほとんど。
+ * 山名に「(那須岳)」「(天神尾根)」のようなかっこ書きが入るので、ここで正しい名前を渡す。
+ */
+const MTN_HINTS = {
+  "茶臼岳(那須岳)": ["Mount Chausu Nasu", "Mount Nasu volcano"],
+  "高尾山": ["Mount Takao Tokyo"],
+  "筑波山": ["Mount Tsukuba view", "Tsukubasan mountain"],
+  "鎌倉アルプス(天園)": ["Tenen hiking course Kamakura", "Kamakura Alps"],
+  "御岳山": ["Mount Mitake Ome Tokyo", "Musashi Mitake Shrine"],
+  "谷川岳(天神尾根)": ["Mount Tanigawa"],
+  "日光白根山": ["Mount Nikko-Shirane"],
+  "北横岳": ["Tsuboniwa Kitayatsugatake", "Mount Kitayoko summit", "Kitayokodake view"],
+  "入笠山": ["Mount Nyukasa"],
+  "木曽駒ヶ岳": ["Senjojiki Cirque", "Mount Kisokomagatake"],
+  "車山": ["Mount Kurumayama Kirigamine"],
+  "安達太良山": ["Mount Adatara"],
+  "蔵王熊野岳": ["Mount Kumano Zao Okama", "Zao Okama crater lake"],
+  "榛名富士": ["Mount Haruna Harunafuji"],
+  "宝登山": ["Mount Hodo Nagatoro"],
+  "鋸山": ["Mount Nokogiri Chiba"],
+  "箱根駒ヶ岳": ["Mount Komagatake Hakone"],
+  "金時山": ["Mount Kintoki Hakone"],
+  "大山(丹沢)": ["Mount Oyama Tanzawa"],
+  "御在所岳": ["Mount Gozaisho"],
+  "伊吹山": ["Mount Ibuki"],
+  "六甲山": ["Mount Rokko Kobe"],
+  "八甲田山(田茂萢岳)": ["Mount Hakkoda"],
+  "大雪山旭岳(姿見)": ["Mount Asahidake Daisetsuzan"],
+  "岩木山": ["Mount Iwaki Aomori"],
+  "月山": ["Mount Gassan"],
+  "磐梯山(八方台)": ["Mount Bandai"],
+  "八方尾根・八方池": ["Happoike", "Happo-ike Hakuba Sanzan", "Happo one ridge summer"],
+  "栂池自然園": ["Tsugaike Shizenen", "Tsugaike Natural Park"],
+  "横手山": ["Mount Yokote Shiga Kogen"],
+  "竜王山(SORA terrace)": ["Ryuoo ski park sea of clouds", "Mount Ryuo Yamanouchi"],
+  "美ヶ原(王ヶ頭)": ["Utsukushigahara", "Mount Ogato Utsukushigahara"],
+  "三頭山": ["Mount Mitosan Hinohara", "Mount Mito summit beech"],
+  "陣馬山": ["Mount Jinba"],
+  "大楠山": ["Ogusuyama summit", "Mount Ogusu view Miura"],
+  "日和田山": ["Mount Hiwada Hidaka", "Kinchakuda"],
+  "岩殿山": ["Mount Iwadono Otsuki"],
+  "石割山": ["Mount Ishiwari Yamanakako"],
+  "大野山": ["Mount Ono Yamakita Kanagawa pasture", "Tanzawa lake Mount Ono"],
+  "幕山": ["Mount Maku Yugawara plum"],
+  "身延山": ["Mount Minobu"],
+  "天上山(カチカチ山)": ["Mount Tenjo Kawaguchiko"],
+  "由布岳": ["Mount Yufu"],
+  "霧島 高千穂峰": ["Mount Takachihonomine Kirishima"],
+  "函館山": ["Mount Hakodate"]
+};
+
 async function jget(params) {
   const url = API + "?" + new URLSearchParams(Object.assign({ format: "json" }, params));
   for (let try_ = 0; try_ < 4; try_++) {
@@ -131,6 +187,8 @@ function toCand(pg) {
   if (/(painting|oil on canvas|lithograph|engraving|woodblock|drawing|18\d\d|19[0-4]\d)/i.test(t)) return null;
   // 駅舎・道の駅・インターチェンジをはじく（「釧路湿原」で駅の写真を掴んだため）
   if (/(-STA\.|station|Michinoeki|道の駅|interchange|parking)/i.test(t)) return null;
+  // 消防署・役所・道路標識をはじく（「Mount Tsukuba」で消防署の写真を掴んだため）
+  if (/(fire department|police|city hall|^Sign,|signpost|Route \d)/i.test(t)) return null;
   if (!ii.width || !ii.height) return null;
   if (ii.width / ii.height < 1.15) return null;                   // 横長だけ（16:9のタイルに使う）
   if (ii.width < 900) return null;
@@ -170,16 +228,27 @@ async function nearby(lat, lng, radius) {
   return cands;
 }
 
+/** data.json から拾う。まだ入っていなければ tools/*-seed.json で代用する
+    （GASを回す前でも写真だけ先に集められるように） */
+function load(data, key, seedName) {
+  let rows = ((data[key] || {}).rows) || [];
+  if (!rows.length) {
+    const seed = path.join(__dirname, seedName);
+    if (fs.existsSync(seed)) rows = JSON.parse(fs.readFileSync(seed, "utf8"));
+  }
+  return rows;
+}
+
 (async () => {
   const dataPath = path.join(root, "data.json");
   const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
-  let rows = ((data.places || {}).rows) || [];
-  if (!rows.length) {
-    // data.json にまだ places が無いとき用（GASを回す前でも動かせるように）
-    const seed = path.join(__dirname, "places-seed.json");
-    if (fs.existsSync(seed)) rows = JSON.parse(fs.readFileSync(seed, "utf8"));
-  }
-  if (!rows.length) { console.error("places がありません。先に runNow を回すか tools/places-seed.json を置いてください"); process.exit(1); }
+  const places = load(data, "places", "places-seed.json");
+  const mtns = load(data, "mountains", "mountains-seed.json");
+  // 行きたい場所と低山を1本につないでまわす（写真の置き場は同じ places-photos.json）
+  const rows = places.map(x => Object.assign({}, x, { enq: HINTS[x.name] }))
+    .concat(mtns.map(x => Object.assign({}, x, { enq: MTN_HINTS[x.name] })));
+  if (!rows.length) { console.error("places も mountains もありません。先に runNow を回すか tools/*-seed.json を置いてください"); process.exit(1); }
+  console.log("行きたい場所 " + places.length + "件 ／ 低山 " + mtns.length + "座");
 
   const prev = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, "utf8")) : { photos: {} };
   const photos = prev.photos || {};
@@ -189,8 +258,7 @@ async function nearby(lat, lng, radius) {
   const used = new Set(Object.values(photos).map(x => x && x.url).filter(Boolean));
   const pick = cands => cands.filter(c => !used.has(c.url))[0] || null;
 
-  for (const p0 of rows) {
-    const p = Object.assign({}, p0, { enq: HINTS[p0.name] });
+  for (const p of rows) {
     if (p.photo) { continue; }                       // 台帳に写真があるので取りにいかない
     if (photos[p.name] && photos[p.name].url) { kept++; got++; continue; }   // 取得ずみ
     let hit = null;
@@ -215,7 +283,9 @@ async function nearby(lat, lng, radius) {
   const out = { source: "Wikimedia Commons", fetchedAt: new Date().toISOString().slice(0, 10),
                 count: Object.keys(photos).length, photos };
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + "\n");
-  console.log("\n取得: " + got + " / " + rows.length + " 件（うち前回ぶんの流用 " + kept + "）");
+  const need = rows.filter(r => !r.photo).length;
+  console.log("\n取得: " + got + " / " + need + " 件（うち前回ぶんの流用 " + kept +
+              "／台帳に写真がある " + (rows.length - need) + "）");
   if (miss.length) console.log("見つからなかった場所（HINTS に英語名などを足すと拾えます）:\n  " + miss.join("\n  "));
   console.log("→ " + OUT);
 })();

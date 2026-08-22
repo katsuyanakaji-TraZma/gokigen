@@ -3035,17 +3035,21 @@ function renderPriv(){
    台帳がまだ読めていないときは、件数を出さずにボタンだけ置く（押せば地図は開く）。 */
 function renderPlacesLink(){
   const rows=((DATA.places&&DATA.places.rows)||[]);
+  const mt=((DATA.mountains&&DATA.mountains.rows)||[]);
+  const goal=((DATA.mountains&&DATA.mountains.goal)||100);
   const t=document.getElementById('placesT'), sub=document.getElementById('placesS');
   if(!t) return;
-  if(!rows.length){
+  if(!rows.length&&!mt.length){
     t.textContent='行きたい場所マップ';
     sub.textContent='台帳をまだ読み込めていません（次の更新でここに件数が出ます）';
     return;
   }
+  // v1.7.1：低山100は「登った数／目標」を出す（登るたびに増えるのが見えるように）
+  const mDone=mt.filter(p=>/済/.test(String(p.status||''))).length;
   const planned=rows.filter(p=>/予定/.test(String(p.status||''))).length;
-  const done=rows.filter(p=>/済/.test(String(p.status||''))).length;
-  t.textContent='行きたい場所マップ（'+rows.length+'か所・予定'+planned+'）';
-  sub.textContent='地図と写真で見る'+(done? '・行った '+done+'か所':'')+'　家族にURLを送れます';
+  t.textContent='行きたい場所マップ（場所'+rows.length+'・低山🏁'+mDone+'/'+goal+'）';
+  sub.textContent='地図と写真で見る'+(planned? '・予定 '+planned+'件':'')+
+    (mt.length? '・⛰低山 '+mt.length+'座':'')+'　家族にURLを送れます';
 }
 
 /* v1.6 note カード（仕事タブ）。最新の記録日ぶんだけを出す */

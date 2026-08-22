@@ -35,8 +35,11 @@
   .hd a.home{flex:none;text-decoration:none;color:#fff;font-size:18px;opacity:.9}
 
   /* ===== タブ（3つ＋表示切替。スマホ幅で必ず1段） ===== */
-  .tabs{display:flex;gap:5px;padding:9px 14px 0;align-items:center}
-  .tabs .tb{flex:1 1 0;min-width:0;padding:8px 2px;border-radius:10px;border:1.5px solid var(--border);
+  /* v1.7.1：タブは4つ。狭い端末では横スクロールにして、4つ目が隠れないようにする */
+  .tabs{display:flex;gap:5px;padding:9px 14px 0;align-items:stretch;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs .tb{flex:1 1 0;min-width:74px;padding:8px 2px;border-radius:10px;border:1.5px solid var(--border);
     background:#fff;color:var(--muted);font-family:inherit;font-size:12px;font-weight:800;
     cursor:pointer;text-align:center;white-space:nowrap;line-height:1.2}
   .tabs .tb.on{background:var(--blue);border-color:var(--blue);color:#fff}
@@ -49,7 +52,8 @@
   .seg button.on{background:var(--purple);border-color:var(--purple);color:#fff}
 
   /* ===== 地図 ===== */
-  #map{width:100%;height:calc(100vh - var(--head) - 46px);min-height:320px;background:#dfe7f7}
+  /* 高さは fitMap() が測って入れる。ここは読み込み直後のちらつき防止の見込み値 */
+  #map{width:100%;height:calc(100vh - var(--head) - 46px);min-height:300px;background:#dfe7f7}
   .view{display:none}
   .view.on{display:block}
   .leaflet-container{font-family:inherit}
@@ -83,11 +87,48 @@
   .tile .flg{position:absolute;top:7px;left:7px;font-size:14px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
   .gnote{padding:2px 14px 10px;font-size:11px;color:var(--muted);line-height:1.7}
 
+  /* v1.7.1 ⛰低山：今の時期のおすすめ10（横スクロールのカード列） */
+  .reco{padding:0 0 12px}
+  .reco .rh{padding:0 14px 8px;font-size:13px;font-weight:800;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+  .reco .rh .rn{font-size:11px;font-weight:700;color:var(--muted)}
+  .rrow{display:flex;gap:9px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    padding:2px 14px 4px;scroll-snap-type:x proximity;scrollbar-width:none}
+  .rrow::-webkit-scrollbar{display:none}
+  .rcard{flex:0 0 208px;scroll-snap-align:start;background:#fff;border-radius:13px;overflow:hidden;
+    box-shadow:var(--shadow);border:none;padding:0;font-family:inherit;cursor:pointer;text-align:left}
+  .rcard .ph{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#dfe7f7}
+  .rcard .ph.none{display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;
+    background:linear-gradient(150deg,#e7ecfa,#dfe7f7);color:var(--soft);font-size:13px;font-weight:800}
+  .rcard .rb{padding:9px 10px 11px}
+  .rcard .r1{display:block;font-size:13px;font-weight:800;line-height:1.35;word-break:break-word}
+  .rcard .r2{display:block;font-size:11.5px;font-weight:700;color:var(--pink);margin-top:4px;
+    line-height:1.4;word-break:break-word}
+  .rcard .r3{display:inline-block;margin-top:6px;font-size:10px;font-weight:800;border-radius:999px;
+    padding:3px 8px;background:var(--bg);color:var(--soft);line-height:1.4;
+    max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rcard .rf{position:absolute}
+  /* 絞り込みボタン */
+  .filt{display:flex;gap:6px;padding:0 14px 10px;flex-wrap:wrap}
+  .filt button{padding:7px 11px;border-radius:999px;border:1.5px solid var(--border);background:#fff;
+    color:var(--soft);font-family:inherit;font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+  .filt button.on{background:var(--green);border-color:var(--green);color:#fff}
+  /* ♨セット温泉ブロック */
+  .onsen{margin-top:13px;padding:12px 13px;border-radius:13px;
+    background:linear-gradient(150deg,rgba(255,77,141,.09),rgba(255,107,53,.09));
+    border:1.5px solid rgba(255,77,141,.28)}
+  .onsen .ol{font-size:10.5px;font-weight:800;color:var(--muted);letter-spacing:.06em}
+  .onsen .on2{font-size:17px;font-weight:800;line-height:1.4;margin-top:3px;word-break:break-word}
+  .onsen .ow{font-size:12px;line-height:1.75;color:var(--soft);margin-top:5px}
+  .subln{display:block;text-align:center;margin-top:10px;font-size:12px;font-weight:800;
+    color:var(--muted);text-decoration:none}
+
   /* ===== ボトムシート ===== */
-  .veil{position:fixed;inset:0;background:rgba(12,18,38,.5);z-index:900;opacity:0;pointer-events:none;
+  /* Leaflet のズームボタンやクレジットは z-index 1000 まで使う。
+     シートやダイアログは必ずその上に出す（前は +− ボタンがシートに重なっていた） */
+  .veil{position:fixed;inset:0;background:rgba(12,18,38,.5);z-index:1900;opacity:0;pointer-events:none;
     transition:opacity .22s}
   .veil.on{opacity:1;pointer-events:auto}
-  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:901;background:#fff;
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:1901;background:#fff;
     border-radius:20px 20px 0 0;box-shadow:0 -6px 26px rgba(26,35,64,.24);
     transform:translateY(102%);transition:transform .26s cubic-bezier(.22,1,.36,1);
     max-height:92vh;max-height:92dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;
@@ -120,7 +161,7 @@
   .out a{color:#128550}
 
   /* ===== 「この旅を決める」ダイアログ ===== */
-  .dlg{position:fixed;left:14px;right:14px;top:50%;transform:translateY(-50%) scale(.96);z-index:920;
+  .dlg{position:fixed;left:14px;right:14px;top:50%;transform:translateY(-50%) scale(.96);z-index:1920;
     background:#fff;border-radius:18px;box-shadow:0 8px 30px rgba(26,35,64,.3);padding:16px;
     max-width:420px;margin:0 auto;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;
     max-height:88vh;overflow-y:auto}
@@ -139,7 +180,7 @@
     background:#fff;color:var(--soft);font-family:inherit;font-size:13.5px;font-weight:800;cursor:pointer}
   .dlg .row button.go{background:linear-gradient(135deg,#4a7eff,#9b59ff);border-color:transparent;color:#fff}
   .done{margin-top:11px;font-size:12px;line-height:1.8;color:var(--green);font-weight:800;min-height:0}
-  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(14px);z-index:960;
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(14px);z-index:1960;
     background:rgba(26,35,64,.94);color:#fff;font-size:12.5px;font-weight:800;padding:11px 16px;
     border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:92vw;text-align:center}
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -159,6 +200,8 @@
   <button id="sg-map" class="on" onclick="setView('map')">🗺 地図</button>
   <button id="sg-grid" onclick="setView('grid')">🖼 写真</button>
 </div>
+
+<div id="mtnTop"></div>
 
 <div class="view on" id="v-map" style="position:relative">
   <div id="map"></div>
@@ -188,7 +231,10 @@
    ・**何も保存しない。** 「この旅を決める」は一文をクリップボードに入れるだけで、
      台帳・カレンダーを動かすのはClaudeとの会話。入力の窓口はチャット一本、という原則を守る。 */
 
-var DATA=null, PHOTOS={}, TAB='jp', VIEW='map', MAP=null, LAYER=null, CUR=null, PICK={y:null,m:null};
+var DATA=null, PHOTOS={}, TAB='jp', VIEW='map', MAP=null, LAYER=null, CUR=null,
+    PICK={y:null,m:null,d:null}, MODE='plan', MFILT=null;
+/** 今日の月（1〜12）。おすすめはこれを見て並ぶ */
+function nowMonth(){ return new Date().getMonth()+1 }
 
 /* ===== 小道具 ===== */
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){
@@ -268,10 +314,124 @@ function plCounts(rows){
            teiban:plFilter(rows,'teiban').length, all:(rows||[]).length,
            planned:(rows||[]).filter(plIsPlanned).length, done:(rows||[]).filter(plIsDone).length };
 }
+/* ===== v1.7.1 ⛰低山（山＋セット温泉） =====
+   低山は「行きたい場所」と別の台帳なので、判定も別にする。
+   いちばん大事なのが「今の時期のおすすめ10」。
+   ゆるりんちょは思い立って登るので、**いま登れる山が上に出ていること**が全部。 */
+
+var MT_GOAL=100;                        // 低山100座。タブの分母
+function mtRows(D){ return ((D&&D.mountains&&D.mountains.rows)||[]) }
+function mtGoal(D){
+  var g=(D&&D.mountains&&D.mountains.goal);
+  return (typeof g==='number'&&g>0)? g : MT_GOAL;
+}
+function mtIsDone(m){ return /済/.test(String((m&&m.status)||'')) }
+function mtIsPlanned(m){ return /予定/.test(String((m&&m.status)||'')) }
+function mtIsSummer(m){ return /○/.test(String((m&&m.summer)||'')) }
+function mtEffort(m){
+  var e=String((m&&m.effort)||'');
+  return /高/.test(e)? 'high' : /中/.test(e)? 'mid' : /低/.test(e)? 'low' : 'na';
+}
+function mtEffortRank(m){ var e=mtEffort(m); return e==='low'?0 : e==='mid'?1 : e==='high'?2 : 3 }
+/** ベストシーズン月。GAS側で数字の並びにしてあるが、古いdata.jsonの文字列でも読めるようにしておく */
+function mtMonths(m){
+  if(m&&Array.isArray(m.months)) return m.months;
+  var t=String((m&&(m.monthsText||m.months))||'').replace(/[０-９]/g,function(c){
+    return String.fromCharCode(c.charCodeAt(0)-0xFEE0)});
+  var out=[],seen={};
+  (t.match(/\d{1,2}/g)||[]).forEach(function(x){
+    var n=parseInt(x,10);
+    if(n>=1&&n<=12&&!seen[n]){seen[n]=1;out.push(n)}
+  });
+  return out;
+}
+/** 今月・来月・再来月（12月→1月と回り込む） */
+function mtWindow(month){
+  var m=Number(month), out=[];
+  for(var i=0;i<3;i++) out.push(((m-1+i)%12+12)%12+1);
+  return out;
+}
+/**
+ * 今の時期のおすすめ。
+ *   絞り込み … ベストシーズン月に「今月・来月・再来月」のどれかを含む／**済は出さない**
+ *              （予定は📅つきで残す。もう決めた山も「そろそろだよ」と背中を押したいので）
+ *   並び順   … ①今月を含む ②夏向き○（6〜9月のときだけ効かせる）③体力 低→中→高 ④台帳の並び
+ * 「夏向き○」を通年で効かせると、冬に登る宝登山や幕山が一年中うしろに回ってしまう。
+ */
+function mtRecommend(rows,month,limit){
+  var m=Number(month), win=mtWindow(m), isSummer=(m>=6&&m<=9);
+  var hit=(rows||[]).filter(function(x){
+    if(mtIsDone(x)) return false;
+    var ms=mtMonths(x);
+    return ms.length && win.some(function(w){ return ms.indexOf(w)>=0 });
+  });
+  hit.sort(function(a,b){
+    var an=mtMonths(a).indexOf(m)>=0?0:1, bn=mtMonths(b).indexOf(m)>=0?0:1;
+    if(an!==bn) return an-bn;                                   // ①今月に入っているものが先
+    if(isSummer){
+      var as=mtIsSummer(a)?0:1, bs=mtIsSummer(b)?0:1;
+      if(as!==bs) return as-bs;                                 // ②夏は夏向き○を先に
+    }
+    var ae=mtEffortRank(a), be=mtEffortRank(b);
+    if(ae!==be) return ae-be;                                   // ③体力 低→中→高
+    return String(a.id||'')<String(b.id||'')? -1 : 1;
+  });
+  return hit.slice(0,limit||10);
+}
+/** ⛰低山タブの並び（写真タイル）: 今の時期のおすすめ → 未 → 予定 → 済 */
+function mtSort(rows,month){
+  var reco=mtRecommend(rows,month,10), rank={};
+  reco.forEach(function(x,i){ rank[x.id]=i });
+  var order=function(x){
+    if(rank[x.id]!=null) return [0,rank[x.id]];
+    if(mtIsDone(x))    return [3,0];
+    if(mtIsPlanned(x)) return [2,0];
+    return [1,0];
+  };
+  return (rows||[]).slice().sort(function(a,b){
+    var oa=order(a), ob=order(b);
+    if(oa[0]!==ob[0]) return oa[0]-ob[0];
+    if(oa[1]!==ob[1]) return oa[1]-ob[1];
+    return String(a.id||'')<String(b.id||'')? -1 : 1;
+  });
+}
+/** 絞り込み。summer＝夏向き○だけ／done＝行った山だけ／null＝ぜんぶ */
+function mtFilter(rows,mode){
+  var list=(rows||[]);
+  if(mode==='summer') return list.filter(mtIsSummer);
+  if(mode==='done')   return list.filter(mtIsDone);
+  return list;
+}
+/** 映像。台帳に無ければ「<山名> 登山 4K」のYouTube検索 */
+function mtVideo(m){
+  if(m&&m.video) return m.video;
+  if(!m||!m.name) return null;
+  return 'https://www.youtube.com/results?search_query='+encodeURIComponent(m.name+' 登山 4K');
+}
+/** Claudeに貼る一文。形をぜったいに変えない（Claude側が読む合図なので） */
+function mtPlanLine(name,year,month){
+  return '⛰低山｜'+name+'｜'+year+'年'+month+'月｜予定';
+}
+function mtDoneLine(name,year,month,day){
+  return '⛰低山｜'+name+'｜'+year+'年'+month+'月'+day+'日｜行った';
+}
+/** タブに出す数（登った数と目標） */
+function mtCounts(rows,goal){
+  var r=rows||[];
+  return { all:r.length, done:r.filter(mtIsDone).length, planned:r.filter(mtIsPlanned).length,
+           summer:r.filter(mtIsSummer).length, goal:goal||MT_GOAL };
+}
 /* ===== v1.7 場所の並べ替え・絞り込みここまで ===== */
 
 /* ===== 読み込み ===== */
 function rows(){ return ((DATA&&DATA.places&&DATA.places.rows)||[]) }
+function mrows(){ return mtRows(DATA) }
+/** いま見ている一覧（低山タブだけ別の台帳を見る） */
+function curList(){
+  if(TAB!=='mtn') return plSort(plFilter(rows(),TAB));
+  return mtSort(mtFilter(mrows(),MFILT),nowMonth());
+}
+function isMtn(){ return TAB==='mtn' }
 async function load(){
   var t=Date.now();
   var got=await Promise.all([
@@ -279,20 +439,23 @@ async function load(){
     fetch('places-photos.json?v='+t,{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})
   ]);
   DATA=got[0]; PHOTOS=(got[1]&&got[1].photos)||{};
-  var c=plCounts(rows());
-  document.getElementById('hsub').textContent = rows().length
-    ? (c.all+'か所・予定'+c.planned+'・行った'+c.done)
+  var c=plCounts(rows()), mc=mtCounts(mrows(),mtGoal(DATA));
+  document.getElementById('hsub').textContent = (rows().length||mc.all)
+    ? (c.all+'か所・⛰低山'+mc.all+'座（🏁'+mc.done+'）')
     : 'まだ台帳を読み込めていません';
   renderTabs(); render();
 }
 function renderTabs(){
-  var c=plCounts(rows());
-  var t=[{k:'jp',l:'🗾 日本',n:c.jp},{k:'world',l:'🌍 世界',n:c.world},{k:'teiban',l:'🏕 定番',n:c.teiban}];
+  var c=plCounts(rows()), mc=mtCounts(mrows(),mtGoal(DATA));
+  var t=[{k:'jp',l:'🗾 日本',n:c.jp+'か所'},{k:'world',l:'🌍 世界',n:c.world+'か所'},
+         {k:'teiban',l:'🏕 定番',n:c.teiban+'か所'},
+         {k:'mtn',l:'⛰ 低山',n:'🏁'+mc.done+'／'+mc.goal}];
   document.getElementById('tabs').innerHTML=t.map(function(x){
     return '<button class="tb '+(TAB===x.k?'on':'')+'" onclick="setTab(\''+x.k+'\')">'+
-           x.l+'<span class="n">'+x.n+'か所</span></button>'}).join('');
+           x.l+'<span class="n">'+x.n+'</span></button>'}).join('');
 }
-function setTab(k){ TAB=k; renderTabs(); render(); }
+function setTab(k){ TAB=k; if(k!=='mtn') MFILT=null; renderTabs(); render(); }
+function setMFilt(m){ MFILT=(MFILT===m)? null : m; render(); }
 function setView(v){
   VIEW=v;
   document.getElementById('sg-map').className=(v==='map'?'on':'');
@@ -301,10 +464,40 @@ function setView(v){
   document.getElementById('v-grid').className='view'+(v==='grid'?' on':'');
   render();
 }
-function render(){ VIEW==='map'? drawMap() : drawGrid() }
+function render(){ drawTop(); VIEW==='map'? drawMap() : drawGrid() }
+
+/* ⛰低山タブの上に固定で出す「今の時期のおすすめ10」と絞り込み。
+   地図でも写真でも同じものが上に出る（どちらで見ていても、いま登れる山が目に入るように）。 */
+var MNAMES=['','1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+function drawTop(){
+  var el=document.getElementById('mtnTop');
+  if(!isMtn()){ el.innerHTML=''; return }
+  var m=nowMonth(), win=mtWindow(m);
+  var reco=mtRecommend(mtFilter(mrows(),MFILT),m,10);
+  var cards=reco.map(function(x){
+    var ph=plPhoto(x,PHOTOS);
+    var img=ph? '<img class="ph" loading="lazy" src="'+esc(ph.url)+'" alt="'+esc(x.name)+'">'
+              : '<div class="ph none">'+esc(x.name)+'</div>';
+    return '<button class="rcard" onclick="openMtn(\''+esc(x.id)+'\')">'+img+
+      '<span class="rb"><span class="r1">'+(mtIsPlanned(x)?'📅 ':'')+esc(x.name)+'</span>'+
+      (x.onsen? '<span class="r2">♨ '+esc(x.onsen)+'</span>':'')+
+      (x.why? '<span class="r3">'+esc(x.why)+'</span>':'')+'</span></button>';
+  }).join('');
+  el.innerHTML=
+    '<div class="reco"><div class="rh">🗓 今の時期のおすすめ'+reco.length+
+      '<span class="rn">'+win.map(function(w){return MNAMES[w]}).join('・')+'がベストシーズンの山</span></div>'+
+    (reco.length? '<div class="rrow">'+cards+'</div>'
+      : '<div class="gnote">いまの時期にちょうどいい山が台帳にありません。絞り込みを外すか、台帳に足してください。</div>')+
+    '</div>'+
+    '<div class="filt">'+
+      '<button class="'+(MFILT==='summer'?'on':'')+'" onclick="setMFilt(\'summer\')">☀ 夏向き（ロープウェイ）</button>'+
+      '<button class="'+(MFILT==='done'?'on':'')+'" onclick="setMFilt(\'done\')">🏁 行った所を見る</button>'+
+    '</div>';
+}
 
 /* ===== 地図 ===== */
-var VIEWS={ jp:[[24,122],[46,146]], world:[[-60,-170],[78,178]], teiban:[[35.2,138.3],[35.6,139.0]] };
+var VIEWS={ jp:[[24,122],[46,146]], world:[[-60,-170],[78,178]],
+            teiban:[[35.2,138.3],[35.6,139.0]], mtn:[[30.5,129],[45.5,142.5]] };
 function drawMap(){
   if(!MAP){
     MAP=L.map('map',{zoomControl:true,attributionControl:true});
@@ -314,44 +507,62 @@ function drawMap(){
   }
   if(LAYER) MAP.removeLayer(LAYER);
   LAYER=L.layerGroup().addTo(MAP);
-  var list=plSort(plFilter(rows(),TAB)).filter(function(p){return p.lat!=null&&p.lng!=null});
+  var mtn=isMtn();
+  var list=curList().filter(function(p){return p.lat!=null&&p.lng!=null});
   list.forEach(function(p){
-    var done=plIsDone(p), cls='pin '+(done?'done':'eff-'+plEffort(p));
-    var badge=plIsPlanned(p)? '<span class="bdg">📅</span>' : '';
+    var done=mtn? mtIsDone(p) : plIsDone(p);
+    var plan=mtn? mtIsPlanned(p) : plIsPlanned(p);
+    var cls='pin '+(done?'done':'eff-'+(mtn? mtEffort(p) : plEffort(p)));
+    var badge=plan? '<span class="bdg">📅</span>' : '';
     var icon=L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,26],
       html:'<div class="'+cls+'"><i>'+(done?'🏁':'')+'</i>'+badge+'</div>'});
     L.marker([p.lat,p.lng],{icon:icon,title:p.name}).addTo(LAYER)
-      .on('click',function(){ openSheet(p.id) });
+      .on('click',function(){ mtn? openMtn(p.id) : openSheet(p.id) });
   });
+  fitMap();
   var b=VIEWS[TAB]||VIEWS.jp;
   MAP.fitBounds(L.latLngBounds(b),{padding:[18,18]});
-  setTimeout(function(){ MAP.invalidateSize() },60);
+  setTimeout(function(){ MAP.invalidateSize(); MAP.fitBounds(L.latLngBounds(b),{padding:[18,18]}) },80);
 }
+/* 地図の高さを「画面の残り」にそろえる。
+   ⛰低山タブは上に「今の時期のおすすめ」と絞り込みが乗るので、
+   固定の高さのままだと地図が画面からはみ出して、日本全体が入らなくなる。 */
+function fitMap(){
+  var el=document.getElementById('map');
+  if(!el) return;
+  var top=el.getBoundingClientRect().top+(window.scrollY||0);
+  el.style.height=Math.max(300,Math.round(window.innerHeight-top-6))+'px';
+}
+window.addEventListener('resize',function(){ if(VIEW==='map'){ fitMap(); if(MAP) MAP.invalidateSize() } });
 
 /* ===== 写真タイル ===== */
 function drawGrid(){
-  var list=plSort(plFilter(rows(),TAB));
+  var mtn=isMtn(), list=curList();
   var g=document.getElementById('grid');
-  if(!list.length){ g.innerHTML='<div class="empty" style="grid-column:1/-1">この区分の場所はまだありません。</div>';
+  if(!list.length){ g.innerHTML='<div class="empty" style="grid-column:1/-1">'+
+      (mtn? 'この絞り込みに当てはまる山はまだありません。':'この区分の場所はまだありません。')+'</div>';
     document.getElementById('gnote').textContent=''; return; }
   g.innerHTML=list.map(function(p){
     var ph=plPhoto(p,PHOTOS);
     var img=ph? '<img class="ph" loading="lazy" src="'+esc(ph.url)+'" alt="'+esc(p.name)+'">'
               : '<div class="ph none">'+esc(p.name)+'</div>';
-    return '<button class="tile" onclick="openSheet(\''+esc(p.id)+'\')">'+img+
-      (plIsDone(p)? '<span class="flg">🏁</span>' : plIsPlanned(p)? '<span class="flg">📅</span>' : '')+
+    var done=mtn? mtIsDone(p) : plIsDone(p), plan=mtn? mtIsPlanned(p) : plIsPlanned(p);
+    var sub=mtn? ('♨ '+(p.onsen||'')) : (p.timing||'');
+    return '<button class="tile" onclick="'+(mtn?'openMtn':'openSheet')+'(\''+esc(p.id)+'\')">'+img+
+      (done? '<span class="flg">🏁</span>' : plan? '<span class="flg">📅</span>' : '')+
       '<span class="ov"><span class="tn">'+esc(p.name)+'</span>'+
-      '<span class="tt">'+esc(p.timing||'')+'</span></span></button>';
+      '<span class="tt">'+esc(sub)+'</span></span></button>';
   }).join('');
-  document.getElementById('gnote').textContent=
-    '推奨時期の早い順です（行った場所は最後）。写真はWikimedia Commonsから自動で当てています。';
+  document.getElementById('gnote').textContent= mtn
+    ? '今の時期のおすすめ → まだの山 → 予定 → 行った山、の順です。写真はWikimedia Commonsから自動で当てています。'
+    : '推奨時期の早い順です（行った場所は最後）。写真はWikimedia Commonsから自動で当てています。';
 }
 
 /* ===== ボトムシート ===== */
 function find(id){ return rows().filter(function(p){return String(p.id)===String(id)})[0]||null }
 function openSheet(id){
   var p=find(id); if(!p) return;
-  CUR=p;
+  CUR=p; CUR._mtn=false;
   var ph=plPhoto(p,PHOTOS), vid=plVideo(p), eff=plEffort(p);
   var hero=ph? '<img class="hero" src="'+esc(ph.url)+'" alt="'+esc(p.name)+'">'
              : '<div class="hero none">'+esc(p.name)+'</div>';
@@ -377,13 +588,64 @@ function openSheet(id){
     (p.note? '<div class="cm">'+esc(p.note)+'</div>' : '')+
     '<div class="bdgs">'+bdg.join('')+'</div>'+ out +
     '<div class="acts">'+
-      '<button class="go" onclick="openDlg()">🗓 この旅を決める</button>'+
+      '<button class="go" onclick="openDlg(\'plan\')">🗓 この旅を決める</button>'+
       '<a href="'+esc(vid||'#')+'" target="_blank" rel="noopener"'+(vid?'':' class="off"')+'>🎬 映像を見る</a>'+
       '<a href="'+esc(p.source||'#')+'" target="_blank" rel="noopener"'+(p.source?'':' class="off"')+'>📖 もっと読む</a>'+
     '</div>'+ cred +'</div>';
   document.getElementById('sheet').className='sheet on';
   document.getElementById('veil').className='veil on';
 }
+/* ⛰低山のボトムシート。行きたい場所のシートとは中身が違う
+   （♨セット温泉が主役のひとつなので、独立したブロックにする）。 */
+function openMtn(id){
+  var m=mrows().filter(function(x){return String(x.id)===String(id)})[0];
+  if(!m) return;
+  CUR=m; CUR._mtn=true;
+  var ph=plPhoto(m,PHOTOS), vid=mtVideo(m), eff=mtEffort(m);
+  var hero=ph? '<img class="hero" src="'+esc(ph.url)+'" alt="'+esc(m.name)+'">'
+             : '<div class="hero none">'+esc(m.name)+'</div>';
+  var bdg=[];
+  if(m.ropeway&&!/^なし/.test(m.ropeway)) bdg.push('<span class="bdg2">🚡 '+esc(m.ropeway)+'</span>');
+  else bdg.push('<span class="bdg2">🚡 ロープウェイなし</span>');
+  if(m.walk) bdg.push('<span class="bdg2 eff-'+eff+'">🥾 山頂まで '+esc(m.walk)+'</span>');
+  var ms=mtMonths(m);
+  if(ms.length) bdg.push('<span class="bdg2">🗓 ベスト '+ms.map(function(x){return x+'月'}).join('・')+'</span>');
+  if(m.effort) bdg.push('<span class="bdg2 eff-'+eff+'">💪 体力'+esc(m.effort)+'</span>');
+  var cred='';
+  if(ph&&ph.from==='commons'){
+    cred='<div class="cred">写真: '+esc(ph.title||'')+(ph.artist? '／'+esc(ph.artist):'')+
+      (ph.license? '／'+esc(ph.license):'')+'（Wikimedia Commons'+
+      (ph.page? ' — <a href="'+esc(ph.page)+'" target="_blank" rel="noopener">出典</a>':'')+'）</div>';
+  }
+  var out='';
+  if(mtIsDone(m)){
+    out='<div class="out">🏁 登りました'+(m.wentAt? '（'+esc(m.wentAt)+'）':'')+'。'+
+      (m.output? '<a href="'+esc(m.output)+'" target="_blank" rel="noopener">公開した成果物を見る →</a>':'')+'</div>';
+  }else if(mtIsPlanned(m)&&m.planned){
+    out='<div class="out">📅 '+esc(m.planned)+' に行く予定です。</div>';
+  }
+  document.getElementById('sheetBody').innerHTML=
+    hero+'<div class="bd">'+
+    '<div class="nm">'+esc(m.name)+(m.elev!=null? '<span style="font-size:14px;color:var(--muted)">（'+
+        esc(String(m.elev))+'m）</span>':'')+'</div>'+
+    '<div class="ar">'+esc(m.area||'')+'</div>'+
+    (m.note? '<div class="cm">'+esc(m.note)+'</div>' : '')+
+    '<div class="bdgs">'+bdg.join('')+'</div>'+
+    (m.onsen? '<div class="onsen"><div class="ol">♨ セットの温泉</div>'+
+      '<div class="on2">'+esc(m.onsen)+'</div>'+
+      (m.why? '<div class="ow">'+esc(m.why)+'</div>':'')+'</div>' : '')+
+    out+
+    '<div class="acts">'+
+      '<button class="go" onclick="openDlg(\'plan\')">🗓 行く日を決める</button>'+
+      '<button onclick="openDlg(\'done\')">⛰ 行った！</button>'+
+      '<a href="'+esc(vid||'#')+'" target="_blank" rel="noopener"'+(vid?'':' class="off"')+'>🎬 映像を見る</a>'+
+    '</div>'+
+    (m.source? '<a class="subln" href="'+esc(m.source)+'" target="_blank" rel="noopener">📖 もっと読む →</a>':'')+
+    cred+'</div>';
+  document.getElementById('sheet').className='sheet on';
+  document.getElementById('veil').className='veil on';
+}
+
 function closeAll(){
   document.getElementById('sheet').className='sheet';
   document.getElementById('dlg').className='dlg';
@@ -392,38 +654,64 @@ function closeAll(){
 function closeDlg(){ document.getElementById('dlg').className='dlg' }
 
 /* ===== 「この旅を決める」 ===== */
-function openDlg(){
+/* ダイアログは3通り。
+     場所の「この旅を決める」 … 年＋月
+     低山の「行く日を決める」 … 年＋月
+     低山の「行った！」       … 年＋月＋日（登った日を台帳に書き戻すための一文）
+   どれも**アプリは何も保存しない**。一文をコピーするだけ。 */
+function openDlg(mode){
   if(!CUR) return;
-  PICK={y:new Date().getFullYear(),m:null};
+  MODE=mode||'plan';
+  var now=new Date();
+  PICK={y:now.getFullYear(),m:(MODE==='done'? now.getMonth()+1 : null),
+        d:(MODE==='done'? now.getDate() : null)};
   drawDlg();
   document.getElementById('dlg').className='dlg on';
   document.getElementById('veil').className='veil on';
 }
 function pickY(y){ PICK.y=y; drawDlg() }
 function pickM(m){ PICK.m=m; drawDlg() }
+function pickD(d){ PICK.d=d; drawDlg() }
+/** いま選んでいる内容でできる一文。まだ選び終わっていなければ null */
+function dlgLine(){
+  if(!CUR||!PICK.y||!PICK.m) return null;
+  if(!CUR._mtn) return plDecision(CUR.name,PICK.y,PICK.m);
+  if(MODE==='done') return PICK.d? mtDoneLine(CUR.name,PICK.y,PICK.m,PICK.d) : null;
+  return mtPlanLine(CUR.name,PICK.y,PICK.m);
+}
 function drawDlg(){
   var ys=[],i;
-  for(i=2026;i<=2036;i++) ys.push(i);
+  var thisYear=new Date().getFullYear();
+  // 「行った！」は過ぎた日を選ぶので、去年から今年まで。予定はこれからの11年
+  if(MODE==='done'){ for(i=thisYear-1;i<=thisYear;i++) ys.push(i) }
+  else { for(i=2026;i<=2036;i++) ys.push(i) }
   var ms=[]; for(i=1;i<=12;i++) ms.push(i);
-  var ready=PICK.y&&PICK.m;
-  var line=ready? plDecision(CUR.name,PICK.y,PICK.m) : '年と月を選んでください';
+  var ds=[]; for(i=1;i<=31;i++) ds.push(i);
+  var line=dlgLine(), ready=!!line;
+  var title = !CUR._mtn ? '🗓 '+esc(CUR.name)+' に行く時期を決める'
+            : MODE==='done' ? '⛰ '+esc(CUR.name)+' に登った日'
+            : '🗓 '+esc(CUR.name)+' に行く日を決める';
   document.getElementById('dlgBody').innerHTML=
-    '<div class="dt">🗓 '+esc(CUR.name)+' に行く時期を決める</div>'+
+    '<div class="dt">'+title+'</div>'+
     '<div class="dl">年</div><div class="chips">'+ys.map(function(y){
       return '<button class="'+(PICK.y===y?'on':'')+'" onclick="pickY('+y+')">'+y+'</button>'}).join('')+'</div>'+
     '<div class="dl">月</div><div class="chips mo">'+ms.map(function(m){
       return '<button class="'+(PICK.m===m?'on':'')+'" onclick="pickM('+m+')">'+m+'月</button>'}).join('')+'</div>'+
-    '<div class="prev" id="prev">'+esc(line)+'</div>'+
+    (MODE==='done'&&CUR._mtn? '<div class="dl">日</div><div class="chips mo">'+ds.map(function(d){
+      return '<button class="'+(PICK.d===d?'on':'')+'" onclick="pickD('+d+')">'+d+'</button>'}).join('')+'</div>' : '')+
+    '<div class="prev" id="prev">'+esc(line||('年と月'+(MODE==='done'&&CUR._mtn?'と日':'')+'を選んでください'))+'</div>'+
     '<div class="row"><button onclick="closeDlg()">やめる</button>'+
     '<button class="go" '+(ready?'':'disabled style="opacity:.45"')+' onclick="copyDecision()">📋 コピー</button></div>'+
     '<div class="done" id="dlgDone"></div>';
 }
 function copyDecision(){
-  if(!CUR||!PICK.y||!PICK.m) return;
-  copy(plDecision(CUR.name,PICK.y,PICK.m),'コピーしました');
-  document.getElementById('dlgDone').innerHTML=
-    'この一文をClaudeに貼れば、台帳・カレンダー・手配が動き出します。'+
-    '家族の方はなかじまさんにLINEで送ってください。';
+  var line=dlgLine();
+  if(!line) return;
+  copy(line,'コピーしました');
+  document.getElementById('dlgDone').innerHTML= CUR._mtn
+    ? 'この一文をClaudeに貼れば台帳が更新されます。'
+    : 'この一文をClaudeに貼れば、台帳・カレンダー・手配が動き出します。'+
+      '家族の方はなかじまさんにLINEで送ってください。';
 }
 
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAll() });

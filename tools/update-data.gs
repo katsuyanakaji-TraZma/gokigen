@@ -30,6 +30,7 @@
  *   ・行きたい場所台帳（GOKIGEN台帳フォルダの「行きたい場所台帳_base」）を読むだけ。
  *     家族の部屋から開く「行きたい場所マップ」（places.html）の材料。
  *     **新しいOAuthスコープはゼロ**（スプレッドシート1本を読むだけ）。台帳への書き戻しもしない。
+ *   ・v1.7.1：低山台帳（「低山台帳_base」）も同じ考え方で読む。⛰低山タブ（山＋セット温泉）。
  *
  * 1日4回（8時・12時・18時・22時）自動実行。Google側のサーバーで動くので Mac mini の電源は関係ありません。
  * 前回の実行以降にどちらのフォルダにも新規/更新ファイルが無ければ、作り直さずスキップします。
@@ -74,6 +75,11 @@ var BIRTH_DATE = '1969-04-30';
 var PLACES_FILE_ID = '18y_FjBcl6nYQmxkTAKJatsJsxeMnF_FKUJTO9A0vYHQ';
 var PLACES_FILE_NAME = '行きたい場所台帳_base';
 
+// v1.7.1：低山台帳（山＋セット温泉）。行きたい場所マップの「⛰低山」タブの材料。
+// 100座を目標にしていて、登った数（状態＝済）をタブに出す。
+var MTN_FILE_ID = '1KkHRijHmSY9UYJ3tV0YKqBmm-u1Sc8dZ8p7BzKFFQr0';
+var MTN_FILE_NAME = '低山台帳_base';
+
 // v1.6：会食の「枠と予約」はGoogleカレンダー（本人の primary）から読む。
 // 今日から何ヶ月先まで見るか。ここを伸ばしても読むのはカレンダー1本だけ。
 var CAL_MONTHS_AHEAD = 6;
@@ -103,6 +109,10 @@ var CONFIG = {
   // v1.7：行きたい場所台帳（表示専用。台帳への書き戻しは一切しない）
   placesFileId:   PLACES_FILE_ID,
   placesFileName: PLACES_FILE_NAME,
+  // v1.7.1：低山台帳（こちらも読むだけ・書き戻しなし）
+  mtnFileId:      MTN_FILE_ID,
+  mtnFileName:    MTN_FILE_NAME,
+  mtnGoal:        100,              // 低山100座。タブの「🏁n／100」の分母
   futureDocPrefix: '未来ビジョン台帳',  // GOKIGEN台帳フォルダの中のGoogleドキュメント
   // v1.2.1：台帳ファイルが増えすぎて6分の実行制限に当たったため、古い日次ファイルを1本にまとめる
   gokigenBaseName:  'GOKIGEN台帳_base',   // まとめ先（この1本だけ読めば7月以前が全部入る）
@@ -196,6 +206,10 @@ function changedFilesSince_(since) {
     var pf = placesFile_();
     if (pf && pf.getLastUpdated().getTime() > cutoff) out.push(pf.getName());
   } catch (e) { Logger.log('行きたい場所台帳を見られませんでした（先に進みます）: ' + e); }
+  try {
+    var mf = mtnFile_();
+    if (mf && mf.getLastUpdated().getTime() > cutoff) out.push(mf.getName());
+  } catch (e) { Logger.log('低山台帳を見られませんでした（先に進みます）: ' + e); }
   /* v1.6：会食の枠は台帳ではなくカレンダーで動く（本人がタイトルを「予約済：家族」に
      書き換えた瞬間が更新のきっかけ）。ここを見ないと、台帳に動きが無い日は
      予約を入れてもアプリが古いままになる。読むのは今日〜先の「ご褒美枠」だけ。 */
@@ -605,6 +619,9 @@ function dryRun() {
     ? d.places.count + '件（' + d.places.title + '／' + d.places.asOf + '）' +
       (d.places.noGeo.length ? '　⚠️緯度経度なし ' + d.places.noGeo.length + '件' : '')
     : 'まだ読めていません'));
+  Logger.log('低山台帳: ' + (d.mountains
+    ? d.mountains.count + '座（' + d.mountains.title + '／目標' + d.mountains.goal + '座）'
+    : 'まだ読めていません'));
   Logger.log('週報書棚: ' + (d.weekly
     ? d.weekly.count + '本' + (d.weekly.latest ? '／最新 ' + d.weekly.latest.name : '（まだ空）')
     : '見られていません'));
@@ -690,6 +707,12 @@ function buildData_(previous) {
   catch (e) { Logger.log('⚠️ 行きたい場所台帳を読めませんでした（前回の内容を維持します）: ' + e); }
   if (!places) places = (previous && previous.places) || null;
 
+  // v1.7.1：低山台帳（⛰低山タブ）。こちらも表示専用
+  var mountains = null;
+  try { mountains = timeIt_('低山台帳', readMountains_); }
+  catch (e) { Logger.log('⚠️ 低山台帳を読めませんでした（前回の内容を維持します）: ' + e); }
+  if (!mountains) mountains = (previous && previous.mountains) || null;
+
   // v1.3：取込時の異常（累計の減少・日付異常・コース名不一致）を1本にまとめる
   var warnings = [];
   try { warnings = buildWarnings_(ledger, u.courses, asOf, u.monthly); }
@@ -705,7 +728,7 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.7',
+    version: '1.7.1',
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -722,7 +745,8 @@ function buildData_(previous) {
       limitlessFiles: limitless.used,
       ecoFiles: eco.used,
       noteFiles: (note && note.used) || [],
-      placesFileId: CONFIG.placesFileId
+      placesFileId: CONFIG.placesFileId,
+      mtnFileId: CONFIG.mtnFileId
     },
     updateHours: CONFIG.updateHours,
     udemyBaseUrl: base ? base.getUrl() : ((previous && previous.udemyBaseUrl) || null),
@@ -743,6 +767,8 @@ function buildData_(previous) {
     note: note,
     // v1.7：行きたい場所マップ（places.html）の材料。却下の行はここに来ない
     places: places,
+    // v1.7.1：低山100（山＋セット温泉）。同じ places.html の「⛰低山」タブ
+    mountains: mountains,
     links: buildLinks_(base, limitless, eco, future, previous)
   };
 }
@@ -2245,6 +2271,112 @@ function readPlaces_() {
     fileId: file.getId(), fileUrl: file.getUrl(), title: file.getName(),
     asOf: Utilities.formatDate(file.getLastUpdated(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm'),
     count: rows.length, dropped: dropped, noGeo: noGeo, rows: rows
+  };
+}
+
+// ===== v1.7.1: 低山台帳（⛰低山タブ／山とセット温泉） =====
+/**
+ * 「低山台帳_base」を書いてあるまま読む。行きたい場所台帳とまったく同じ考え方：
+ *   ・状態「却下」の行は出さない
+ *   ・並べ替えや「今の時期のおすすめ」の判定は**ページ側**の仕事（ここではやらない）
+ * ひとつだけ手を入れるのが「ベストシーズン月」で、
+ * 「7,8,9,10」のような文字列を数字の並び [7,8,9,10] にほぐしておく
+ * （ページ側で毎回パースすると、書き方のゆれ（全角カンマ・「月」つき）に何度も付き合うことになる）。
+ */
+var MTN_COLS = {
+  id:      ['id', 'ID'],
+  name:    ['山名', '山'],
+  area:    ['エリア'],
+  lat:     ['緯度'],
+  lng:     ['経度'],
+  elev:    ['標高'],
+  ropeway: ['ロープウェイ', 'ロープウエイ'],
+  walk:    ['山頂まで歩き', '歩き'],
+  summer:  ['夏向き'],
+  months:  ['ベストシーズン月', 'ベストシーズン'],
+  effort:  ['体力'],
+  onsen:   ['セット温泉', '温泉'],
+  why:     ['行く意味'],
+  status:  ['状態'],
+  wentAt:  ['行った日'],
+  planned: ['予定'],
+  note:    ['一言'],
+  photo:   ['写真URL', '写真'],
+  video:   ['映像URL', '映像'],
+  source:  ['出典URL', '出典'],
+  output:  ['公開した成果物', '成果物']
+};
+
+/** 「7,8,9,10」「7月,8月」「７，８」→ [7,8,9,10]。1〜12だけ拾い、重複は落として並べる */
+function mtnMonths_(v) {
+  var t = String(v == null ? '' : v).replace(/[０-９]/g, function (c) {
+    return String.fromCharCode(c.charCodeAt(0) - 0xFEE0);
+  });
+  var out = [], seen = {};
+  (t.match(/\d{1,2}/g) || []).forEach(function (x) {
+    var n = parseInt(x, 10);
+    if (n >= 1 && n <= 12 && !seen[n]) { seen[n] = 1; out.push(n); }
+  });
+  return out;
+}
+
+/** 台帳のファイル。IDで開けなければ名前でも探す */
+function mtnFile_() {
+  try {
+    var f = DriveApp.getFileById(CONFIG.mtnFileId);
+    if (f) return f;
+  } catch (e) { Logger.log('低山台帳をIDで開けませんでした（名前で探します）: ' + e); }
+  var it = DriveApp.getFolderById(CONFIG.gokigenFolderId).getFilesByName(CONFIG.mtnFileName);
+  return it.hasNext() ? it.next() : null;
+}
+
+function readMountains_() {
+  var file = mtnFile_();
+  if (!file) { Logger.log('⚠️ 低山台帳が見つかりません'); return null; }
+  var values = SpreadsheetApp.openById(file.getId()).getSheets()[0].getDataRange().getValues();
+  var hd = findColumns_(values, MTN_COLS, 'name');
+  if (!hd) { Logger.log('⚠️ 低山台帳の見出し（山名／エリア／標高…）が見つかりません'); return null; }
+
+  var rows = [], dropped = 0, noGeo = [];
+  for (var i = hd.row + 1; i < values.length; i++) {
+    var row = values[i];
+    var cell = function (f) { var c = hd.map[f]; return c == null ? null : str_(row[c]); };
+    var name = cell('name');
+    if (!name) continue;
+    var status = cell('status') || '';
+    if (/却下/.test(status)) { dropped++; continue; }
+    var lat = hd.map.lat != null ? num_(row[hd.map.lat]) : null;
+    var lng = hd.map.lng != null ? num_(row[hd.map.lng]) : null;
+    if (lat == null || lng == null) noGeo.push(name);
+    rows.push({
+      id: cell('id') || ('M' + i), name: name, area: cell('area') || null,
+      lat: lat, lng: lng,
+      elev: hd.map.elev != null ? num_(row[hd.map.elev]) : null,
+      ropeway: cell('ropeway') || null, walk: cell('walk') || null,
+      summer: cell('summer') || null,
+      months: mtnMonths_(hd.map.months != null ? row[hd.map.months] : ''),
+      monthsText: cell('months') || null,
+      effort: cell('effort') || null,
+      onsen: cell('onsen') || null, why: cell('why') || null,
+      status: status || null, wentAt: cell('wentAt') || null, planned: cell('planned') || null,
+      note: cell('note') || null,
+      photo: cell('photo') || null, video: cell('video') || null,
+      source: cell('source') || null, output: cell('output') || null
+    });
+  }
+
+  var n = function (fn) { return rows.filter(fn).length; };
+  Logger.log('低山台帳: ' + rows.length + '座（夏向き' + n(function (r) { return /○/.test(String(r.summer || '')); }) +
+             '／済' + n(function (r) { return /済/.test(String(r.status || '')); }) +
+             '・予定' + n(function (r) { return /予定/.test(String(r.status || '')); }) + '）' +
+             (dropped ? '　※却下' + dropped + '座は出していません' : ''));
+  if (noGeo.length) Logger.log('⚠️ 緯度経度が空のため地図に出せません: ' + noGeo.join('・'));
+  var noMonth = rows.filter(function (r) { return !r.months.length; }).map(function (r) { return r.name; });
+  if (noMonth.length) Logger.log('⚠️ ベストシーズン月が読めません（おすすめに出ません）: ' + noMonth.join('・'));
+  return {
+    fileId: file.getId(), fileUrl: file.getUrl(), title: file.getName(),
+    asOf: Utilities.formatDate(file.getLastUpdated(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm'),
+    goal: CONFIG.mtnGoal, count: rows.length, dropped: dropped, noGeo: noGeo, rows: rows
   };
 }
 
