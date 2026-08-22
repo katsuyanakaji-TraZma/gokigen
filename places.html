@@ -43,7 +43,7 @@
     background:#fff;color:var(--muted);font-family:inherit;font-size:12px;font-weight:800;
     cursor:pointer;text-align:center;white-space:nowrap;line-height:1.2}
   .tabs .tb.on{background:var(--blue);border-color:var(--blue);color:#fff}
-  .tabs .tb .n{display:block;font-size:9.5px;font-weight:700;opacity:.85}
+  .tabs .tb .n{display:block;font-size:9.5px;font-weight:700;opacity:.85;white-space:normal;line-height:1.35}
   .seg{display:flex;gap:0;padding:8px 14px 9px}
   .seg button{flex:1;padding:7px 4px;border:1.5px solid var(--border);background:#fff;color:var(--muted);
     font-family:inherit;font-size:12px;font-weight:800;cursor:pointer}
@@ -441,7 +441,7 @@ async function load(){
   DATA=got[0]; PHOTOS=(got[1]&&got[1].photos)||{};
   var c=plCounts(rows()), mc=mtCounts(mrows(),mtGoal(DATA));
   document.getElementById('hsub').textContent = (rows().length||mc.all)
-    ? (c.all+'か所・⛰低山'+mc.all+'座（🏁'+mc.done+'）')
+    ? (c.all+'か所・⛰低山'+mc.all+'座（踏破'+mc.done+'座）')
     : 'まだ台帳を読み込めていません';
   renderTabs(); render();
 }
@@ -449,7 +449,9 @@ function renderTabs(){
   var c=plCounts(rows()), mc=mtCounts(mrows(),mtGoal(DATA));
   var t=[{k:'jp',l:'🗾 日本',n:c.jp+'か所'},{k:'world',l:'🌍 世界',n:c.world+'か所'},
          {k:'teiban',l:'🏕 定番',n:c.teiban+'か所'},
-         {k:'mtn',l:'⛰ 低山',n:'🏁'+mc.done+'／'+mc.goal}];
+         /* v1.7.1修正：「🏁0／100」をやめ、言葉と計算ずみの数で出す
+            （分数を読ませない＝頭の中で引き算をさせない、というv1.6の原則にそろえる） */
+         {k:'mtn',l:'⛰ 低山',n:'踏破'+mc.done+'座・あと'+Math.max(0,mc.goal-mc.done)+'座'}];
   document.getElementById('tabs').innerHTML=t.map(function(x){
     return '<button class="tb '+(TAB===x.k?'on':'')+'" onclick="setTab(\''+x.k+'\')">'+
            x.l+'<span class="n">'+x.n+'</span></button>'}).join('');

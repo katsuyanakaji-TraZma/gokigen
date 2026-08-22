@@ -181,9 +181,8 @@ console.log("\n【家族の部屋からの入口】");
 has(appHtml, 'href="places.html"', "★index.html から places.html へ行ける");
 has(appHtml, "function renderPlacesLink()", "件数を出す関数がある");
 has(appHtml, "  renderPlacesLink();", "renderPriv から呼んでいる");
-// v1.7.1 で「場所n・低山🏁n/100」に変わった（低山の数も入口に出すため）
-has(appHtml, "'行きたい場所マップ（場所'+rows.length+'・低山🏁'+mDone+'/'+goal+'）'",
-    "★入口に場所の件数が出る");
+// v1.7.1 で「場所n・低山 踏破n座・あとm座」に変わった（低山の数も入口に出すため）
+has(appHtml, "'行きたい場所マップ（場所'+rows.length+", "★入口に場所の件数が出る");
 const iPriv = appHtml.indexOf('id="pg-priv"'), iBtn = appHtml.indexOf('id="placesCard"'),
       iGraph = appHtml.indexOf('id="pg-graph"');
 ok(iPriv < iBtn && iBtn < iGraph, "★入口は家族・プライベートの部屋の中にある", iPriv + "/" + iBtn + "/" + iGraph);

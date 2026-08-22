@@ -205,7 +205,8 @@ eq(plPhoto({ name: "入笠山", photo: "https://example.jp/x.jpg" }, {}).url, "h
 
 console.log("\n【画面の配線】");
 has(pageHtml, "{k:'mtn',l:'⛰ 低山'", "★4つ目のタブがある");
-has(pageHtml, "'🏁'+mc.done+'／'+mc.goal", "★タブに「🏁n／100」を出す");
+has(pageHtml, "'踏破'+mc.done+'座・あと'+Math.max(0,mc.goal-mc.done)+'座'",
+    "★タブは「踏破n座・あとm座」（残りまで計算して出す）");
 has(pageHtml, "overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none", "タブは狭ければ横スクロール");
 has(pageHtml, 'id="mtnTop"', "おすすめ10の置き場所がある");
 has(pageHtml, "🗓 今の時期のおすすめ", "おすすめカードの見出し");
@@ -221,8 +222,35 @@ has(pageHtml, "📖 もっと読む →", "小さく「もっと読む」");
 has(pageHtml, "mtn:[[30.5,129],[45.5,142.5]]", "低山タブの地図は日本全体");
 ok(!/(円|¥|価格|料金|万円)/.test(pageHtml.slice(pageHtml.indexOf("<body"))), "★価格は出していない", "金額がある");
 ok(!/localStorage|sessionStorage/.test(pageHtml), "★何も保存しない", "ストレージを使っている");
-has(appHtml, "'行きたい場所マップ（場所'+rows.length+'・低山🏁'+mDone+'/'+goal+'）'",
-    "★家族の部屋の入口が「場所n・低山🏁n/100」");
+has(appHtml, "'・低山 踏破'+mDone+'座・あと'+Math.max(0,goal-mDone)+'座）'",
+    "★家族の部屋の入口も「場所n・低山 踏破n座・あとm座」");
+
+/* v1.7.1修正：分数・スラッシュ表記が出ていないかを1行ずつ見る。
+   v1.6で決めた「計算させない・言葉で示す」を、あとから足した画面にも効かせるため。
+   test-dining.js が index.html でやっているのと同じ考え方を places.html にも広げる。
+   日付そのもの（16/9のアスペクト比、URL、ISO日時）は分数ではないので通す。 */
+console.log("\n【言葉化】「n/100」のような分数表記が出ていない");
+// 日付そのものは分数ではない（test-dining.js と同じ通し方）
+const FRAC_OK = ["T00:00:00", "://", "16/9", "aspect-ratio", "2030/4/29", "2026/8月"];
+const scanFrac = (html, label) => {
+  const js = html.slice(html.lastIndexOf("<script>"), html.lastIndexOf("</script>"));
+  const bad = [];
+  js.split("\n").forEach((ln, i) => {
+    (ln.match(/'[^'\n]*'/g) || []).concat(ln.match(/`[^`\n]*`/g) || []).forEach(x => {
+      if (!/\d\s*[\/／]\s*\d/.test(x)) return;
+      if (FRAC_OK.some(w => x.indexOf(w) >= 0)) return;
+      bad.push(label + " " + (i + 1) + "行目 " + x);
+    });
+  });
+  return bad;
+};
+const frac = scanFrac(pageHtml, "places.html").concat(scanFrac(appHtml, "index.html"));
+ok(frac.length === 0, "★JSの文字列に「数字／数字」の分数が残っていない",
+   "残り:\n     " + frac.join("\n     "));
+ok(pageHtml.indexOf("／'+mc.goal") < 0 && appHtml.indexOf("+'/'+goal") < 0,
+   "★「🏁n／100」「🏁n/100」の書き方が消えている", "まだ残っている");
+has(pageHtml, "踏破", "「踏破」という言葉を使っている");
+has(appHtml, "・あと'+Math.max(0,goal-mDone)+'座", "★残りの座数を計算して出している");
 
 console.log("\n【実データ】");
 const pj = JSON.parse(fs.readFileSync(path.join(root, "places-photos.json"), "utf8"));
