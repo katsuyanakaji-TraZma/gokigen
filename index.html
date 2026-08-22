@@ -144,10 +144,17 @@
   .dlink.off{opacity:.5;pointer-events:none;border-style:dashed}
   /* 未来欄（87→77→72→67→62のはしご＋87歳の声） */
   .fut{background:linear-gradient(160deg,#fff, #faf7ff);border:1.5px solid #e8dcff}
-  .lad{display:flex;gap:5px;margin-bottom:9px}
-  .lad button{flex:1;padding:7px 2px;border-radius:9px;border:1.5px solid var(--border);background:#fff;
-    color:var(--muted);font-size:11px;font-weight:800;font-family:inherit;cursor:pointer;line-height:1.25}
-  .lad button b{display:block;font-size:13px}
+  /* v1.6.1：はしごは5段（87・77・72・67・62）。スマホ幅で5つ目が押し出されないよう、
+     ①flex-wrap で入らなければ2段目へ回す（overflow:hidden で隠さない）
+     ②min-width:0＋flex-basis:0 で5つを均等に細くする
+     ③年号（2031）の文字を1段下げる
+     幅390pxのiPhoneでは card の内側が332pxあり、5つ×54px＋隙間4px×4＝286px なので
+     余裕をもって横一列に収まる。もっと狭い端末でも、隠れずに折り返すだけ。 */
+  .lad{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:9px}
+  .lad button{flex:1 1 0;min-width:54px;max-width:34%;padding:7px 1px;border-radius:9px;
+    border:1.5px solid var(--border);background:#fff;color:var(--muted);font-size:10px;font-weight:800;
+    font-family:inherit;cursor:pointer;line-height:1.3;letter-spacing:0}
+  .lad button b{display:block;font-size:13.5px;letter-spacing:0}
   .lad button.on{background:var(--purple);border-color:var(--purple);color:#fff}
   .ladtxt{font-size:12.5px;line-height:1.8;color:var(--text);min-height:44px}
   .ladtxt .y{color:var(--purple);font-weight:800}
@@ -2160,6 +2167,39 @@ function ckNextFamily(D){
   }
   return null;
 }
+/* v1.6.1：【◯◯軸】がどの部屋のことかを決める。
+   台帳の書き方は「【経済軸・v3.3】」のように注記が付くことがあるので、言葉で見る。
+   GAS側の futureRoom_ と同じ順番（家族・趣味 → priv、精神・心 → spirit）。 */
+function ckAxisRoom(label){
+  const t=String(label==null?'':label);
+  if(!/軸/.test(t)) return null;            // 【v3.3・本人口述で塗り重ね】のような注記は軸ではない
+  if(/健康/.test(t)) return 'health';
+  if(/精神|心/.test(t)) return 'spirit';
+  if(/知識|教養/.test(t)) return 'know';
+  if(/仕事/.test(t)) return 'work';
+  if(/家族|趣味/.test(t)) return 'priv';
+  if(/経済/.test(t)) return 'eco';
+  return null;
+}
+/* v1.6.1：はしごの1段の本文を「【◯◯軸】〜次の【」で切り分ける。
+   62歳(2031)の段は【仕事軸】【家族・趣味軸】【健康軸】【経済軸】【精神軸】が1行に並ぶので、
+   「。」で切って拾う昔のやり方だと、健康の部屋に仕事の話が出てしまう。
+     pre    … 最初の【より前（どの部屋にも共通の一言。例「資産化工事の年」）
+     byRoom … 部屋 → その軸の本文 */
+function ckLadderParts(text){
+  const s=String(text==null?'':text);
+  const marks=[]; const re=/【([^】]*)】/g; let m;
+  while((m=re.exec(s))) marks.push({label:m[1],from:m.index,body:m.index+m[0].length});
+  const trim=x=>String(x).replace(/^[\s。、:：]+/,'').replace(/[\s、。]+$/,'');
+  const out={pre:trim(marks.length? s.slice(0,marks[0].from) : s),byRoom:{}};
+  marks.forEach((mk,i)=>{
+    const end=(i+1<marks.length)? marks[i+1].from : s.length;
+    const room=ckAxisRoom(mk.label);
+    const body=trim(s.slice(mk.body,end));
+    if(room&&body&&!out.byRoom[room]) out.byRoom[room]=body;
+  });
+  return out;
+}
 /* 未来のはしご。87歳はその部屋の完成図、それ以外はサブゴールから部屋に関係する一文を選ぶ */
 function ckLadder(D,room,age){
   const f=D.future;
@@ -2170,10 +2210,14 @@ function ckLadder(D,room,age){
     const r=f.rooms&&f.rooms[room];
     if(r&&r.bullets&&r.bullets.length) return r.bullets[0];
   }
+  // ① その部屋の軸が書いてあれば、それをまるごと出す（v1.6.1）
+  const p=ckLadderParts(rung.text);
+  if(p.byRoom[room]) return p.byRoom[room];
+  // ② 軸が無い部屋は、これまでどおり「前書き」から関係のありそうな一文を選ぶ
   const re=(CK_ROOMS[room]||{}).keys;
-  const parts=String(rung.text).split(/。/).map(s=>s.trim()).filter(Boolean);
+  const parts=String(p.pre||rung.text).split(/。/).map(s=>s.trim()).filter(Boolean);
   const hit=re? parts.filter(s=>re.test(s))[0] : null;
-  return hit || parts[0] || rung.text;   // 当てはまる一文が無ければ、その年齢の見出しの一文
+  return hit || parts[0] || p.pre || rung.text;
 }
 
 /* ===== 87歳の声（部屋ごと） ===== */
