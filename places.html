@@ -85,6 +85,11 @@
     text-shadow:0 1px 3px rgba(0,0,0,.5);word-break:break-word}
   .tile .tt{display:block;font-size:9.5px;font-weight:700;color:rgba(255,255,255,.86);margin-top:2px}
   .tile .flg{position:absolute;top:7px;left:7px;font-size:14px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  /* v1.7.3 推奨時期の小さなラベル（タイルの右上） */
+  .tile .tlab{position:absolute;top:6px;right:6px;font-size:9.5px;font-weight:800;
+    background:rgba(12,18,38,.62);color:#fff;border-radius:999px;padding:3px 7px;
+    letter-spacing:.02em;backdrop-filter:blur(2px);max-width:64%;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap}
   .gnote{padding:2px 14px 10px;font-size:11px;color:var(--muted);line-height:1.7}
 
   /* v1.7.1 ⛰低山：今の時期のおすすめ10（横スクロールのカード列） */
@@ -258,14 +263,50 @@ function share(){ copy(location.href,'このページのURLをコピーしまし
    ここから下の「ここまで」までは DOM に触らない
    （tools/test/test-places.js が、この範囲だけを切り出して検証するため）。 */
 
-/* 推奨時期の早い順。台帳に無い書き方が出てきたら、その他（90）としていちばん後ろの手前に置く。
+/* v1.7.3：推奨時期を「西暦の年」に直して並べる。
+   台帳の書き方は増える一方（「2027夏」「2028(59歳)」「2032年末」…）で、
+   決め打ちの一覧に無い書き方が全部いちばん後ろに固まってしまっていた。
+   年に直せば、あとから何を書き足しても勝手に正しい位置に入る。
+
+     年が書いてあるもの   … その年（「2026〜2031」は始まりの2026）
+     歳で書いてあるもの   … 生まれ年 + その歳（62歳→2031・64歳→2033・67歳→2036）
+     「60代前半」        … 60歳＝2029
+     「後半戦でも可」    … 2036（67歳以降と同じ扱い）
+     「定番候補」        … いつでも行けるので、いちばん最後の手前
+     読めないもの        … 末尾
    状態が「済」の場所は、時期に関係なくいちばん最後（もう行ったので、選ぶ対象ではない）。 */
-var PL_TIMING=['60代前半','62〜64歳','62〜67歳','2026〜2031','64〜67歳',
-               '2031〜2033','2031〜2036','67歳以降でも可','後半戦でも可','定番候補'];
+var PL_BIRTH_YEAR=1969;
+var PL_YEAR_TEIBAN=9998, PL_YEAR_UNKNOWN=9999;
 function plTimingRank(t){
   var s=String(t==null?'':t).trim();
-  var i=PL_TIMING.indexOf(s);
-  return i>=0? i : 90;
+  if(!s) return PL_YEAR_UNKNOWN;
+  var y=s.match(/(20\d{2})/);                       // 「2027夏」「2028(59歳)」「2026〜2031」
+  if(y) return +y[1];
+  /* 「62〜64歳」は**始まりの62歳**を採る。`(\d{2})歳` だと「64歳」を拾ってしまうので、
+     歳や代が出てくる文では、いちばん先に出る2桁の数字を年齢とみなす。 */
+  if(/[歳代]/.test(s)){
+    var a=s.match(/(\d{2})/);
+    if(a){ var n=+a[1]; if(n>=40&&n<=99) return PL_BIRTH_YEAR+n; }
+  }
+  if(/後半戦/.test(s)) return 2036;
+  if(/定番/.test(s)) return PL_YEAR_TEIBAN;
+  return PL_YEAR_UNKNOWN;
+}
+/** タイルの端に出す短いラベル。「2026〜2031」→「2026〜」、「67歳以降でも可」→「67歳以降」 */
+function plTimingLabel(t){
+  var s=String(t==null?'':t).trim();
+  if(!s) return '';
+  var y=s.match(/(20\d{2})/);
+  if(y){
+    var se=(s.match(/年末|年始|[春夏秋冬]/)||[''])[0];
+    return y[1]+(se||(/[〜~～]/.test(s)? '〜':''));
+  }
+  return s.replace(/でも可$/,'').replace(/候補$/,'');
+}
+/** 同じ年のなかは体力 高→低（脚を使うものを先に。動けるうちに前倒し） */
+function plEffortOrder(p){
+  var e=plEffort(p);
+  return e==='high'? 0 : e==='mid'? 1 : e==='low'? 2 : 3;
 }
 /* v1.7.2：状態の書き方は台帳を作り直すたびにゆれる（「済」→「行った」、「予定」→「計画」）。
    言葉のゆれで登った山が未踏に戻ってしまうので、書き方の候補をまとめて拾う。
@@ -278,8 +319,10 @@ function plSort(list){
     var da=plIsDone(a)?1:0, db=plIsDone(b)?1:0;
     if(da!==db) return da-db;                                  // 行った場所は最後
     var ra=plTimingRank(a.timing), rb=plTimingRank(b.timing);
-    if(ra!==rb) return ra-rb;
-    return String(a.id||'')<String(b.id||'')? -1 : 1;          // 同じ時期なら台帳の並び
+    if(ra!==rb) return ra-rb;                                  // 推奨時期の早い順（西暦）
+    var ea=plEffortOrder(a), eb=plEffortOrder(b);
+    if(ea!==eb) return ea-eb;                                  // 同じ年なら体力 高→低
+    return String(a.id||'')<String(b.id||'')? -1 : 1;          // それも同じなら台帳の並び
   });
 }
 /** タブの絞り込み。jp=日本／world=海外／teiban=定番 */
@@ -553,15 +596,18 @@ function drawGrid(){
     var img=ph? '<img class="ph" loading="lazy" src="'+esc(ph.url)+'" alt="'+esc(p.name)+'">'
               : '<div class="ph none">'+esc(p.name)+'</div>';
     var done=mtn? mtIsDone(p) : plIsDone(p), plan=mtn? mtIsPlanned(p) : plIsPlanned(p);
-    var sub=mtn? ('♨ '+(p.onsen||'')) : (p.timing||'');
+    var sub=mtn? ('♨ '+(p.onsen||'')) : '';
+    // v1.7.3：行きたい場所は、推奨時期を右上の小さなラベルに出す（並び順の理由が一目で分かる）
+    var lab=(!mtn&&p.timing)? '<span class="tlab">'+esc(plTimingLabel(p.timing))+'</span>' : '';
     return '<button class="tile" onclick="'+(mtn?'openMtn':'openSheet')+'(\''+esc(p.id)+'\')">'+img+
-      (done? '<span class="flg">🏁</span>' : plan? '<span class="flg">📅</span>' : '')+
+      (done? '<span class="flg">🏁</span>' : plan? '<span class="flg">📅</span>' : '')+ lab +
       '<span class="ov"><span class="tn">'+esc(p.name)+'</span>'+
-      '<span class="tt">'+esc(sub)+'</span></span></button>';
+      (sub? '<span class="tt">'+esc(sub)+'</span>':'')+'</span></button>';
   }).join('');
   document.getElementById('gnote').textContent= mtn
     ? '今の時期のおすすめ → まだの山 → 予定 → 行った山、の順です。写真はWikimedia Commonsから自動で当てています。'
-    : '推奨時期の早い順です（行った場所は最後）。写真はWikimedia Commonsから自動で当てています。';
+    : '推奨時期の早い順です（同じ年なら体力の高いものから／行った場所は最後）。'+
+      '右上の小さな数字がその推奨時期。写真はWikimedia Commonsから自動で当てています。';
 }
 
 /* ===== ボトムシート ===== */

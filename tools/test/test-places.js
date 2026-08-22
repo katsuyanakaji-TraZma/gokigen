@@ -194,22 +194,66 @@ has(pageHtml, "for(i=2026;i<=2036;i++)", "年は2026〜2036から選ぶ");
 has(pageHtml, "この一文をClaudeに貼れば、台帳・カレンダー・手配が動き出します。", "コピー後の1行");
 has(pageHtml, "家族の方はなかじまさんにLINEで送ってください", "家族向けの案内");
 
-console.log("\n【要件4】並び順（推奨時期の早い順・行った場所は最後）");
-const order = plSort(P.rows).map(r => r.timing + "/" + r.name);
-eq(order[0], "62〜64歳/ウユニ塩湖", "★いちばん早いのは62〜64歳");
-eq(order[order.length - 1], "60代前半/行った場所", "★「済」は時期が早くてもいちばん最後");
+console.log("\n【v1.7.3】推奨時期を西暦の年に直す");
+eq(plTimingRank("2026"), 2026, "年だけならその年");
+eq(plTimingRank("2027夏"), 2027, "★「2027夏」→ 2027");
+eq(plTimingRank("2028(59歳)"), 2028, "★「2028(59歳)」→ 年が優先で 2028（59歳ではない）");
+eq(plTimingRank("2032年末"), 2032, "「2032年末」→ 2032");
+eq(plTimingRank("2026〜2031"), 2026, "★幅があるときは始まりの年");
+eq(plTimingRank("2031〜2036"), 2031, "同上");
+eq(plTimingRank("60代前半"), 2029, "★「60代前半」→ 60歳の年 2029");
+eq(plTimingRank("62〜64歳"), 2031, "★「62〜64歳」→ 2031");
+eq(plTimingRank("62〜67歳"), 2031, "「62〜67歳」も始まりの62歳＝2031");
+eq(plTimingRank("64〜67歳"), 2033, "★「64〜67歳」→ 2033");
+eq(plTimingRank("67歳以降でも可"), 2036, "★「67歳以降でも可」→ 2036");
+eq(plTimingRank("後半戦でも可"), 2036, "★「後半戦でも可」→ 2036");
+eq(plTimingRank("定番候補"), 9998, "★「定番候補」はいちばん最後の手前");
+eq(plTimingRank("知らない書き方"), 9999, "★読めない書き方は末尾。落ちない");
+eq(plTimingRank(null), 9999, "空でも落ちない");
+eq(plTimingRank("2026〜2031") < plTimingRank("60代前半"), "true", "2026〜2031 → 60代前半");
 eq(plTimingRank("60代前半") < plTimingRank("62〜64歳"), "true", "60代前半 → 62〜64歳");
-eq(plTimingRank("62〜64歳") < plTimingRank("2026〜2031"), "true", "62〜64歳 → 2026〜2031");
-eq(plTimingRank("2026〜2031") < plTimingRank("64〜67歳"), "true", "2026〜2031 → 64〜67歳");
-eq(plTimingRank("64〜67歳") < plTimingRank("67歳以降でも可"), "true", "64〜67歳 → 67歳以降でも可");
-eq(plTimingRank("67歳以降でも可") < plTimingRank("後半戦でも可"), "true", "67歳以降でも可 → 後半戦でも可");
-eq(plTimingRank("後半戦でも可") < plTimingRank("定番候補"), "true", "後半戦でも可 → 定番候補");
-eq(plTimingRank("2031〜2033") > plTimingRank("64〜67歳"), "true", "台帳にある2031〜2033も順番に入っている");
-eq(plTimingRank("知らない書き方"), 90, "★知らない書き方はその他（90）に寄せる。落ちない");
-eq(plTimingRank(null), 90, "空でも落ちない");
-// 同じ時期どうしは台帳のid順
+eq(plTimingRank("64〜67歳") < plTimingRank("定番候補"), "true", "64〜67歳 → 定番候補");
+
+console.log("\n【v1.7.3】タイルの端に出す短いラベル");
+eq(plTimingLabel("2027夏"), "2027夏", "季節つきはそのまま");
+eq(plTimingLabel("2028(59歳)"), "2028", "★かっこ書きは落として年だけ");
+eq(plTimingLabel("2026〜2031"), "2026〜", "★幅があることは「〜」で示す");
+eq(plTimingLabel("2032年末"), "2032年末", "年末はそのまま");
+eq(plTimingLabel("67歳以降でも可"), "67歳以降", "★「でも可」は落とす");
+eq(plTimingLabel("後半戦でも可"), "後半戦", "同上");
+eq(plTimingLabel("定番候補"), "定番", "★「候補」は落とす");
+eq(plTimingLabel("60代前半"), "60代前半", "そのまま出るものはそのまま");
+eq(plTimingLabel(""), "", "空なら空");
+
+console.log("\n【v1.7.3】並び順（推奨時期の早い順・同じ年は体力 高→低・済は最後）");
+const YR = [
+  { id: "A1", name: "2027の低い山", timing: "2027夏", effort: "低", status: "未", kind: "日本" },
+  { id: "A2", name: "2027の高い山", timing: "2027秋", effort: "高", status: "未", kind: "日本" },
+  { id: "A3", name: "2027の中くらい", timing: "2027", effort: "中", status: "未", kind: "日本" },
+  { id: "A4", name: "いま行ける", timing: "2026〜2031", effort: "低", status: "未", kind: "日本" },
+  { id: "A5", name: "62〜64歳のもの", timing: "62〜64歳", effort: "高", status: "未", kind: "日本" },
+  { id: "A6", name: "定番", timing: "定番候補", effort: "低", status: "候補", kind: "日本" },
+  { id: "A7", name: "書き方が読めない", timing: "そのうち", effort: "低", status: "未", kind: "日本" },
+  { id: "A8", name: "もう行った", timing: "2026", effort: "低", status: "済", kind: "日本" }
+];
+const ord = plSort(YR).map(r => r.name);
+console.log("   " + ord.join(" → "));
+eq(ord[0], "いま行ける", "★2026がいちばん早い");
+eq(ord.slice(1, 4).join(","), "2027の高い山,2027の中くらい,2027の低い山",
+   "★同じ2027のなかは体力 高→中→低（脚を使うものを先に）");
+eq(ord[4], "62〜64歳のもの", "2031");
+eq(ord[5], "定番", "★定番候補は後ろ");
+eq(ord[6], "書き方が読めない", "★読めないものは末尾");
+eq(ord[7], "もう行った", "★済は年が早くてもいちばん最後");
+eq(plSort(YR).length, YR.length, "並べ替えで場所が減らない");
+eq(plSort([]).length, 0, "空でも落ちない");
+
+console.log("\n【要件4】並び順（作り物の台帳でも成り立つ）");
+const order = plSort(P.rows).map(r => r.timing + "/" + r.name);
+eq(order[0], "2026〜2031/宗谷岬", "★いちばん早いのは2026〜2031");
+eq(order[order.length - 1], "60代前半/行った場所", "★「済」は時期が早くてもいちばん最後");
 const jp = plSort(plFilter(P.rows, "jp")).map(r => r.id);
-eq(jp.join(","), "J01,J04,J09,J99", "★同じ時期のなかは台帳の並び（id順）／済は最後");
+eq(jp.join(","), "J01,J04,J09,J99", "★同じ時期のなかは体力→台帳の並び／済は最後");
 
 console.log("\n【要件4】タブの絞り込み");
 eq(plFilter(P.rows, "jp").length, 4, "🗾日本は4件");
@@ -231,6 +275,8 @@ ok(!/api[_-]?key|access[_-]?token|mapbox/i.test(pageHtml), "★APIキーを使�
 has(pageHtml, "grid-template-columns:1fr 1fr", "★写真タイルはスマホ2列");
 has(pageHtml, "@media(min-width:720px){ .grid{grid-template-columns:repeat(4,1fr)", "★PCは4列");
 has(pageHtml, "aspect-ratio:16/9", "写真は16:9");
+has(pageHtml, 'class="tlab"', "★タイルの端に推奨時期のラベルを出している");
+has(pageHtml, "plTimingLabel(p.timing)", "ラベルは短くしたもの");
 has(pageHtml, "🗓 この旅を決める", "ボタン1");
 has(pageHtml, "🎬 映像を見る", "ボタン2");
 has(pageHtml, "📖 もっと読む", "ボタン3");
