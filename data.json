@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-22T08:28:58+09:00",
-  "version": "1.5",
+  "generatedAt": "2026-08-22T11:13:18+09:00",
+  "version": "1.6",
   "selfVersion": {
     "birth": "1969-04-30",
     "asOf": "2026-08-22",
@@ -142,6 +142,12 @@
       {
         "name": "経済台帳ログ_2026-08-22",
         "rows": 2
+      }
+    ],
+    "noteFiles": [
+      {
+        "name": "note台帳ログ_2026-08-21",
+        "rows": 4
       }
     ]
   },
@@ -7476,6 +7482,87 @@
     "folderUrl": "https://drive.google.com/drive/folders/1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk",
     "count": 0,
     "latest": null
+  },
+  "calendar": null,
+  "note": {
+    "asOf": "2026-08-21",
+    "time": "20:43",
+    "month": {
+      "date": "2026-08-21",
+      "time": "20:43",
+      "span": "月間",
+      "period": "月間",
+      "views": 7755,
+      "comments": 50,
+      "likes": 397,
+      "note": "TOP5=お盆はOSハント週間502/NKS開店しました493/最終回の情景をありありと469/30年後の自分から毎朝エールが届く464/10年日記静かに引退へ458",
+      "src": "note台帳ログ_2026-08-21"
+    },
+    "all": {
+      "date": "2026-08-21",
+      "time": "20:43",
+      "span": "全期間",
+      "period": "全期間",
+      "views": 74142,
+      "comments": 430,
+      "likes": 3385,
+      "note": "TOP5=Udemyが大進化AIロールプレイ1254/誰がどんなOSから発言しているのか821/書斎の入り口のお守りを捨てました627/モゴモゴとした違和感625/上司のNG行動625",
+      "src": "note台帳ログ_2026-08-21"
+    },
+    "rows": [
+      {
+        "date": "2026-08-20",
+        "time": "22:44",
+        "span": "全期間",
+        "period": "全期間",
+        "views": 73681,
+        "comments": 428,
+        "likes": 3353,
+        "note": "参考(前日集計)",
+        "src": "note台帳ログ_2026-08-21"
+      },
+      {
+        "date": "2026-08-20",
+        "time": "22:44",
+        "span": "月間",
+        "period": "月間",
+        "views": 7636,
+        "comments": 48,
+        "likes": 377,
+        "note": "参考(前日集計)",
+        "src": "note台帳ログ_2026-08-21"
+      },
+      {
+        "date": "2026-08-21",
+        "time": "20:43",
+        "span": "全期間",
+        "period": "全期間",
+        "views": 74142,
+        "comments": 430,
+        "likes": 3385,
+        "note": "TOP5=Udemyが大進化AIロールプレイ1254/誰がどんなOSから発言しているのか821/書斎の入り口のお守りを捨てました627/モゴモゴとした違和感625/上司のNG行動625",
+        "src": "note台帳ログ_2026-08-21"
+      },
+      {
+        "date": "2026-08-21",
+        "time": "20:43",
+        "span": "月間",
+        "period": "月間",
+        "views": 7755,
+        "comments": 50,
+        "likes": 397,
+        "note": "TOP5=お盆はOSハント週間502/NKS開店しました493/最終回の情景をありありと469/30年後の自分から毎朝エールが届く464/10年日記静かに引退へ458",
+        "src": "note台帳ログ_2026-08-21"
+      }
+    ],
+    "used": [
+      {
+        "name": "note台帳ログ_2026-08-21",
+        "rows": 4
+      }
+    ],
+    "fileUrl": "https://docs.google.com/spreadsheets/d/13FjfuhIXJ8hQi08EnVMQc4lL8nP4XzKzYEd-jAAWcbo/edit?usp=drivesdk",
+    "folderUrl": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
   },
   "links": {
     "folders": {
