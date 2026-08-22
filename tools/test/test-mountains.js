@@ -37,6 +37,7 @@ eval(pickGs("function normHead_(v) {", "// 見出し行を探して、項目名 
 eval(pickGs("// ===== v1.2: base + デルタ形式の台帳を読む共通部品 =====", "// ===== v1.2: リミットレス台帳"));
 eval(pickGs("// ===== 変換ヘルパー =====", "// ===== GitHub ====="));
 eval(pickGs("var LIMITLESS_FOLDER_ID", "// ===== STEP1"));      // CONFIG（目標100座など）
+eval(pickGs("var STATUS_DONE_RE", "var PLACES_COLS"));           // 状態の言い換え（済／行った）
 eval(pickGs("var MTN_COLS", "// ===== v1.4: WANT台帳"));
 
 console.log("\n【要件1】ベストシーズン月のパース");

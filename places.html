@@ -267,8 +267,12 @@ function plTimingRank(t){
   var i=PL_TIMING.indexOf(s);
   return i>=0? i : 90;
 }
-function plIsDone(p){ return /済/.test(String((p&&p.status)||'')) }
-function plIsPlanned(p){ return /予定/.test(String((p&&p.status)||'')) }
+/* v1.7.2：状態の書き方は台帳を作り直すたびにゆれる（「済」→「行った」、「予定」→「計画」）。
+   言葉のゆれで登った山が未踏に戻ってしまうので、書き方の候補をまとめて拾う。
+   Apps Script 側（STATUS_DONE_RE / STATUS_PLAN_RE）と同じ規則。 */
+var ST_DONE=/済|行った|登った|完了/, ST_PLAN=/予定|計画/;
+function plIsDone(p){ return ST_DONE.test(String((p&&p.status)||'')) }
+function plIsPlanned(p){ return ST_PLAN.test(String((p&&p.status)||'')) }
 function plSort(list){
   return list.slice().sort(function(a,b){
     var da=plIsDone(a)?1:0, db=plIsDone(b)?1:0;
@@ -325,8 +329,8 @@ function mtGoal(D){
   var g=(D&&D.mountains&&D.mountains.goal);
   return (typeof g==='number'&&g>0)? g : MT_GOAL;
 }
-function mtIsDone(m){ return /済/.test(String((m&&m.status)||'')) }
-function mtIsPlanned(m){ return /予定/.test(String((m&&m.status)||'')) }
+function mtIsDone(m){ return ST_DONE.test(String((m&&m.status)||'')) }
+function mtIsPlanned(m){ return ST_PLAN.test(String((m&&m.status)||'')) }
 function mtIsSummer(m){ return /○/.test(String((m&&m.summer)||'')) }
 function mtEffort(m){
   var e=String((m&&m.effort)||'');

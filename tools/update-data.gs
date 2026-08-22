@@ -60,6 +60,8 @@ var ECO_FOLDER_ID = '13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR';
 // 列＝部屋／項目／目標値／期限／現状の取り方／備考。
 // 行が増えても目標値が書き換わっても、コードは直さない（この1本を読むだけ）。
 var WANT_FILE_ID = '1UgAb8OuWpIxvLyeDeuQRHQ2J5E04G3IZV-DMUD_h5k4';
+// v1.7.2：WANT台帳も作り直されて「WANT台帳_base」になっていた。名前で探すのでIDは予備。
+var WANT_FILE_NAME = 'WANT台帳_base';
 
 // v1.4：週報書棚フォルダ（📖_週報書棚）。
 // **中身は読まない**。いちばん新しいファイルの「名前とリンク」だけを取り、アプリはリンクを置くだけ。
@@ -100,6 +102,7 @@ var CONFIG = {
   ecoBaseName:  '経済台帳_base',
   // v1.4：目標×差分（WANT台帳）と週報書棚
   wantFileId:      WANT_FILE_ID,
+  wantFileName:    WANT_FILE_NAME,
   weeklyFolderId:  WEEKLY_FOLDER_ID,
   birthDate:       BIRTH_DATE,
   // v1.6：Googleカレンダー（会食の枠・予約）と note台帳（GOKIGEN台帳フォルダの中）
@@ -192,13 +195,14 @@ function changedFilesSince_(since) {
       var it = DriveApp.getFolderById(id).getFiles();
       while (it.hasNext()) {
         var f = it.next();
+        if (f.isTrashed()) continue;                          // v1.7.2：ゴミ箱のものは見ない
         if (f.getLastUpdated().getTime() > cutoff) out.push(f.getName());
       }
     } catch (e) { Logger.log('フォルダを見られませんでした（先に進みます）: ' + id + ' / ' + e); }
   });
   try {
-    var w = DriveApp.getFileById(CONFIG.wantFileId);
-    if (w.getLastUpdated().getTime() > cutoff) out.push(w.getName());
+    var w = wantFile_();                                  // v1.7.2：名前で取った最新のもの
+    if (w && w.getLastUpdated().getTime() > cutoff) out.push(w.getName());
   } catch (e) { Logger.log('WANT台帳を見られませんでした（先に進みます）: ' + e); }
   /* v1.7：行きたい場所台帳。GOKIGEN台帳フォルダの中にあるので上のループでも拾えるが、
      置き場所を移されても気づけるよう、ファイルそのものの更新時刻も見ておく。 */
@@ -301,8 +305,8 @@ function setupUdemyBase() {
 }
 
 function findUdemyBase_() {
-  var it = DriveApp.getFolderById(CONFIG.udemyFolderId).getFilesByName(CONFIG.udemyBaseName);
-  return it.hasNext() ? it.next() : null;
+  // v1.7.2：ゴミ箱の同名ファイルを掴まないよう、共通の名前検索を使う
+  return ledgerByName_(CONFIG.udemyBaseName, null, CONFIG.udemyFolderId);
 }
 
 // ===== v1.2.1: 台帳の整理（6分の実行制限に当たったための対策） =====
@@ -352,7 +356,11 @@ function nameDate_(name) {
 /** フォルダ直下から名前ちょうど一致のファイルを1つ返す */
 function fileInFolder_(folder, name) {
   var it = folder.getFilesByName(name);
-  while (it.hasNext()) { var f = it.next(); if (f.getName() === name) return f; }
+  while (it.hasNext()) {
+    var f = it.next();
+    if (f.isTrashed()) continue;                              // v1.7.2：ゴミ箱のものは読まない
+    if (f.getName() === name) return f;
+  }
   return null;
 }
 /** 「=」で始まる文字列を数式と誤解されないようにする（読み戻すと元の文字列に戻る） */
@@ -385,6 +393,7 @@ function consolidateGokigen_() {
   while (it.hasNext()) {
     var f = it.next();
     if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue;
+    if (f.isTrashed()) continue;                              // v1.7.2：ゴミ箱のものは読まない
     var n = f.getName();
     if (n === CONFIG.gokigenBaseName) continue;
     if (!/^GOKIGEN[_ ]?台帳/.test(n)) continue;      // 関係ないファイルは絶対にさわらない
@@ -825,6 +834,52 @@ function gate_(rec, dropped) {
 }
 
 /**
+ * v1.7.2：「〜台帳_base」を **名前で** 探す。固定IDは名前で見つからないときの予備。
+ *
+ * なぜ名前を先に見るか：
+ * 台帳をDrive上で作り直すと fileId が変わる。旧ファイルはゴミ箱に入るが、
+ * **ゴミ箱のファイルは fileId でなら開けてしまう**ので、固定IDを先に見ていると
+ * いつまでも古い台帳を読み続ける（2026-08-22に実際に起きた。行きたい場所71件・
+ * 低山46座に作り直したのに、アプリは50件・45座のままだった）。
+ * 名前で探して、ゴミ箱のものは必ず外す。これで作り直しても勝手に追従する。
+ *
+ * 同名が複数あったら「更新時刻がいちばん新しいもの」を採り、警告をログに残す。
+ */
+function ledgerByName_(name, fallbackId, folderId) {
+  var hits = [];
+  try {
+    var it = DriveApp.getFolderById(folderId || CONFIG.gokigenFolderId).getFilesByName(name);
+    while (it.hasNext()) {
+      var f = it.next();
+      if (f.isTrashed()) continue;              // ゴミ箱の同名ファイルは絶対に読まない
+      if (f.getName() !== name) continue;       // 名前がぴたり一致するものだけ
+      hits.push(f);
+    }
+  } catch (e) { Logger.log('台帳を名前で探せませんでした（' + name + '）: ' + e); }
+
+  if (hits.length > 1) {
+    hits.sort(function (a, b) { return b.getLastUpdated().getTime() - a.getLastUpdated().getTime(); });
+    Logger.log('⚠️ 同名の台帳が ' + hits.length + ' 件、最新（更新時刻）を採用: ' + name +
+               '（' + Utilities.formatDate(hits[0].getLastUpdated(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm') + '）');
+  }
+  if (hits.length) return hits[0];
+
+  // 名前で見つからないときだけ、コードに書いてある固定IDを予備として使う
+  if (fallbackId) {
+    try {
+      var g = DriveApp.getFileById(fallbackId);
+      if (g && !g.isTrashed()) {
+        Logger.log('「' + name + '」は名前で見つからないので固定IDで開きました: ' + fallbackId);
+        return g;
+      }
+      if (g) Logger.log('⚠️ 固定IDの「' + name + '」はゴミ箱にあります。読みません: ' + fallbackId);
+    } catch (e) { Logger.log('固定IDでも開けませんでした（' + name + '）: ' + e); }
+  }
+  Logger.log('⚠️ 台帳が見つかりません: ' + name);
+  return null;
+}
+
+/**
  * 古い順にファイルを返す（後から読んだもので上書き = 新しいファイル優先）。
  *
  * ・DriveApp の getFiles() は **そのフォルダの直下だけ** を返す。サブフォルダの中は見ない。
@@ -839,6 +894,7 @@ function filesOldestFirst_(folderId, baseName) {
   while (it.hasNext()) {
     var f = it.next();
     if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue; // スプレッドシート以外は無視
+    if (f.isTrashed()) continue;                              // v1.7.2：ゴミ箱のものは読まない
     var rank = (baseName && f.getName() === baseName) ? 0 : 1;
     list.push({ file: f, rank: rank, t: f.getLastUpdated().getTime() });
   }
@@ -1002,6 +1058,7 @@ function udemySources_() {
   while (it.hasNext()) {
     var f = it.next();
     if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue;
+    if (f.isTrashed()) continue;                              // v1.7.2：ゴミ箱のものは読まない
     var n = f.getName(), rank = null;
     if (n === CONFIG.udemyBaseName)                       rank = LEDGER_RANK.base;
     else if (/^Udemy台帳ログ_\d{4}-\d{2}-\d{2}/.test(n))  rank = LEDGER_RANK.delta;
@@ -1422,6 +1479,7 @@ function findFutureDoc_() {
   while (it.hasNext()) {
     var f = it.next();
     if (f.getMimeType() !== MimeType.GOOGLE_DOCS) continue;
+    if (f.isTrashed()) continue;                              // v1.7.2：ゴミ箱のものは読まない
     if (f.getName().indexOf(CONFIG.futureDocPrefix) !== 0) continue;
     if (!best || f.getName() > best.getName()) best = f;    // 名前の日付が新しい方
   }
@@ -2113,6 +2171,7 @@ function readNote_() {
   while (it.hasNext()) {
     var f = it.next();
     if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue;
+    if (f.isTrashed()) continue;                              // v1.7.2：ゴミ箱のものは読まない
     if (!re.test(f.getName())) continue;
     srcs.push({ file: f, name: f.getName(), t: f.getLastUpdated().getTime() });
   }
@@ -2182,6 +2241,13 @@ function readNote_() {
 }
 
 // ===== v1.7: 行きたい場所台帳（行きたい場所マップの材料） =====
+/* v1.7.2：状態の書き方は台帳を作り直すたびにゆれる（「済」→「行った」、「予定」→「計画」）。
+   言葉のゆれで**登った山が未踏に戻る**ので、書き方の候補をここに集めて全部拾う。
+   アプリ側（places.html）にも同じ規則を置いてある。 */
+var STATUS_DONE_RE   = /済|行った|登った|完了/;
+var STATUS_PLAN_RE   = /予定|計画/;
+var STATUS_REJECT_RE = /却下|見送/;
+
 /**
  * GOKIGEN台帳フォルダの中の「行きたい場所台帳_base」を、**書いてあるまま**読む。
  *
@@ -2215,14 +2281,9 @@ var PLACES_COLS = {
   output:   ['公開した成果物', '成果物']
 };
 
-/** 台帳のファイル。IDで開けなければ名前でも探す（作り直しでIDが変わっても止まらない） */
+/** 台帳のファイル。**名前が先・固定IDは予備**（作り直してIDが変わっても新しい方を読む） */
 function placesFile_() {
-  try {
-    var f = DriveApp.getFileById(CONFIG.placesFileId);
-    if (f) return f;
-  } catch (e) { Logger.log('行きたい場所台帳をIDで開けませんでした（名前で探します）: ' + e); }
-  var it = DriveApp.getFolderById(CONFIG.gokigenFolderId).getFilesByName(CONFIG.placesFileName);
-  return it.hasNext() ? it.next() : null;
+  return ledgerByName_(CONFIG.placesFileName, CONFIG.placesFileId);
 }
 
 function readPlaces_() {
@@ -2239,7 +2300,7 @@ function readPlaces_() {
     var name = cell('name');
     if (!name) continue;                                  // 空行・見出しの続き
     var status = cell('status') || '';
-    if (/却下/.test(status)) { dropped++; continue; }      // 見送った場所は出さない
+    if (STATUS_REJECT_RE.test(status)) { dropped++; continue; }   // 見送った場所は出さない
     var lat = hd.map.lat != null ? num_(row[hd.map.lat]) : null;
     var lng = hd.map.lng != null ? num_(row[hd.map.lng]) : null;
     if (lat == null || lng == null) noGeo.push(name);      // 落とさずに警告だけ残す
@@ -2262,7 +2323,7 @@ function readPlaces_() {
   };
   Logger.log('行きたい場所台帳: ' + rows.length + '件（定番' + n(/定番/, 'kind') +
              '・日本' + n(/^日本$/, 'kind') + '・海外' + n(/海外/, 'kind') +
-             '／予定' + n(/予定/, 'status') + '・済' + n(/済/, 'status') + '）' +
+             '／予定' + n(STATUS_PLAN_RE, 'status') + '・済' + n(STATUS_DONE_RE, 'status') + '）' +
              (dropped ? '　※却下' + dropped + '件は出していません' : ''));
   if (noGeo.length) {
     Logger.log('⚠️ 緯度経度が空のため地図に出せません（写真タイルには出ます）: ' + noGeo.join('・'));
@@ -2320,14 +2381,9 @@ function mtnMonths_(v) {
   return out;
 }
 
-/** 台帳のファイル。IDで開けなければ名前でも探す */
+/** 台帳のファイル。**名前が先・固定IDは予備** */
 function mtnFile_() {
-  try {
-    var f = DriveApp.getFileById(CONFIG.mtnFileId);
-    if (f) return f;
-  } catch (e) { Logger.log('低山台帳をIDで開けませんでした（名前で探します）: ' + e); }
-  var it = DriveApp.getFolderById(CONFIG.gokigenFolderId).getFilesByName(CONFIG.mtnFileName);
-  return it.hasNext() ? it.next() : null;
+  return ledgerByName_(CONFIG.mtnFileName, CONFIG.mtnFileId);
 }
 
 function readMountains_() {
@@ -2344,7 +2400,7 @@ function readMountains_() {
     var name = cell('name');
     if (!name) continue;
     var status = cell('status') || '';
-    if (/却下/.test(status)) { dropped++; continue; }
+    if (STATUS_REJECT_RE.test(status)) { dropped++; continue; }
     var lat = hd.map.lat != null ? num_(row[hd.map.lat]) : null;
     var lng = hd.map.lng != null ? num_(row[hd.map.lng]) : null;
     if (lat == null || lng == null) noGeo.push(name);
@@ -2367,8 +2423,8 @@ function readMountains_() {
 
   var n = function (fn) { return rows.filter(fn).length; };
   Logger.log('低山台帳: ' + rows.length + '座（夏向き' + n(function (r) { return /○/.test(String(r.summer || '')); }) +
-             '／済' + n(function (r) { return /済/.test(String(r.status || '')); }) +
-             '・予定' + n(function (r) { return /予定/.test(String(r.status || '')); }) + '）' +
+             '／済' + n(function (r) { return STATUS_DONE_RE.test(String(r.status || '')); }) +
+             '・予定' + n(function (r) { return STATUS_PLAN_RE.test(String(r.status || '')); }) + '）' +
              (dropped ? '　※却下' + dropped + '座は出していません' : ''));
   if (noGeo.length) Logger.log('⚠️ 緯度経度が空のため地図に出せません: ' + noGeo.join('・'));
   var noMonth = rows.filter(function (r) { return !r.months.length; }).map(function (r) { return r.name; });
@@ -2385,7 +2441,10 @@ function readMountains_() {
    「現状の取り方」を先に置く（「現状」だけでも拾えるが、正式名を優先させる）。 */
 var WANT_COLS = {
   room: ['部屋'], item: ['項目'], goal: ['目標値', '目標'], due: ['期限'],
-  how:  ['現状の取り方', '現状'], note: ['備考']
+  how:  ['現状の取り方'],          // 旧レイアウト：「自動: 体重」のような**取り方の説明**
+  cur:  ['現状'],                  // 新レイアウト：「83.1kg」のような**書いてある実測**
+  state: ['状態'],                 // 新レイアウト：未着手／進行中／完了 など
+  note: ['備考', 'メモ']
 };
 /**
  * WANT台帳を「書いてあるまま」読む。
@@ -2394,11 +2453,20 @@ var WANT_COLS = {
  * そうしておけば、差分の出し方を直したいときに Apps Script を貼り替えずに済み、
  * 台帳に行が増えたときも、この関数は何も変えずにそのまま通る。
  */
+/** WANT台帳のファイル。**名前が先・固定IDは予備** */
+function wantFile_() {
+  return ledgerByName_(CONFIG.wantFileName, CONFIG.wantFileId);
+}
+
 function readWant_() {
-  var file = DriveApp.getFileById(CONFIG.wantFileId);
-  var values = SpreadsheetApp.openById(CONFIG.wantFileId).getSheets()[0].getDataRange().getValues();
+  var file = wantFile_();
+  if (!file) { Logger.log('⚠️ WANT台帳が見つかりません'); return null; }
+  var values = SpreadsheetApp.openById(file.getId()).getSheets()[0].getDataRange().getValues();
   var hd = findColumns_(values, WANT_COLS, 'room');
   if (!hd) { Logger.log('⚠️ WANT台帳の見出し（部屋／項目／目標値…）が見つかりません'); return null; }
+  /* 旧レイアウトでは「現状の取り方」が cur('現状') にも先頭一致で引っかかる。
+     同じ列なら cur は無かったことにする（「自動: 体重」を実測として出さないため）。 */
+  var sameCol = (hd.map.how != null && hd.map.how === hd.map.cur);
   var rows = [];
   for (var i = hd.row + 1; i < values.length; i++) {
     var row = values[i];
@@ -2406,10 +2474,14 @@ function readWant_() {
     var room = cell('room'), item = cell('item');
     if (!room || !item) continue;                     // 部屋と項目が無い行は見出しの続きや空行
     rows.push({ room: room, item: item, goal: cell('goal'), due: cell('due'),
-                how: cell('how'), note: cell('note') });
+                how: cell('how'),
+                cur: sameCol ? null : cell('cur'),    // 台帳に書いてある現状（新レイアウト）
+                state: cell('state'),
+                note: cell('note') });
   }
-  Logger.log('WANT台帳: ' + rows.length + '行（' + file.getName() + '）');
-  return { fileId: CONFIG.wantFileId, fileUrl: file.getUrl(), title: file.getName(),
+  Logger.log('WANT台帳: ' + rows.length + '行（' + file.getName() + '／' +
+             (hd.map.how != null ? '旧レイアウト：現状の取り方あり' : '新レイアウト：現状・状態あり') + '）');
+  return { fileId: file.getId(), fileUrl: file.getUrl(), title: file.getName(),
            asOf: Utilities.formatDate(file.getLastUpdated(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm'),
            rows: rows };
 }
@@ -2428,6 +2500,7 @@ function readWeekly_() {
   var best = null, n = 0;
   while (it.hasNext()) {
     var f = it.next();
+    if (f.isTrashed()) continue;                              // v1.7.2：ゴミ箱のものは読まない
     n++;
     var t = f.getLastUpdated().getTime();
     if (!best || t > best.t) {

@@ -33,10 +33,12 @@ const pickGs = (a, b) => {
   if (i < 0 || j < 0) throw new Error("update-data.gs に目印が見つかりません: " + (i < 0 ? a : b));
   return gs.slice(i, j);
 };
+eval(pickGs("var LIMITLESS_FOLDER_ID", "// ===== STEP1"));      // CONFIG（台帳フォルダのIDなど）
 eval(pickGs("function normHead_(v) {", "// 見出し行を探して、項目名 → 列番号 の対応表を作る"));
 eval(pickGs("// ===== v1.2: base + デルタ形式の台帳を読む共通部品 =====", "// ===== v1.2: リミットレス台帳"));
 eval(pickGs("// ===== 変換ヘルパー =====", "// ===== GitHub ====="));
-eval(pickGs("var PLACES_COLS", "/** 台帳のファイル。"));
+eval(pickGs("/**\n * v1.7.2：「〜台帳_base」を **名前で** 探す。", "/**\n * 古い順にファイルを返す"));  // ledgerByName_
+eval(pickGs("var STATUS_DONE_RE", "/** 台帳のファイル。"));   // 状態の言い換え＋PLACES_COLS
 eval(pickGs("function readPlaces_() {", "// ===== v1.4: WANT台帳"));
 
 // 本物の台帳と同じ見出し・同じ並び
@@ -73,12 +75,73 @@ global.SpreadsheetApp = { openById: () => ({ getSheets: () => [{ getDataRange: (
 placesFile_ = () => ({ getId: () => "sheet1", getUrl: () => "https://docs.google.com/x",
                        getName: () => "行きたい場所台帳_base", getLastUpdated: () => new Date(0) });
 
+/* ===== v1.7.2：台帳を作り直したときに、新しい方を読むか ===== */
+console.log("\n【v1.7.2】台帳の探し方（名前が先・固定IDは予備・ゴミ箱は読まない）");
+{
+  const mk = (name, id, t, trashed) => ({
+    getName: () => name, getId: () => id, getUrl: () => "https://docs.google.com/" + id,
+    getLastUpdated: () => new Date(t), isTrashed: () => !!trashed
+  });
+  // 作り直した本番と同じ形：旧ファイルはゴミ箱、新ファイルが生きている
+  const OLD = mk("行きたい場所台帳_base", "old-id", "2026-08-20T00:00:00Z", true);
+  const NEW = mk("行きたい場所台帳_base", "new-id", "2026-08-22T22:34:00Z", false);
+  let folderFiles = [OLD, NEW], byId = { "old-id": OLD, "new-id": NEW };
+  global.DriveApp = {
+    getFolderById: () => ({
+      getFilesByName: n => { let i = 0; const l = folderFiles.filter(f => f.getName() === n);
+        return { hasNext: () => i < l.length, next: () => l[i++] }; }
+    }),
+    getFileById: id => { if (!byId[id]) throw new Error("見つかりません: " + id); return byId[id]; }
+  };
+  logs.length = 0;
+  eq(ledgerByName_("行きたい場所台帳_base", "old-id").getId(), "new-id",
+     "★ゴミ箱の旧ファイルではなく、生きている新しい台帳を読む");
+  ok(!logs.some(l => /固定IDで開きました/.test(l)), "★名前で見つかったので固定IDは使わない", logs.join(" / "));
+
+  // 同名が2つ生きているときは、更新時刻がいちばん新しいものを採って警告
+  const NEW2 = mk("行きたい場所台帳_base", "new2-id", "2026-08-23T09:00:00Z", false);
+  folderFiles = [NEW, NEW2]; byId["new2-id"] = NEW2;
+  logs.length = 0;
+  eq(ledgerByName_("行きたい場所台帳_base", "old-id").getId(), "new2-id",
+     "★同名が2件なら更新時刻が新しい方");
+  ok(logs.some(l => /⚠️ 同名の台帳が 2 件、最新（更新時刻）を採用/.test(l)),
+     "★同名が複数あることを警告に出す", logs.join(" / "));
+
+  // 名前で見つからないときだけ固定IDを使う
+  folderFiles = [];
+  logs.length = 0;
+  eq(ledgerByName_("行きたい場所台帳_base", "new-id").getId(), "new-id", "名前で無ければ固定IDが予備になる");
+  ok(logs.some(l => /固定IDで開きました/.test(l)), "予備を使ったことをログに残す", logs.join(" / "));
+
+  // 名前でも見つからず、固定IDもゴミ箱なら null（古い台帳を読み続けない）
+  logs.length = 0;
+  eq(ledgerByName_("行きたい場所台帳_base", "old-id"), "null",
+     "★固定IDの先がゴミ箱なら読まない（null）");
+  ok(logs.some(l => /ゴミ箱にあります/.test(l)), "ゴミ箱だったことを警告に出す", logs.join(" / "));
+
+  eq(ledgerByName_("ない台帳_base", null), "null", "どこにも無ければ null");
+}
+has(gs, "function placesFile_() {\n  return ledgerByName_(CONFIG.placesFileName, CONFIG.placesFileId);",
+    "★行きたい場所台帳は名前優先で探す");
+has(gs, "function mtnFile_() {\n  return ledgerByName_(CONFIG.mtnFileName, CONFIG.mtnFileId);",
+    "★低山台帳も名前優先");
+has(gs, "function wantFile_() {\n  return ledgerByName_(CONFIG.wantFileName, CONFIG.wantFileId);",
+    "★WANT台帳も名前優先");
+has(gs, "var w = wantFile_();", "★更新ガードも名前で取った最新ファイルの更新時刻を見る");
+ok((gs.match(/isTrashed\(\)/g) || []).length >= 8,
+   "★Driveからファイルを取るところでは、ゴミ箱のものを外している",
+   "isTrashed の数: " + (gs.match(/isTrashed\(\)/g) || []).length);
+
 console.log("\n【要件1】台帳 → places の変換");
 const P = readPlaces_();
 ok(!!P, "台帳を読めた", "null が返った");
 eq(P.count, 6, "★却下1件を除いた6件（空行も落ちる）");
 eq(P.dropped, 1, "★却下は1件だけ数えて出力しない");
 eq(P.rows.filter(r => r.name === "見送った場所").length, 0, "★却下の場所は places に入らない");
+// v1.7.2：状態の書き方のゆれ（済／行った、予定／計画）
+eq(STATUS_DONE_RE.test("行った") + "/" + STATUS_DONE_RE.test("済"), "true/true", "★「行った」も「済」として数える");
+eq(STATUS_PLAN_RE.test("計画") + "/" + STATUS_PLAN_RE.test("予定"), "true/true", "★「計画」も「予定」として数える");
+eq(STATUS_DONE_RE.test("未"), "false", "「未」は済ではない");
 eq(P.noGeo.join(","), "座標のない場所", "★緯度経度が空の場所を警告に出す");
 eq(P.rows.filter(r => r.name === "座標のない場所").length, 1, "★でも places からは落とさない（写真タイルには出る）");
 ok(logs.some(l => /⚠️ 緯度経度が空/.test(l)), "★ログに警告が出ている", logs.join(" / "));

@@ -1594,10 +1594,15 @@ function computeGoals(D){
     var goal=wtGoal(r.goal);
     rooms[room].push({room:room,item:r.item,goalText:r.goal,goal:goal,due:r.due,
       how:r.how,note:r.note,mode:mode,metric:metric,cur:cur,
+      /* v1.7.2：作り直したWANT台帳は「現状の取り方」ではなく**現状の実測**と**状態**を書く形になった。
+         自動で取れる4項目はこれまでどおり差分を出し、それ以外は台帳に書いてある現状をそのまま出す。 */
+      written:r.cur||null, state:r.state||null,
       diff:(mode==='auto'&&cur)? wtDiff(goal,cur.value) : null});
   });
   var n=0; Object.keys(rooms).forEach(k=>n+=rooms[k].length);
-  return {rooms:rooms,count:n,total:((w&&w.rows)||[]).length,
+  // 台帳に「現状」が書いてある行が1つでもあれば、新レイアウトとみなす（説明文の出し分けに使う）
+  var written=((w&&w.rows)||[]).some(function(r){ return !!r.cur });
+  return {rooms:rooms,count:n,total:((w&&w.rows)||[]).length,written:written,
           asOf:(w&&w.asOf)||null,url:(w&&w.fileUrl)||null,title:(w&&w.title)||null};
 }
 
@@ -2399,8 +2404,11 @@ function renderGoals(){
       '<span style="margin-left:auto;font-size:10px;color:var(--muted);font-weight:700">WANT台帳'+
       (G.asOf? '（'+esc(G.asOf)+' 更新）':'')+'</span></div>'+
       list.map(goalRowHtml).join('')+
-      '<div class="gsub">「現状の取り方」が<b>自動</b>の行だけ、いまの数字と差分を出しています。'+
-      '<b>手動</b>・<b>半自動</b>の行は目標と備考だけです。'+
+      '<div class="gsub">'+(G.written
+        ? '現状はWANT台帳に書いてあるものをそのまま出しています（体重など自動で取れる項目は、'+
+          'アプリ側の数字と差分も出します）。'
+        : '「現状の取り方」が<b>自動</b>の行だけ、いまの数字と差分を出しています。'+
+          '<b>手動</b>・<b>半自動</b>の行は目標と備考だけです。')+
       'WANT台帳に行を足したり目標値を書き換えたりすれば、次の更新でそのままここに出ます。</div>'+
       (G.url? '<a class="dlink" href="'+esc(G.url)+'" target="_blank" rel="noopener">'+
               '📂 WANT台帳を開く<span class="arw">→</span></a>' : '');
@@ -2415,8 +2423,9 @@ function goalRowHtml(g){
   const cell=(t,cls)=>'<div class="gv'+(String(t).length>8? ' sm':'')+(cls? ' '+cls:'')+'">'+esc(t)+'</div>';
   // 現状
   let curHtml='<div class="gv sm">—</div>';
-  if(g.mode!=='auto') curHtml='<div class="gv sm">'+esc(WT_MODE_LABEL[g.mode])+'で確認</div>';
-  else if(g.cur) curHtml=cell(fmt(g.cur.value));
+  if(g.mode==='auto'&&g.cur) curHtml=cell(fmt(g.cur.value));
+  else if(g.written) curHtml=cell(g.written);            // v1.7.2：台帳に書いてある現状
+  else if(g.mode!=='auto') curHtml='<div class="gv sm">'+esc(WT_MODE_LABEL[g.mode])+'で確認</div>';
   else curHtml='<div class="gv sm">まだ取れていません</div>';
   // 差分
   let dHtml='<div class="gv sm">—</div>', hint='';
@@ -2435,12 +2444,15 @@ function goalRowHtml(g){
     // 差分が出せない理由は3つある。どれなのかを、そのまま日本語で書く
     if(!g.metric) hint='この項目の現状は、まだ自動では取れません（WANT台帳の「現状の取り方」に'+
                        '対応を足すと、ここに出るようになります）。';
+    else if(g.written) hint='';                       // 台帳に現状が書いてあるので、それを出している
     else if(!g.cur) hint='現状はまだ台帳から取れていません。';
     else hint='目標値がまだ数字で決まっていないので、差分はお休みです。';
   }
   return '<div class="gr">'+
     '<div class="gn">'+esc(g.item||'')+
-      '<span class="gmode '+g.mode+'">'+esc(WT_MODE_LABEL[g.mode])+'</span>'+
+      // v1.7.2：台帳に「状態」が書いてあればそれを出す（無ければ従来どおり自動／手動の別）
+      (g.state? '<span class="gmode auto">'+esc(g.state)+'</span>'
+              : '<span class="gmode '+g.mode+'">'+esc(WT_MODE_LABEL[g.mode])+'</span>')+
       (g.due? '<span class="gmode">期限 '+esc(g.due)+'</span>':'')+'</div>'+
     '<div class="gg">'+
       '<div><div class="gl">目標</div><div class="gv sm">'+esc(g.goalText||'—')+'</div></div>'+
@@ -3046,8 +3058,9 @@ function renderPlacesLink(){
   }
   /* v1.7.1：低山100は「踏破n座・あとm座」と言葉で出す。
      「0/100」だと読む側が引き算をすることになるので、残りの数まで計算して書く。 */
-  const mDone=mt.filter(p=>/済/.test(String(p.status||''))).length;
-  const planned=rows.filter(p=>/予定/.test(String(p.status||''))).length;
+  // v1.7.2：状態の書き方のゆれ（済／行った、予定／計画）をまとめて拾う
+  const mDone=mt.filter(p=>/済|行った|登った|完了/.test(String(p.status||''))).length;
+  const planned=rows.filter(p=>/予定|計画/.test(String(p.status||''))).length;
   t.textContent='行きたい場所マップ（場所'+rows.length+
     '・低山 踏破'+mDone+'座・あと'+Math.max(0,goal-mDone)+'座）';
   sub.textContent='地図と写真で見る'+(planned? '・予定 '+planned+'件':'')+

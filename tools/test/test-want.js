@@ -35,9 +35,15 @@ const pickGs = (a, b) => {
   return gs.slice(i, j);
 };
 const Logger = { log: () => {} };
-const CONFIG = { birthDate: "1969-04-30" };
 eval(pickGs("function ecoHistory_(all) {", "// ===== v1.4: WANT台帳"));
 eval(pickGs("// ===== v1.4: 自己バージョン", "// ===== 変換ヘルパー"));
+// v1.7.2：WANT台帳の読み取り本体（新旧レイアウトの両対応）を検証するため
+const Utilities = { formatDate: () => "2026-08-22 22:34" };
+eval(pickGs("var LIMITLESS_FOLDER_ID", "// ===== STEP1"));   // CONFIG（誕生日・台帳フォルダなど）
+eval(pickGs("function normHead_(v) {", "// 見出し行を探して"));
+eval(pickGs("/** 見出し行を探し、項目名（別名の配列）→ 列番号 の対応を作る", "// ===== v1.2: リミットレス台帳"));
+eval(pickGs("function str_(v) {", "function mood_(v) {"));
+eval(pickGs("var WANT_COLS", "// ===== v1.4: 週報書棚"));
 
 console.log("\n【Apps Script側】自己バージョン ver57.x");
 eq(selfVersion_("2026-08-17").version, "ver57.04", "★2026年8月は ver57.04（1969-04-30生まれ）");
@@ -78,6 +84,8 @@ eval(leak(pickHtml("/* ===== util ===== */", "/* ===== state ===== */")));
 eval(leak(pickHtml("/* ===== 分析メモ（4視点）ここから =====", "/* ===== 分析メモ ここまで ===== */")));
 eval(leak(pickHtml("/* ===== 知識の部屋（リミットレス台帳の集計）ここから =====", "/* ===== 知識の部屋 ここまで ===== */")));
 eval(leak(pickHtml("/* ===== v1.4 目標×差分（WANT台帳）ここから =====", "/* ===== v1.4 目標×差分 ここまで ===== */")));
+// v1.7.2：目標カード1行のHTML（DOMに触らず文字列を返すだけなので、ここで直接呼べる）
+eval(leak(pickHtml("function goalRowHtml(g){", "/* ===== v1.4 📎3点セット")));
 eval(leak(pickHtml("/* ===== v1.4 3点セット（📖最新を読む／🗄書棚／📊全期間）ここから =====",
                    "/* ===== v1.4 3点セット ここまで ===== */")));
 
@@ -85,6 +93,58 @@ console.log("\n【アプリ側】ver57.x が Apps Script側と一致する");
 ["2026-08-17", "2026-04-01", "2026-03-31", "2027-04-30", "1969-04-30"].forEach(d => {
   eq(selfVersion(d).version, selfVersion_(d).version, "★" + d + " の ver が両側で一致");
 });
+
+/* ===== v1.7.2：作り直したWANT台帳（新レイアウト）を読めるか ===== */
+console.log("\n【v1.7.2】WANT台帳の新レイアウト（現状／状態／メモ）");
+{
+  // 2026-08-22に作り直された本物の見出し。「現状の取り方」ではなく「現状(2026/8/22)」になった
+  const NEW_SHEET = [
+    ["部屋", "項目", "目標値", "期限", "現状(2026/8/22)", "状態", "メモ"],
+    ["健康", "体重", "78kg", "2026/12/31", "83.1kg", "進行中", "月▲1.1kgペースで到達圏"],
+    ["経済", "個人金融資産の目標額", "7500万円", "2034/4(65歳)", "3213万円(2026/8/21)", "進行中", "あと4287万円"],
+    ["仕事", "Udemyコース数", "15コース目まで(あと5本)", "2026/12/31", "10コース(累計70294人)", "進行中", "年内マスト"],
+    ["", "", "", "", "", "", ""]
+  ];
+  const OLD_SHEET = [
+    ["部屋", "項目", "目標値", "期限", "現状の取り方", "備考"],
+    ["健康", "体重", "78kg(理想)〜72kg(本音)", "2027/4", "自動: health直近のweight", "巡航目標値"],
+    ["精神", "百クラブ", "常に1つ以上進行中", "常時", "手動: 週報で確認", ""]
+  ];
+  const run = sheet => {
+    global.SpreadsheetApp = { openById: () => ({ getSheets: () => [{ getDataRange: () => ({ getValues: () => sheet }) }] }) };
+    wantFile_ = () => ({ getId: () => "w", getUrl: () => "https://docs.google.com/w",
+                         getName: () => "WANT台帳_base", getLastUpdated: () => new Date(0) });
+    return readWant_();
+  };
+  const W = run(NEW_SHEET);
+  eq(W.rows.length, 3, "新レイアウトを3行読める（空行は落ちる）");
+  eq(W.rows[0].cur, "83.1kg", "★「現状」に書いてある実測をそのまま持ち帰る");
+  eq(W.rows[0].state, "進行中", "★「状態」も持ち帰る");
+  eq(W.rows[0].note, "月▲1.1kgペースで到達圏", "★「メモ」は備考のかわりに読む");
+  eq(W.rows[0].how, "null", "★新レイアウトに「現状の取り方」は無いので null");
+  eq(W.rows[1].cur, "3213万円(2026/8/21)", "経済の現状");
+
+  const O = run(OLD_SHEET);
+  eq(O.rows.length, 2, "旧レイアウトもこれまでどおり読める");
+  eq(O.rows[0].how, "自動: health直近のweight", "旧レイアウトの「現状の取り方」");
+  eq(O.rows[0].cur, "null",
+     "★旧レイアウトでは cur を出さない（「自動: …」を実測として画面に出さないため）");
+  eq(O.rows[0].note, "巡航目標値", "旧レイアウトの「備考」");
+
+  // 画面側：自動で取れない行は、台帳に書いてある現状をそのまま出す
+  const D2 = { want: { rows: [
+    { room: "健康", item: "体重", goal: "78kg", due: "2026/12/31", cur: "83.1kg", state: "進行中", note: "" },
+    { room: "経済", item: "個人金融資産", goal: "7500万円", due: "2034/4", cur: "3213万円", state: "進行中", note: "" }
+  ] }, health: [], udemyCourses: [], eco: { rows: [] } };
+  const G2 = computeGoals(D2);
+  eq(G2.written, "true", "★台帳に現状が書いてある＝新レイアウトと分かる");
+  eq(G2.rooms.health[0].written, "83.1kg", "★書いてある現状が画面まで届く");
+  eq(G2.rooms.health[0].state, "進行中", "状態も届く");
+  const html = goalRowHtml(G2.rooms.health[0]);
+  ok(html.indexOf("83.1kg") >= 0, "★現状の欄に「83.1kg」が出る", html.slice(0, 300));
+  ok(html.indexOf("進行中") >= 0, "★状態のタグが出る", html.slice(0, 300));
+  ok(html.indexOf("手動で確認") < 0, "★「手動で確認」ではなく実測を出す", html.slice(0, 200));
+}
 
 console.log("\n【アプリ側】「現状の取り方」から自動／半自動／手動を見分ける");
 eq(wtMode("自動: health直近のweight"), "auto", "「自動:」で始まれば自動");

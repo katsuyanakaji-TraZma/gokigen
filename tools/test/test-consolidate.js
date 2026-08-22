@@ -232,7 +232,8 @@ global.DriveApp = {
       let i = 0;
       const list = DRIVE_FILES.map(f => ({
         getName: () => f.name, getId: () => f.name,
-        getMimeType: () => f.mime, getLastUpdated: () => ({ getTime: () => f.t })
+        getMimeType: () => f.mime, getLastUpdated: () => ({ getTime: () => f.t }),
+        isTrashed: () => !!f.trashed          // v1.7.2：ゴミ箱のファイルは読まない
       }));
       return { hasNext: () => i < list.length, next: () => list[i++] };
     }
@@ -327,6 +328,16 @@ has(gs, "function timeIt_", "計測の道具がある");
   has(gs, "timeIt_('" + n + "'", n + "の時間を測っている"));
 has(gs, "⏱ データ作成の合計", "全体の時間も出す");
 has(gs, "直下のみ", "フォルダ直下だけを読むと明記してある");
+
+/* ===== v1.7.2：ゴミ箱の同名ファイルは読まない ===== */
+console.log("\n【v1.7.2】台帳を作り直したとき、ゴミ箱の古いファイルを読まない");
+DRIVE_FILES.push({ name: "GOKIGEN台帳_base", t: 999, mime: "SHEET", trashed: true });
+const afterTrash = filesOldestFirst_("folder", "GOKIGEN台帳_base").map(f => f.getName());
+ok(afterTrash.filter(n => n === "GOKIGEN台帳_base").length === 1,
+   "★ゴミ箱に同名のファイルがあっても、生きている方だけを読む",
+   "読んだもの: " + afterTrash.join(" / "));
+DRIVE_FILES.pop();
+
 
 console.log(fail ? "\n❌ " + fail + "件 失敗\n" : "\n全ケース合格 ✅\n");
 process.exit(fail ? 1 : 0);
