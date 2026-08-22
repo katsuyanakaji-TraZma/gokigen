@@ -1343,5 +1343,37 @@
    9,
    10
   ]
+ },
+ {
+  "id": "M46",
+  "name": "大菩薩嶺",
+  "area": "山梨・甲州",
+  "lat": 35.749,
+  "lng": 138.846,
+  "elev": 2057,
+  "ropeway": "なし(上日川峠まで車)",
+  "walk": "150分",
+  "summer": "○",
+  "monthsText": "5,6,7,8,9,10,11",
+  "months": [
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "effort": "低",
+  "onsen": "雲峰荘(裂石温泉)",
+  "why": "日本百名山で最も手軽な2000m峰・大菩薩峠と富士山の稜線歩き",
+  "status": "計画",
+  "wentAt": null,
+  "planned": "10月(日未定)・アキさんと一泊二日",
+  "note": "上日川峠周回＋勝沼ワイナリー・ほうとう",
+  "photo": null,
+  "video": null,
+  "source": "https://www.yamanashi-kankou.jp/",
+  "output": null
  }
 ]

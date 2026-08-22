@@ -1,7 +1,7 @@
 {
  "source": "Wikimedia Commons",
  "fetchedAt": "2026-08-22",
- "count": 95,
+ "count": 117,
  "photos": {
   "小田急山中湖フォレストコテージ": {
    "title": "Mount Fuji and Lake Yamanaka (5767436265).jpg",
@@ -1047,6 +1047,248 @@
    "license": "CC BY-SA 3.0",
    "score": -1,
    "query": "Mount Ono Yamakita Kanagawa pasture"
+  },
+  "屋久島・縄文杉": {
+   "title": "Jomon Sugi 03.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Jomon_Sugi_03.jpg/1280px-Jomon_Sugi_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Jomon_Sugi_03.jpg",
+   "w": 1200,
+   "h": 800,
+   "artist": "Σ64",
+   "license": "CC BY 3.0",
+   "score": -4,
+   "query": "Jomon Sugi Yakushima"
+  },
+  "熊野古道・中辺路": {
+   "title": "Kumano Kodo pilgrimage route Nakahechi From Gyuba-Dojiguchi To Chikatsuyu World heritage 熊野古道 中辺路 牛馬童子口～近露02.JPG",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Kumano_Kodo_pilgrimage_route_Nakahechi_From_Gyuba-Dojiguchi_To_Chikatsuyu_World_heritage_%E7%86%8A%E9%87%8E%E5%8F%A4%E9%81%93_%E4%B8%AD%E8%BE%BA%E8%B7%AF_%E7%89%9B%E9%A6%AC%E7%AB%A5%E5%AD%90%E5%8F%A3%EF%BD%9E%E8%BF%91%E9%9C%B202.JPG/1280px-Kumano_Kodo_pilgrimage_route_Nakahechi_From_Gyuba-Dojiguchi_To_Chikatsuyu_World_heritage_%E7%86%8A%E9%87%8E%E5%8F%A4%E9%81%93_%E4%B8%AD%E8%BE%BA%E8%B7%AF_%E7%89%9B%E9%A6%AC%E7%AB%A5%E5%AD%90%E5%8F%A3%EF%BD%9E%E8%BF%91%E9%9C%B202.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Kumano_Kodo_pilgrimage_route_Nakahechi_From_Gyuba-Dojiguchi_To_Chikatsuyu_World_heritage_%E7%86%8A%E9%87%8E%E5%8F%A4%E9%81%93_%E4%B8%AD%E8%BE%BA%E8%B7%AF_%E7%89%9B%E9%A6%AC%E7%AB%A5%E5%AD%90%E5%8F%A3%EF%BD%9E%E8%BF%91%E9%9C%B202.JPG",
+   "w": 1200,
+   "h": 900,
+   "artist": "Nekosuki",
+   "license": "CC BY-SA 4.0",
+   "score": -1,
+   "query": "Kumano Kodo Nakahechi"
+  },
+  "立山黒部・雪の大谷": {
+   "title": "Tateyama Toll Road and Yuki-no-otani.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Tateyama_Toll_Road_and_Yuki-no-otani.jpg/1280px-Tateyama_Toll_Road_and_Yuki-no-otani.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Tateyama_Toll_Road_and_Yuki-no-otani.jpg",
+   "w": 1200,
+   "h": 960,
+   "artist": "Alpsdake",
+   "license": "CC BY-SA 4.0",
+   "score": -1,
+   "query": "Yuki-no-Otani snow wall Tateyama"
+  },
+  "白川郷・冬のライトアップ": {
+   "title": "Shirakawa-go 20170202-3.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Shirakawa-go_20170202-3.jpg/1280px-Shirakawa-go_20170202-3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Shirakawa-go_20170202-3.jpg",
+   "w": 1200,
+   "h": 800,
+   "artist": "Suicasmo",
+   "license": "CC BY-SA 4.0",
+   "score": -1,
+   "query": "Shirakawa-go winter"
+  },
+  "長岡まつり大花火大会": {
+   "title": "2007 Nagaoka Festival 004 Edit.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2007_Nagaoka_Festival_004_Edit.jpg/1280px-2007_Nagaoka_Festival_004_Edit.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:2007_Nagaoka_Festival_004_Edit.jpg",
+   "w": 1200,
+   "h": 957,
+   "artist": "Kropsoq",
+   "license": "CC BY-SA 3.0",
+   "score": -1,
+   "query": "Nagaoka Fireworks Festival"
+  },
+  "大曲の花火(全国花火競技大会)": {
+   "title": "Omagari Hanabi street.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Omagari_Hanabi_street.jpg/1280px-Omagari_Hanabi_street.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Omagari_Hanabi_street.jpg",
+   "w": 1200,
+   "h": 675,
+   "artist": "Drivephotographer",
+   "license": "CC0",
+   "score": -1,
+   "query": "Omagari no Hanabi Daisen"
+  },
+  "熊野大花火大会": {
+   "title": "Oniga-jo01.JPG",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Oniga-jo01.JPG/1280px-Oniga-jo01.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Oniga-jo01.JPG",
+   "w": 1200,
+   "h": 812,
+   "artist": "Captain76",
+   "license": "CC BY-SA 3.0",
+   "score": -1,
+   "query": "Onigajo Mie"
+  },
+  "氷見の寒ブリ": {
+   "title": "Looking south from near Nadaura coast in Himi, Toyama - Apr 29, 2011.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Looking_south_from_near_Nadaura_coast_in_Himi%2C_Toyama_-_Apr_29%2C_2011.jpg/1280px-Looking_south_from_near_Nadaura_coast_in_Himi%2C_Toyama_-_Apr_29%2C_2011.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Looking_south_from_near_Nadaura_coast_in_Himi,_Toyama_-_Apr_29,_2011.jpg",
+   "w": 1200,
+   "h": 795,
+   "artist": "the.Firebottle",
+   "license": "CC BY-SA 2.0",
+   "score": -1,
+   "query": "Himi Toyama bay"
+  },
+  "間人ガニ(京丹後)": {
+   "title": "Taiza coast.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Taiza_coast.jpg/1280px-Taiza_coast.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Taiza_coast.jpg",
+   "w": 1200,
+   "h": 900,
+   "artist": "Bakkai",
+   "license": "CC BY 3.0",
+   "score": -1,
+   "query": "Taiza Kyotango coast"
+  },
+  "大間のマグロ": {
+   "title": "Shimokita-oma-1.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Shimokita-oma-1.jpg/1280px-Shimokita-oma-1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Shimokita-oma-1.jpg",
+   "w": 1200,
+   "h": 900,
+   "artist": "Douglas P Perkins (Douglaspperkins (talk))",
+   "license": "CC BY 3.0",
+   "score": -2,
+   "query": "Oma town Shimokita"
+  },
+  "下関の天然とらふぐ": {
+   "title": "View from 2nd floor of Karato Market (Shimonoseki Port).JPG",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/View_from_2nd_floor_of_Karato_Market_%28Shimonoseki_Port%29.JPG/1280px-View_from_2nd_floor_of_Karato_Market_%28Shimonoseki_Port%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:View_from_2nd_floor_of_Karato_Market_(Shimonoseki_Port).JPG",
+   "w": 1200,
+   "h": 900,
+   "artist": "そらみみ (Soramimi)",
+   "license": "CC BY-SA 4.0",
+   "score": -1,
+   "query": "Karato Market Shimonoseki"
+  },
+  "多胡碑(高崎・上野三碑)": {
+   "title": "多胡碑記念館.JPG",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/%E5%A4%9A%E8%83%A1%E7%A2%91%E8%A8%98%E5%BF%B5%E9%A4%A8.JPG/1280px-%E5%A4%9A%E8%83%A1%E7%A2%91%E8%A8%98%E5%BF%B5%E9%A4%A8.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:%E5%A4%9A%E8%83%A1%E7%A2%91%E8%A8%98%E5%BF%B5%E9%A4%A8.JPG",
+   "w": 1200,
+   "h": 900,
+   "artist": "Bonsaiship",
+   "license": "CC BY-SA 3.0",
+   "score": -2,
+   "query": "多胡碑"
+  },
+  "マチュピチュ・インカ道4日間": {
+   "title": "Machu Picchu, Perú, 2015-07-30, DD 47.JPG",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Machu_Picchu%2C_Per%C3%BA%2C_2015-07-30%2C_DD_47.JPG/1280px-Machu_Picchu%2C_Per%C3%BA%2C_2015-07-30%2C_DD_47.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Machu_Picchu,_Per%C3%BA,_2015-07-30,_DD_47.JPG",
+   "w": 1200,
+   "h": 798,
+   "artist": "Diego Delso",
+   "license": "CC BY-SA 4.0",
+   "score": -2,
+   "query": "Machu Picchu"
+  },
+  "サンティアゴ巡礼路(最後の100km)": {
+   "title": "Camino Francés, Santiago de Compostela 02.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Camino_Franc%C3%A9s%2C_Santiago_de_Compostela_02.jpg/1280px-Camino_Franc%C3%A9s%2C_Santiago_de_Compostela_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Camino_Franc%C3%A9s,_Santiago_de_Compostela_02.jpg",
+   "w": 1200,
+   "h": 900,
+   "artist": "Simon Burchell",
+   "license": "CC BY-SA 4.0",
+   "score": -1,
+   "query": "Camino de Santiago pilgrims"
+  },
+  "セレンゲティ大移動": {
+   "title": "Serengeti wildebeest migration JF.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Serengeti_wildebeest_migration_JF.jpg/1280px-Serengeti_wildebeest_migration_JF.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Serengeti_wildebeest_migration_JF.jpg",
+   "w": 1200,
+   "h": 855,
+   "artist": "Wolves201",
+   "license": "CC BY-SA 4.0",
+   "score": -1,
+   "query": "Serengeti wildebeest migration"
+  },
+  "サン・セバスチャンのバル巡り": {
+   "title": "San Sebastian La Concha-20120902-RM-125922.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/San_Sebastian_La_Concha-20120902-RM-125922.jpg/1280px-San_Sebastian_La_Concha-20120902-RM-125922.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:San_Sebastian_La_Concha-20120902-RM-125922.jpg",
+   "w": 1200,
+   "h": 900,
+   "artist": "Ermell",
+   "license": "CC BY-SA 4.0",
+   "score": -1,
+   "query": "San Sebastian La Concha"
+  },
+  "アルバの白トリュフ": {
+   "title": "Piazza Pertinace - panoramio.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Piazza_Pertinace_-_panoramio.jpg/1280px-Piazza_Pertinace_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Piazza_Pertinace_-_panoramio.jpg",
+   "w": 1200,
+   "h": 923,
+   "artist": "gertrudis2010",
+   "license": "CC BY-SA 3.0",
+   "score": -15,
+   "query": "座標から半径3km"
+  },
+  "北京ダック＋万里の長城": {
+   "title": "Great Wall of China July 2006.JPG",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Great_Wall_of_China_July_2006.JPG/1280px-Great_Wall_of_China_July_2006.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Great_Wall_of_China_July_2006.JPG",
+   "w": 1200,
+   "h": 898,
+   "artist": "Velatrix",
+   "license": "CC0",
+   "score": -1,
+   "query": "Great Wall of China Mutianyu"
+  },
+  "ボローニャの手打ちパスタ": {
+   "title": "Bologna - Piazza Maggiore from Palazzo Comunale.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Bologna_-_Piazza_Maggiore_from_Palazzo_Comunale.jpg/1280px-Bologna_-_Piazza_Maggiore_from_Palazzo_Comunale.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Bologna_-_Piazza_Maggiore_from_Palazzo_Comunale.jpg",
+   "w": 1200,
+   "h": 654,
+   "artist": "Ingo Mehling",
+   "license": "CC BY-SA 4.0",
+   "score": -1,
+   "query": "Bologna Piazza Maggiore"
+  },
+  "シドニー年越し花火": {
+   "title": "Sydney habour bridge & opera house fireworks new year eve 2008.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Sydney_habour_bridge_%26_opera_house_fireworks_new_year_eve_2008.jpg/1280px-Sydney_habour_bridge_%26_opera_house_fireworks_new_year_eve_2008.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Sydney_habour_bridge_%26_opera_house_fireworks_new_year_eve_2008.jpg",
+   "w": 1200,
+   "h": 744,
+   "artist": "Linh_rOm",
+   "license": "CC BY 2.0",
+   "score": -1,
+   "query": "Sydney New Year fireworks Harbour Bridge"
+  },
+  "大菩薩嶺": {
+   "title": "Mount Daibosatsurei.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Mount_Daibosatsurei.jpg/1280px-Mount_Daibosatsurei.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Mount_Daibosatsurei.jpg",
+   "w": 1200,
+   "h": 900,
+   "artist": "Oyama no taisho",
+   "license": "Public domain",
+   "score": -2,
+   "query": "Mount Daibosatsu"
+  },
+  "萩・津和野(母方ルーツを辿る)": {
+   "title": "Tonomachi-dori Street in Tsuwano, Kanoashi, Shimane 3.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Tonomachi-dori_Street_in_Tsuwano%2C_Kanoashi%2C_Shimane_3.jpg/1280px-Tonomachi-dori_Street_in_Tsuwano%2C_Kanoashi%2C_Shimane_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "full": "https://commons.wikimedia.org/wiki/File:Tonomachi-dori_Street_in_Tsuwano,_Kanoashi,_Shimane_3.jpg",
+   "w": 1200,
+   "h": 900,
+   "artist": "そらみみ",
+   "license": "CC BY-SA 4.0",
+   "score": -1,
+   "query": "Tonomachi-dori Street in Tsuwano"
   }
  }
 }

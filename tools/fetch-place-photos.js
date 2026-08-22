@@ -107,7 +107,29 @@ const HINTS = {
   "ホノルルマラソン": ["Honolulu Marathon"],
   "台湾(九份・太魯閣・日月潭)": ["Jiufen Taiwan", "Taroko Gorge Taiwan"],
   "スイスアルプス・ユングフラウ": ["Jungfraujoch", "Eiger Monch Jungfrau panorama"],
-  "イタリア・ドロミテ": ["Dolomites Tre Cime"]
+  "イタリア・ドロミテ": ["Dolomites Tre Cime"],
+  // v1.7.3：作り直した台帳で増えた21件
+  "屋久島・縄文杉": ["Jomon Sugi Yakushima", "Yakushima cedar forest"],
+  "熊野古道・中辺路": ["Kumano Kodo Nakahechi", "Kumano Kodo trail"],
+  "立山黒部・雪の大谷": ["Yuki-no-Otani snow wall Tateyama", "Tateyama Kurobe Alpine Route snow corridor"],
+  "白川郷・冬のライトアップ": ["Shirakawa-go winter", "Shirakawago gassho houses snow"],
+  "長岡まつり大花火大会": ["Nagaoka Fireworks Festival", "Nagaoka hanabi Niigata"],
+  "大曲の花火(全国花火競技大会)": ["Omagari fireworks", "Omagari no Hanabi Daisen"],
+  "熊野大花火大会": ["Onigajo Mie", "Kumano fireworks Mie"],
+  "氷見の寒ブリ": ["Himi Toyama bay", "Himi fishing port Toyama"],
+  "間人ガニ(京丹後)": ["Taiza Kyotango coast", "Kyotango Tango Peninsula sea"],
+  "大間のマグロ": ["Oma Aomori cape", "Oma town Shimokita"],
+  "下関の天然とらふぐ": ["Karato Market Shimonoseki", "Shimonoseki Kanmon Strait"],
+  "萩・津和野(母方ルーツを辿る)": ["Tonomachi-dori Street in Tsuwano", "萩城下町 Gofukumachisuji"],
+  "多胡碑(高崎・上野三碑)": ["Tago Hi Takasaki", "Tagohi monument Gunma"],
+  "マチュピチュ・インカ道4日間": ["Machu Picchu", "Inca Trail Peru"],
+  "サンティアゴ巡礼路(最後の100km)": ["Camino de Santiago pilgrims", "Santiago de Compostela cathedral"],
+  "セレンゲティ大移動": ["Serengeti wildebeest migration", "Serengeti National Park"],
+  "サン・セバスチャンのバル巡り": ["San Sebastian La Concha", "Donostia San Sebastian old town"],
+  "アルバの白トリュフ": ["Alba Piedmont Italy", "Langhe Barolo vineyards"],
+  "北京ダック＋万里の長城": ["Great Wall of China Mutianyu", "Great Wall Badaling"],
+  "ボローニャの手打ちパスタ": ["Bologna Piazza Maggiore", "Bologna porticoes Italy"],
+  "シドニー年越し花火": ["Sydney New Year fireworks Harbour Bridge", "Sydney Harbour Bridge fireworks"]
 };
 
 /* Commons は無記名だと1秒1回くらいが上限。速く回すと 429 で全部落ちる
@@ -162,7 +184,8 @@ const MTN_HINTS = {
   "天上山(カチカチ山)": ["Mount Tenjo Kawaguchiko"],
   "由布岳": ["Mount Yufu"],
   "霧島 高千穂峰": ["Mount Takachihonomine Kirishima"],
-  "函館山": ["Mount Hakodate"]
+  "函館山": ["Mount Hakodate"],
+  "大菩薩嶺": ["Mount Daibosatsu", "Daibosatsurei Yamanashi"]
 };
 
 async function jget(params) {
@@ -184,11 +207,14 @@ function toCand(pg) {
   if (!/\.(jpe?g|png)$/i.test(t)) return null;                    // svg・pdf・音声は除く
   if (/(map|地図|logo|icon|coat of arms|flag|diagram|plaque|signboard|案内板)/i.test(t)) return null;
   // 絵画・版画・古地図をはじく（「Jungfrau」で19世紀の油絵を掴んだため）
-  if (/(painting|oil on canvas|lithograph|engraving|woodblock|drawing|18\d\d|19[0-4]\d)/i.test(t)) return null;
+  // 1900年代の写真・絵は古すぎる（「Hagi Castle Town Aerial photograph.1976」を掴んだため）
+  if (/(painting|oil on canvas|lithograph|engraving|woodblock|drawing|18\d\d|19\d\d)/i.test(t)) return null;
   // 駅舎・道の駅・インターチェンジをはじく（「釧路湿原」で駅の写真を掴んだため）
   if (/(-STA\.|station|Michinoeki|道の駅|interchange|parking)/i.test(t)) return null;
   // 消防署・役所・道路標識をはじく（「Mount Tsukuba」で消防署の写真を掴んだため）
   if (/(fire department|police|city hall|^Sign,|signpost|Route \d)/i.test(t)) return null;
+  // 現地の小物（消毒スプレー・自販機・看板）をはじく
+  if (/(alcohol spray|sanitiz|vending machine|poster|banner|manhole)/i.test(t)) return null;
   if (!ii.width || !ii.height) return null;
   if (ii.width / ii.height < 1.15) return null;                   // 横長だけ（16:9のタイルに使う）
   if (ii.width < 900) return null;
@@ -228,13 +254,17 @@ async function nearby(lat, lng, radius) {
   return cands;
 }
 
-/** data.json から拾う。まだ入っていなければ tools/*-seed.json で代用する
-    （GASを回す前でも写真だけ先に集められるように） */
+/** data.json と tools/*-seed.json を**重ねて**使う（名前が同じなら data.json を優先）。
+    台帳を作り直したあと、まだ runNow を回していないタイミングでも、
+    seed に書いた新しい行の写真を先に集められる。 */
 function load(data, key, seedName) {
-  let rows = ((data[key] || {}).rows) || [];
-  if (!rows.length) {
-    const seed = path.join(__dirname, seedName);
-    if (fs.existsSync(seed)) rows = JSON.parse(fs.readFileSync(seed, "utf8"));
+  const rows = ((data[key] || {}).rows) || [];
+  const seen = new Set(rows.map(r => r.name));
+  const seed = path.join(__dirname, seedName);
+  if (fs.existsSync(seed)) {
+    JSON.parse(fs.readFileSync(seed, "utf8")).forEach(r => {
+      if (!seen.has(r.name)) { seen.add(r.name); rows.push(r); }
+    });
   }
   return rows;
 }
