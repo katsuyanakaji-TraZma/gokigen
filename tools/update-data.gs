@@ -26,6 +26,11 @@
  *   ・note台帳（GOKIGEN台帳フォルダの中の「note台帳ログ_YYYY-MM-DD」）→ 仕事タブのnoteカード。
  *   ・Udemyの月間サニティの目安を 1,500人 → 1,800人 に引き上げ（正当な増加での誤検知を防ぐ）。
  *
+ * v1.7で足したもの：
+ *   ・行きたい場所台帳（GOKIGEN台帳フォルダの「行きたい場所台帳_base」）を読むだけ。
+ *     家族の部屋から開く「行きたい場所マップ」（places.html）の材料。
+ *     **新しいOAuthスコープはゼロ**（スプレッドシート1本を読むだけ）。台帳への書き戻しもしない。
+ *
  * 1日4回（8時・12時・18時・22時）自動実行。Google側のサーバーで動くので Mac mini の電源は関係ありません。
  * 前回の実行以降にどちらのフォルダにも新規/更新ファイルが無ければ、作り直さずスキップします。
  *
@@ -63,6 +68,12 @@ var WEEKLY_FOLDER_ID = '1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk';
 // v1.4：自己バージョン（ver57.x）の起点。誕生月を .00 として、月がひとつ進むごとに .01 上がる。
 var BIRTH_DATE = '1969-04-30';
 
+// v1.7：行きたい場所台帳（GOKIGEN台帳フォルダの中のスプレッドシート1本）。
+// 家族の部屋から開く「行きたい場所マップ」（places.html）の材料。
+// 名前でも探せるようにしてあるので、作り直してIDが変わっても止まらない。
+var PLACES_FILE_ID = '18y_FjBcl6nYQmxkTAKJatsJsxeMnF_FKUJTO9A0vYHQ';
+var PLACES_FILE_NAME = '行きたい場所台帳_base';
+
 // v1.6：会食の「枠と予約」はGoogleカレンダー（本人の primary）から読む。
 // 今日から何ヶ月先まで見るか。ここを伸ばしても読むのはカレンダー1本だけ。
 var CAL_MONTHS_AHEAD = 6;
@@ -89,6 +100,9 @@ var CONFIG = {
   calMonthsAhead:  CAL_MONTHS_AHEAD,
   calMonthCap:     CAL_MONTH_CAP,
   noteDeltaPrefix: 'note台帳ログ_',   // GOKIGEN台帳フォルダ直下の「note台帳ログ_YYYY-MM-DD」
+  // v1.7：行きたい場所台帳（表示専用。台帳への書き戻しは一切しない）
+  placesFileId:   PLACES_FILE_ID,
+  placesFileName: PLACES_FILE_NAME,
   futureDocPrefix: '未来ビジョン台帳',  // GOKIGEN台帳フォルダの中のGoogleドキュメント
   // v1.2.1：台帳ファイルが増えすぎて6分の実行制限に当たったため、古い日次ファイルを1本にまとめる
   gokigenBaseName:  'GOKIGEN台帳_base',   // まとめ先（この1本だけ読めば7月以前が全部入る）
@@ -176,6 +190,12 @@ function changedFilesSince_(since) {
     var w = DriveApp.getFileById(CONFIG.wantFileId);
     if (w.getLastUpdated().getTime() > cutoff) out.push(w.getName());
   } catch (e) { Logger.log('WANT台帳を見られませんでした（先に進みます）: ' + e); }
+  /* v1.7：行きたい場所台帳。GOKIGEN台帳フォルダの中にあるので上のループでも拾えるが、
+     置き場所を移されても気づけるよう、ファイルそのものの更新時刻も見ておく。 */
+  try {
+    var pf = placesFile_();
+    if (pf && pf.getLastUpdated().getTime() > cutoff) out.push(pf.getName());
+  } catch (e) { Logger.log('行きたい場所台帳を見られませんでした（先に進みます）: ' + e); }
   /* v1.6：会食の枠は台帳ではなくカレンダーで動く（本人がタイトルを「予約済：家族」に
      書き換えた瞬間が更新のきっかけ）。ここを見ないと、台帳に動きが無い日は
      予約を入れてもアプリが古いままになる。読むのは今日〜先の「ご褒美枠」だけ。 */
@@ -581,6 +601,10 @@ function dryRun() {
       ((d.note.month && d.note.month.likes) || '—') + 'スキ／全期間' +
       ((d.note.all && d.note.all.views) || '—') + 'ビュー'
     : 'まだありません'));
+  Logger.log('行きたい場所台帳: ' + (d.places
+    ? d.places.count + '件（' + d.places.title + '／' + d.places.asOf + '）' +
+      (d.places.noGeo.length ? '　⚠️緯度経度なし ' + d.places.noGeo.length + '件' : '')
+    : 'まだ読めていません'));
   Logger.log('週報書棚: ' + (d.weekly
     ? d.weekly.count + '本' + (d.weekly.latest ? '／最新 ' + d.weekly.latest.name : '（まだ空）')
     : '見られていません'));
@@ -660,6 +684,12 @@ function buildData_(previous) {
   catch (e) { Logger.log('⚠️ note台帳を読めませんでした（前回の内容を維持します）: ' + e); }
   if (!note || !note.asOf) note = (previous && previous.note) || note;
 
+  // v1.7：行きたい場所台帳（表示専用。読めなければ前回の内容をそのまま保つ）
+  var places = null;
+  try { places = timeIt_('行きたい場所台帳', readPlaces_); }
+  catch (e) { Logger.log('⚠️ 行きたい場所台帳を読めませんでした（前回の内容を維持します）: ' + e); }
+  if (!places) places = (previous && previous.places) || null;
+
   // v1.3：取込時の異常（累計の減少・日付異常・コース名不一致）を1本にまとめる
   var warnings = [];
   try { warnings = buildWarnings_(ledger, u.courses, asOf, u.monthly); }
@@ -675,7 +705,7 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.6',
+    version: '1.7',
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -691,7 +721,8 @@ function buildData_(previous) {
       udemyFiles: ledger.used,
       limitlessFiles: limitless.used,
       ecoFiles: eco.used,
-      noteFiles: (note && note.used) || []
+      noteFiles: (note && note.used) || [],
+      placesFileId: CONFIG.placesFileId
     },
     updateHours: CONFIG.updateHours,
     udemyBaseUrl: base ? base.getUrl() : ((previous && previous.udemyBaseUrl) || null),
@@ -710,6 +741,8 @@ function buildData_(previous) {
     // v1.6：会食の枠・予約（カレンダー）と note台帳。実績はこれまでどおり health[].dining
     calendar: calendar,
     note: note,
+    // v1.7：行きたい場所マップ（places.html）の材料。却下の行はここに来ない
+    places: places,
     links: buildLinks_(base, limitless, eco, future, previous)
   };
 }
@@ -2119,6 +2152,99 @@ function readNote_() {
     used: used,
     fileUrl: latestUrl,
     folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.gokigenFolderId
+  };
+}
+
+// ===== v1.7: 行きたい場所台帳（行きたい場所マップの材料） =====
+/**
+ * GOKIGEN台帳フォルダの中の「行きたい場所台帳_base」を、**書いてあるまま**読む。
+ *
+ * 表示専用の台帳なので、ここでは並べ替えも判定もしない（アプリ側の仕事）。
+ * ただし2つだけ決めごとがある：
+ *   ・状態が「却下」の行は data.json に出さない（見送った場所を家族に見せない）
+ *   ・緯度か経度が空の行は **出したうえで** 警告ログを残す
+ *     （地図には出せないが、写真タイルには出せるので落とさない）
+ *
+ * 写真は台帳に書かない方針。空欄の行の写真は places-photos.json（Wikimedia Commons）
+ * から places.html 側で当てる。台帳の「写真URL」に値があれば、そちらが優先される。
+ */
+var PLACES_COLS = {
+  id:       ['id', 'ID'],
+  name:     ['場所', '名前'],
+  kind:     ['区分'],
+  area:     ['地方・国', '地方'],
+  lat:      ['緯度'],
+  lng:      ['経度'],
+  effort:   ['体力'],
+  season:   ['ベストシーズン'],
+  timing:   ['推奨時期'],
+  withWhom: ['同行'],
+  status:   ['状態'],
+  decided:  ['決めた時期'],
+  note:     ['一言'],
+  photo:    ['写真URL', '写真'],
+  video:    ['映像URL', '映像'],
+  source:   ['出典URL', '出典'],
+  booking:  ['手配先'],
+  output:   ['公開した成果物', '成果物']
+};
+
+/** 台帳のファイル。IDで開けなければ名前でも探す（作り直しでIDが変わっても止まらない） */
+function placesFile_() {
+  try {
+    var f = DriveApp.getFileById(CONFIG.placesFileId);
+    if (f) return f;
+  } catch (e) { Logger.log('行きたい場所台帳をIDで開けませんでした（名前で探します）: ' + e); }
+  var it = DriveApp.getFolderById(CONFIG.gokigenFolderId).getFilesByName(CONFIG.placesFileName);
+  return it.hasNext() ? it.next() : null;
+}
+
+function readPlaces_() {
+  var file = placesFile_();
+  if (!file) { Logger.log('⚠️ 行きたい場所台帳が見つかりません'); return null; }
+  var values = SpreadsheetApp.openById(file.getId()).getSheets()[0].getDataRange().getValues();
+  var hd = findColumns_(values, PLACES_COLS, 'name');
+  if (!hd) { Logger.log('⚠️ 行きたい場所台帳の見出し（場所／区分／緯度…）が見つかりません'); return null; }
+
+  var rows = [], dropped = 0, noGeo = [];
+  for (var i = hd.row + 1; i < values.length; i++) {
+    var row = values[i];
+    var cell = function (f) { var c = hd.map[f]; return c == null ? null : str_(row[c]); };
+    var name = cell('name');
+    if (!name) continue;                                  // 空行・見出しの続き
+    var status = cell('status') || '';
+    if (/却下/.test(status)) { dropped++; continue; }      // 見送った場所は出さない
+    var lat = hd.map.lat != null ? num_(row[hd.map.lat]) : null;
+    var lng = hd.map.lng != null ? num_(row[hd.map.lng]) : null;
+    if (lat == null || lng == null) noGeo.push(name);      // 落とさずに警告だけ残す
+    rows.push({
+      id: cell('id') || ('X' + i), name: name,
+      kind: cell('kind') || null, area: cell('area') || null,
+      lat: lat, lng: lng,
+      effort: cell('effort') || null, season: cell('season') || null,
+      timing: cell('timing') || null, withWhom: cell('withWhom') || null,
+      status: status || null, decided: cell('decided') || null,
+      note: cell('note') || null,
+      photo: cell('photo') || null, video: cell('video') || null,
+      source: cell('source') || null, booking: cell('booking') || null,
+      output: cell('output') || null
+    });
+  }
+
+  var n = function (re, field) {
+    return rows.filter(function (r) { return re.test(String(r[field] || '')); }).length;
+  };
+  Logger.log('行きたい場所台帳: ' + rows.length + '件（定番' + n(/定番/, 'kind') +
+             '・日本' + n(/^日本$/, 'kind') + '・海外' + n(/海外/, 'kind') +
+             '／予定' + n(/予定/, 'status') + '・済' + n(/済/, 'status') + '）' +
+             (dropped ? '　※却下' + dropped + '件は出していません' : ''));
+  if (noGeo.length) {
+    Logger.log('⚠️ 緯度経度が空のため地図に出せません（写真タイルには出ます）: ' + noGeo.join('・'));
+  }
+  return {
+    fileId: file.getId(), fileUrl: file.getUrl(), title: file.getName(),
+    asOf: Utilities.formatDate(file.getLastUpdated(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm'),
+    count: rows.length, dropped: dropped, noGeo: noGeo, rows: rows
   };
 }
 

@@ -269,6 +269,15 @@
   .dnbar .dnbv{width:52px;text-align:right;font-weight:800;flex:none;color:var(--soft)}
   .dnleg{font-size:11px;color:var(--muted);line-height:2;margin-top:9px}
   .dnleg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:4px;font-style:normal}
+  /* v1.7 行きたい場所マップへの入口（家族の部屋） */
+  .mapbtn{display:flex;align-items:center;gap:11px;width:100%;padding:15px 14px;border-radius:14px;
+    border:none;cursor:pointer;font-family:inherit;text-decoration:none;text-align:left;
+    background:linear-gradient(135deg,#4a7eff,#9b59ff 60%,#ff4d8d);box-shadow:var(--shadow)}
+  .mapbtn .mi{font-size:26px;flex:none;line-height:1}
+  .mapbtn .mt{flex:1;min-width:0}
+  .mapbtn .m1{font-size:15px;font-weight:800;color:#fff;line-height:1.35}
+  .mapbtn .m2{font-size:11px;font-weight:700;color:rgba(255,255,255,.82);margin-top:2px}
+  .mapbtn .arw{font-size:17px;color:rgba(255,255,255,.85);flex:none}
   .klog{font-size:13px;color:var(--soft)}
   .klog .e{padding:9px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center}
   .klog .e:last-child{border-bottom:none}
@@ -648,6 +657,11 @@
 <div class="page" id="pg-priv">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🍶 会食・家族</div></div>
   <div class="card goal" id="goal-priv" style="display:none"></div>
+  <!-- v1.7 行きたい場所マップへの入口。家族にURLを送って共有できる別ページ -->
+  <div class="card" id="placesCard"><a class="mapbtn" id="placesLink" href="places.html">
+    <span class="mi">🗺</span><span class="mt"><span class="m1" id="placesT">行きたい場所マップ</span>
+    <span class="m2" id="placesS">地図と写真で見る・家族にURLを送れます</span></span><span class="arw">→</span>
+  </a></div>
   <!-- v1.6 会食予実カード：枠と予約はGoogleカレンダー、実績はGOKIGEN台帳の「会食」欄 -->
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--orange)"></span>今月の会食（実績・これから・残りの席）</div>
@@ -2930,6 +2944,7 @@ function renderSpirit(){
    数字は全部 dnThisMonth / dnFutureMonths / dnPastMonths が計算済みで返してくる。
    ここは受け取った数を並べるだけ（画面の中で割り算をしない＝分数を作らない）。 */
 function renderPriv(){
+  renderPlacesLink();
   const t=dnTodayStr();
   const m=dnThisMonth(DATA,t);
   const q=(label,value,unit,cls,sub)=>
@@ -3014,6 +3029,23 @@ function renderPriv(){
     list.slice().reverse().map(e=>
       `<div class="e"><div><div style="font-weight:600;font-size:13px">${esc(e.memo)}</div><div style="font-size:11px;color:var(--muted)">${e.date}</div></div></div>`).join('')
     :'<div style="text-align:center;padding:16px;color:var(--muted)">記録なし</div>';
+}
+
+/* v1.7 行きたい場所マップへの入口。件数は data.json の places から数える。
+   台帳がまだ読めていないときは、件数を出さずにボタンだけ置く（押せば地図は開く）。 */
+function renderPlacesLink(){
+  const rows=((DATA.places&&DATA.places.rows)||[]);
+  const t=document.getElementById('placesT'), sub=document.getElementById('placesS');
+  if(!t) return;
+  if(!rows.length){
+    t.textContent='行きたい場所マップ';
+    sub.textContent='台帳をまだ読み込めていません（次の更新でここに件数が出ます）';
+    return;
+  }
+  const planned=rows.filter(p=>/予定/.test(String(p.status||''))).length;
+  const done=rows.filter(p=>/済/.test(String(p.status||''))).length;
+  t.textContent='行きたい場所マップ（'+rows.length+'か所・予定'+planned+'）';
+  sub.textContent='地図と写真で見る'+(done? '・行った '+done+'か所':'')+'　家族にURLを送れます';
 }
 
 /* v1.6 note カード（仕事タブ）。最新の記録日ぶんだけを出す */
