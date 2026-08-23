@@ -35,7 +35,8 @@ const pickGs = (a, b) => {
   return gs.slice(i, j);
 };
 const Logger = { log: () => {} };
-eval(pickGs("function ecoHistory_(all) {", "// ===== v1.4: WANT台帳"));
+eval(pickGs("var ECO_ACCOUNTS = [", "function ecoAccount_"));   // 口座マスタ（v1.9の繰越で使う）
+eval(pickGs("/** その日その口座ぶんの残高", "// ===== v1.4: WANT台帳"));
 eval(pickGs("// ===== v1.4: 自己バージョン", "// ===== 変換ヘルパー"));
 // v1.7.2：WANT台帳の読み取り本体（新旧レイアウトの両対応）を検証するため
 const Utilities = { formatDate: () => "2026-08-22 22:34" };

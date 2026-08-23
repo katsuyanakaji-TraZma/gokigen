@@ -737,7 +737,7 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.8',
+    version: '1.9',
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -1828,9 +1828,12 @@ var ECO_ACCOUNTS = [
   { key: 'sbi',    re: /SBI/i }
 ];
 var ECO_ACCOUNT_LABEL = { sbi: 'SBIメイン', gold: 'SBI貴金属', nomura: '野村', bank: '個人銀行', corp: '法人' };
-// 合計線＝この4つが同じ日に揃ったときだけ点を打つ（観測定義書v2）
+/* v1.9：個人資産はこの4口座で固定。**残高は積み上げではなく「いまいくらか」**なので、
+   記帳のない口座は「ゼロ」ではなく「前回のまま」。4つを繰越で持ち回って合計を出す。 */
 var ECO_PERSONAL_ACCOUNTS = ['sbi', 'gold', 'nomura', 'bank'];
 var ECO_DEFAULT_ACCOUNT = 'sbi';
+// 最後の記帳からこの日数を超えたら「そろそろ更新」。持ち越しが古くなりすぎていないかの目印
+var ECO_STALE_DAYS = 14;
 
 function ecoAccount_(cat, name, src) {
   var s = [cat, name, src].join(' ');
@@ -1893,21 +1896,27 @@ function readEco_() {
 
   var corp = ecoCorp_(corpRows);
   var warnings = ecoWarnings_(all, history);
+  // v1.9：口座マスタ4つの「いま」（最新値・最後に記帳した日・鮮度）
+  var accounts = ecoAccountsState_(history, latest);
+  var stale = accounts.filter(function (a) { return a.stale; });
 
-  Logger.log('経済台帳: 個人' + rows.length + '件' + (latest ? '（' + latest + '時点）' : '（データ待ち）') +
-             ' 個人資産合計 ' + fmtYen_(total) +
-             '（' + (todayPt ? todayPt.accounts.map(function (k) {
-                return ECO_ACCOUNT_LABEL[k] + ' ' + fmtYen_(todayPt[k]);
-              }).join(' + ') : '—') + '）' +
-             ' 推移' + history.length + '点／合計線' +
-             history.filter(function (p) { return p.complete; }).length + '点' +
+  Logger.log('経済台帳: 個人合計 ' + fmtYen_(total) +
+             '（' + accounts.map(function (a) {
+                return a.label + ' ' + (a.known ? fmtYen_(a.amount) : '未記帳') +
+                       (a.asOf ? '[' + (+a.asOf.slice(5, 7)) + '/' + (+a.asOf.slice(8, 10)) + ']' : '');
+              }).join('・') + '）' +
+             '／鮮度' + ECO_STALE_DAYS + '日超: ' +
+             (stale.length ? stale.map(function (a) { return a.label + '(' + a.days + '日)'; }).join('・') : 'なし'));
+  Logger.log('　　　　　個人' + rows.length + '件' + (latest ? '（' + latest + '時点）' : '（データ待ち）') +
+             ' 推移' + history.length + '点（繰越方式）' +
              '／法人' + corp.monthly.length + 'ヶ月' +
              (corp.latest ? '（最新 ' + corp.latest.date + ' ' + fmtYen_(corp.latest.amount) + '）' : ''));
 
   return { baseName: CONFIG.ecoBaseName, baseUrl: baseUrl,
            folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.ecoFolderId,
            asOf: latest, used: used, rows: rows, history: history,
-           accounts: todayPt ? todayPt.accounts : [],
+           // v1.9：繰越方式。accounts は口座マスタ4つの状態（口座名・最新値・最新日付・経過日数・stale）
+           accounts: accounts, carryForward: true, staleDays: ECO_STALE_DAYS,
            complete: todayPt ? !!todayPt.complete : false,
            corp: corp, warnings: warnings,
            sumLevel: todayPt ? todayPt.level : 'item', total: Math.round(total) };
@@ -1927,35 +1936,94 @@ function readEco_() {
  * 口座が書かれていない行は SBIメインとして数える（古い台帳はSBIメインしか無いため）。
  * 取り違えたままにしないよう、判定不能な行は ecoWarnings_ が必ず警告に出す。
  */
+/** その日その口座ぶんの残高。資産クラスの行があればそれだけを足す（3重計上しない） */
+function ecoAccountAmount_(list) {
+  var hasCls = list.some(function (r) { return r.level === 'class'; });
+  var use = list.filter(function (r) {
+    return hasCls ? r.level === 'class' : (r.level !== 'total' && r.level !== 'memo');
+  });
+  if (!use.length) return null;
+  return Math.round(use.reduce(function (a, r) { return a + (r.amount || 0); }, 0));
+}
+
+/**
+ * v1.9：記録日ごとの個人資産を**繰越方式**で作る。
+ *
+ * これまでは「その日に記帳した口座だけ」を足していた。だが残高は積み上げではなく
+ * 「いまいくらか」なので、貴金属や銀行を送らなかった日は**その口座がゼロ**になり、
+ * 総資産がガクンと減ったように見えていた（送っていないだけで、減ってはいない）。
+ *
+ * そこで口座ごとに「最新値と、その値をいつ記帳したか」を持ち回り、
+ * 記録日ごとの合計＝**その時点での4口座の最新値の合計**にする。
+ * 記帳のない口座は直前の値をそのまま使う（＝持ち越し）。
+ *
+ * 各点に持たせるもの：
+ *   total       … 繰越合計（4口座のうち、いままでに1度でも記帳された口座の合計）
+ *   posted      … その日に**実際に記帳した**口座（点を濃く描くのに使う）
+ *   carried     … その日は持ち越しだけだった口座
+ *   accounts    … 合計に入っている口座（＝1度でも記帳された口座）
+ *   postedTotal … その日に記帳したぶんだけの合計（台帳の総括行との突合に使う）
+ */
 function ecoHistory_(all) {
   var byDate = {};
   (all || []).forEach(function (r) {
     if (r.account === 'corp') return;                 // 法人は個人の線に混ぜない
     (byDate[r.date] = byDate[r.date] || []).push(r);
   });
-  // 合計線の条件。この関数だけで完結させておく（テストが関数単体で動くように）
-  var NEED = ['sbi', 'gold', 'nomura', 'bank'];
+  var NEED = ECO_PERSONAL_ACCOUNTS;
+  var carry = {};                                     // 口座 → { amount, date }
   return Object.keys(byDate).sort().map(function (d) {
     var list = byDate[d];
     var acc = {};
-    list.forEach(function (r) { var k = r.account || 'sbi'; (acc[k] = acc[k] || []).push(r); });
-    var out = { date: d, rows: 0, total: 0 }, present = [];
+    list.forEach(function (r) {
+      var k = r.account || ECO_DEFAULT_ACCOUNT;
+      (acc[k] = acc[k] || []).push(r);
+    });
+    var posted = [], postedTotal = 0;
     Object.keys(acc).forEach(function (k) {
-      var L = acc[k];
-      var hasCls = L.some(function (r) { return r.level === 'class'; });
-      var use = L.filter(function (r) {
-        return hasCls ? r.level === 'class' : (r.level !== 'total' && r.level !== 'memo');
-      });
-      if (!use.length) return;
-      out[k] = Math.round(use.reduce(function (a, r) { return a + (r.amount || 0); }, 0));
-      out.rows += use.length;
-      out.total += out[k];
-      present.push(k);
+      var v = ecoAccountAmount_(acc[k]);
+      if (v == null) return;
+      carry[k] = { amount: v, date: d };              // ここで持ち越しの値を更新する
+      posted.push(k);
+      if (NEED.indexOf(k) >= 0) postedTotal += v;
+    });
+    var out = { date: d, rows: list.length, total: 0,
+                posted: posted.sort(), postedTotal: Math.round(postedTotal),
+                accounts: [], carried: [] };
+    NEED.forEach(function (k) {
+      if (!carry[k]) return;                          // 一度も記帳が無い口座は数えない
+      out[k] = carry[k].amount;
+      out[k + 'At'] = carry[k].date;                  // その値をいつ記帳したか
+      out.total += carry[k].amount;
+      out.accounts.push(k);
+      if (posted.indexOf(k) < 0) out.carried.push(k); // この日は持ち越しだけ
     });
     out.level = list.some(function (r) { return r.level === 'class'; }) ? 'class' : 'item';
-    out.accounts = present.sort();
-    out.complete = NEED.every(function (k) { return present.indexOf(k) >= 0; });
+    out.complete = NEED.every(function (k) { return out.accounts.indexOf(k) >= 0; });
     return out;
+  });
+}
+
+/**
+ * v1.9：口座マスタ4つの「いま」。最新値・最後に記帳した日・そこからの経過日数。
+ * 14日を超えたら stale（画面で「🔔 そろそろ更新」を出す）。
+ */
+function ecoAccountsState_(history, asOf) {
+  var last = (history || []).length ? history[history.length - 1] : null;
+  var when = {};
+  (history || []).forEach(function (p) {
+    (p.posted || []).forEach(function (k) { when[k] = p.date; });
+  });
+  var days = function (d) {
+    if (!d || !asOf) return null;
+    return Math.round((new Date(asOf + 'T00:00:00Z') - new Date(d + 'T00:00:00Z')) / 86400000);
+  };
+  return ECO_PERSONAL_ACCOUNTS.map(function (k) {
+    var amount = (last && last[k] != null) ? last[k] : null;
+    var at = when[k] || null;
+    var n = days(at);
+    return { key: k, label: ECO_ACCOUNT_LABEL[k], amount: amount, asOf: at, days: n,
+             stale: (n != null && n > ECO_STALE_DAYS), known: (amount != null) };
   });
 }
 
@@ -2026,13 +2094,16 @@ function ecoWarnings_(all, history) {
     if (!tots.length) return;
     var grand = tots.reduce(function (a, r) { return Math.max(a, r.amount); }, 0);
     if (!grand) return;
-    var gap = Math.abs(p.total - grand) / grand;
+    /* v1.9：繰越合計（p.total）ではなく、**その日に記帳したぶん**（postedTotal）と比べる。
+       繰越合計には前回のままの口座が入っているので、その日の総括行とは必ずズレる。 */
+    var mine = (p.postedTotal != null) ? p.postedTotal : p.total;
+    var gap = Math.abs(mine - grand) / grand;
     if (gap <= ECO_TOTAL_GAP) return;
     var pct = Math.round(gap * 1000) / 10;
-    Logger.log('⚠️ ' + p.date + ' の合算 ' + fmtYen_(p.total) + ' と総括行 ' + fmtYen_(grand) +
+    Logger.log('⚠️ ' + p.date + ' の合算 ' + fmtYen_(mine) + ' と総括行 ' + fmtYen_(grand) +
                ' が ' + pct + '% ずれています（二重計上・記帳もれを疑ってください）');
     add('warn', 'ecoTotalGap', p.date,
-      p.date + 'の個別行の合算（' + fmtYen_(p.total) + '）と台帳の総括行（' + fmtYen_(grand) +
+      p.date + 'の個別行の合算（' + fmtYen_(mine) + '）と台帳の総括行（' + fmtYen_(grand) +
       '）が' + pct + '%ずれています。同じ資産を二重に書いていないか、記帳もれが無いか確かめてください');
   });
 

@@ -48,9 +48,75 @@ const pickGs = (a, b) => {
 eval(pickGs("var LIMITLESS_FOLDER_ID", "// ===== STEP1"));
 eval(pickGs("// ===== Udemy台帳（base + デルタの合算） =====", "// 今公開中の data.json"));
 eval(pickGs("var ECO_COLS", "function readEco_"));
-eval(pickGs("function ecoHistory_(all) {", "// ===== v1.4: WANT台帳"));
+eval(pickGs("/** その日その口座ぶんの残高", "// ===== v1.4: WANT台帳"));
 
 /* ---------- ①【要件1】コースIDのホワイトリスト ---------- */
+/* ===== v1.9：繰越方式 ===== */
+console.log("\n【v1.9】繰越方式（記帳のない口座は前回の値を持ち越す）");
+{
+  const R = (date, account, amount) =>
+    ({ date, account, name: account + "計", cat: "資産クラス", level: "class", amount });
+  /* 本人の記帳のしかたそのまま：SBIは毎回送るが、貴金属と銀行はときどきしか送らない。
+     これまでは送らない日に総資産が減って見えていた。 */
+  const H = ecoHistory_([
+    R("2026-08-16", "sbi", 13100000), R("2026-08-16", "gold", 590000),
+    R("2026-08-18", "sbi", 13000000),                       // 貴金属を送らない日
+    R("2026-08-20", "nomura", 11000000),
+    R("2026-08-23", "sbi", 13200000), R("2026-08-23", "bank", 7270000)
+  ]);
+  eq(H.length, 4, "記録日は4日");
+  eq(H[0].total, 13690000, "8/16は SBI 1310万 + 貴金属 59万");
+  eq(H[1].total, 13590000, "★8/18に貴金属を送らなくても、59万は持ち越されて合計から消えない");
+  ok(H[1].total > 13000000, "★送らなかった日に総資産が「SBIだけ」に減っていない", String(H[1].total));
+  eq(H[1].gold, 590000, "★貴金属の値は8/16のまま");
+  eq(H[1].goldAt, "2026-08-16", "その値をいつ記帳したかも持っている");
+  eq(H[2].total, 24590000, "8/20は 野村1100万 が足されて増える（減らない）");
+  eq(H[3].total, 32060000, "8/23は 4口座そろって 1320+59+1100+727万");
+  eq(H[3].complete, "true", "4口座そろった");
+  eq(H[0].complete, "false", "8/16はまだ2口座");
+  // 実記帳した口座のリスト
+  eq(H[0].posted.join(","), "gold,sbi", "★8/16に実記帳したのは 貴金属とSBI");
+  eq(H[1].posted.join(","), "sbi", "★8/18に実記帳したのは SBI だけ");
+  eq(H[1].carried.join(","), "gold", "★8/18は貴金属が持ち越し");
+  eq(H[2].posted.join(","), "nomura", "8/20は野村だけ");
+  eq(H[2].carried.join(","), "sbi,gold", "★8/20はSBIと貴金属が持ち越し");
+  eq(H[3].posted.join(","), "bank,sbi", "8/23はSBIと銀行");
+  eq(H[3].carried.join(","), "gold,nomura", "8/23は貴金属と野村が持ち越し");
+  eq(H[1].postedTotal, 13000000, "★その日に記帳したぶんだけの合計も持つ（総括行との突合に使う）");
+  /* 8/18の増減は「SBIが1310万→1300万に減った10万」だけであるべき。
+     繰越前は、ここに貴金属59万の消失が乗って69万減って見えていた。 */
+  eq(H[1].total - H[0].total, -100000,
+     "★8/18の増減はSBIの実際の増減だけ（貴金属59万は消えていない）");
+
+  console.log("\n【v1.9】鮮度（14日を超えたら stale）");
+  const A = ecoAccountsState_(H, "2026-08-23");
+  eq(A.length, 4, "口座マスタは4つ固定");
+  eq(A.map(a => a.key).join(","), "sbi,gold,nomura,bank", "並びも固定");
+  eq(A[0].amount + "/" + A[0].asOf + "/" + A[0].days, "13200000/2026-08-23/0", "SBIメインは当日");
+  eq(A[1].amount + "/" + A[1].asOf + "/" + A[1].days, "590000/2026-08-16/7", "★貴金属は7日前の値");
+  eq(A[1].stale, "false", "7日ならまだ stale ではない");
+  eq(A[2].days, 3, "野村は3日前");
+  eq(A[3].days, 0, "銀行は当日");
+  // 14日を超えたら stale
+  const A2 = ecoAccountsState_(H, "2026-08-31");
+  eq(A2[1].days, 15, "★貴金属は8/31時点で15日前");
+  eq(A2[1].stale, "true", "★14日を超えたので stale＝true");
+  eq(A2[0].stale, "false", "8日のSBIはまだ false");
+  const A3 = ecoAccountsState_(H, "2026-08-30");
+  eq(A3[1].days + "/" + A3[1].stale, "14/false", "★ちょうど14日は stale ではない（超えたら、なので）");
+  // 一度も記帳の無い口座
+  const H1 = ecoHistory_([R("2026-08-16", "sbi", 100)]);
+  const A4 = ecoAccountsState_(H1, "2026-08-16");
+  eq(A4[1].known + "/" + A4[1].amount, "false/null", "★一度も記帳が無い口座は known:false（合計に入れない）");
+  eq(H1[0].total, 100, "合計は記帳のあるぶんだけ");
+  eq(ecoHistory_([]).length, 0, "記録が無くても落ちない");
+  // 法人は繰越にも合計にも入らない
+  const H2 = ecoHistory_([R("2026-08-16", "sbi", 100),
+                          { date: "2026-08-16", account: "corp", name: "法人現金", cat: "法人",
+                            level: "class", amount: 74240000 }]);
+  eq(H2[0].total, 100, "★法人は個人の繰越合計に1円も入らない");
+}
+
 console.log("\n【要件1】UdemyのコースIDは C01〜C10 だけ");
 ["C01", "C05", "C10", "c07", " C02 "].forEach(id =>
   ok(isUdemyCourseId_(id), "「" + id + "」は取り込む", id));
@@ -159,13 +225,19 @@ eq(H[0].total, 24122431, "8/13 は届いた2口座の合計");
 eq(H[1].date + " sbi=" + H[1].sbi, "2026-08-16 sbi=13104897",
    "★8/16 SBIメインは資産クラス4行だけを足して台帳の「SBI証券口座 合計」と一致");
 eq(H[1].gold, 599473, "★8/16 貴金属は別口座として分かれる");
-eq(H[1].total, 13704370, "8/16 の合計は台帳の「総資産(証券+貴金属)」と一致");
+/* v1.9【繰越方式】8/16は「その日の証券+貴金属 13,704,370」に、
+   8/13に記帳した野村 11,053,904 が持ち越されて乗る。これが本人の実際の総資産。 */
+eq(H[1].total, 13704370 + 11053904, "★8/16は 証券+貴金属 に 8/13の野村が持ち越されて乗る");
+eq(H[1].sbi + H[1].gold, 13704370, "その日に記帳した証券+貴金属ぶんは台帳どおり");
+eq(H[1].nomura + "/" + H[1].nomuraAt, "11053904/2026-08-13", "★野村は8/13の値を持ち越し");
 eq(H[2].date + " sbi=" + H[2].sbi, "2026-08-18 sbi=13094607",
    "★8/18 SBIメイン＝13,094,607円（個別行の合算＝Udemy収益ではない）");
-eq(H[2].nomura, undefined, "8/18 は野村の記録が無いので野村線に点を打たない");
+eq(H[2].nomura, 11053904, "★8/18も野村は8/13の値のまま（記録が無い＝ゼロ、ではない）");
+eq(H[2].carried.indexOf("nomura") >= 0, "true", "8/18の野村は持ち越しと分かる");
 eq(H.filter(p => p.complete).length, 0,
    "★4口座が揃った日はまだ無い＝合計線は点なし（偽の急落を作らない）");
-eq(H[1].accounts.join(","), "gold,sbi", "その日に届いた口座が分かる");
+eq(H[1].posted.join(","), "gold,sbi", "★その日に**実記帳した**口座が分かる（点を濃く描くのに使う）");
+eq(H[1].accounts.join(","), "sbi,gold,nomura", "accounts は合計に入っている口座（持ち越しを含む）");
 
 console.log("\n【要件5】4口座が揃った日だけ合計線に点が打たれる");
 const FULL = ALL.concat(mk("2026-08-22", [
@@ -305,22 +377,26 @@ const mkData = (all, monthly) => {
   };
 };
 
-console.log("\n【要件4】家画面の経済カード（円・カンマ区切り／前回比は比較できる2点だけ）");
+console.log("\n【要件4】家画面の経済カード（円・カンマ区切り／v1.9：前回比は繰越合計の直近2点）");
 const D = mkData(ALL);
 const card = ecoCard(D);
-eq(fmtYen(card.total), "¥13,094,607", "★カードの値は個人資産合計を円で（$192,538ではない）");
+/* v1.9【繰越方式】8/18はSBIしか記帳が無いが、貴金属と野村は前回の値を持ち越している。
+   カードに出るのは「そのとき本人が持っている額」＝繰越合計。 */
+eq(fmtYen(card.total), "¥24,747,984", "★カードの値は繰越した個人資産合計を円で（$192,538ではない）");
 eq(card.asOf, "2026-08-18", "基準日は台帳の最新の記録日");
-eq(card.delta, null, "★8/18(SBIのみ)と8/16(SBI+貴金属)は口座の顔ぶれが違うので引き算しない");
-has(card.deltaText, "口座の顔ぶれ", "なぜ前回比が出ないかを画面に書く");
-eq(ecoMissing(card.accounts).join("・"), "SBI貴金属・野村・個人銀行", "★足りない口座が言える");
-// 同じ顔ぶれの日が2つあれば、そこで前回比を出す
+eq(card.carry, "true", "★繰越方式の data.json だと分かる");
+eq(card.delta, -10290, "★前回比は繰越合計の直近2点の差（SBIの実際の増減だけが出る）");
+eq(card.from, "2026-08-16", "どの日と比べたかを持つ");
+has(card.deltaText, "前回比", "画面に出す文");
+eq(ecoMissing(card.accounts).join("・"), "個人銀行", "★まだ一度も記帳の無い口座が言える");
+// 記帳の無い日をはさんでも、前回比は繰越合計どうしで出る
 const SAME = ALL.concat(mk("2026-08-20", [
   ["SBI 米国株式", "資産クラス", 6000000, "SBIメイン"],
   ["SBI 預り金(円)", "資産クラス", 7194607, "SBIメイン"]
 ], "x"));
 const card2 = ecoCard(mkData(SAME));
-eq(card2.total, 13194607, "最新の個人資産合計");
-eq(card2.delta, 100000, "★同じ顔ぶれ（SBIメインだけ）の日どうしで前回比を出す");
+eq(card2.total, 24847984, "最新の繰越合計");
+eq(card2.delta, 100000, "★SBIが10万増えたぶんだけが前回比に出る（貴金属・野村は持ち越し）");
 eq(card2.from, "2026-08-18", "どの日と比べたかを持つ");
 eq(signedYen(card2.delta), "+¥100,000", "前回比も円・カンマ区切り");
 eq(fmtYen(0), "¥0", "0円でも落ちない");
@@ -335,21 +411,25 @@ eq(ecoCard(OLDH).delta, null,
    "★古い形式では前回比を出さない（8/16との差 −609,763円は偽の減少）");
 has(ecoCard(OLDH).deltaText, "次の更新から", "いつ出るようになるかを画面に書く");
 
-console.log("\n【要件5】アプリ側の3系列");
+console.log("\n【要件5】アプリ側の系列（v1.9：合計線＋口座別4線）");
 const T = computeEcoTrend(D);
-eq(T.series.map(s => s.label).join(","), "SBI,野村,合計", "★凡例は3つ（SBI／野村／合計）");
-eq(T.series.map(s => s.color).join(","), "#4a7eff,#22c77a,#ffb800", "★3色そろっている");
-eq(T.series[0].values.join(","), "13068527,13104897,13094607", "★SBI線は3日ぶんつながる（偽の急落なし）");
-eq(T.series[1].values.join(","), "11053904,,", "野村線は記録のある日だけ（あとは空＝点なし）");
-eq(T.series[2].values.filter(v => v != null).length, 0, "★合計線は4口座が揃うまで点なし");
-eq(T.ok, "true", "SBI線が2点以上あるので線は引ける");
-const T2 = computeEcoTrend(mkData(FULL));
-eq(T2.series[2].values.filter(v => v != null).length, 1, "★揃った日に合計線の点が1つ出る");
-eq(T2.series[2].last, 23600000, "合計線の値＝個人の真の総資産");
+eq(T.series.map(s => s.label).join(","), "合計,SBIメイン,貴金属,野村,銀行", "★凡例は5つ");
+eq(T.series.map(s => s.color).join(","), "#ffb800,#4a7eff,#ff6b35,#22c77a,#9b59ff", "★5色そろっている");
+eq(T.carry, "true", "★繰越方式だと分かる");
+const S = {}; T.series.forEach(x => S[x.key] = x);
+eq(S.sbi.values.join(","), "13068527,13104897,13094607", "★SBI線は3日ぶんつながる（偽の急落なし）");
+eq(S.nomura.values.join(","), "11053904,11053904,11053904",
+   "★野村線は記録の無い日も前回の値のまま（線が途切れない・ゼロに落ちない）");
+eq(S.total.values.filter(v => v != null).length, 3, "★合計線は毎日点が打てる（4口座待ちをやめた）");
+eq(S.total.values[2], 24747984, "8/18の合計＝繰越した総資産");
+// その日に実記帳したかどうか（点の濃さ）
+eq(S.nomura.live.join(","), "true,false,false", "★野村は8/13だけ実記帳、あとは持ち越し（点を薄く）");
+eq(S.sbi.live.join(","), "true,true,true", "SBIは毎日記帳している");
+eq(T.ok, "true", "線は引ける");
 // 8/13と8/16をそのまま1本の線にすると、野村1,105万円ぶんの偽の急落になる
 const naive = [24122431, 13704370];
 ok(naive[0] - naive[1] > 10000000, "（参考）1本線のままなら1,041万円の偽の急落が出ていた", "");
-ok(T.series[0].values[0] < T.series[0].values[1], "★SBI線は増えている＝急落に見えない", "");
+ok(S.sbi.values[0] < S.sbi.values[1], "★SBI線は増えている＝急落に見えない", "");
 // 古い形式（口座別の内訳が無い data.json）でも線が消えない
 const OLD = { eco: { asOf: "2026-08-16", rows: [], history: [
   { date: "2026-08-13", total: 13000000, level: "class", rows: 4 },
@@ -363,7 +443,8 @@ const DC = mkData(WITH_CORP);
 const meter = ecoCorpMeter(DC);
 eq(fmtYen(meter.latest.amount), "¥45,000,000", "★法人メーターは独立して出る");
 eq(ecoCard(DC).total, 23600000, "★家画面の経済カードに法人は入っていない");
-eq(computeEcoTrend(DC).series[2].last, 23600000, "★合計線にも法人は入っていない");
+eq(computeEcoTrend(DC).series.filter(x => x.key === "total")[0].last, 23600000,
+   "★合計線にも法人は入っていない");
 eq(wtEcoTotal(DC), 23600000, "★目標×差分の「総資産」にも法人は入らない");
 eq(ecoCorpMeter({ eco: {} }).latest, null, "法人の記録が無ければ「データ待ち」");
 eq(ecoCorpMeter({ eco: {} }).known, "false", "古いdata.jsonでも落ちない");

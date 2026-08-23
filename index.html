@@ -287,6 +287,19 @@
   .gt div.on{background:var(--blue);border-color:var(--blue);color:#fff}
   .msg{font-size:13px;color:var(--green);text-align:center;margin-top:7px;min-height:18px;font-weight:700}
   .note{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.7}
+  /* v1.9 経済：口座マスタ4行（最新値＋いつの値か） */
+  .accs{margin-top:10px}
+  .arow{display:flex;align-items:baseline;gap:8px;padding:9px 0;border-bottom:1px solid var(--border);
+    flex-wrap:wrap}
+  .arow:last-child{border-bottom:none}
+  .arow .an{font-size:13px;font-weight:800;flex:none;min-width:78px}
+  .arow .aw{font-size:10.5px;color:var(--muted);font-weight:700;flex:none}
+  .arow .av{margin-left:auto;font-size:15px;font-weight:800;white-space:nowrap}
+  .arow.none .av{color:var(--muted);font-weight:700}
+  .arow.stale{background:rgba(255,184,0,.10);border-radius:9px;padding:9px 8px;margin:2px 0;
+    border-bottom:none;box-shadow:inset 0 0 0 1.5px rgba(255,184,0,.35)}
+  .arow.stale .aw{color:#7a5200}
+  .arow .abell{flex-basis:100%;font-size:10.5px;font-weight:800;color:#7a5200}
   /* v1.5 本人メモ。実測値ではないことが一目で分かるよう、点線＋タグつきにする */
   .memo{margin-top:10px;padding:10px 12px;border:1.5px dashed var(--border);border-radius:12px;
     background:var(--bg);font-size:12px;line-height:1.8;color:var(--soft)}
@@ -578,9 +591,9 @@
     <!-- 実測が入るまでのあいだだけ出す本人メモ。実測行が台帳に入ったら自動で消える -->
     <div class="memo" id="corpMemo" style="display:none"></div>
   </div>
-  <!-- v1.5【要件5】個人資産の推移（SBI線／野村線／合計線の3系列） -->
+  <!-- v1.9 個人資産の推移（合計線＋口座別4線。繰越方式なのでどの線も途切れない） -->
   <div class="card" id="ecoTrendCard">
-    <div class="ct"><span class="dot" style="background:var(--yellow)"></span>📊 個人資産の推移（全期間・3系列）</div>
+    <div class="ct"><span class="dot" style="background:var(--yellow)"></span>📊 個人資産の推移（全期間・合計＋口座別）</div>
     <div class="eleg" id="ecoLegend"></div>
     <canvas id="chartEcoTotal" height="170"></canvas>
     <div class="pace" id="ecoTrendNote"></div>
@@ -1516,6 +1529,9 @@ function wtMetric(how){
 /* 経済台帳の総資産。data.json に総額があればそれを使い、無ければ同じ規則でその場で足す */
 function wtEcoTotal(D){
   var e=(D&&D.eco)||{}, rows=(e.rows||[]).filter(function(r){return r.account!=='corp'});
+  // v1.9：繰越合計があればそれ（eco.total も Apps Script が繰越で入れている）
+  var hist=(e.history||[]).filter(function(x){return x&&x.total!=null});
+  if(hist.length&&hist[hist.length-1].posted!=null) return hist[hist.length-1].total;
   if(e.total!=null) return e.total;
   if(!rows.length) return null;
   var cls=rows.filter(r=>r.level==='class');
@@ -1743,7 +1759,7 @@ function kitAllTime(D,room){
   return '';
 }
 /* 総資産の推移。記録日が2つ以上そろってから線を描く（1点のときは数値だけ） */
-/* v1.5【要件5】推移グラフは3系列（観測定義書v2「4. グラフ・表示の読み方」）。
+/* v1.9 推移グラフは合計線＋口座別4線（v1.5の3系列から。繰越方式で線が途切れなくなった）。
      SBI線  … SBIメイン口座だけの日次残高（ライト版のたびに更新される）
      野村線 … 野村由来の行だけ（フル版＝月1で更新）
      合計線 … 個人の総資産。SBIメイン＋SBI貴金属＋野村＋個人銀行が
@@ -1751,10 +1767,13 @@ function kitAllTime(D,room){
    揃わない日にも点を打つと、まだ届いていない口座のぶんが「急落」に見えてしまう
    （8/13は野村1,105万円が入っていて、8/16は入っていない。足して並べると偽の急落になる）。
    法人（会社の現金）はどの線にも入らない＝別メーター。 */
+/* v1.9：合計線＋口座別4線。繰越方式になったので、どの線も記録日ごとに値がある。 */
 var ECO_SERIES=[
-  {key:'sbi',    label:'SBI',  color:'#4a7eff'},
-  {key:'nomura', label:'野村', color:'#22c77a'},
-  {key:'total',  label:'合計', color:'#ffb800'}
+  {key:'total',  label:'合計',     color:'#ffb800'},
+  {key:'sbi',    label:'SBIメイン', color:'#4a7eff'},
+  {key:'gold',   label:'貴金属',   color:'#ff6b35'},
+  {key:'nomura', label:'野村',     color:'#22c77a'},
+  {key:'bank',   label:'銀行',     color:'#9b59ff'}
 ];
 function computeEcoTrend(D){
   var e=(D&&D.eco)||{};
@@ -1771,18 +1790,30 @@ function computeEcoTrend(D){
   var hasAcc=hist.some(function(p){
     return ['sbi','gold','nomura','bank'].some(function(k){return p[k]!=null});
   });
+  /* v1.9：繰越方式（history に posted がある）なら、合計線は毎日点が打てる。
+     繰越前の古い data.json は「4口座が揃った日だけ」のままにしておく（偽の急落を作らない）。 */
+  var carry=hist.some(function(p){return p.posted!=null});
   var series=ECO_SERIES.map(function(sp){
     var vals=hist.map(function(p){
-      // 合計線は「4口座が揃った日」だけ。ほかは記録のある日だけ。
-      if(sp.key==='total') return hasAcc? (p.complete? p.total : null) : (p.total!=null? p.total : null);
+      if(sp.key==='total'){
+        if(carry||!hasAcc) return p.total!=null? p.total : null;
+        return p.complete? p.total : null;
+      }
       return p[sp.key]!=null? p[sp.key] : null;
     });
     var got=vals.filter(function(v){return v!=null});
-    return {key:sp.key,label:sp.label,color:sp.color,values:vals,count:got.length,
+    /* その日に実際に記帳したかどうか。点の濃さを変えるのに使う
+       （濃い＝その日に記帳した／薄い＝前回の値を持ち越しただけ）。 */
+    var live=hist.map(function(p){
+      if(!carry) return true;
+      if(sp.key==='total') return (p.posted||[]).length>0;
+      return (p.posted||[]).indexOf(sp.key)>=0;
+    });
+    return {key:sp.key,label:sp.label,color:sp.color,values:vals,live:live,count:got.length,
             first:got.length? got[0]:null, last:got.length? got[got.length-1]:null};
   });
   var pts=hist.filter(function(p){return p.total!=null});
-  var res={points:pts,series:series,labels:hist.map(function(p){return p.date}),
+  var res={points:pts,series:series,carry:carry,labels:hist.map(function(p){return p.date}),
            first:pts.length? pts[0]:null, last:pts.length? pts[pts.length-1]:null,
            delta:pts.length>1? pts[pts.length-1].total-pts[0].total : 0,
            byAccount:hasAcc,
@@ -1807,18 +1838,33 @@ function computeWeekly(D){
 
 /* 【要件4】家画面の経済カード。
    値   … いちばん新しい記録日の個人資産合計（円）
-   前回比… 「比較できる」直近2点の差。口座の顔ぶれ（SBI／貴金属／野村／銀行）が
-           同じ日どうしでしか引き算しない。顔ぶれが違う日を引くと、まだ届いていない
-           口座のぶんが「減った」に見えてしまうため。 */
+   前回比… v1.9【繰越方式】**繰越合計の直近2点の差**。
+           繰越では記帳の無い口座も前回の値を持ち続けるので、どの2点を引いても
+           「届いていない口座のぶんが減った」にはならない。
+           口座の顔ぶれで場合分けしていたのは、繰越前の作りの名残りなのでやめた。
+           ただし古い data.json（繰越前）は昔の作りのままなので、そちらは従来どおり
+           顔ぶれの同じ日どうしでしか引かない。 */
 function ecoCard(D){
   var e=(D&&D.eco)||{};
   var hist=(e.history||[]).filter(function(x){return x&&x.date&&x.total!=null});
-  var out={total:null,asOf:null,accounts:[],complete:false,
+  var out={total:null,asOf:null,accounts:[],complete:false,carry:false,
            delta:null,from:null,deltaText:'前回比 —'};
   if(hist.length){
     var cur=hist[hist.length-1];
     out.total=cur.total; out.asOf=cur.date;
     out.accounts=cur.accounts||[]; out.complete=!!cur.complete;
+    // posted があれば繰越方式で作られた history（v1.9以降）
+    out.carry = hist.some(function(p){ return p.posted!=null });
+    if(out.carry){
+      if(hist.length>=2){
+        var prev=hist[hist.length-2];
+        out.delta=cur.total-prev.total; out.from=prev.date;
+        out.deltaText=signedYen(out.delta)+' 前回比（'+md(out.from)+'）';
+      }else{
+        out.deltaText='前回比 —（記録日が1日ぶん）';
+      }
+      return out;
+    }
     var sig=out.accounts.join(',');
     if(!sig){
       /* 口座別の内訳を持たない古い data.json（v1.4以前）。
@@ -1841,13 +1887,33 @@ function ecoCard(D){
   }
   return out;
 }
-/* 口座の顔ぶれを日本語にする。合計線が出ない日の「なぜ出ないか」を説明するのに使う */
+/* 口座の顔ぶれを日本語にする */
 var ECO_ACC_LABEL={sbi:'SBIメイン',gold:'SBI貴金属',nomura:'野村',bank:'個人銀行'};
 var ECO_ACC_NEED=['sbi','gold','nomura','bank'];
+var ECO_STALE_DAYS=14;
 function ecoMissing(accounts){
   var have=accounts||[];
   return ECO_ACC_NEED.filter(function(k){return have.indexOf(k)<0})
                      .map(function(k){return ECO_ACC_LABEL[k]});
+}
+/* v1.9：口座マスタ4つの「いま」。Apps Script が eco.accounts に入れてくれるが、
+   古い data.json（accounts が口座キーの配列だった頃）でも落ちないよう、
+   ここで history から組み立て直せるようにしておく。 */
+function ecoAccounts(D){
+  var e=(D&&D.eco)||{};
+  var a=e.accounts;
+  if(Array.isArray(a)&&a.length&&typeof a[0]==='object') return a;   // v1.9の形
+  var hist=(e.history||[]).filter(function(x){return x&&x.date});
+  var last=hist.length? hist[hist.length-1]:null, when={};
+  hist.forEach(function(p){ (p.posted||p.accounts||[]).forEach(function(k){ when[k]=p.date }) });
+  var asOf=last? last.date:null;
+  return ECO_ACC_NEED.map(function(k){
+    var amount=(last&&last[k]!=null)? last[k] : null;
+    var at=when[k]||null;
+    var n=(at&&asOf)? Math.round((new Date(asOf+'T00:00:00Z')-new Date(at+'T00:00:00Z'))/86400000) : null;
+    return {key:k,label:ECO_ACC_LABEL[k],amount:amount,asOf:at,days:n,
+            stale:(n!=null&&n>ECO_STALE_DAYS),known:(amount!=null)};
+  });
 }
 
 /* 経済の棚卸し日＝毎月第4土曜10:00枠（観測定義書v2「フル版」）。
@@ -2316,6 +2382,11 @@ function ckVoicePriv(D){
 /* 経済台帳の合計。新しい台帳は「総括／資産クラス／個別銘柄」の3段が入っているので、
    資産クラスの行があればそれだけを足す（そうしないと同じ資産を3回数えてしまう）。 */
 function ckEcoTotal(D){
+  /* v1.9【繰越方式】eco.rows は「いちばん新しい記録日に記帳した行」だけなので、
+     その日にSBIしか送っていなければSBIぶんしか出ない。繰越合計（history の最後）があれば
+     そちらを使う。87歳の声が「資産は1,335万」と本当より小さく言ってしまうのを防ぐ。 */
+  const hist=(((D.eco||{}).history)||[]).filter(x=>x&&x.total!=null);
+  if(hist.length&&hist[hist.length-1].posted!=null) return hist[hist.length-1].total;
   // v1.5：法人（会社の現金）は個人の合計に足さない。Apps Script側でも除いてあるが二重の歯止め
   const rows=(((D.eco||{}).rows)||[]).filter(r=>r.account!=='corp');
   const cls=rows.filter(r=>r.level==='class');
@@ -2568,24 +2639,27 @@ function renderEcoTrend(){
     if(sp.count===1) return sp.label+'線は'+fmtYen(sp.last)+'の1点だけ（線は2点目から）';
     return sp.label+'線は'+fmtYen(sp.first)+'→'+fmtYen(sp.last)+'（'+sp.count+'点）';
   }).join('／');
-  const tot=t.series.filter(sp=>sp.key==='total')[0];
   note.textContent=say+'。'+
     (!t.byAccount ? '（口座別の内訳がまだ入っていないので、いまは1本線です。'+
-                    'Apps Scriptを貼り替えて更新すると、SBI線・野村線・合計線の3本に分かれます）'
-     : (tot&&tot.count) ? ''
-     : '合計線は SBIメイン＋SBI貴金属＋野村＋個人銀行 が同じ日に揃った日だけ点を打ちます'+
-       '（まだ揃った日がありません）。揃わない日に点を打つと、届いていない口座のぶんが急落に見えるためです。')+
+                    'Apps Scriptを貼り替えて更新すると、合計線と口座別4線に分かれます）'
+     : t.carry ? '記帳のない口座は前回の値を持ち越しています。'+
+                 '濃い点がその日に記帳した口座、薄い点は持ち越しです。'
+     : '合計線は4口座が同じ日に揃った日だけ点を打っています（次の更新から繰越方式になります）。')+
     ' 法人（会社の現金）はどの線にも入れていません。';
 
   if(typeof Chart==='undefined'){cv.style.display='none';return}
   cv.style.display='';
+  /* v1.9：その日に実記帳した点は濃く・大きく、持ち越しだけの点は薄く小さく。
+     「線が動いていないのは記帳が無いからだ」が、グラフを見ただけで分かるように。 */
+  const fade=(hex)=>hex+'55';
   const sets=t.series.filter(sp=>sp.count>=1&&!ecoOff[sp.key]).map(sp=>({
     label:sp.label,data:sp.values,borderColor:sp.color,backgroundColor:sp.color,
-    // 合計線は点がとびとび。線でつなぐが、無い日は素通しにする（0に落とさない）
+    // 点がとびとびの線もある。線でつなぐが、無い日は素通しにする（0に落とさない）
     spanGaps:true,fill:false,tension:.3,
-    pointRadius:sp.key==='total'?4:3,pointBackgroundColor:sp.color,
-    borderWidth:sp.key==='total'?3:2,
-    borderDash:sp.key==='total'?[]:[]
+    pointRadius:(sp.live||[]).map((v,i)=> v? (sp.key==='total'?4.5:3.5) : (sp.key==='total'?2:1.5)),
+    pointBackgroundColor:(sp.live||[]).map(v=> v? sp.color : fade(sp.color)),
+    pointBorderColor:(sp.live||[]).map(v=> v? sp.color : fade(sp.color)),
+    borderWidth:sp.key==='total'?3:1.8
   }));
   chartEco=new Chart(cv.getContext('2d'),{type:'line',
     data:{labels:t.labels.map(d=>d.slice(5)),datasets:sets},
@@ -2811,17 +2885,25 @@ function renderEco(){
     byCat[k]=(byCat[k]||0)+(r.amount||0); });
   const items=cls.length? rows.filter(r=>r.level==='item'&&r.amount!=null)
                               .sort((a,b)=>b.amount-a.amount) : [];
-  const hist=(eco.history||[]);
-  const cur=hist.length? hist[hist.length-1] : null;
-  // 口座別の残高（届いている口座だけ）。合計線が出ない日は「何が足りないか」を書く
-  const accLine=cur? ECO_ACC_NEED.filter(k=>cur[k]!=null).map(k=>
-    `<div class="ri"><span class="rn">${ECO_ACC_LABEL[k]}</span><span class="rv">${fmtYen(cur[k])}</span></div>`).join('') : '';
-  const miss=cur? ecoMissing(cur.accounts) : ECO_ACC_NEED.map(k=>ECO_ACC_LABEL[k]);
+  /* v1.9【繰越方式】口座マスタ4行をいつも並べる。
+     記帳のない口座は前回の値を持ち越しているので、いくらなのかは常に分かる。
+     大事なのは「その値がいつのものか」なので、各行に最新日を小さく出し、
+     14日を超えたら黄色で「🔔 そろそろ更新」と出す。 */
+  const accs=ecoAccounts(DATA);
+  const accLine='<div class="accs">'+accs.map(a=>
+    '<div class="arow'+(a.stale?' stale':'')+(a.known?'':' none')+'">'+
+      '<span class="an">'+esc(a.label)+'</span>'+
+      '<span class="aw">'+(a.asOf? md(a.asOf)+'時点'+(a.days? '・'+a.days+'日前':'・今日') : '未記帳')+'</span>'+
+      '<span class="av">'+(a.known? fmtYen(a.amount) : '—')+'</span>'+
+      (a.stale? '<span class="abell">🔔 そろそろ更新</span>' : '')+
+    '</div>').join('')+'</div>';
+  const noYet=accs.filter(a=>!a.known).map(a=>a.label);
   box.innerHTML='<div class="mi-row"><span class="mv">'+fmtYen(total)+'</span></div>'+
     '<div class="md '+(card.delta!=null&&card.delta<0?'bad':'good')+'">'+esc(card.deltaText)+'</div>'+
-    '<div class="pace">'+esc(card.asOf||eco.asOf||rows[rows.length-1].date||'')+' 時点の個人資産合計'+
-      (miss.length? '（この日は '+esc(miss.join('・'))+' が未着。合計線には点を打ちません）'
-                  : '（4口座そろった日。合計線に点が打たれます）')+'。法人は含みません。</div>'+
+    '<div class="pace">'+esc(card.asOf||eco.asOf||rows[rows.length-1].date||'')+' 時点の個人資産合計。'+
+      '記帳のない口座は前回の値を持ち越しています'+
+      (noYet.length? '（'+esc(noYet.join('・'))+' はまだ一度も記帳がありません）' : '')+
+      '。法人は含みません。</div>'+
     accLine+
     (Object.keys(byCat).length? '<details class="adet"><summary>資産の中身を見る</summary>'+
       Object.keys(byCat).map(k=>
