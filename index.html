@@ -3061,7 +3061,9 @@ function renderPlacesLink(){
   // v1.7.2：状態の書き方のゆれ（済／行った、予定／計画）をまとめて拾う
   const mDone=mt.filter(p=>/済|行った|登った|完了/.test(String(p.status||''))).length;
   const planned=rows.filter(p=>/予定|計画/.test(String(p.status||''))).length;
-  t.textContent='行きたい場所マップ（場所'+rows.length+
+  // v1.8：区分に「グルメ」が増えた。場所とグルメは重ならないように数える
+  const gourmet=rows.filter(p=>/グルメ/.test(String(p.kind||''))).length;
+  t.textContent='行きたい場所マップ（場所'+(rows.length-gourmet)+'・グルメ'+gourmet+
     '・低山 踏破'+mDone+'座・あと'+Math.max(0,goal-mDone)+'座）';
   sub.textContent='地図と写真で見る'+(planned? '・予定 '+planned+'件':'')+
     (mt.length? '・⛰低山 '+mt.length+'座':'')+'　家族にURLを送れます';

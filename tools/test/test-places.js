@@ -68,6 +68,16 @@ const SHEET = [HEAD,
         photo: "https://example.jp/mine.jpg", video: "https://youtu.be/uyuni" }),
   row({ id: "P01", name: "ふもとっぱらキャンプ場", kind: "定番", area: "静岡・富士宮", lat: 35.4, lng: 138.594,
         effort: "低", season: "通年", timing: "定番候補", withWhom: "一族", status: "候補", note: "富士山正面" }),
+  // v1.8：区分「グルメ」と、日帰り圏（関東・山梨・静岡・東北の福島）
+  row({ id: "G01", name: "那珂湊おさかな市場・あんこう鍋", kind: "グルメ", area: "関東・茨城",
+        lat: 36.34, lng: 140.58, effort: "低", season: "11〜3月", timing: "2027冬",
+        withWhom: "アキさん", status: "候補", note: "冬の茨城はあんこう" }),
+  row({ id: "G21", name: "香港の飲茶・点心", kind: "グルメ", area: "香港", lat: 22.28, lng: 114.16,
+        effort: "低", season: "10〜3月", timing: "2030", withWhom: "アキさん", status: "候補" }),
+  row({ id: "K05", name: "会津東山温泉 向瀧", kind: "日本", area: "東北・福島", lat: 37.482, lng: 139.953,
+        effort: "低", season: "1〜2月", timing: "2027冬", withWhom: "アキさん", status: "候補" }),
+  row({ id: "K14", name: "河口湖・大石公園", kind: "日本", area: "山梨・富士五湖", lat: 35.517, lng: 138.75,
+        effort: "低", season: "6〜7月", timing: "2026秋", withWhom: "一族", status: "候補" }),
   ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]   // 空行
 ];
 // Drive/Sheets を叩かずに readPlaces_ をそのまま動かす
@@ -135,7 +145,7 @@ ok((gs.match(/isTrashed\(\)/g) || []).length >= 8,
 console.log("\n【要件1】台帳 → places の変換");
 const P = readPlaces_();
 ok(!!P, "台帳を読めた", "null が返った");
-eq(P.count, 6, "★却下1件を除いた6件（空行も落ちる）");
+eq(P.count, 10, "★却下1件を除いた10件（空行も落ちる）");
 eq(P.dropped, 1, "★却下は1件だけ数えて出力しない");
 eq(P.rows.filter(r => r.name === "見送った場所").length, 0, "★却下の場所は places に入らない");
 // v1.7.2：状態の書き方のゆれ（済／行った、予定／計画）
@@ -145,8 +155,8 @@ eq(STATUS_DONE_RE.test("未"), "false", "「未」は済ではない");
 eq(P.noGeo.join(","), "座標のない場所", "★緯度経度が空の場所を警告に出す");
 eq(P.rows.filter(r => r.name === "座標のない場所").length, 1, "★でも places からは落とさない（写真タイルには出る）");
 ok(logs.some(l => /⚠️ 緯度経度が空/.test(l)), "★ログに警告が出ている", logs.join(" / "));
-ok(logs.some(l => /行きたい場所台帳: 6件（定番1・日本4・海外1／予定1・済1）/.test(l)),
-   "★ログの件数の出し方（定番n・日本n・海外n／予定n・済n）", logs.join("\n     "));
+ok(logs.some(l => /行きたい場所台帳: 10件（定番1・日本6・海外1・グルメ2／予定1・済1）/.test(l)),
+   "★ログの件数の出し方（定番n・日本n・海外n・グルメn／予定n・済n）", logs.join("\n     "));
 const soya = P.rows.filter(r => r.id === "J01")[0];
 eq(soya.lat, 45.523, "緯度が数字で入る");
 eq(soya.lng, 141.937, "経度が数字で入る");
@@ -253,18 +263,48 @@ const order = plSort(P.rows).map(r => r.timing + "/" + r.name);
 eq(order[0], "2026〜2031/宗谷岬", "★いちばん早いのは2026〜2031");
 eq(order[order.length - 1], "60代前半/行った場所", "★「済」は時期が早くてもいちばん最後");
 const jp = plSort(plFilter(P.rows, "jp")).map(r => r.id);
-eq(jp.join(","), "J01,J04,J09,J99", "★同じ時期のなかは体力→台帳の並び／済は最後");
+// 2026が3つ（J01・J04・K14）でどれも体力低なので、そこは台帳の並び（id順）
+eq(jp.join(","), "J01,J04,K14,K05,J09,J99", "★推奨時期の年順→体力→台帳の並び／済は最後");
 
 console.log("\n【要件4】タブの絞り込み");
-eq(plFilter(P.rows, "jp").length, 4, "🗾日本は4件");
-eq(plFilter(P.rows, "world").length, 1, "🌍世界は1件");
+eq(plFilter(P.rows, "jp").length, 6, "🗾日本は6件");
+eq(plFilter(P.rows, "world").length, 1, "🌍世界は1件（グルメの海外はここに入らない）");
 eq(plFilter(P.rows, "teiban").length, 1, "🏕定番は1件");
 const c = plCounts(P.rows);
-eq(c.all + "/" + c.planned + "/" + c.done, "6/1/1", "全体・予定・済の数");
+eq(c.all + "/" + c.planned + "/" + c.done, "10/1/1", "全体・予定・済の数");
 eq(plFilter(null, "jp").length, 0, "places が無くても落ちない");
 eq(plEffort({ effort: "高" }) + plEffort({ effort: "中" }) + plEffort({ effort: "低" }) + plEffort({}),
    "highmidlowna", "体力→ピンの色（高=赤・中=橙・低=緑）");
 eq(plIsDone({ status: "済" }) + "/" + plIsPlanned({ status: "予定" }), "true/true", "済・予定の見分け");
+
+console.log("\n【v1.8】区分「グルメ」の振り分け");
+eq(plFilter(P.rows, "gourmet").length, 2, "★🍽グルメは2件（国内1・海外1）");
+eq(plFilter(P.rows, "gourmet").map(r => r.id).join(","), "G01,G21", "中身も合っている");
+ok(plFilter(P.rows, "jp").every(r => !/グルメ/.test(r.kind)), "★グルメは日本タブに出ない", "");
+ok(plFilter(P.rows, "world").every(r => !/グルメ/.test(r.kind)),
+   "★海外のグルメ（香港）は世界タブではなくグルメタブへ", "");
+eq(plCounts(P.rows).gourmet, 2, "タブに出すグルメの数");
+eq(plCounts(P.rows).spots, 8, "★入口の「場所n」はグルメを除いた数（10−2）");
+eq(plFilter(P.rows, "gourmet")[0].name, "那珂湊おさかな市場・あんこう鍋", "グルメも他と同じ作りで並ぶ");
+eq(plSort(plFilter(P.rows, "gourmet")).map(r => r.id).join(","), "G01,G21",
+   "★グルメも推奨時期の早い順（2027冬 → 2030）");
+
+console.log("\n【v1.8】🚗日帰り圏の絞り込み（関東・山梨・静岡・東北の福島）");
+eq(plIsDayTrip({ area: "関東・千葉" }), "true", "関東はまるごと日帰り圏");
+eq(plIsDayTrip({ area: "関東・神奈川" }), "true", "関東・神奈川");
+eq(plIsDayTrip({ area: "山梨・富士五湖" }), "true", "★山梨");
+eq(plIsDayTrip({ area: "静岡・富士宮" }), "true", "★静岡");
+eq(plIsDayTrip({ area: "東北・福島" }), "true", "★東北は福島だけ日帰り圏");
+eq(plIsDayTrip({ area: "東北・青森" }), "false", "★東北でも青森は日帰り圏ではない");
+eq(plIsDayTrip({ area: "東北・宮城" }), "false", "宮城も違う");
+eq(plIsDayTrip({ area: "北海道" }), "false", "北海道は違う");
+eq(plIsDayTrip({ area: "近畿・和歌山" }), "false", "近畿は違う");
+eq(plIsDayTrip({ area: "香港" }), "false", "海外は違う");
+eq(plIsDayTrip({}), "false", "地方・国が空でも落ちない");
+eq(plIsDayTrip(null), "false", "null でも落ちない");
+const day = plFilter(P.rows, "jp").filter(plIsDayTrip).map(r => r.id);
+eq(day.join(","), "K05,K14", "★日本タブを日帰り圏で絞ると会津(福島)と河口湖(山梨)だけ");
+eq(plCounts(P.rows).dayTrip, 4, "日帰り圏の総数（定番の富士宮・グルメの茨城も入る）");
 
 console.log("\n【画面の配線】");
 has(pageHtml, 'id="v-map"', "地図の面がある");
@@ -282,6 +322,11 @@ has(pageHtml, "🎬 映像を見る", "ボタン2");
 has(pageHtml, "📖 もっと読む", "ボタン3");
 has(pageHtml, "function share()", "🔗共有ボタン");
 has(pageHtml, "jp:[[24,122],[46,146]]", "日本タブは日本全体");
+has(pageHtml, "{k:'gourmet',l:'🍽 グルメ'", "★5つ目のタブがある");
+has(pageHtml, "🚗 日帰り圏（", "★日本タブに日帰り圏のボタンがある");
+has(pageHtml, "function setJFilt(", "日帰り圏の切り替え");
+has(pageHtml, "gourmet:null", "★グルメの地図はピンに合わせる（日本と海外が混ざるので）");
+has(appHtml, "'・グルメ'+gourmet+", "★入口ボタンにグルメの数が出る");
 has(pageHtml, "world:[[-60,-170],[78,178]]", "世界タブは世界全体");
 ok(!/(円|¥|\$[0-9]|価格|料金|万円)/.test(pageHtml.replace(/[^]*?<script>/, "")),
    "★価格は一切出していない", "金額らしき文字列がある");
@@ -291,7 +336,7 @@ has(appHtml, 'href="places.html"', "★index.html から places.html へ行け�
 has(appHtml, "function renderPlacesLink()", "件数を出す関数がある");
 has(appHtml, "  renderPlacesLink();", "renderPriv から呼んでいる");
 // v1.7.1 で「場所n・低山 踏破n座・あとm座」に変わった（低山の数も入口に出すため）
-has(appHtml, "'行きたい場所マップ（場所'+rows.length+", "★入口に場所の件数が出る");
+has(appHtml, "'行きたい場所マップ（場所'+(rows.length-gourmet)+", "★入口に場所の件数が出る（グルメは別勘定）");
 const iPriv = appHtml.indexOf('id="pg-priv"'), iBtn = appHtml.indexOf('id="placesCard"'),
       iGraph = appHtml.indexOf('id="pg-graph"');
 ok(iPriv < iBtn && iBtn < iGraph, "★入口は家族・プライベートの部屋の中にある", iPriv + "/" + iBtn + "/" + iGraph);

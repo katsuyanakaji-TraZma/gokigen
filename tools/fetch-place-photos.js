@@ -129,7 +129,58 @@ const HINTS = {
   "アルバの白トリュフ": ["Alba Piedmont Italy", "Langhe Barolo vineyards"],
   "北京ダック＋万里の長城": ["Great Wall of China Mutianyu", "Great Wall Badaling"],
   "ボローニャの手打ちパスタ": ["Bologna Piazza Maggiore", "Bologna porticoes Italy"],
-  "シドニー年越し花火": ["Sydney New Year fireworks Harbour Bridge", "Sydney Harbour Bridge fireworks"]
+  "シドニー年越し花火": ["Sydney New Year fireworks Harbour Bridge", "Sydney Harbour Bridge fireworks"],
+
+  /* v1.8：日帰り圏の22件 */
+  "鋸山・日本寺(地獄のぞき)": ["Nihon-ji Nokogiriyama", "Jigoku Nozoki Mount Nokogiri"],
+  "養老渓谷・粟又の滝": ["Awamata Falls", "Yoro Valley Chiba autumn"],
+  "濃溝の滝(亀岩の洞窟)": ["Nomizo Falls Kameiwa cave", "Kameiwa no Doukutsu"],
+  "犬吠埼(日本一早い初日の出)": ["Inubosaki lighthouse", "Cape Inubo Choshi"],
+  "会津東山称温泉 向瀧": ["Higashiyama Onsen Aizu"],
+  "会津東山温泉 向瀧": ["Mukaitaki Aizu", "Higashiyama Onsen Aizuwakamatsu"],
+  "大内宿": ["Ouchi-juku", "Ouchijuku thatched houses"],
+  "鶴ヶ城・飯盛山(会津若松)": ["Tsuruga Castle Aizuwakamatsu", "Aizu Wakamatsu Castle"],
+  "袋田の滝(氷瀑)": ["Fukuroda Falls", "Fukuroda no Taki Ibaraki"],
+  "日光・奥日光(中禅寺湖・竜頭の滝)": ["Ryuzu Falls Nikko", "Lake Chuzenji autumn"],
+  "尾瀬ヶ原(ミズバショウ)": ["Oze marshland", "Ozegahara wooden path"],
+  "草津温泉 湯畑": ["Kusatsu Onsen Yubatake", "Kusatsu hot spring Gunma"],
+  "長瀞ライン下り・宝登山": ["Nagatoro Iwadatami", "Nagatoro river boat Saitama"],
+  "箱根 大涌谷・芦ノ湖": ["Owakudani Hakone", "Lake Ashi Hakone Mount Fuji"],
+  "河口湖・大石公園(富士山)": ["Oishi Park Lake Kawaguchi", "Lake Kawaguchi Mount Fuji lavender"],
+  "忍野八海": ["Oshino Hakkai", "Oshino Hakkai Mount Fuji"],
+  "昇仙峡(甲府)": ["Shosenkyo", "Shosenkyo Kofu Yamanashi gorge"],
+  "白糸の滝(富士宮)": ["Shiraito Falls Fujinomiya", "Shiraito no Taki Shizuoka"],
+  "三保松原(富士山の展望)": ["Miho no Matsubara", "Miho Pine Grove Mount Fuji"],
+  "寸又峡 夢のつり橋": ["Sumatakyo Yume no Tsuribashi", "Sumata Gorge suspension bridge"],
+  "堂ヶ島 天窓洞(西伊豆)": ["Dogashima Tensodo", "Dogashima Nishiizu cave"],
+  "河津桜まつり(伊豆)": ["Kawazu-zakura", "Kawazu cherry blossom Izu"],
+  "大洗磯前神社 神磯の鳥居": ["Oarai Isosaki Shrine torii", "Kamiiso no Torii Oarai"],
+
+  /* v1.8：グルメは**料理そのもの**を探す（土地の写真より、食べに行きたくなる一枚） */
+  "那珂湊おさかな市場・あんこう鍋(大洗)": ["Anglerfish hot pot", "Ankou nabe", "Nakaminato fish market"],
+  "宇都宮餃子めぐり": ["Yaki gyoza", "Gyoza plate"],
+  "甲府のほうとう": ["Hoto noodles Yamanashi", "Houtou pumpkin noodle"],
+  "沼津港の深海魚・生しらす": ["Shirasu don whitebait rice bowl", "Numazu port fish market"],
+  "浜名湖のうなぎ": ["Unagi kabayaki eel", "Unaju grilled eel"],
+  "会津の馬刺し・ソースカツ丼": ["Basashi horse sashimi", "Sauce katsudon Aizu"],
+  "三崎のマグロ(三浦半島)": ["Maguro tuna sashimi", "Misaki tuna Miura"],
+  "松阪牛(三重・松阪)": ["Matsusaka beef", "Sukiyaki wagyu beef"],
+  "博多の水炊き・もつ鍋": ["Motsunabe", "Mizutaki"],
+  "札幌の海鮮・ジンギスカン": ["Genghis Khan mutton Hokkaido", "Kaisendon seafood rice bowl"],
+  "富山湾の白エビ・ホタルイカ": ["Firefly squid Watasenia", "Shiroebi don"],
+  "新潟のへぎそば・のどぐろ": ["Hegisoba Niigata", "Nodoguro blackthroat seaperch grilled"],
+  "金沢 近江町市場": ["Omicho Market Kanazawa", "Kobako crab Kanazawa"],
+  "讃岐うどん巡り(香川)": ["Sanuki udon", "Kagawa udon noodles"],
+  "大阪 串カツ・たこ焼き(新世界)": ["Kushikatsu Osaka", "Takoyaki Osaka Shinsekai"],
+  "仙台の牛タン・ずんだ": ["Gyutan grilled beef tongue", "Sendai beef tongue"],
+  "長崎ちゃんぽん・卓袱料理": ["Chanpon", "Sara udon Nagasaki"],
+  "高知 ひろめ市場のカツオ藁焼き": ["Katsuo no tataki", "Bonito straw grilled Kochi"],
+  "香港の飲茶・点心": ["Dim sum Hong Kong", "Yum cha dim sum steamer"],
+  "ナポリの本場ピッツァ": ["Pizza Margherita Naples", "Neapolitan pizza wood oven"],
+  "リヨンのブション(フランス美食の都)": ["Bouchon Lyonnais restaurant", "Lyon Vieux Lyon"],
+  "シンガポール チキンライス・チリクラブ": ["Hainanese chicken rice", "Chilli crab Singapore"],
+  "バレンシアのパエリア": ["Paella Valenciana", "Paella pan Valencia"],
+  "釜山の海鮮(チャガルチ市場)": ["Jagalchi Market Busan", "Busan seafood market"]
 };
 
 /* Commons は無記名だと1秒1回くらいが上限。速く回すと 429 で全部落ちる
@@ -215,6 +266,8 @@ function toCand(pg) {
   if (/(fire department|police|city hall|^Sign,|signpost|Route \d)/i.test(t)) return null;
   // 現地の小物（消毒スプレー・自販機・看板）をはじく
   if (/(alcohol spray|sanitiz|vending machine|poster|banner|manhole)/i.test(t)) return null;
+  // 資料館・博物館の建物ではなく、その土地や料理そのものを出したい
+  if (/(museum|記念館|資料館)/i.test(t)) return null;
   if (!ii.width || !ii.height) return null;
   if (ii.width / ii.height < 1.15) return null;                   // 横長だけ（16:9のタイルに使う）
   if (ii.width < 900) return null;

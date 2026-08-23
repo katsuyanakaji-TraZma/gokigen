@@ -737,7 +737,7 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.7.1',
+    version: '1.8',
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -2321,8 +2321,10 @@ function readPlaces_() {
   var n = function (re, field) {
     return rows.filter(function (r) { return re.test(String(r[field] || '')); }).length;
   };
+  // v1.8：区分に「グルメ」が増えた（食べに行くこと自体が目的の旅）
   Logger.log('行きたい場所台帳: ' + rows.length + '件（定番' + n(/定番/, 'kind') +
              '・日本' + n(/^日本$/, 'kind') + '・海外' + n(/海外/, 'kind') +
+             '・グルメ' + n(/グルメ/, 'kind') +
              '／予定' + n(STATUS_PLAN_RE, 'status') + '・済' + n(STATUS_DONE_RE, 'status') + '）' +
              (dropped ? '　※却下' + dropped + '件は出していません' : ''));
   if (noGeo.length) {

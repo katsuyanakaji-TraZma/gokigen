@@ -237,7 +237,7 @@
      台帳・カレンダーを動かすのはClaudeとの会話。入力の窓口はチャット一本、という原則を守る。 */
 
 var DATA=null, PHOTOS={}, TAB='jp', VIEW='map', MAP=null, LAYER=null, CUR=null,
-    PICK={y:null,m:null,d:null}, MODE='plan', MFILT=null;
+    PICK={y:null,m:null,d:null}, MODE='plan', MFILT=null, JFILT=null;
 /** 今日の月（1〜12）。おすすめはこれを見て並ぶ */
 function nowMonth(){ return new Date().getMonth()+1 }
 
@@ -325,14 +325,23 @@ function plSort(list){
     return String(a.id||'')<String(b.id||'')? -1 : 1;          // それも同じなら台帳の並び
   });
 }
-/** タブの絞り込み。jp=日本／world=海外／teiban=定番 */
+/** タブの絞り込み。jp=日本／world=海外／teiban=定番／gourmet=グルメ（v1.8） */
 function plFilter(rows,tab){
   return (rows||[]).filter(function(p){
     var k=String(p.kind||'');
-    if(tab==='teiban') return /定番/.test(k);
-    if(tab==='world')  return /海外/.test(k);
+    if(tab==='teiban')  return /定番/.test(k);
+    if(tab==='world')   return /海外/.test(k);
+    if(tab==='gourmet') return /グルメ/.test(k);
     return /日本/.test(k);
   });
+}
+/* v1.8：🚗日帰り圏。川口から車で日帰りできる範囲を「地方・国」の書き出しで見る。
+   関東・山梨・静岡はまるごと、東北は福島だけ（会津なら日帰りが成り立つ）。
+   台帳の「地方・国」は「関東・千葉」「山梨・富士五湖」のように**地方が頭に来る**決まり。 */
+var PL_DAYTRIP=/^(関東|山梨|静岡)/;
+function plIsDayTrip(p){
+  var a=String((p&&p.area)||'');
+  return PL_DAYTRIP.test(a) || /^東北・福島/.test(a);
 }
 /** 写真は「台帳の写真URLが最優先」。空ならCommonsから拾った1枚。それも無ければ null */
 function plPhoto(p,photos){
@@ -357,8 +366,13 @@ function plDecision(name,year,month){
 }
 /** タブに出す件数（「🗾日本 33か所」の数字） */
 function plCounts(rows){
+  var g=plFilter(rows,'gourmet');
   return { jp:plFilter(rows,'jp').length, world:plFilter(rows,'world').length,
-           teiban:plFilter(rows,'teiban').length, all:(rows||[]).length,
+           teiban:plFilter(rows,'teiban').length, gourmet:g.length, all:(rows||[]).length,
+           /* 入口ボタンの「場所n・グルメn」は重ならないように数える
+              （グルメはグルメで数え、場所はそれ以外） */
+           spots:((rows||[]).length-g.length),
+           dayTrip:(rows||[]).filter(plIsDayTrip).length,
            planned:(rows||[]).filter(plIsPlanned).length, done:(rows||[]).filter(plIsDone).length };
 }
 /* ===== v1.7.1 ⛰低山（山＋セット温泉） =====
@@ -475,8 +489,10 @@ function rows(){ return ((DATA&&DATA.places&&DATA.places.rows)||[]) }
 function mrows(){ return mtRows(DATA) }
 /** いま見ている一覧（低山タブだけ別の台帳を見る） */
 function curList(){
-  if(TAB!=='mtn') return plSort(plFilter(rows(),TAB));
-  return mtSort(mtFilter(mrows(),MFILT),nowMonth());
+  if(TAB==='mtn') return mtSort(mtFilter(mrows(),MFILT),nowMonth());
+  var list=plFilter(rows(),TAB);
+  if(TAB==='jp'&&JFILT==='day') list=list.filter(plIsDayTrip);   // v1.8：🚗日帰り圏
+  return plSort(list);
 }
 function isMtn(){ return TAB==='mtn' }
 async function load(){
@@ -488,7 +504,7 @@ async function load(){
   DATA=got[0]; PHOTOS=(got[1]&&got[1].photos)||{};
   var c=plCounts(rows()), mc=mtCounts(mrows(),mtGoal(DATA));
   document.getElementById('hsub').textContent = (rows().length||mc.all)
-    ? (c.all+'か所・⛰低山'+mc.all+'座（踏破'+mc.done+'座）')
+    ? (c.spots+'か所・🍽グルメ'+c.gourmet+'・⛰低山'+mc.all+'座（踏破'+mc.done+'座）')
     : 'まだ台帳を読み込めていません';
   renderTabs(); render();
 }
@@ -498,13 +514,24 @@ function renderTabs(){
          {k:'teiban',l:'🏕 定番',n:c.teiban+'か所'},
          /* v1.7.1修正：「🏁0／100」をやめ、言葉と計算ずみの数で出す
             （分数を読ませない＝頭の中で引き算をさせない、というv1.6の原則にそろえる） */
-         {k:'mtn',l:'⛰ 低山',n:'踏破'+mc.done+'座・あと'+Math.max(0,mc.goal-mc.done)+'座'}];
+         {k:'mtn',l:'⛰ 低山',n:'踏破'+mc.done+'座・あと'+Math.max(0,mc.goal-mc.done)+'座'},
+         {k:'gourmet',l:'🍽 グルメ',n:c.gourmet+'か所'}];
   document.getElementById('tabs').innerHTML=t.map(function(x){
     return '<button class="tb '+(TAB===x.k?'on':'')+'" onclick="setTab(\''+x.k+'\')">'+
            x.l+'<span class="n">'+x.n+'</span></button>'}).join('');
+  /* v1.8：タブが5つになって幅に収まらなくなったので、
+     選んでいるタブが端で切れていたら横スクロールして見えるところへ寄せる。 */
+  var on=document.querySelector('#tabs .tb.on');
+  if(on&&on.scrollIntoView) on.scrollIntoView({block:'nearest',inline:'nearest'});
 }
-function setTab(k){ TAB=k; if(k!=='mtn') MFILT=null; renderTabs(); render(); }
+function setTab(k){
+  TAB=k;
+  if(k!=='mtn') MFILT=null;
+  if(k!=='jp')  JFILT=null;
+  renderTabs(); render();
+}
 function setMFilt(m){ MFILT=(MFILT===m)? null : m; render(); }
+function setJFilt(m){ JFILT=(JFILT===m)? null : m; render(); }
 function setView(v){
   VIEW=v;
   document.getElementById('sg-map').className=(v==='map'?'on':'');
@@ -520,6 +547,13 @@ function render(){ drawTop(); VIEW==='map'? drawMap() : drawGrid() }
 var MNAMES=['','1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
 function drawTop(){
   var el=document.getElementById('mtnTop');
+  if(TAB==='jp'){
+    // v1.8：日本タブの🚗日帰り圏（関東・山梨・静岡・東北の福島）
+    var n=plFilter(rows(),'jp').filter(plIsDayTrip).length;
+    el.innerHTML='<div class="filt"><button class="'+(JFILT==='day'?'on':'')+
+      '" onclick="setJFilt(\'day\')">🚗 日帰り圏（'+n+'か所）</button></div>';
+    return;
+  }
   if(!isMtn()){ el.innerHTML=''; return }
   var m=nowMonth(), win=mtWindow(m);
   var reco=mtRecommend(mtFilter(mrows(),MFILT),m,10);
@@ -545,8 +579,10 @@ function drawTop(){
 }
 
 /* ===== 地図 ===== */
+/* タブごとの初期表示。gourmet は日本と海外が混ざるので、決め打ちにせず
+   そのとき出ているピンに合わせる（null＝ピンから計算する）。 */
 var VIEWS={ jp:[[24,122],[46,146]], world:[[-60,-170],[78,178]],
-            teiban:[[35.2,138.3],[35.6,139.0]], mtn:[[30.5,129],[45.5,142.5]] };
+            teiban:[[35.2,138.3],[35.6,139.0]], mtn:[[30.5,129],[45.5,142.5]], gourmet:null };
 function drawMap(){
   if(!MAP){
     MAP=L.map('map',{zoomControl:true,attributionControl:true});
@@ -569,9 +605,15 @@ function drawMap(){
       .on('click',function(){ mtn? openMtn(p.id) : openSheet(p.id) });
   });
   fitMap();
-  var b=VIEWS[TAB]||VIEWS.jp;
-  MAP.fitBounds(L.latLngBounds(b),{padding:[18,18]});
-  setTimeout(function(){ MAP.invalidateSize(); MAP.fitBounds(L.latLngBounds(b),{padding:[18,18]}) },80);
+  var b=(TAB==='jp'&&JFILT==='day')? null : VIEWS[TAB];
+  if(!b){                                    // ピンに合わせる（グルメ・絞り込み中など）
+    var pts=list.map(function(p){return [p.lat,p.lng]});
+    b = pts.length? L.latLngBounds(pts).pad(0.12) : L.latLngBounds(VIEWS.jp);
+  }else{
+    b = L.latLngBounds(b);
+  }
+  MAP.fitBounds(b,{padding:[18,18]});
+  setTimeout(function(){ MAP.invalidateSize(); MAP.fitBounds(b,{padding:[18,18]}) },80);
 }
 /* 地図の高さを「画面の残り」にそろえる。
    ⛰低山タブは上に「今の時期のおすすめ」と絞り込みが乗るので、
@@ -606,7 +648,8 @@ function drawGrid(){
   }).join('');
   document.getElementById('gnote').textContent= mtn
     ? '今の時期のおすすめ → まだの山 → 予定 → 行った山、の順です。写真はWikimedia Commonsから自動で当てています。'
-    : '推奨時期の早い順です（同じ年なら体力の高いものから／行った場所は最後）。'+
+    : (TAB==='gourmet'? '食べに行くこと自体が目的の旅です。' : '')+
+      '推奨時期の早い順です（同じ年なら体力の高いものから／行った場所は最後）。'+
       '右上の小さな数字がその推奨時期。写真はWikimedia Commonsから自動で当てています。';
 }
 
