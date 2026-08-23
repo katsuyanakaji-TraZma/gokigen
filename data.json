@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-23T10:43:51+09:00",
-  "version": "1.8",
+  "generatedAt": "2026-08-23T11:24:37+09:00",
+  "version": "1.9",
   "selfVersion": {
     "birth": "1969-04-30",
     "asOf": "2026-08-23",
@@ -7510,88 +7510,202 @@
         "date": "2026-08-13",
         "rows": 8,
         "total": 24122431,
-        "sbi": 13068527,
-        "nomura": 11053904,
-        "level": "item",
-        "accounts": [
+        "posted": [
           "nomura",
           "sbi"
         ],
+        "postedTotal": 24122431,
+        "accounts": [
+          "sbi",
+          "nomura"
+        ],
+        "carried": [],
+        "sbi": 13068527,
+        "sbiAt": "2026-08-13",
+        "nomura": 11053904,
+        "nomuraAt": "2026-08-13",
+        "level": "item",
         "complete": false
       },
       {
         "date": "2026-08-16",
-        "rows": 5,
-        "total": 13704370,
-        "sbi": 13104897,
-        "gold": 599473,
-        "level": "class",
-        "accounts": [
+        "rows": 31,
+        "total": 24758274,
+        "posted": [
           "gold",
           "sbi"
         ],
+        "postedTotal": 13704370,
+        "accounts": [
+          "sbi",
+          "gold",
+          "nomura"
+        ],
+        "carried": [
+          "nomura"
+        ],
+        "sbi": 13104897,
+        "sbiAt": "2026-08-16",
+        "gold": 599473,
+        "goldAt": "2026-08-16",
+        "nomura": 11053904,
+        "nomuraAt": "2026-08-13",
+        "level": "class",
         "complete": false
       },
       {
         "date": "2026-08-18",
         "rows": 20,
-        "total": 13094607,
-        "sbi": 13094607,
-        "level": "item",
-        "accounts": [
+        "total": 24747984,
+        "posted": [
           "sbi"
         ],
+        "postedTotal": 13094607,
+        "accounts": [
+          "sbi",
+          "gold",
+          "nomura"
+        ],
+        "carried": [
+          "gold",
+          "nomura"
+        ],
+        "sbi": 13094607,
+        "sbiAt": "2026-08-18",
+        "gold": 599473,
+        "goldAt": "2026-08-16",
+        "nomura": 11053904,
+        "nomuraAt": "2026-08-13",
+        "level": "item",
         "complete": false
       },
       {
         "date": "2026-08-20",
         "rows": 24,
-        "total": 24255067,
-        "sbi": 13236333,
-        "nomura": 11018734,
-        "level": "item",
-        "accounts": [
+        "total": 24854540,
+        "posted": [
           "nomura",
           "sbi"
         ],
+        "postedTotal": 24255067,
+        "accounts": [
+          "sbi",
+          "gold",
+          "nomura"
+        ],
+        "carried": [
+          "gold"
+        ],
+        "sbi": 13236333,
+        "sbiAt": "2026-08-20",
+        "gold": 599473,
+        "goldAt": "2026-08-16",
+        "nomura": 11018734,
+        "nomuraAt": "2026-08-20",
+        "level": "item",
         "complete": false
       },
       {
         "date": "2026-08-21",
         "rows": 7,
         "total": 32133369,
-        "sbi": 13238897,
-        "gold": 619525,
-        "bank": 7265348,
-        "nomura": 11009599,
-        "level": "item",
-        "accounts": [
+        "posted": [
           "bank",
           "gold",
           "nomura",
           "sbi"
         ],
+        "postedTotal": 32133369,
+        "accounts": [
+          "sbi",
+          "gold",
+          "nomura",
+          "bank"
+        ],
+        "carried": [],
+        "sbi": 13238897,
+        "sbiAt": "2026-08-21",
+        "gold": 619525,
+        "goldAt": "2026-08-21",
+        "nomura": 11009599,
+        "nomuraAt": "2026-08-21",
+        "bank": 7265348,
+        "bankAt": "2026-08-21",
+        "level": "item",
         "complete": true
       },
       {
         "date": "2026-08-23",
         "rows": 22,
-        "total": 24617049,
-        "sbi": 13497852,
-        "nomura": 11119197,
-        "level": "item",
-        "accounts": [
+        "total": 32501922,
+        "posted": [
           "nomura",
           "sbi"
         ],
-        "complete": false
+        "postedTotal": 24617049,
+        "accounts": [
+          "sbi",
+          "gold",
+          "nomura",
+          "bank"
+        ],
+        "carried": [
+          "gold",
+          "bank"
+        ],
+        "sbi": 13497852,
+        "sbiAt": "2026-08-23",
+        "gold": 619525,
+        "goldAt": "2026-08-21",
+        "nomura": 11119197,
+        "nomuraAt": "2026-08-23",
+        "bank": 7265348,
+        "bankAt": "2026-08-21",
+        "level": "item",
+        "complete": true
       }
     ],
     "accounts": [
-      "nomura",
-      "sbi"
+      {
+        "key": "sbi",
+        "label": "SBIメイン",
+        "amount": 13497852,
+        "asOf": "2026-08-23",
+        "days": 0,
+        "stale": false,
+        "known": true
+      },
+      {
+        "key": "gold",
+        "label": "SBI貴金属",
+        "amount": 619525,
+        "asOf": "2026-08-21",
+        "days": 2,
+        "stale": false,
+        "known": true
+      },
+      {
+        "key": "nomura",
+        "label": "野村",
+        "amount": 11119197,
+        "asOf": "2026-08-23",
+        "days": 0,
+        "stale": false,
+        "known": true
+      },
+      {
+        "key": "bank",
+        "label": "個人銀行",
+        "amount": 7265348,
+        "asOf": "2026-08-21",
+        "days": 2,
+        "stale": false,
+        "known": true
+      }
     ],
-    "complete": false,
+    "carryForward": true,
+    "staleDays": 14,
+    "complete": true,
     "corp": {
       "monthly": [
         {
@@ -7643,7 +7757,7 @@
       }
     ],
     "sumLevel": "item",
-    "total": 24617049
+    "total": 32501922
   },
   "want": {
     "fileId": "19ajM16i5LNtpzOweJe0SKwHRrM6nDoHmUtBLJ2qYy28",
