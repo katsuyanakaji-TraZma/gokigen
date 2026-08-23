@@ -308,7 +308,9 @@ const pickHtml = (a, b) => {
   if (i < 0 || j < 0) throw new Error("index.html に目印が見つかりません: " + (i < 0 ? a : b));
   return html.slice(i, j);
 };
-eval(leak(pickHtml("/* 経済台帳の合計。新しい台帳は", "function ckVoiceEco(D){")));
+// v1.9.1：経済の金額は util の ecoTotal に一本化したので、そちらも読む
+eval(leak(pickHtml("/* ===== util ===== */", "/* ===== state ===== */")));
+eval(leak(pickHtml("/* v1.9.1：87歳の声が読む総資産も", "function ckVoiceEco(D){")));
 const ecoRows = ECO_NEW.slice(1).map(r => ({
   date: r[0], cat: r[1], name: r[2], amount: typeof r[4] === "number" ? r[4] : null, level: ecoLevel_(r[1])
 }));

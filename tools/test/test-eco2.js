@@ -348,6 +348,15 @@ eq(aug.officialAsOf, "2026-08-18", "★8/09の途中経過ではなく8/18を採
 eq(aug.newEnroll, 47, "累計の差（7/17基準）はこれまでどおり別に持つ");
 eq(U.monthly.filter(m => m.ym === "2026-07")[0].officialNew, 50, "7月も列から拾える");
 
+/* v1.9.1：推移の説明文は renderEcoTrend の中で組み立てている（DOMに触るので eval できない）。
+   同じ組み立てをここで再現して、「n点・繰越方式」の形になっているかだけを確かめる。 */
+const index_note_of = t => {
+  const how = t.carry ? "・繰越方式" : "";
+  return t.series.map(sp => sp.count >= 2
+    ? sp.label + "線は" + fmtYen(sp.first) + "→" + fmtYen(sp.last) + "（" + sp.count + "点" + how + "）"
+    : sp.label + "線").join("／");
+};
+
 /* ========== アプリ側（index.html） ========== */
 const leak = code => code.replace(/^(const|let) /gm, "var ");
 const pickHtml = (a, b) => {
@@ -362,6 +371,8 @@ eval(leak(pickHtml("/* ===== v1.4 3点セット（📖最新を読む／🗄書�
                    "/* ===== v1.4 3点セット ここまで ===== */")));
 eval(leak(pickHtml("/* ===== v1.5 経済（個人資産カード／法人メーター）ここから =====",
                    "/* ===== v1.5 経済 ここまで ===== */")));
+// v1.9.1：87歳の声が読む総資産（ckEcoTotal / ckVoiceEco）も同じ数字か確かめる
+eval(leak(pickHtml("/* v1.9.1：87歳の声が読む総資産も", "function ckVoice(D,room){")));
 
 // Apps Script が作るのと同じ形の data.json を組み立てる
 const mkData = (all, monthly) => {
@@ -437,6 +448,72 @@ const OLD = { eco: { asOf: "2026-08-16", rows: [], history: [
 eq(computeEcoTrend(OLD).ok, "true", "★口座別の内訳が無い古いdata.jsonでも線は引ける");
 eq(computeEcoTrend(OLD).byAccount, "false", "古い形式だと分かる");
 eq(computeEcoTrend({ eco: {} }).ok, "false", "記録が無ければ線は引かない");
+
+/* ===== v1.9.1：金額の出どころが1つになっているか ===== */
+console.log("\n【v1.9.1】画面に出る個人資産の金額は、すべて eco.total と一致する");
+{
+  /* 本番と同じ形：いちばん新しい記録日にはSBIと野村しか記帳が無く、
+     貴金属と銀行は数日前の値を持ち越している。
+     ここで「記帳日だけの合計」を読んでしまう箇所が1つでも残っていると、
+     87歳の声だけが小さい額を言う——という v1.9 のバグが再発する。 */
+  const R = (date, account, amount) =>
+    ({ date, account, name: account + "計", cat: "資産クラス", level: "class", amount });
+  const src = [
+    R("2026-08-21", "sbi", 13300000), R("2026-08-21", "gold", 619525),
+    R("2026-08-21", "nomura", 11100000), R("2026-08-21", "bank", 7265348),
+    R("2026-08-23", "sbi", 13497852), R("2026-08-23", "nomura", 11119197)   // 貴金属・銀行は持ち越し
+  ];
+  const hist = ecoHistory_(src);
+  const accs = ecoAccountsState_(hist, "2026-08-23");
+  const D9 = { eco: { asOf: "2026-08-23", history: hist, accounts: accs, carryForward: true,
+                      total: hist[hist.length - 1].total,
+                      rows: src.filter(r => r.date === "2026-08-23") } };
+  const TOTAL = 13497852 + 619525 + 11119197 + 7265348;      // = 32,501,922
+  eq(D9.eco.total, TOTAL, "繰越合計は4口座の最新値の合計");
+  const posted = 13497852 + 11119197;                        // 記帳日だけの合計（読んではいけない方）
+  ok(posted !== TOTAL, "★2つの数字はちゃんと食い違っている（テストの前提）", "");
+
+  // 画面に金額を出している関数を、ぜんぶ並べて突き合わせる
+  const sites = {
+    "家画面の経済カード": ecoCard(D9).total,
+    "経済の部屋の総資産": ecoTotal(D9),
+    "87歳の声":          ckEcoTotal(D9),
+    "目標×差分の総資産":  wtEcoTotal(D9),
+    "推移グラフの合計線の最後": computeEcoTrend(D9).series.filter(x => x.key === "total")[0].last
+  };
+  Object.keys(sites).forEach(function (k) {
+    eq(sites[k], TOTAL, "★" + k + " が eco.total と一致");
+  });
+  ok(Object.keys(sites).every(k => sites[k] !== posted),
+     "★どこも「記帳日だけの合計」を読んでいない", JSON.stringify(sites));
+  // 口座4行の合計も同じ
+  eq(accs.reduce((a, x) => a + (x.amount || 0), 0), TOTAL, "★口座4行の合計も eco.total と一致");
+  // 87歳の声の文言
+  has(ckVoiceEco(D9).text, fmtYen(TOTAL), "★87歳の声の金額も同じ");
+  has(ckVoiceEco(D9).text, "（個人4口座・繰越）", "★87歳の声は「個人4口座・繰越」と言う");
+  // legacy は名前で分かるようにしてあり、繰越の data.json では使われない
+  ok(ecoLegacyRowSum(D9) !== TOTAL, "★legacy（記帳日だけの合計）は別物", String(ecoLegacyRowSum(D9)));
+  eq(ecoIsCarry(D9), "true", "繰越方式だと分かる");
+  eq(ecoIsCarry({ eco: { history: [{ date: "2026-08-16", total: 100 }] } }), "false", "古い形式は false");
+
+  console.log("\n【v1.9.1】合計線の点の数 ＝ history の件数");
+  const T9 = computeEcoTrend(D9);
+  const tot9 = T9.series.filter(x => x.key === "total")[0];
+  eq(tot9.count, hist.length, "★合計線の点は記録日ぶん全部（4口座待ちをやめた）");
+  eq(tot9.values.filter(v => v != null).length, hist.length, "空の点が無い");
+  eq(T9.labels.length, hist.length, "横軸も記録日ぶん");
+  eq(T9.series.length, 5, "合計線＋口座別4線");
+  eq(T9.series.map(x => x.key).join(","), "total,sbi,gold,nomura,bank", "並びも決まっている");
+  // 口座別の線も、持ち越しの日を含めて全記録日ぶん点がある
+  T9.series.forEach(function (sp) {
+    eq(sp.count, hist.length, sp.label + "線も記録日ぶん全部（持ち越しで途切れない）");
+  });
+  // 実記帳か持ち越しかが分かる（点の濃さ）
+  eq(tot9.live.join(","), "true,true", "合計線はどの日も記帳がある");
+  eq(T9.series.filter(x => x.key === "gold")[0].live.join(","), "true,false",
+     "★貴金属は8/23が持ち越し（点を薄く描く）");
+  has(index_note_of(T9), "繰越方式", "★推移の説明文に「繰越方式」と書く");
+}
 
 console.log("\n【要件6】アプリ側の法人メーター");
 const DC = mkData(WITH_CORP);

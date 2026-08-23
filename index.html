@@ -747,6 +747,31 @@ const md=ds=>ds?(+ds.slice(5,7))+'/'+(+ds.slice(8,10)):'';
 const fmtUSD=n=>n==null?'—':'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 /* 円表記。個人資産はこちら（Udemyの収益＝ドルとは通貨から違う） */
 const fmtYen=n=>n==null?'—':'¥'+Math.round(n).toLocaleString('ja-JP');
+/* ===== v1.9.1 経済の金額はここ一本 =====
+   画面に出る個人資産の金額は、家画面・経済の部屋・87歳の声・目標×差分・3点セットまで
+   **すべて ecoTotal(D) を通す**。以前は「繰越合計」と「記帳日だけの合計」の2つが混在し、
+   87歳の声だけが古い方（24,617,049円）を読んでいた。
+   出どころが1つなら、そういうズレはもう起きない。 */
+function ecoIsCarry(D){
+  var h=(((D&&D.eco)||{}).history)||[];
+  return h.length>0 && h[h.length-1] && h[h.length-1].posted!=null;
+}
+/** 個人資産の合計（繰越）。法人は1円も入らない */
+function ecoTotal(D){
+  var e=(D&&D.eco)||{};
+  var hist=(e.history||[]).filter(function(x){return x&&x.total!=null});
+  if(hist.length) return hist[hist.length-1].total;   // 繰越合計（古い形式でもその日の合計）
+  if(e.total!=null) return e.total;
+  return ecoLegacyRowSum(D);
+}
+/** 【legacy】記帳日だけの合計。**繰越方式の data.json では絶対に使わない。**
+    口座別の内訳を持たない古い data.json（v1.8以前）を素通しさせるためだけに残してある。 */
+function ecoLegacyRowSum(D){
+  var rows=(((D&&D.eco)||{}).rows||[]).filter(function(r){return r.account!=='corp'});
+  var cls=rows.filter(function(r){return r.level==='class'});
+  var use=cls.length? cls : rows.filter(function(r){return r.level!=='total'&&r.level!=='memo'});
+  return use.reduce(function(a,r){return a+(r.amount||0)},0);
+}
 const signedYen=d=>Math.round(d)===0? '±¥0' : (d>0?'+':'−')+'¥'+Math.abs(Math.round(d)).toLocaleString('ja-JP');
 /* 台帳から来た文字列をHTMLに差し込むときのエスケープ */
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -1526,17 +1551,12 @@ function wtMetric(how){
   for(var i=0;i<WT_METRICS.length;i++) if(WT_METRICS[i].re.test(t)) return WT_METRICS[i].key;
   return null;
 }
-/* 経済台帳の総資産。data.json に総額があればそれを使い、無ければ同じ規則でその場で足す */
+/* 経済台帳の総資産。v1.9.1で ecoTotal（util）に一本化した。
+   目標×差分の「総資産」も、家画面も、87歳の声も、同じ数字を読む。 */
 function wtEcoTotal(D){
-  var e=(D&&D.eco)||{}, rows=(e.rows||[]).filter(function(r){return r.account!=='corp'});
-  // v1.9：繰越合計があればそれ（eco.total も Apps Script が繰越で入れている）
-  var hist=(e.history||[]).filter(function(x){return x&&x.total!=null});
-  if(hist.length&&hist[hist.length-1].posted!=null) return hist[hist.length-1].total;
-  if(e.total!=null) return e.total;
-  if(!rows.length) return null;
-  var cls=rows.filter(r=>r.level==='class');
-  var use=cls.length? cls : rows.filter(r=>r.level!=='total'&&r.level!=='memo');
-  return use.length? use.reduce((a,r)=>a+(r.amount||0),0) : null;
+  var e=(D&&D.eco)||{};
+  var has=((e.history||[]).length>0)||(e.total!=null)||((e.rows||[]).length>0);
+  return has? ecoTotal(D) : null;
 }
 /* 現状値。取れないときは null を返し、呼び出し側は「現状 —」と出すだけにする */
 function wtCurrent(D,key){
@@ -1706,8 +1726,8 @@ function kitLatest(D,room){
     push(L,'総資産',fmtInt(Math.round(wtEcoTotal(D)||0))+'円');
     use.slice().sort((a,b)=>(b.amount||0)-(a.amount||0)).slice(0,6)
        .forEach(r=>push(L,r.name||r.cat||'—',fmtInt(Math.round(r.amount||0))+'円'));
-    return {title:(e.asOf||rows[rows.length-1].date)+' 時点（'+
-      (cls.length? '資産クラス'+cls.length+'区分':rows.length+'件')+'）',lines:L};
+    return {title:(e.asOf||rows[rows.length-1].date)+' に記帳したぶん（'+
+      (cls.length? '資産クラス'+cls.length+'区分':rows.length+'件')+'）※総資産は繰越',lines:L};
   }
   if(room==='know'||room==='spirit'){
     var r2=kitLastLimitless(D);
@@ -1851,7 +1871,7 @@ function ecoCard(D){
            delta:null,from:null,deltaText:'前回比 —'};
   if(hist.length){
     var cur=hist[hist.length-1];
-    out.total=cur.total; out.asOf=cur.date;
+    out.total=ecoTotal(D); out.asOf=cur.date;   // v1.9.1：金額は ecoTotal 一本
     out.accounts=cur.accounts||[]; out.complete=!!cur.complete;
     // posted があれば繰越方式で作られた history（v1.9以降）
     out.carry = hist.some(function(p){ return p.posted!=null });
@@ -2381,24 +2401,17 @@ function ckVoicePriv(D){
 }
 /* 経済台帳の合計。新しい台帳は「総括／資産クラス／個別銘柄」の3段が入っているので、
    資産クラスの行があればそれだけを足す（そうしないと同じ資産を3回数えてしまう）。 */
-function ckEcoTotal(D){
-  /* v1.9【繰越方式】eco.rows は「いちばん新しい記録日に記帳した行」だけなので、
-     その日にSBIしか送っていなければSBIぶんしか出ない。繰越合計（history の最後）があれば
-     そちらを使う。87歳の声が「資産は1,335万」と本当より小さく言ってしまうのを防ぐ。 */
-  const hist=(((D.eco||{}).history)||[]).filter(x=>x&&x.total!=null);
-  if(hist.length&&hist[hist.length-1].posted!=null) return hist[hist.length-1].total;
-  // v1.5：法人（会社の現金）は個人の合計に足さない。Apps Script側でも除いてあるが二重の歯止め
-  const rows=(((D.eco||{}).rows)||[]).filter(r=>r.account!=='corp');
-  const cls=rows.filter(r=>r.level==='class');
-  const use=cls.length? cls : rows.filter(r=>r.level!=='total'&&r.level!=='memo');
-  return use.reduce((a,r)=>a+(r.amount||0),0);
-}
+/* v1.9.1：87歳の声が読む総資産も ecoTotal（util）に一本化。
+   ここで独自に足していたせいで、SBIしか記帳の無い日に本当より小さい額を言っていた。 */
+function ckEcoTotal(D){ return ecoTotal(D) }
 function ckVoiceEco(D){
   const rows=((D.eco||{}).rows)||[];
   if(!rows.length)
     return {tone:'alarm',text:'経済台帳の入口ができたね。まずは口座を1つ、名前と金額を書き込むところからでいい。数えられないものは、増やせないんだよ。'};
   const total=ckEcoTotal(D);
-  return {tone:'yell',text:'資産は'+fmtYen(total)+'（個人のみ）。年1,000万の資産型まで、あわてず一段ずつでいい。一番裏切らないのは金融資産だよ。'};
+  return {tone:'yell',text:'資産は'+fmtYen(total)+
+    (ecoIsCarry(D)? '（個人4口座・繰越）' : '（個人のみ）')+
+    '。年1,000万の資産型まで、あわてず一段ずつでいい。一番裏切らないのは金融資産だよ。'};
 }
 function ckVoice(D,room){
   const f={health:ckVoiceHealth,know:ckVoiceKnow,spirit:ckVoiceSpirit,
@@ -2634,10 +2647,12 @@ function renderEcoTrend(){
 
   /* 文章はグラフより先に。Chart.jsが読めなくても数字は読める。
      合計線は4口座が揃った日にしか点が無いので、何点あるかを必ず書く。 */
+  // v1.9.1：点の数のうしろに「繰越方式」と書いて、何を見ている線なのかを毎回はっきりさせる
+  const how=t.carry? '・繰越方式' : '';
   const say=t.series.map(sp=>{
     if(!sp.count) return sp.label+'線はまだ記録なし';
     if(sp.count===1) return sp.label+'線は'+fmtYen(sp.last)+'の1点だけ（線は2点目から）';
-    return sp.label+'線は'+fmtYen(sp.first)+'→'+fmtYen(sp.last)+'（'+sp.count+'点）';
+    return sp.label+'線は'+fmtYen(sp.first)+'→'+fmtYen(sp.last)+'（'+sp.count+'点'+how+'）';
   }).join('／');
   note.textContent=say+'。'+
     (!t.byAccount ? '（口座別の内訳がまだ入っていないので、いまは1本線です。'+
@@ -2879,7 +2894,7 @@ function renderEco(){
   const card=ecoCard(DATA);
   const cls=rows.filter(r=>r.level==='class');
   const sumRows=cls.length? cls : rows.filter(r=>r.level!=='total'&&r.level!=='memo');
-  const total=card.total!=null? card.total : sumRows.reduce((a,r)=>a+(r.amount||0),0);
+  const total=ecoTotal(DATA);          // v1.9.1：ここも ecoTotal 一本（行の足し算はしない）
   const byCat={};
   sumRows.forEach(r=>{ const k=(cls.length? (r.name||'その他') : (r.cat||'その他'));
     byCat[k]=(byCat[k]||0)+(r.amount||0); });
@@ -2905,7 +2920,9 @@ function renderEco(){
       (noYet.length? '（'+esc(noYet.join('・'))+' はまだ一度も記帳がありません）' : '')+
       '。法人は含みません。</div>'+
     accLine+
-    (Object.keys(byCat).length? '<details class="adet"><summary>資産の中身を見る</summary>'+
+    (Object.keys(byCat).length? '<details class="adet"><summary>'+
+      esc((card.asOf||'')+'に記帳したぶんの中身を見る')+'</summary>'+
+      '<div class="pace">ここは<b>その日に送った口座の内訳</b>です。上の総資産（繰越）とは金額が違います。</div>'+
       Object.keys(byCat).map(k=>
         `<div class="ri"><span class="rn">${esc(k)}</span><span class="rv">${fmtYen(byCat[k])}</span></div>`).join('')+
       (items.length? items.map(r=>`<div class="ri"><span class="rn">${esc(r.cat||'')} ${esc(r.name)}</span>`+
