@@ -1948,21 +1948,22 @@ function ecoAccountAmount_(list) {
 
 /**
  * v1.9：記録日ごとの個人資産を**繰越方式**で作る。
+ * v1.9.2：さらに「後ろ向き埋め」を足した。
  *
  * これまでは「その日に記帳した口座だけ」を足していた。だが残高は積み上げではなく
  * 「いまいくらか」なので、貴金属や銀行を送らなかった日は**その口座がゼロ**になり、
  * 総資産がガクンと減ったように見えていた（送っていないだけで、減ってはいない）。
+ * → 口座ごとに最新値を持ち回る（前向きの持ち越し）。
  *
- * そこで口座ごとに「最新値と、その値をいつ記帳したか」を持ち回り、
- * 記録日ごとの合計＝**その時点での4口座の最新値の合計**にする。
- * 記帳のない口座は直前の値をそのまま使う（＝持ち越し）。
+ * それでも、口座を**初めて記帳した日**に段差が残る。銀行を8/21に初記帳すると、
+ * 8/20までは銀行がゼロ扱いなので、合計線が一気に約700万上がる。
+ * これも資産が増えたのではなく、見えていなかっただけ。
+ * → 初回より前の日は**初回の値**で埋める（後ろ向き埋め＝推定）。
  *
- * 各点に持たせるもの：
- *   total       … 繰越合計（4口座のうち、いままでに1度でも記帳された口座の合計）
- *   posted      … その日に**実際に記帳した**口座（点を濃く描くのに使う）
- *   carried     … その日は持ち越しだけだった口座
- *   accounts    … 合計に入っている口座（＝1度でも記帳された口座）
- *   postedTotal … その日に記帳したぶんだけの合計（台帳の総括行との突合に使う）
+ * 各点が口座ごとに持つ kind：
+ *   posted … その日に実際に記帳した
+ *   carry  … 前の記帳の値を持ち越している
+ *   back   … 初回記帳より前なので、初回の値で補っている（推定・グラフは点線）
  */
 function ecoHistory_(all) {
   var byDate = {};
@@ -1970,38 +1971,72 @@ function ecoHistory_(all) {
     if (r.account === 'corp') return;                 // 法人は個人の線に混ぜない
     (byDate[r.date] = byDate[r.date] || []).push(r);
   });
+  var dates = Object.keys(byDate).sort();
   var NEED = ECO_PERSONAL_ACCOUNTS;
-  var carry = {};                                     // 口座 → { amount, date }
-  return Object.keys(byDate).sort().map(function (d) {
-    var list = byDate[d];
-    var acc = {};
-    list.forEach(function (r) {
+
+  // ① その日に記帳された口座と、その額
+  var pv = {};                                        // 日付 → { 口座: 額 }
+  dates.forEach(function (d) {
+    var acc = {}, m = {};
+    byDate[d].forEach(function (r) {
       var k = r.account || ECO_DEFAULT_ACCOUNT;
       (acc[k] = acc[k] || []).push(r);
     });
-    var posted = [], postedTotal = 0;
     Object.keys(acc).forEach(function (k) {
       var v = ecoAccountAmount_(acc[k]);
-      if (v == null) return;
-      carry[k] = { amount: v, date: d };              // ここで持ち越しの値を更新する
-      posted.push(k);
-      if (NEED.indexOf(k) >= 0) postedTotal += v;
+      if (v != null) m[k] = v;
     });
-    var out = { date: d, rows: list.length, total: 0,
-                posted: posted.sort(), postedTotal: Math.round(postedTotal),
-                accounts: [], carried: [] };
-    NEED.forEach(function (k) {
-      if (!carry[k]) return;                          // 一度も記帳が無い口座は数えない
-      out[k] = carry[k].amount;
-      out[k + 'At'] = carry[k].date;                  // その値をいつ記帳したか
-      out.total += carry[k].amount;
-      out.accounts.push(k);
-      if (posted.indexOf(k) < 0) out.carried.push(k); // この日は持ち越しだけ
-    });
-    out.level = list.some(function (r) { return r.level === 'class'; }) ? 'class' : 'item';
-    out.complete = NEED.every(function (k) { return out.accounts.indexOf(k) >= 0; });
-    return out;
+    pv[d] = m;
   });
+
+  // ② 器を作る
+  var out = dates.map(function (d) {
+    return { date: d, rows: byDate[d].length, total: 0, postedTotal: 0,
+             posted: [], carried: [], back: [], accounts: [], kind: {},
+             level: byDate[d].some(function (r) { return r.level === 'class'; }) ? 'class' : 'item' };
+  });
+
+  // ③ 口座ごとに、前向きの持ち越しと後ろ向き埋めを流し込む
+  var backFill = [];                                  // ログ用
+  NEED.forEach(function (k) {
+    var firstIdx = -1;
+    for (var i = 0; i < dates.length; i++) { if (pv[dates[i]][k] != null) { firstIdx = i; break; } }
+    if (firstIdx < 0) return;                         // 一度も記帳が無い口座は数えない
+    var firstVal = pv[dates[firstIdx]][k], firstAt = dates[firstIdx];
+    var last = null, lastAt = null;
+    for (var j = 0; j < dates.length; j++) {
+      var p = out[j], d = dates[j], kind, amt, at;
+      if (j < firstIdx)            { kind = 'back';   amt = firstVal; at = firstAt; }
+      else if (pv[d][k] != null)   { kind = 'posted'; amt = last = pv[d][k]; at = lastAt = d; }
+      else                         { kind = 'carry';  amt = last; at = lastAt; }
+      p[k] = amt;
+      p[k + 'At'] = at;
+      p.kind[k] = kind;
+      p.total += amt;
+      p.accounts.push(k);
+      if (kind === 'posted') { p.posted.push(k); p.postedTotal += amt; }
+      else if (kind === 'carry') p.carried.push(k);
+      else p.back.push(k);
+    }
+    if (firstIdx > 0) {
+      backFill.push(ECO_ACCOUNT_LABEL[k] + ' ' + mdShort_(dates[0]) +
+        (firstIdx > 1 ? '〜' + mdShort_(dates[firstIdx - 1]) : '') +
+        '（' + mdShort_(firstAt) + 'の値）');
+    }
+  });
+
+  out.forEach(function (p) {
+    p.accounts.sort(); p.posted.sort(); p.carried.sort(); p.back.sort();
+    p.complete = NEED.every(function (k) { return p.accounts.indexOf(k) >= 0; });
+  });
+  if (backFill.length) Logger.log('後ろ向き埋め: ' + backFill.join('・'));
+  else if (dates.length) Logger.log('後ろ向き埋め: なし（どの口座も初日から記帳あり）');
+  return out;
+}
+
+/** ログ用の短い日付。「2026-08-21」→「8/21」 */
+function mdShort_(d) {
+  return d ? (+String(d).slice(5, 7)) + '/' + (+String(d).slice(8, 10)) : '';
 }
 
 /**

@@ -1829,11 +1829,21 @@ function computeEcoTrend(D){
       if(sp.key==='total') return (p.posted||[]).length>0;
       return (p.posted||[]).indexOf(sp.key)>=0;
     });
-    return {key:sp.key,label:sp.label,color:sp.color,values:vals,live:live,count:got.length,
+    /* v1.9.2：初回記帳より前を初回の値で埋めた点（＝推定）。
+       実測ではないので、点を薄く・線を点線にする。合計線は、その日の中に
+       ひとつでも推定が混じっていれば推定あつかいにする。 */
+    var back=hist.map(function(p){
+      if(sp.key==='total') return (p.back||[]).length>0;
+      return (p.back||[]).indexOf(sp.key)>=0;
+    });
+    return {key:sp.key,label:sp.label,color:sp.color,values:vals,live:live,back:back,
+            backCount:back.filter(Boolean).length,count:got.length,
             first:got.length? got[0]:null, last:got.length? got[got.length-1]:null};
   });
   var pts=hist.filter(function(p){return p.total!=null});
-  var res={points:pts,series:series,carry:carry,labels:hist.map(function(p){return p.date}),
+  var res={points:pts,series:series,carry:carry,
+           hasBack:hist.some(function(p){return (p.back||[]).length>0}),
+           labels:hist.map(function(p){return p.date}),
            first:pts.length? pts[0]:null, last:pts.length? pts[pts.length-1]:null,
            delta:pts.length>1? pts[pts.length-1].total-pts[0].total : 0,
            byAccount:hasAcc,
@@ -2658,7 +2668,8 @@ function renderEcoTrend(){
     (!t.byAccount ? '（口座別の内訳がまだ入っていないので、いまは1本線です。'+
                     'Apps Scriptを貼り替えて更新すると、合計線と口座別4線に分かれます）'
      : t.carry ? '記帳のない口座は前回の値を持ち越しています。'+
-                 '濃い点がその日に記帳した口座、薄い点は持ち越しです。'
+                 '濃い点がその日に記帳した口座、薄い点は持ち越しです。'+
+                 (t.hasBack? '初回記帳より前は初回の値で補っています（点線）。':'')
      : '合計線は4口座が同じ日に揃った日だけ点を打っています（次の更新から繰越方式になります）。')+
     ' 法人（会社の現金）はどの線にも入れていません。';
 
@@ -2667,15 +2678,22 @@ function renderEcoTrend(){
   /* v1.9：その日に実記帳した点は濃く・大きく、持ち越しだけの点は薄く小さく。
      「線が動いていないのは記帳が無いからだ」が、グラフを見ただけで分かるように。 */
   const fade=(hex)=>hex+'55';
-  const sets=t.series.filter(sp=>sp.count>=1&&!ecoOff[sp.key]).map(sp=>({
-    label:sp.label,data:sp.values,borderColor:sp.color,backgroundColor:sp.color,
-    // 点がとびとびの線もある。線でつなぐが、無い日は素通しにする（0に落とさない）
-    spanGaps:true,fill:false,tension:.3,
-    pointRadius:(sp.live||[]).map((v,i)=> v? (sp.key==='total'?4.5:3.5) : (sp.key==='total'?2:1.5)),
-    pointBackgroundColor:(sp.live||[]).map(v=> v? sp.color : fade(sp.color)),
-    pointBorderColor:(sp.live||[]).map(v=> v? sp.color : fade(sp.color)),
-    borderWidth:sp.key==='total'?3:1.8
-  }));
+  const ghost=(hex)=>hex+'33';
+  const sets=t.series.filter(sp=>sp.count>=1&&!ecoOff[sp.key]).map(sp=>{
+    const bk=sp.back||[];
+    return {
+      label:sp.label,data:sp.values,borderColor:sp.color,backgroundColor:sp.color,
+      // 点がとびとびの線もある。線でつなぐが、無い日は素通しにする（0に落とさない）
+      spanGaps:true,fill:false,tension:.3,
+      /* v1.9.2：実記帳＞持ち越し＞推定（後ろ向き埋め）の順に、点を薄く小さくする */
+      pointRadius:(sp.live||[]).map((v,i)=> bk[i]? 1.5 : (v? (sp.key==='total'?4.5:3.5) : (sp.key==='total'?2:1.5))),
+      pointBackgroundColor:(sp.live||[]).map((v,i)=> bk[i]? ghost(sp.color) : (v? sp.color : fade(sp.color))),
+      pointBorderColor:(sp.live||[]).map((v,i)=> bk[i]? ghost(sp.color) : (v? sp.color : fade(sp.color))),
+      borderWidth:sp.key==='total'?3:1.8,
+      // 推定を含む区間だけ点線にする（実測でつないだ区間と見分けがつくように）
+      segment:{ borderDash:c=> (bk[c.p0DataIndex]||bk[c.p1DataIndex])? [5,4] : undefined }
+    };
+  });
   chartEco=new Chart(cv.getContext('2d'),{type:'line',
     data:{labels:t.labels.map(d=>d.slice(5)),datasets:sets},
     options:{responsive:true,plugins:{legend:{display:false},

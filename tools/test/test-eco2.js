@@ -65,28 +65,28 @@ console.log("\n【v1.9】繰越方式（記帳のない口座は前回の値を�
     R("2026-08-23", "sbi", 13200000), R("2026-08-23", "bank", 7270000)
   ]);
   eq(H.length, 4, "記録日は4日");
-  eq(H[0].total, 13690000, "8/16は SBI 1310万 + 貴金属 59万");
-  eq(H[1].total, 13590000, "★8/18に貴金属を送らなくても、59万は持ち越されて合計から消えない");
+  /* v1.9.2【後ろ向き埋め】野村（初回8/20）と銀行（初回8/23）は、初回より前も
+     初回の値で埋まる。だから最初の日からもう4口座ぶんが乗っている。 */
+  eq(H[0].total, 13100000 + 590000 + 11000000 + 7270000, "★8/16から4口座ぶん（初回より前は初回の値で補う）");
+  eq(H[1].total, H[0].total - 100000, "★8/18の増減はSBIの実際の増減だけ（貴金属59万は消えない）");
   ok(H[1].total > 13000000, "★送らなかった日に総資産が「SBIだけ」に減っていない", String(H[1].total));
   eq(H[1].gold, 590000, "★貴金属の値は8/16のまま");
   eq(H[1].goldAt, "2026-08-16", "その値をいつ記帳したかも持っている");
-  eq(H[2].total, 24590000, "8/20は 野村1100万 が足されて増える（減らない）");
-  eq(H[3].total, 32060000, "8/23は 4口座そろって 1320+59+1100+727万");
+  eq(H[0].kind.nomura + "/" + H[0].kind.bank, "back/back", "★8/16の野村と銀行は推定（初回より前）");
+  eq(H[2].total, H[1].total, "★8/20に野村を初記帳しても段差が出ない（同じ額で埋まっていたから）");
+  eq(H[2].kind.nomura, "posted", "8/20は野村の初記帳");
+  eq(H[3].total, 13200000 + 590000 + 11000000 + 7270000, "8/23は 1320+59+1100+727万");
   eq(H[3].complete, "true", "4口座そろった");
-  eq(H[0].complete, "false", "8/16はまだ2口座");
+  eq(H[0].complete, "true", "★埋めたので8/16の時点でも4口座そろっている");
   // 実記帳した口座のリスト
   eq(H[0].posted.join(","), "gold,sbi", "★8/16に実記帳したのは 貴金属とSBI");
   eq(H[1].posted.join(","), "sbi", "★8/18に実記帳したのは SBI だけ");
   eq(H[1].carried.join(","), "gold", "★8/18は貴金属が持ち越し");
   eq(H[2].posted.join(","), "nomura", "8/20は野村だけ");
-  eq(H[2].carried.join(","), "sbi,gold", "★8/20はSBIと貴金属が持ち越し");
+  eq(H[2].carried.join(","), "gold,sbi", "★8/20はSBIと貴金属が持ち越し（並びは口座名順）");
   eq(H[3].posted.join(","), "bank,sbi", "8/23はSBIと銀行");
   eq(H[3].carried.join(","), "gold,nomura", "8/23は貴金属と野村が持ち越し");
   eq(H[1].postedTotal, 13000000, "★その日に記帳したぶんだけの合計も持つ（総括行との突合に使う）");
-  /* 8/18の増減は「SBIが1310万→1300万に減った10万」だけであるべき。
-     繰越前は、ここに貴金属59万の消失が乗って69万減って見えていた。 */
-  eq(H[1].total - H[0].total, -100000,
-     "★8/18の増減はSBIの実際の増減だけ（貴金属59万は消えていない）");
 
   console.log("\n【v1.9】鮮度（14日を超えたら stale）");
   const A = ecoAccountsState_(H, "2026-08-23");
@@ -221,7 +221,11 @@ const H = ecoHistory_(ALL);
 eq(H.length, 3, "記録日3日ぶんの点ができる");
 eq(H[0].date + " sbi=" + H[0].sbi, "2026-08-13 sbi=13068527", "8/13 SBIメイン");
 eq(H[0].nomura, 11053904, "★8/13 野村（11,053,904円）が野村線に分かれる");
-eq(H[0].total, 24122431, "8/13 は届いた2口座の合計");
+/* v1.9.2【後ろ向き埋め】8/13は貴金属の初記帳（8/16）より前なので、
+   その値 599,473 で埋まる。銀行はこの3日ぶんの台帳にまだ一度も出てこないので入らない。 */
+eq(H[0].total, 24122431 + 599473, "★8/13は 届いた2口座 ＋ 初回より前を埋めた貴金属");
+eq(H[0].kind.gold + "/" + H[0].goldAt, "back/2026-08-16", "8/13の貴金属は推定（8/16の値）");
+eq(H[0].postedTotal, 24122431, "その日に記帳したぶんだけの合計は、届いた2口座のまま");
 eq(H[1].date + " sbi=" + H[1].sbi, "2026-08-16 sbi=13104897",
    "★8/16 SBIメインは資産クラス4行だけを足して台帳の「SBI証券口座 合計」と一致");
 eq(H[1].gold, 599473, "★8/16 貴金属は別口座として分かれる");
@@ -237,7 +241,7 @@ eq(H[2].carried.indexOf("nomura") >= 0, "true", "8/18の野村は持ち越しと
 eq(H.filter(p => p.complete).length, 0,
    "★4口座が揃った日はまだ無い＝合計線は点なし（偽の急落を作らない）");
 eq(H[1].posted.join(","), "gold,sbi", "★その日に**実記帳した**口座が分かる（点を濃く描くのに使う）");
-eq(H[1].accounts.join(","), "sbi,gold,nomura", "accounts は合計に入っている口座（持ち越しを含む）");
+eq(H[1].accounts.join(","), "gold,nomura,sbi", "accounts は合計に入っている口座（持ち越し・推定を含む）");
 
 console.log("\n【要件5】4口座が揃った日だけ合計線に点が打たれる");
 const FULL = ALL.concat(mk("2026-08-22", [
@@ -250,7 +254,9 @@ const H2 = ecoHistory_(FULL);
 const last = H2[H2.length - 1];
 eq(last.complete, "true", "★4口座が揃った日は complete＝true");
 eq(last.total, 23600000, "★合計線の点＝個人の真の総資産（4口座の合計）");
-eq(H2.filter(p => p.complete).length, 1, "揃った日だけが合計線の点になる");
+/* v1.9.2：埋めたので「揃っていない日」はもう無い。complete はどの日も true になり、
+   合計線は記録日ぶん全部に点が打たれる（4口座待ちの考え方そのものを廃止した）。 */
+eq(H2.filter(p => p.complete).length, H2.length, "★埋めたのでどの日も4口座そろっている");
 
 console.log("\n【要件6】区分「法人」は個人から完全に切り離される");
 const WITH_CORP = FULL.concat(mk("2026-08-22", [
@@ -350,6 +356,12 @@ eq(U.monthly.filter(m => m.ym === "2026-07")[0].officialNew, 50, "7月も列か�
 
 /* v1.9.1：推移の説明文は renderEcoTrend の中で組み立てている（DOMに触るので eval できない）。
    同じ組み立てをここで再現して、「n点・繰越方式」の形になっているかだけを確かめる。 */
+/* v1.9.2：説明文のうち「初回記帳より前は…（点線）」の一行が出るかを確かめる。
+   renderEcoTrend はDOMに触るので eval できないため、条件だけを再現する。 */
+const pageNote = t => (t.carry
+  ? "記帳のない口座は前回の値を持ち越しています。濃い点がその日に記帳した口座、薄い点は持ち越しです。" +
+    (t.hasBack ? "初回記帳より前は初回の値で補っています（点線）。" : "")
+  : "");
 const index_note_of = t => {
   const how = t.carry ? "・繰越方式" : "";
   return t.series.map(sp => sp.count >= 2
@@ -448,6 +460,87 @@ const OLD = { eco: { asOf: "2026-08-16", rows: [], history: [
 eq(computeEcoTrend(OLD).ok, "true", "★口座別の内訳が無い古いdata.jsonでも線は引ける");
 eq(computeEcoTrend(OLD).byAccount, "false", "古い形式だと分かる");
 eq(computeEcoTrend({ eco: {} }).ok, "false", "記録が無ければ線は引かない");
+
+/* ===== v1.9.2：後ろ向き埋め（初回記帳より前は初回の値で補う） ===== */
+console.log("\n【v1.9.2】初回記帳より前も埋めて、合計線の段差を消す");
+{
+  const R = (date, account, amount) =>
+    ({ date, account, name: account + "計", cat: "資産クラス", level: "class", amount });
+  /* 本番と同じ形：銀行の初記帳が8/21、貴金属の初記帳が8/16。
+     埋める前は 8/20→8/21 で銀行の約727万がまるごと段差になっていた。 */
+  const SRC = [
+    R("2026-08-13", "sbi", 13068527), R("2026-08-13", "nomura", 11053904),
+    R("2026-08-16", "sbi", 13104897), R("2026-08-16", "gold", 599473),
+    R("2026-08-18", "sbi", 13094607),
+    R("2026-08-20", "sbi", 13181163), R("2026-08-20", "nomura", 11073377),
+    R("2026-08-21", "sbi", 13148496), R("2026-08-21", "gold", 619525),
+    R("2026-08-21", "nomura", 11100000), R("2026-08-21", "bank", 7265348),
+    R("2026-08-23", "sbi", 13497852), R("2026-08-23", "nomura", 11119197)
+  ];
+  logs.length = 0;
+  const H = ecoHistory_(SRC);
+
+  console.log("\n  kind（記帳／持ち越し／推定）が正しく付く");
+  eq(H[0].kind.bank, "back", "★8/13の銀行は推定（初回8/21より前）");
+  eq(H[0].bank + "/" + H[0].bankAt, "7265348/2026-08-21", "★埋めた値は初回8/21の値");
+  eq(H[0].kind.gold, "back", "★8/13の貴金属も推定（初回8/16より前）");
+  eq(H[0].gold, 599473, "貴金属は8/16の値で埋める");
+  eq(H[0].kind.sbi + "/" + H[0].kind.nomura, "posted/posted", "8/13に記帳したSBIと野村は posted");
+  eq(H[0].back.join(","), "bank,gold", "★8/13の推定は銀行と貴金属");
+  eq(H[1].kind.gold, "posted", "8/16は貴金属を初記帳したので posted");
+  eq(H[1].kind.nomura, "carry", "★8/16の野村は持ち越し");
+  eq(H[1].back.join(","), "bank", "8/16の推定は銀行だけ");
+  eq(H[2].kind.sbi + "/" + H[2].kind.gold + "/" + H[2].kind.bank, "posted/carry/back",
+     "★8/18は 記帳／持ち越し／推定 が1点に同居する");
+  eq(H[4].back.length, 0, "★8/21で銀行が初記帳されたので、そこから先に推定は無い");
+  eq(H[4].posted.join(","), "bank,gold,nomura,sbi", "8/21は4口座そろって記帳");
+  eq(H[5].kind.bank, "carry", "8/23の銀行は持ち越し（推定ではない）");
+  eq(H.every(p => p.accounts.join(",") === "bank,gold,nomura,sbi"), "true",
+     "★どの日も4口座そろっている（埋めたので）");
+
+  console.log("\n  ログに後ろ向き埋めの中身を出す");
+  ok(logs.some(l => /後ろ向き埋め: SBI貴金属 8\/13（8\/16の値）・個人銀行 8\/13〜8\/20（8\/21の値）/.test(l)),
+     "★「後ろ向き埋め: 銀行 8/13〜8/20（8/21の値）…」の形で出る", logs.join(" / "));
+  logs.length = 0;
+  ecoHistory_([R("2026-08-13", "sbi", 100), R("2026-08-13", "gold", 1),
+               R("2026-08-13", "nomura", 1), R("2026-08-13", "bank", 1),
+               R("2026-08-16", "sbi", 200)]);
+  ok(logs.some(l => /後ろ向き埋め: なし/.test(l)), "初日から全部そろっていれば「なし」", logs.join(" / "));
+
+  console.log("\n  合計線に段差が出ない（増減は実記帳ぶんだけ）");
+  const diffs = H.slice(1).map((p, i) => p.total - H[i].total);
+  console.log("   日次の増減: " + diffs.map(d => d.toLocaleString()).join(" / "));
+  /* その日に記帳した口座の、実際の増減の合計。これを超える動きが出たら段差。 */
+  const realMove = H.slice(1).map((p, i) => {
+    const prev = H[i];
+    return p.posted.reduce((a, k) => a + Math.abs(p[k] - prev[k]), 0);
+  });
+  diffs.forEach((d, i) => ok(Math.abs(d) <= realMove[i] + 1,
+    "★" + H[i + 1].date + " の増減は実記帳の差分の範囲内（段差なし）",
+    "増減 " + d + " > 実記帳の動き " + realMove[i]));
+  ok(Math.max.apply(null, diffs.map(Math.abs)) < 1000000,
+     "★どの日も100万円を超える段差が出ない（埋める前は約727万の段差があった）",
+     "最大 " + Math.max.apply(null, diffs.map(Math.abs)));
+  // 埋めなかった場合との比較（8/21に銀行が丸ごと乗る段差）
+  const noFill = 7265348;
+  ok(diffs[3] < noFill / 10, "★8/21の段差が銀行まるごと（約727万）ではなくなっている", String(diffs[3]));
+
+  console.log("\n  アプリ側：推定の点は薄く・点線");
+  const D92 = { eco: { asOf: "2026-08-23", history: H, carryForward: true,
+                       total: H[H.length - 1].total, rows: [] } };
+  const T92 = computeEcoTrend(D92);
+  eq(T92.hasBack, "true", "★推定を含むと分かる（説明文の「点線」の一行を出す条件）");
+  const gs2 = T92.series.filter(x => x.key === "gold")[0];
+  eq(gs2.back.join(","), "true,false,false,false,false,false", "★貴金属は8/13だけ推定");
+  const bs2 = T92.series.filter(x => x.key === "bank")[0];
+  eq(bs2.back.join(","), "true,true,true,true,false,false", "★銀行は8/13〜8/20が推定");
+  const ts2 = T92.series.filter(x => x.key === "total")[0];
+  eq(ts2.back.join(","), "true,true,true,true,false,false",
+     "★合計線も、推定が混じる日は推定あつかい（点線でつなぐ）");
+  eq(ts2.count, H.length, "合計線の点は記録日ぶん全部");
+  eq(ts2.last, H[H.length - 1].total, "最後の点は eco.total と一致");
+  has(pageNote(T92), "点線", "★説明文に点線のことを書く");
+}
 
 /* ===== v1.9.1：金額の出どころが1つになっているか ===== */
 console.log("\n【v1.9.1】画面に出る個人資産の金額は、すべて eco.total と一致する");
