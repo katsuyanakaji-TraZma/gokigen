@@ -413,6 +413,26 @@ function safeCell_(v) {
   return v;
 }
 
+/**
+ * v1.10.2：**自由記入の欄だけ**に使う、もう一段きつい守り。
+ * 数式に加えて、「10/10」「8/10」のように**日付に見える文字列**にも「'」を付ける。
+ *
+ * なぜ必要か：ご機嫌度を「10/10」の形で書いていたところ、スプレッドシートが
+ * これを**10月10日**と解釈してセルを Date にしてしまい、読み戻すとご機嫌度が
+ * null に化けていた（2026-07-21 の 10 が消えた）。一言の欄にたまたま「8/10」と
+ * だけ書いた日も同じことが起きる。
+ *
+ * 日付の列（「2026-07-20」）にこれを使ってはいけない。「'」が付くと日付として
+ * 読めなくなり、その行がまるごと落ちる。だから列を選んで使う。
+ */
+var SHEET_DATEISH_RE = /^\s*\d{1,4}\s*[\/\-.]\s*\d{1,2}(\s*[\/\-.]\s*\d{1,4})?\s*$/;
+function safeText_(v) {
+  if (v == null) return '';
+  if (typeof v !== 'string') return v;
+  if (/^[=+@]/.test(v) || SHEET_DATEISH_RE.test(v)) return "'" + v;
+  return v;
+}
+
 /* GOKIGEN台帳のファイル名。「GOKIGEN台帳_base」も「GOKIGEN_台帳_2026-08-24」も通る。
    読むときも、まとめるときも、この1つの見分け方を使う（食い違わないように）。 */
 var GOKIGEN_FILE_RE = /^GOKIGEN[_ ]?台帳/;
@@ -422,12 +442,20 @@ var GOKIGEN_BASE_HEAD = ['日付', '曜日', '体重', '体脂肪率', '筋肉�
   '血圧上', '血圧下', 'ご機嫌度', '睡眠', '運動', '会食', 'ルーティン', '一言'];
 
 function gokigenBaseRow_(r) {
+  /* 列ごとに守り方を変える。
+       日付・曜日・数字 … そのまま（safeCell_ の数式よけだけ）
+       ご機嫌度・自由記入 … safeText_（数式よけ＋日付に見える文字列を文字列のまま留める）
+     ご機嫌度は5段階と10段階が混ざるので、読み戻すときに取り違えないよう必ず「8/10」の形で書く。
+     この形はスプレッドシートに日付と読まれてしまうため、safeText_ で守る必要がある。 */
   return [
-    r.date, r.dow, r.weight, r.fat, r.muscle, r.visceral, r.bodyAge, r.bpHigh, r.bpLow,
-    // ご機嫌度は5段階と10段階が混ざる。読み戻すときに取り違えないよう必ず「8/10」の形で書く
-    r.mood == null ? '' : (r.mood + '/10'),
-    r.sleep, r.exercise, r.dining, r.routine, r.note
-  ].map(safeCell_);
+    safeCell_(r.date), safeCell_(r.dow),
+    safeCell_(r.weight), safeCell_(r.fat), safeCell_(r.muscle),
+    safeCell_(r.visceral), safeCell_(r.bodyAge), safeCell_(r.bpHigh), safeCell_(r.bpLow),
+    safeText_(r.mood == null ? '' : (r.mood + '/10')),
+    safeCell_(r.sleep),
+    safeText_(r.exercise), safeText_(r.dining),
+    safeCell_(r.routine), safeText_(r.note)
+  ];
 }
 
 /**
@@ -839,7 +867,7 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.10.1',
+    version: '1.10.2',
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -2918,6 +2946,7 @@ function money_(v) {
   return isNaN(n) ? null : n;
 }
 function str_(v) {
+  v = unquote_(v);
   var s = String(v === null || v === undefined ? '' : v).trim();
   return s === '' ? null : s;
 }
@@ -2926,10 +2955,33 @@ function str_(v) {
  * 台帳には「4/5」（5段階）と「6」（10段階）と「かなりよい」（言葉）が混在している。
  * 5段階の記録は×2して10段階に換算する。
  */
+/**
+ * v1.10.2：safeCell_ / safeText_ が付けた先頭の「'」を外す。
+ * ふつうスプレッドシートが読み戻すときに外してくれるが、外れずに返る場合に備える。
+ * **自分たちが付ける形（=+@ で始まる／日付に見える）のときだけ**外す。
+ * 「'これは引用」のような、もともと「'」で始まる文章はそのままにする。
+ */
+function unquote_(v) {
+  if (typeof v !== 'string' || v.charAt(0) !== "'") return v;
+  var rest = v.slice(1);
+  return (/^[=+@]/.test(rest) || SHEET_DATEISH_RE.test(rest)) ? rest : v;
+}
+
 function mood_(v) {
   if (v === '' || v === null || v === undefined) return null;
-  // 「4/5」をGoogleスプレッドシートが日付(4月5日)に変換してしまった場合の救済
-  if (v instanceof Date) { var mm = v.getMonth() + 1; return (mm >= 1 && mm <= 5) ? mm * 2 : null; }
+  v = unquote_(v);
+  /* 「4/5」「8/10」をGoogleスプレッドシートが日付に変換してしまった場合の救済。
+     どちらも「分子/分母」の分母が日にちになるので、**日にちを見れば何段階か分かる**。
+       日が 5  … 5段階の「n/5」 → n は月。10段階に直すので ×2
+       日が 10 … 10段階の「n/10」→ n は月。そのまま
+     v1.10.1まではここで月しか見ておらず、10段階の「8/10」「10/10」が
+     まるごと null に化けていた（2026-07-21 のご機嫌度10が消えた原因）。 */
+  if (v instanceof Date) {
+    var mm = v.getMonth() + 1, dd = v.getDate();
+    if (dd === 10 && mm >= 1 && mm <= 10) return mm;
+    if (dd === 5 && mm >= 1 && mm <= 5) return mm * 2;
+    return (mm >= 1 && mm <= 5) ? mm * 2 : null;
+  }
   // 素の数値: 5以下は5段階とみなして×2、6〜10はすでに10段階
   if (typeof v === 'number') {
     if (v >= 1 && v <= 5) return v * 2;

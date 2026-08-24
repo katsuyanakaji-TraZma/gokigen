@@ -175,6 +175,22 @@ const sheetOf = values => ({
   getDataRange: () => ({ getValues: () => values }),
   getParent: () => ({ getSpreadsheetTimeZone: () => "Asia/Tokyo" })
 });
+/**
+ * 本物のスプレッドシートにセルを入れたとき、何になって返ってくるかを真似る。
+ *   ・先頭の「'」は「これは文字列」という印として食べられる（読み戻すと消えている）
+ *   ・「10/10」のように日付に見える文字列は **Date に変換されてしまう**
+ * ②を真似ていなかったせいで、「ご機嫌度10が統合で消える」不具合を
+ * これまでのテストは見逃していた（2026-07-21）。
+ */
+const sheetCell = cell => {
+  if (typeof cell !== "string") return cell;
+  if (/^'/.test(cell)) return cell.slice(1);
+  const m = cell.match(/^(\d{1,2})\/(\d{1,2})$/);
+  if (m) return new Date(2026, +m[1] - 1, +m[2]);
+  return cell;
+};
+const sheetRows = rows => rows.map(r => r.map(sheetCell));
+
 // SpreadsheetApp.openById の代わり
 const STORE = {};
 FILES.forEach(f => { STORE[f.name] = f.values; });
@@ -194,7 +210,8 @@ const merged = {};
 FILES.filter(f => nameDate_(f.name) <= "2026-07-31").forEach(f => readGokigenInto_(fileOf(f.name), merged));
 const mergedDates = Object.keys(merged).sort();
 mergedDates.forEach(d => delete merged[d]._ok);
-STORE["GOKIGEN台帳_base"] = [GOKIGEN_BASE_HEAD].concat(mergedDates.map(d => gokigenBaseRow_(merged[d])));
+// 本物のスプレッドシートに書いたのと同じ状態にしてから読み戻す
+STORE["GOKIGEN台帳_base"] = sheetRows([GOKIGEN_BASE_HEAD].concat(mergedDates.map(d => gokigenBaseRow_(merged[d]))));
 const after = {};
 readGokigenInto_(fileOf("GOKIGEN台帳_base"), after);                      // base を最初に
 FILES.filter(f => nameDate_(f.name) > "2026-07-31")
@@ -209,7 +226,12 @@ eq(after["2026-07-21"].weight, 84.0, "★列がズレた行が正しい行を上
 eq(after["2026-07-22"].note, "7/22の記録（訂正）", "8月のファイルの訂正が勝っている");
 eq(after["2026-08-01"].weight, 83.5, "8月の行はそのまま残る");
 // base に書き出した「ご機嫌度」の形
-eq(STORE["GOKIGEN台帳_base"][1][9], "8/10", "★ご機嫌度は必ず「8/10」の形で書き出す");
+// 書き出す時点では「'8/10」（「'」は文字列の印）。シートに入ると「8/10」の文字列になる
+eq(gokigenBaseRow_(merged["2026-07-20"])[9], "'8/10",
+   "★ご機嫌度は「'8/10」と書く（「'」が無いと10月8日にされてしまう）");
+eq(STORE["GOKIGEN台帳_base"][1][9], "8/10", "★シートに入ると「8/10」の文字列として残る");
+ok(!(STORE["GOKIGEN台帳_base"][1][9] instanceof Date),
+   "★★日付に化けていない（ここが化けるとご機嫌度が消える）", String(STORE["GOKIGEN台帳_base"][1][9]));
 eq(GOKIGEN_BASE_HEAD[0], "日付", "base の見出しは「日付」で始まる（読み取りがこれを探す）");
 eq(GOKIGEN_BASE_HEAD.length, 15, "base の列は15列（読み取りは位置で見ている）");
 // 「=」で始まる一言を数式と誤解されないようにする
@@ -326,7 +348,8 @@ console.log("\n【v1.10.1】統合の前後で中身が変わらない");
       ["2026-08-01", "土", 83.2, 30.1, 55.0, 12, 62, 128, 82, "4/5", 78, "散歩3km", "なし", 80, "月初めの一言"],
       ["2026-08-02", "日", 83.0, 30.0, 55.1, 12, 62, 126, 80, 8, 81, "ジム", "家族で焼肉", 90, "=1+1 で始まる一言"]],
     "GOKIGEN台帳_2026-08-03": [HEAD,
-      ["2026-08-03", "月", 82.8, 29.9, 55.2, 11, 61, 124, 79, "9/10", 85, "", "なし", 70, ""],
+      // ご機嫌度10 …「10/10」と書くとスプレッドシートが10月10日にしてしまう（v1.10.1の不具合）
+      ["2026-08-03", "月", 82.8, 29.9, 55.2, 11, 61, 124, 79, 10, 85, "", "なし", 70, ""],
       // 列がズレた壊れ行（体重の位置に「4/5」）。正しい8/02の行を壊してはいけない
       ["2026-08-02", "日", "4/5", "長い文章がここに来てしまっている", "", "", 6, "", "", "", "", "", "", "", ""]],
     "GOKIGEN台帳_2026-08-04": [HEAD,
@@ -351,11 +374,13 @@ console.log("\n【v1.10.1】統合の前後で中身が変わらない");
       getSheets: () => [{
       getDataRange: () => ({ getValues: () => SHEETS[id] }),
       clear: () => { SHEETS[id] = []; },
-      /* 本物のスプレッドシートは、先頭の「'」を「これは文字列」という印として食べる
-         （読み戻すと消えている）。作り物でも同じようにふるまわせる。 */
+      /* 本物のスプレッドシートのふるまいを、2つだけ真似る。
+         ① 先頭の「'」は「これは文字列」という印として食べる（読み戻すと消えている）
+         ② 「10/10」のように**日付に見える文字列は Date に変換してしまう**
+            ← これを真似ていなかったので、v1.10.1のテストは
+              「ご機嫌度10が null に化ける」不具合を見逃していた。 */
       getRange: (r, c, nr, nc) => ({
-        setValues: v => { SHEETS[id] = v.map(row => row.map(cell =>
-          (typeof cell === "string" && /^'[=+@]/.test(cell)) ? cell.slice(1) : cell)); },
+        setValues: v => { SHEETS[id] = v.map(row => row.map(sheetCell)); },
         setValue: v => {} })
     }] }),
     flush: () => {}
@@ -378,7 +403,7 @@ console.log("\n【v1.10.1】統合の前後で中身が変わらない");
   eq(before["2026-08-01"].note, "書き直した一言", "同じ日は新しいファイルが勝つ");
   eq(before["2026-08-02"].weight, 83.0, "★壊れ行に正しい行を上書きされていない");
   eq(before["2026-08-01"].mood, 8, "5段階の「4/5」は10段階の8として読む");
-  eq(before["2026-08-03"].mood, 9, "10段階の「9/10」はそのまま9");
+  eq(before["2026-08-03"].mood, 10, "★ご機嫌度10（ここが統合で消えていた）");
 
   // ② 統合する（14日より古いもの＝ここでは全部。3本以上あるので実行される）
   const msg = consolidateGokigen_("2026-08-10", 12, 3);
@@ -395,7 +420,9 @@ console.log("\n【v1.10.1】統合の前後で中身が変わらない");
   eq(after["2026-08-02"].note, "=1+1 で始まる一言", "★「=」で始まる一言が数式にならずに戻る");
   eq(after["2026-08-02"].weight, 83.0, "壊れ行に負けていない");
   eq(after["2026-08-04"].dining, "客・アズビル懇親", "会食欄");
-  eq(after["2026-08-01"].mood + "/" + after["2026-08-03"].mood, "8/9", "★ご機嫌度が5段階と10段階で混ざらない");
+  eq(after["2026-08-01"].mood + "・" + after["2026-08-03"].mood, "8・10",
+     "★ご機嫌度が5段階と10段階で混ざらない／10も消えない");
+  eq(after["2026-08-03"].mood, 10, "★【v1.10.2】ご機嫌度10が統合で null に化けない");
   eq(after["2026-07-30"].weight, 84.0, "baseにもとからあった行も残っている");
 
   // ④ 中身が違えば必ず気づく（gokigenDiff_ の逆テスト）
