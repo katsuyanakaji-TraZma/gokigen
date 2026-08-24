@@ -335,13 +335,19 @@ function plFilter(rows,tab){
     return /日本/.test(k);
   });
 }
-/* v1.8：🚗日帰り圏。川口から車で日帰りできる範囲を「地方・国」の書き出しで見る。
-   関東・山梨・静岡はまるごと、東北は福島だけ（会津なら日帰りが成り立つ）。
+/* v1.8：🚗日帰り圏。川口から車で日帰りできる範囲。
+   v1.10：台帳に「日帰り圏」列（○×）があればそれが最優先。本人が点呼で直した答えが勝つ。
+   列が空欄・列そのものが無いときだけ、「地方・国」の書き出しから推定する
+   （関東・山梨・静岡はまるごと、東北は福島だけ）。
    台帳の「地方・国」は「関東・千葉」「山梨・富士五湖」のように**地方が頭に来る**決まり。 */
 var PL_DAYTRIP=/^(関東|山梨|静岡)/;
-function plIsDayTrip(p){
+function plDayTripGuess(p){
   var a=String((p&&p.area)||'');
   return PL_DAYTRIP.test(a) || /^東北・福島/.test(a);
+}
+function plIsDayTrip(p){
+  if(p&&typeof p.dayTrip==='boolean') return p.dayTrip;   // 台帳の○×（Apps Scriptが判定ずみ）
+  return plDayTripGuess(p);
 }
 /** 写真は「台帳の写真URLが最優先」。空ならCommonsから拾った1枚。それも無ければ null */
 function plPhoto(p,photos){

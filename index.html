@@ -287,6 +287,31 @@
   .gt div.on{background:var(--blue);border-color:var(--blue);color:#fff}
   .msg{font-size:13px;color:var(--green);text-align:center;margin-top:7px;min-height:18px;font-weight:700}
   .note{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.7}
+  /* v1.10 🌱人生初 */
+  .lfh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .lfh .lfn{font-size:26px;font-weight:800;line-height:1.1}
+  .lfh .lfu{font-size:13px;font-weight:800;color:var(--soft)}
+  .lfh .lfv{margin-left:auto;font-size:11px;font-weight:800;color:#fff;background:var(--purple);
+    border-radius:999px;padding:3px 10px;white-space:nowrap}
+  .lfd{font-size:11.5px;font-weight:700;margin-top:4px}
+  .lfd.up{color:var(--green)} .lfd.down{color:var(--orange)} .lfd.zero{color:var(--muted)}
+  .lfnext{margin-top:11px;padding:11px 12px;border-radius:12px;background:rgba(34,199,122,.09);
+    border:1.5px solid rgba(34,199,122,.30);font-size:12.5px;line-height:1.75;font-weight:700;
+    display:flex;gap:8px;align-items:flex-start}
+  .lfnext .lfi{flex:none;font-size:15px}
+  .lfrow{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:11.5px}
+  .lfrow .lfk{width:62px;flex:none;font-weight:800;color:var(--soft)}
+  .lfrow.on .lfk{color:var(--purple)}
+  .lfrow .lfm{width:44px;flex:none;color:var(--muted);font-weight:700}
+  .lfrow .lfbar{flex:1;height:12px;background:var(--bg);border-radius:6px;overflow:hidden}
+  /* span のままだと inline で height が効かず、棒が出ない */
+  .lfrow .lfbf{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#22c77a,#4a7eff)}
+  .lfrow.on .lfbf{background:linear-gradient(90deg,#9b59ff,#ff4d8d)}
+  .lfrow .lfc{width:38px;text-align:right;flex:none;font-weight:800}
+  .lfrow .lfc.z{color:var(--muted);font-weight:700}
+  .lfit{padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px;line-height:1.7}
+  .lfit:last-child{border-bottom:none}
+  .lfit .lfdt{font-size:10.5px;color:var(--muted);font-weight:800;margin-right:6px}
   /* v1.9 経済：口座マスタ4行（最新値＋いつの値か） */
   .accs{margin-top:10px}
   .arow{display:flex;align-items:baseline;gap:8px;padding:9px 0;border-bottom:1px solid var(--border);
@@ -637,6 +662,8 @@
 <div class="page" id="pg-spirit">
   <div class="hdr"><button class="back" onclick="go('home')">← 家</button><div class="h1">🧘 精神</div></div>
   <div class="card goal" id="goal-spirit" style="display:none"></div>
+  <!-- v1.10 🌱人生初（ver57.x ごと）。呪縛からの解放にいちばん近い部屋に置く -->
+  <div class="card" id="lfCard"><div id="lfBody"></div></div>
   <div class="card">
     <div class="ct"><span class="dot" style="background:var(--purple)"></span>コンディション（最新）</div>
     <div class="mg">
@@ -1998,6 +2025,89 @@ function wkMonthNew(D){
           from:last.from||null, to:last.to||null};
 }
 /* ===== v1.5 経済 ここまで ===== */
+/* ===== v1.10 🌱人生初（ver57.x ごと）ここから =====
+   ここから下の「ここまで」までは DOM に触らない
+   （tools/test/test-lifefirst.js が、この範囲だけを切り出して検証するため）。
+
+   57歳の誕生日（4/30）を起点に、月ごとに ver57.01（5月）…と刻んでいく。
+   その ver のあいだに「人生で初めてやったこと」がいくつあったかを数える。
+   数えるだけで終わらせない——先月と比べて何件か、今月まだ0件なら何をするか、まで出す。 */
+
+/** data.json の lifeFirsts を、画面に出せる形（新しいver順の配列）にそろえる */
+function lfList(D){
+  var m=(D&&D.lifeFirsts)||{};
+  return Object.keys(m).sort().reverse().map(function(k){
+    var g=m[k]||{};
+    return {key:k, ver:g.ver||('ver'+k), label:g.label||'',
+            count:g.count||0, items:g.items||[], from:g.from||null, to:g.to||null};
+  });
+}
+/** 今日の ver（バナーと同じ selfVersion を使う。数え方を2つ持たない） */
+function lfNowKey(todayStr){
+  var ds=todayStr||(function(){var d=new Date();
+    return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())})();
+  return selfVersion(ds).version.replace(/^ver/,'');
+}
+/** ver のキー「57.04」を1つ前に戻す（57.00 の前は 56.11） */
+function lfPrevKey(key){
+  var a=String(key).split('.'), maj=+a[0], min=+a[1];
+  if(min>0) return maj+'.'+pad(min-1);
+  return (maj-1)+'.11';
+}
+function lfVerLabel(key,todayStr){
+  var a=String(key).split('.'), maj=+a[0], min=+a[1];
+  var b=String(SELF_BIRTH);
+  var t=(+b.slice(0,4))*12+(+b.slice(5,7)-1)+maj*12+min;   // 誕生月からの通算月
+  return Math.floor(t/12)+'年'+(t%12+1)+'月';
+}
+
+/**
+ * 🌱人生初カードの中身。
+ *   now   … 今のverの件数と明細
+ *   prev  … 1つ前のverの件数（先月比を出すため）
+ *   diff  … 先月比
+ *   trend … ver57.01から今のverまでの件数の並び（記録の無いverは0で埋める）
+ *   next  … 次の一手（1行）
+ */
+function lfCard(D,todayStr){
+  var all=lfList(D), by={};
+  all.forEach(function(g){ by[g.key]=g });
+  var nowKey=lfNowKey(todayStr), prevKey=lfPrevKey(nowKey);
+  var now=by[nowKey]||{key:nowKey,ver:'ver'+nowKey,count:0,items:[],label:lfVerLabel(nowKey)};
+  var prev=by[prevKey]||null;
+  var diff=prev? now.count-prev.count : null;
+
+  /* 件数の推移。誕生月（.00）から今のverまでを、記録が無い月も0で並べる。
+     「先月は8件だったのに今月はまだ1件」が、並びを見るだけで分かるように。 */
+  var trend=[], k=(+nowKey.split('.')[0])+'.00';
+  for(var i=0;i<=(+nowKey.split('.')[1]);i++){
+    var key=(+nowKey.split('.')[0])+'.'+pad(i);
+    var g=by[key];
+    trend.push({key:key, ver:'ver'+key, label:(g&&g.label)||lfVerLabel(key),
+                count:(g&&g.count)||0, now:key===nowKey});
+  }
+  // 今のverより前のverも記録があれば拾う（去年の分など）
+  var older=all.filter(function(g){ return g.key<trend[0].key });
+
+  var next;
+  if(!all.length)
+    next='リミットレス台帳に🌱の記録がまだありません。朝の点呼で「初めてやったこと」を1つ話すところから。';
+  else if(now.count===0)
+    next=now.ver+'はまだ記録なし。'+(prev&&prev.count? '前の'+prev.ver+'は'+prev.count+'件でした。':'')+
+         '今日「初めて」を1つ作れば、この月が動きます。';
+  else if(diff!=null&&diff<0)
+    next=now.ver+'は'+now.count+'件で、前の'+prev.ver+'より'+Math.abs(diff)+'件少なめ。あと'+
+         Math.abs(diff)+'件で並びます。';
+  else if(diff!=null&&diff>0)
+    next=now.ver+'は'+now.count+'件。前の'+prev.ver+'より'+diff+'件多い、いい月です。';
+  else
+    next=now.ver+'は'+now.count+'件。この調子で1つずつ積んでいきましょう。';
+
+  return {now:now, prev:prev, diff:diff, trend:trend, older:older,
+          total:all.reduce(function(a,g){return a+g.count},0), next:next, known:all.length>0};
+}
+/* ===== v1.10 🌱人生初 ここまで ===== */
+
 /* ===== v1.6 会食予実（枠・予約・実績）ここから =====
    ここから下の「ここまで」までは DOM に触らない
    （tools/test/test-dining.js が、この範囲だけを切り出して検証するため）。
@@ -3044,7 +3154,48 @@ function renderKnow(){
        <div style="font-size:13px;line-height:1.75;margin-top:3px">${r.note.length>150?r.note.slice(0,150)+'…':r.note}</div>
      </div>`).join('');
 }
+/* v1.10 🌱人生初カード。数字だけで終わらせず、先月比と「次の一手」まで出す。 */
+function renderLifeFirst(){
+  const el=document.getElementById('lfBody');
+  if(!el) return;
+  const c=lfCard(DATA);
+  if(!c.known){
+    el.innerHTML='<div class="ct"><span class="dot" style="background:var(--green)"></span>🌱 人生初</div>'+
+      '<div class="waiting">リミットレス台帳に🌱（種別「初めて」）の記録がまだありません。<br>'+
+      '朝の点呼で「初めてやったこと」を1つ話せば、次の更新からここに積み上がります。</div>';
+    return;
+  }
+  const n=c.now, d=c.diff;
+  const dTxt = d==null ? '前の月の記録がまだありません'
+    : d>0 ? '前の'+c.prev.ver+'より +'+d+'件'
+    : d<0 ? '前の'+c.prev.ver+'より −'+Math.abs(d)+'件（あと'+Math.abs(d)+'件で並びます）'
+    : '前の'+c.prev.ver+'と同じ件数';
+  const dCls = d==null? 'zero' : d>0? 'up' : d<0? 'down' : 'zero';
+  const mx=Math.max(1,...c.trend.map(x=>x.count),...c.older.map(x=>x.count));
+  const bar=x=>'<div class="lfrow'+(x.now?' on':'')+'"><span class="lfk">'+esc(x.ver)+'</span>'+
+    '<span class="lfm">'+esc(String(x.label||'').replace(/^\d+年/,''))+'</span>'+
+    '<span class="lfbar">'+(x.count? '<span class="lfbf" style="width:'+(x.count/mx*100).toFixed(1)+'%"></span>':'')+'</span>'+
+    '<span class="lfc'+(x.count?'':' z')+'">'+(x.count? x.count+'件':'—')+'</span></div>';
+
+  el.innerHTML=
+    '<div class="ct"><span class="dot" style="background:var(--green)"></span>🌱 人生初</div>'+
+    '<div class="lfh"><span class="lfn">'+n.count+'</span><span class="lfu">件</span>'+
+      '<span class="lfv">'+esc(n.ver)+'（'+esc(n.label||'')+'）</span></div>'+
+    '<div class="lfd '+dCls+'">'+esc(dTxt)+'</div>'+
+    '<div class="lfnext"><span class="lfi">🌱</span><span>'+esc(c.next)+'</span></div>'+
+    '<details class="adet"><summary>ver別の積み上げを見る（ぜんぶで'+c.total+'件）</summary>'+
+      c.trend.slice().reverse().map(bar).join('')+
+      (c.older.length? '<div class="pace" style="margin-top:8px">その前</div>'+
+        c.older.map(bar).join('') : '')+
+      (n.items.length? '<div class="pace" style="margin-top:10px">🌱 '+esc(n.ver)+' の中身</div>'+
+        n.items.map(x=>'<div class="lfit"><span class="lfdt">'+md(x.date)+'</span>'+esc(x.content)+
+          (x.who? ' <span class="lfdt">'+esc(x.who)+'</span>':'')+'</div>').join('')
+        : '<div class="pace" style="margin-top:10px">'+esc(n.ver)+' の記録はまだありません</div>')+
+    '</details>';
+}
+
 function renderSpirit(){
+  renderLifeFirst();
   const m=lastWith('mood',0);
   document.getElementById('v-mood').textContent=m? m.mood : '—';
   document.getElementById('u-mood').textContent=m? '点（満点10点）' : '';

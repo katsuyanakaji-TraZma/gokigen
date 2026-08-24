@@ -737,7 +737,7 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.9',
+    version: '1.10',
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -768,6 +768,8 @@ function buildData_(previous) {
     future: future,
     limitless: limitless,
     knowledge: knowledge,
+    // v1.10：🌱人生初を ver57.x ごとに。台帳は変えず、日付から毎回数え直している
+    lifeFirsts: (limitless && limitless.lifeFirsts) || {},
     eco: eco,
     want: want,
     weekly: weekly,
@@ -1691,6 +1693,7 @@ function readLimitless_() {
       // 同じ日付×内容はデルタ（後から読んだ方）が勝つ
       byKey[date + '|' + text] = {
         date: date,
+        ver: verKey_(date),               // v1.10：日付から毎回その場で出す（台帳には列を足さない）
         kinds: tags.kinds,          // 集計に数えるタグ（「?」なし）
         unsure: tags.unsure,        // 「?」付き＝未確定。数えないが画面には出す
         kindsText: raw,             // 種別セルの原文（詳細行の表示用）
@@ -1703,13 +1706,61 @@ function readLimitless_() {
     used.push({ name: s.name, rows: cnt });
   });
   var rows = Object.keys(byKey).sort().map(function (k) { return byKey[k]; });
+  /* v1.10：🌱人生初は**180日で切る前の全部**から数える。
+     切ったあとで数えると、半年たった ver の件数が勝手に減っていく。
+     data.json に残すのは件数と明細だけなので、行を全部持つより軽い。 */
+  var lifeFirsts = buildLifeFirsts_(rows);
   var cutoff = Utilities.formatDate(
     new Date(new Date().getTime() - CONFIG.limitlessKeepDays * 86400000), 'Asia/Tokyo', 'yyyy-MM-dd');
   rows = rows.filter(function (r) { return r.date >= cutoff; });
-  Logger.log('リミットレス台帳: ' + rows.length + '行（' + CONFIG.limitlessKeepDays + '日以内）');
+  var lfKeys = Object.keys(lifeFirsts).sort();
+  Logger.log('リミットレス台帳: ' + rows.length + '行（' + CONFIG.limitlessKeepDays + '日以内）' +
+             '／🌱人生初 ' + lfKeys.reduce(function (a, k) { return a + lifeFirsts[k].count; }, 0) + '件（' +
+             (lfKeys.length ? lfKeys.map(function (k) {
+                return 'ver' + k + ' ' + lifeFirsts[k].count + '件'; }).join('・') : 'まだありません') + '）');
   return { baseName: CONFIG.limitlessBaseName, baseUrl: baseUrl,
            folderUrl: 'https://drive.google.com/drive/folders/' + CONFIG.limitlessFolderId,
-           used: used, rows: rows };
+           used: used, rows: rows, lifeFirsts: lifeFirsts };
+}
+
+/**
+ * v1.10：🌱人生初（リミットレス台帳の種別「初めて」）を ver57.x ごとに集める。
+ *
+ * 新しい入力の仕組みは作らない。**すでにある台帳の🌱タグを ver 単位で数え直すだけ**。
+ * ver は日付から selfVersion_ で毎回その場で出すので、台帳に列を足す必要もない
+ * （列を足すと、台帳を作り直すたびに消えて面倒が増える）。
+ *
+ *   { "57.04": { count: 5, ver: "ver57.04", label: "2026年8月",
+ *                items: [{date, content, who}] }, ... }
+ *
+ * 「?」付きの種別（まだ決めかねている印）は kinds に入っていないので、自動的に外れる。
+ */
+var LIFE_FIRST_KIND = '初めて';
+var LIFE_FIRST_ITEMS = 20;        // 1つのverに残す明細の数（数えるのは全部）
+
+function buildLifeFirsts_(rows) {
+  var out = {};
+  (rows || []).forEach(function (r) {
+    if ((r.kinds || []).indexOf(LIFE_FIRST_KIND) < 0) return;
+    var key = verKey_(r.date);
+    if (!out[key]) {
+      out[key] = { ver: 'ver' + key, count: 0,
+                   label: (+r.date.slice(0, 4)) + '年' + (+r.date.slice(5, 7)) + '月',
+                   from: r.date, to: r.date, items: [] };
+    }
+    var g = out[key];
+    g.count++;
+    if (r.date < g.from) g.from = r.date;
+    if (r.date > g.to) g.to = r.date;
+    if (g.items.length < LIFE_FIRST_ITEMS) {
+      g.items.push({ date: r.date, content: r.text, who: r.who || null });
+    }
+  });
+  // 明細は新しい順（画面はそのまま並べるだけでよい）
+  Object.keys(out).forEach(function (k) {
+    out[k].items.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+  });
+  return out;
 }
 
 /**
@@ -2384,8 +2435,27 @@ var PLACES_COLS = {
   video:    ['映像URL', '映像'],
   source:   ['出典URL', '出典'],
   booking:  ['手配先'],
-  output:   ['公開した成果物', '成果物']
+  output:   ['公開した成果物', '成果物'],
+  dayTrip:  ['日帰り圏', '日帰り']        // v1.10：本人が○×で上書きできる列（無くても動く）
 };
+
+/* v1.10【🚗日帰り圏】川口から車で日帰りできる範囲。
+   「地方・国」の書き出しで機械的に推定する。関東・山梨・静岡はまるごと、
+   東北は福島だけ（会津なら日帰りが成り立つ）。
+   **これはあくまで初期値**で、台帳の「日帰り圏」列に○×が書いてあればそちらが勝つ。 */
+var PLACES_DAYTRIP_RE = /^(関東|山梨|静岡)/;
+function placesDayTripGuess_(area) {
+  var a = String(area == null ? '' : area);
+  return PLACES_DAYTRIP_RE.test(a) || /^東北・福島/.test(a);
+}
+/** 台帳の「日帰り圏」セル。○/はい/true → true、×/いいえ/false → false、空欄 → null（＝推定に任せる） */
+function placesDayTripCell_(v) {
+  var t = String(v == null ? '' : v).trim();
+  if (!t) return null;
+  if (/^(○|◯|o|yes|y|true|1|日帰り)/i.test(t)) return true;
+  if (/^(×|x|no|n|false|0|-|—)/i.test(t)) return false;
+  return null;
+}
 
 /** 台帳のファイル。**名前が先・固定IDは予備**（作り直してIDが変わっても新しい方を読む） */
 function placesFile_() {
@@ -2420,13 +2490,26 @@ function readPlaces_() {
       note: cell('note') || null,
       photo: cell('photo') || null, video: cell('video') || null,
       source: cell('source') || null, booking: cell('booking') || null,
-      output: cell('output') || null
+      output: cell('output') || null,
+      /* v1.10：台帳に○×が書いてあればそれ、空欄なら「地方・国」からの推定。
+         dayTripSrc で、どちらで決まったのかが分かる（点呼で見直すときの手がかり）。 */
+      dayTrip: (hd.map.dayTrip != null && placesDayTripCell_(row[hd.map.dayTrip]) != null)
+                 ? placesDayTripCell_(row[hd.map.dayTrip])
+                 : placesDayTripGuess_(cell('area')),
+      dayTripSrc: (hd.map.dayTrip != null && placesDayTripCell_(row[hd.map.dayTrip]) != null)
+                 ? 'ledger' : 'guess'
     });
   }
 
   var n = function (re, field) {
     return rows.filter(function (r) { return re.test(String(r[field] || '')); }).length;
   };
+  var day = rows.filter(function (r) { return r.dayTrip; });
+  var dayFromLedger = day.filter(function (r) { return r.dayTripSrc === 'ledger'; }).length;
+  Logger.log('🚗日帰り圏: ' + day.length + '件（うち台帳の列で決まったもの ' + dayFromLedger +
+             '件／残りは「地方・国」からの推定）' +
+             (hd.map.dayTrip == null ? '　※台帳にまだ「日帰り圏」列がありません。'
+                                       + 'setupDayTripColumn() を1回だけ実行すると、推定値つきで作られます' : ''));
   // v1.8：区分に「グルメ」が増えた（食べに行くこと自体が目的の旅）
   Logger.log('行きたい場所台帳: ' + rows.length + '件（定番' + n(/定番/, 'kind') +
              '・日本' + n(/^日本$/, 'kind') + '・海外' + n(/海外/, 'kind') +
@@ -2441,6 +2524,49 @@ function readPlaces_() {
     asOf: Utilities.formatDate(file.getLastUpdated(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm'),
     count: rows.length, dropped: dropped, noGeo: noGeo, rows: rows
   };
+}
+
+/**
+ * v1.10：行きたい場所台帳に「日帰り圏」列を作り、初期値（推定）を書き入れる。
+ * **1回だけ手で実行する**（自動実行では呼ばない）。理由：
+ *   ・毎回書き戻すと、本人が点呼で直した○×を上書きしてしまう
+ *   ・runNow は読むだけにしておきたい（実行時間もスコープの都合も）
+ * すでに列があれば作らず、**空欄のセルにだけ**推定値を入れる。○×が入っている行には触らない。
+ * 何度実行しても壊れない。
+ */
+function setupDayTripColumn() {
+  var file = placesFile_();
+  if (!file) return '⚠️ 行きたい場所台帳が見つかりません';
+  var sheet = SpreadsheetApp.openById(file.getId()).getSheets()[0];
+  var values = sheet.getDataRange().getValues();
+  var hd = findColumns_(values, PLACES_COLS, 'name');
+  if (!hd) return '⚠️ 見出し（場所／区分／地方・国…）が見つかりません';
+
+  var col = hd.map.dayTrip;
+  var made = false;
+  if (col == null) {                                   // 列そのものを右端に足す
+    col = values[hd.row].length;
+    sheet.getRange(hd.row + 1, col + 1).setValue('日帰り圏');
+    made = true;
+  }
+  var filled = 0, kept = 0;
+  for (var i = hd.row + 1; i < values.length; i++) {
+    var name = hd.map.name != null ? str_(values[i][hd.map.name]) : null;
+    if (!name) continue;
+    var cur = made ? null : placesDayTripCell_(values[i][col]);
+    if (cur != null) { kept++; continue; }              // 本人が書いた○×は絶対に上書きしない
+    var area = hd.map.area != null ? str_(values[i][hd.map.area]) : null;
+    sheet.getRange(i + 1, col + 1).setValue(placesDayTripGuess_(area) ? '○' : '×');
+    filled++;
+  }
+  SpreadsheetApp.flush();
+  var msg = '✅ 「日帰り圏」列' + (made ? 'を作りました' : 'はすでにありました') +
+            '。空欄の' + filled + '行に推定値（○／×）を入れました' +
+            (kept ? '。すでに○×のあった' + kept + '行は触っていません' : '') +
+            '\n   これは**初期値**です。点呼で一覧を見ながら○×を直せば、次の更新からそちらが優先されます。' +
+            '\n   ' + file.getUrl();
+  Logger.log(msg);
+  return msg;
 }
 
 // ===== v1.7.1: 低山台帳（⛰低山タブ／山とセット温泉） =====
@@ -2627,6 +2753,13 @@ function readWeekly_() {
  * 12ヶ月で整数部が1つ上がる（＝満年齢）。1969-04-30生まれなら 2026年8月＝ver57.04。
  * 日にちは見ない（誕生月はまるごと .00）。
  */
+/**
+ * v1.10：ver57.x の「キー」。selfVersion_ の結果から "ver" を外しただけで、
+ * 計算そのものは selfVersion_ 一本（バナーの ver 表示と絶対にズレない）。
+ * 2026年8月 → "57.04"。
+ */
+function verKey_(ds) { return selfVersion_(ds).version.replace(/^ver/, ''); }
+
 function selfVersion_(ds, birth) {
   var b = String(birth || CONFIG.birthDate);
   var t = (+ds.slice(0, 4) - +b.slice(0, 4)) * 12 + (+ds.slice(5, 7) - +b.slice(5, 7));
