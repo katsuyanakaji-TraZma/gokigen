@@ -245,6 +245,10 @@ eq(order[0], "GOKIGEN台帳_base", "★base がいちばん最初（更新日時
 eq(order.join(","), "GOKIGEN台帳_base,GOKIGEN_台帳_2026-08-01,GOKIGEN_台帳_2026-08-16",
    "そのあとは古い順（＝新しいファイルが後から上書きする）");
 eq(order.indexOf("未来ビジョン台帳_2026-08-13"), -1, "スプレッドシート以外は読まない");
+// v1.10.1：名前でしぼる引数を足したので、そこも見る
+eq(filesOldestFirst_("folder", null, /^GOKIGEN[_ ]?台帳/).map(f => f.getName()).join(","),
+   filesOldestFirst_("folder").map(f => f.getName()).filter(n => /^GOKIGEN[_ ]?台帳/.test(n)).join(","),
+   "★名前でしぼると、GOKIGEN台帳のファイルだけになる（他の台帳は開かない）");
 eq(filesOldestFirst_("folder").map(f => f.getName())[0], "GOKIGEN_台帳_2026-08-01",
    "base名を渡さなければ、これまでどおり更新日時だけの順番");
 
@@ -300,6 +304,141 @@ eq(ecoLevel_("米国株式"), "item", "個別銘柄は内訳の段");
 eq(ecoLevel_("メモ"), "memo", "メモは合計に足さない");
 eq(ecoLevel_("国内株式"), "item", "旧台帳の区分（国内株式など）は内訳の段になる");
 eq(ecoLevel_(null), "item", "区分が空でも落ちない");
+
+/* ===== v1.10.1：自動統合しても、読める中身が1文字も変わらないか =====
+   runNow のたびに統合が走るようになったので、「まとめる前」と「まとめたあと」で
+   readGokigen_ が返すものが完全に同じであることを、実際に読み書きして確かめる。 */
+console.log("\n【v1.10.1】統合の前後で中身が変わらない");
+{
+  eval(pick("// ===== GOKIGEN台帳 =====", "// ===== Udemy台帳（base + デルタの合算） ====="));  // readGokigen_ / HEALTH_FIELDS
+  eval(pick("/**\n * v1.10.1：まとめる前（before）と、", "// ===== v1.6: Googleカレンダー"));    // gokigenDiff_
+
+  /* 本物の台帳と同じ形の日次ファイルを4本作る。
+     わざと難しくしてある：
+       ・ご機嫌度が5段階（4/5）と10段階（8/10）で混在
+       ・同じ日が2本のファイルに出てくる（新しい方が勝つ）
+       ・列がズレた壊れ行が混ざっている（正しい行を上書きしてはいけない）
+       ・「=」で始まる一言（数式と読まれてはいけない） */
+  const HEAD = ["日付", "曜日", "体重", "体脂肪率", "筋肉量", "内臓脂肪", "体年齢",
+                "血圧上", "血圧下", "ご機嫌度", "睡眠", "運動", "会食", "ルーティン", "一言"];
+  const FILES = {
+    "GOKIGEN台帳_2026-08-01": [HEAD,
+      ["2026-08-01", "土", 83.2, 30.1, 55.0, 12, 62, 128, 82, "4/5", 78, "散歩3km", "なし", 80, "月初めの一言"],
+      ["2026-08-02", "日", 83.0, 30.0, 55.1, 12, 62, 126, 80, 8, 81, "ジム", "家族で焼肉", 90, "=1+1 で始まる一言"]],
+    "GOKIGEN台帳_2026-08-03": [HEAD,
+      ["2026-08-03", "月", 82.8, 29.9, 55.2, 11, 61, 124, 79, "9/10", 85, "", "なし", 70, ""],
+      // 列がズレた壊れ行（体重の位置に「4/5」）。正しい8/02の行を壊してはいけない
+      ["2026-08-02", "日", "4/5", "長い文章がここに来てしまっている", "", "", 6, "", "", "", "", "", "", "", ""]],
+    "GOKIGEN台帳_2026-08-04": [HEAD,
+      // 同じ日を書き直した（新しいファイルが勝つ）
+      ["2026-08-01", "土", 83.1, 30.0, 55.0, 12, 62, 128, 82, "4/5", 78, "散歩3km", "なし", 80, "書き直した一言"],
+      ["2026-08-04", "火", 82.9, 29.8, 55.3, 11, 61, 122, 78, 7, 88, "ゴルフ", "客・アズビル懇親", 75, "会食あり"]],
+    "GOKIGEN台帳_base": [HEAD,
+      ["2026-07-30", "木", 84.0, 30.5, 54.8, 13, 63, 130, 84, "8/10", 72, "", "なし", 60, "7月の記録"]]
+  };
+
+  // Drive/Sheets の作り物。ファイルは名前で引ける「シートの中身」でしかない
+  const SHEETS = JSON.parse(JSON.stringify(FILES));
+  const moved = [];
+  const mkFile = name => ({
+    getName: () => name, getId: () => name, getMimeType: () => "SHEET",
+    getLastUpdated: () => ({ getTime: () => Object.keys(SHEETS).indexOf(name) }),
+    isTrashed: () => false, moveTo: dest => { moved.push(name); delete SHEETS[name]; }
+  });
+  global.MimeType = { GOOGLE_SHEETS: "SHEET", GOOGLE_DOCS: "DOC" };
+  global.SpreadsheetApp = {
+    openById: id => ({ getId: () => id, getUrl: () => "https://docs.google.com/" + id,
+      getSheets: () => [{
+      getDataRange: () => ({ getValues: () => SHEETS[id] }),
+      clear: () => { SHEETS[id] = []; },
+      /* 本物のスプレッドシートは、先頭の「'」を「これは文字列」という印として食べる
+         （読み戻すと消えている）。作り物でも同じようにふるまわせる。 */
+      getRange: (r, c, nr, nc) => ({
+        setValues: v => { SHEETS[id] = v.map(row => row.map(cell =>
+          (typeof cell === "string" && /^'[=+@]/.test(cell)) ? cell.slice(1) : cell)); },
+        setValue: v => {} })
+    }] }),
+    flush: () => {}
+  };
+  global.DriveApp = {
+    getFolderById: () => ({
+      getFiles: () => { const l = Object.keys(SHEETS).map(mkFile); let i = 0;
+        return { hasNext: () => i < l.length, next: () => l[i++] }; },
+      getFilesByName: n => { const l = SHEETS[n] ? [mkFile(n)] : []; let i = 0;
+        return { hasNext: () => i < l.length, next: () => l[i++] }; },
+      getFoldersByName: () => ({ hasNext: () => true, next: () => ({ getName: () => "圧縮済み" }) })
+    }),
+    getFileById: id => mkFile(id)
+  };
+
+  // ① まとめる前に readGokigen_ で読んだ中身を控える
+  const before = readGokigen_();
+  const beforeDates = Object.keys(before).sort();
+  eq(beforeDates.join(","), "2026-07-30,2026-08-01,2026-08-02,2026-08-03,2026-08-04", "統合前は5日ぶん");
+  eq(before["2026-08-01"].note, "書き直した一言", "同じ日は新しいファイルが勝つ");
+  eq(before["2026-08-02"].weight, 83.0, "★壊れ行に正しい行を上書きされていない");
+  eq(before["2026-08-01"].mood, 8, "5段階の「4/5」は10段階の8として読む");
+  eq(before["2026-08-03"].mood, 9, "10段階の「9/10」はそのまま9");
+
+  // ② 統合する（14日より古いもの＝ここでは全部。3本以上あるので実行される）
+  const msg = consolidateGokigen_("2026-08-10", 12, 3);
+  has(msg, "統合しました", "統合が走った");
+  eq(moved.length, 3, "★日次3本が「圧縮済み」へ移った（baseは移さない）");
+  eq(Object.keys(SHEETS).join(","), "GOKIGEN台帳_base", "★残ったのは base だけ");
+
+  // ③ まとめたあとに、もう一度 readGokigen_ で読む
+  const after = readGokigen_();
+  eq(Object.keys(after).sort().join(","), beforeDates.join(","), "★日付が1日も欠けていない");
+  eq(gokigenDiff_(before, after), "null", "★1項目も変わっていない（体重〜一言まで全部）");
+  // 目で見ても分かるように、代表的な値を並べて確かめる
+  eq(after["2026-08-01"].note, "書き直した一言", "一言もそのまま");
+  eq(after["2026-08-02"].note, "=1+1 で始まる一言", "★「=」で始まる一言が数式にならずに戻る");
+  eq(after["2026-08-02"].weight, 83.0, "壊れ行に負けていない");
+  eq(after["2026-08-04"].dining, "客・アズビル懇親", "会食欄");
+  eq(after["2026-08-01"].mood + "/" + after["2026-08-03"].mood, "8/9", "★ご機嫌度が5段階と10段階で混ざらない");
+  eq(after["2026-07-30"].weight, 84.0, "baseにもとからあった行も残っている");
+
+  // ④ 中身が違えば必ず気づく（gokigenDiff_ の逆テスト）
+  const broken = JSON.parse(JSON.stringify(after));
+  broken["2026-08-02"].weight = 99.9;
+  has(gokigenDiff_(before, broken), "2026-08-02 のweight", "★値が変わっていれば言い当てる");
+  const lost = JSON.parse(JSON.stringify(after));
+  delete lost["2026-08-03"];
+  has(gokigenDiff_(before, lost), "消えている", "★日が消えていれば言い当てる");
+  /* safeCell_ が付ける「'」は中身ではないので、それだけを理由に統合を止めない
+     （止めてしまうと、「=」で始まる一言を書いた日から統合が永久に進まなくなる） */
+  const quoted = JSON.parse(JSON.stringify(after));
+  quoted["2026-08-02"].note = "'" + quoted["2026-08-02"].note;
+  eq(gokigenDiff_(before, quoted), "null", "★先頭の「'」だけの違いは差分とみなさない");
+
+  console.log("\n【v1.10.1】ムダに重くしないための決めごと");
+  // 3本に満たなければ見送る
+  SHEETS["GOKIGEN台帳_2026-08-05"] = [HEAD, ["2026-08-05", "水", 82.7, 29.7, 55.4, 11, 61, 120, 76, 8, 90, "", "なし", 80, ""]];
+  const few = consolidateGokigen_("2026-08-10", 12, 3);
+  has(few, "まだ見送り", "★1本だけなら base を開かずに見送る");
+  eq(Object.keys(SHEETS).sort().join(","), "GOKIGEN台帳_2026-08-05,GOKIGEN台帳_base", "見送ったので移動もしない");
+  // 上限（1回で2本まで）
+  SHEETS["GOKIGEN台帳_2026-08-06"] = [HEAD, ["2026-08-06", "木", 82.6, 29.6, 55.5, 11, 61, 121, 77, 8, 88, "", "なし", 80, ""]];
+  SHEETS["GOKIGEN台帳_2026-08-07"] = [HEAD, ["2026-08-07", "金", 82.5, 29.5, 55.6, 11, 61, 122, 78, 8, 86, "", "なし", 80, ""]];
+  const capped = consolidateGokigen_("2026-08-10", 2, 3);
+  has(capped, "残り1本は次の回にまとめます", "★1回にまとめる本数に上限がある");
+  eq(Object.keys(SHEETS).sort().join(","), "GOKIGEN台帳_2026-08-07,GOKIGEN台帳_base",
+     "★古い2本だけ片づいて、いちばん新しい1本は残る");
+  const after2 = readGokigen_();
+  eq(gokigenDiff_(after, after2) === null || Object.keys(after2).length === 8, "true",
+     "上限をかけても中身は壊れない");
+  eq(Object.keys(after2).length, 8, "8/05〜8/07も読める（8日分）");
+  // 対象なし
+  has(consolidateGokigen_("2026-01-01", 12, 3), "まとめ対象はありませんでした", "古いものが無ければ何もしない");
+
+  console.log("\n【v1.10.1】自動で走る配線");
+  has(gs, "try { autoConsolidate_(props); }", "★runNow（run_）から自動で呼ばれる");
+  has(gs, "if (props.getProperty(PROP_LAST_CONSOLIDATE) === today) return null;", "★1日1回まで");
+  has(gs, "consolidateKeepDays: 14", "直近14日ぶんは残す");
+  has(gs, "consolidateMinFiles: 3", "3本たまってからまとめる");
+  has(gs, "consolidateMaxPerRun: 12", "1回で12本まで");
+  has(gs, "catch (e) { Logger.log('⚠️ 自動統合でエラー", "★統合が失敗しても data.json 作りは止めない");
+}
 
 /* アプリ側：3重に数えないか */
 const leak = code => code.replace(/^(const|let) /gm, "var ");

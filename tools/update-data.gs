@@ -41,6 +41,9 @@
  *
  * v1.2.1で、台帳ファイルが増えすぎて6分の実行制限に当たったため、次を足しました：
  *   ③ runConsolidateOnce() … 古い日次台帳を1本にまとめ、元ファイルは「圧縮済み」フォルダへ移す
+ *      **v1.10.1から、これは runNow が自動でやる**（手で実行しなくてよい）。
+ *      直近14日ぶんは残し、それより古いものが3本たまったら、1日1回・最大12本ずつまとめる。
+ *      この関数は「たまりすぎたぶんを一気に片づけたい」ときの手動用として残してある。
  *                            （削除はしません。何度実行しても壊れません）
  *      まとめる範囲は CONFIG.consolidateBefore。まだ重いときは、この日付を先へ進めて
  *      もう一度実行すれば、その日付までの日次台帳がさらにまとまります。
@@ -119,7 +122,15 @@ var CONFIG = {
   futureDocPrefix: '未来ビジョン台帳',  // GOKIGEN台帳フォルダの中のGoogleドキュメント
   // v1.2.1：台帳ファイルが増えすぎて6分の実行制限に当たったため、古い日次ファイルを1本にまとめる
   gokigenBaseName:  'GOKIGEN台帳_base',   // まとめ先（この1本だけ読めば7月以前が全部入る）
-  consolidateBefore: '2026-07-31',        // この日付以前の日次ファイルをまとめる（ファイル名の日付で判定）
+  consolidateBefore: '2026-07-31',        // 手動 runConsolidateOnce() のときの範囲（残置）
+  /* v1.10.1：runNow が走るたびに、古い日次台帳を自動でまとめる。
+     ・keepDays … 直近この日数ぶんの日次ファイルは残す（すぐ見返せるように）
+     ・minFiles … まとめる本数がこれ未満なら見送る。1本のために base を開くと毎日ムダに重い
+     ・maxPerRun… 1回のrunNowでまとめる上限。たまった状態でも1回の実行を長くしない
+     ・1日1回まで（同じ日に4回走っても、まとめるのは最初の1回だけ） */
+  consolidateKeepDays: 14,
+  consolidateMinFiles: 3,
+  consolidateMaxPerRun: 12,
   archiveFolderName: '圧縮済み',           // まとめ終わった元ファイルの引っ越し先（削除はしない）
   updateHours:  [8, 12, 18, 22],   // 自動実行する時刻
   snapshotLimit: 30,               // data.jsonに残す「記録日ごとのスナップショット」の日数
@@ -144,6 +155,7 @@ var RANGE = {
 };
 
 var PROP_LAST_RUN = 'LAST_RUN_AT';
+var PROP_LAST_CONSOLIDATE = 'LAST_CONSOLIDATE_AT';   // v1.10.1：自動統合は1日1回まで
 
 // GitHubトークンは「スクリプト プロパティ」に GITHUB_TOKEN という名前で保存します（コードに直接書かない）
 function getToken_() {
@@ -174,6 +186,13 @@ function run_(force) {
     }
     Logger.log('更新のあったファイル: ' + changed.join(' / '));
   }
+
+  /* v1.10.1：古い日次台帳の自動統合。data.json を作る**前**にやる。
+     ここでまとめておけば、このあとの readGokigen_ が読むファイルがそのぶん減る。
+     まとめる物が無ければ、フォルダを1回見るだけで終わる（1日1回しか見ない）。
+     失敗しても data.json 作りは止めない——統合はあくまで掃除で、本体ではないため。 */
+  try { autoConsolidate_(props); }
+  catch (e) { Logger.log('⚠️ 自動統合でエラー（台帳はそのまま。先に進みます）: ' + e); }
 
   var previous = fetchCurrentJson_();          // 失敗時のフォールバック用に、今公開中のdata.jsonを取得
   var data = buildData_(previous);
@@ -309,6 +328,28 @@ function findUdemyBase_() {
   return ledgerByName_(CONFIG.udemyBaseName, null, CONFIG.udemyFolderId);
 }
 
+/**
+ * v1.10.1：runNow のたびに、古くなった日次台帳を自動で base にまとめる。
+ * これで runConsolidateOnce() を手で実行しなくてよくなった。
+ *
+ * ムダに重くしないための決めごとが3つ：
+ *   ・**1日1回まで**（4回走る日でも、まとめるのは最初の1回だけ）
+ *   ・**まとめる本数が3本に満たなければ見送る**（1本のために base を開くのは割に合わない）
+ *   ・**1回で12本まで**（たまっていても、1回の実行を長くしない。残りは翌日）
+ * 直近14日ぶんの日次ファイルは、すぐ見返せるようにそのまま残す。
+ */
+function autoConsolidate_(props) {
+  var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
+  if (props.getProperty(PROP_LAST_CONSOLIDATE) === today) return null;   // 今日はもうやった
+  var cutoff = Utilities.formatDate(
+    new Date(new Date().getTime() - CONFIG.consolidateKeepDays * 86400000), 'Asia/Tokyo', 'yyyy-MM-dd');
+  var t0 = new Date().getTime();
+  var msg = consolidateGokigen_(cutoff, CONFIG.consolidateMaxPerRun, CONFIG.consolidateMinFiles);
+  props.setProperty(PROP_LAST_CONSOLIDATE, today);
+  Logger.log('🧹 自動統合（' + cutoff + ' 以前・' + ((new Date().getTime() - t0) / 1000).toFixed(1) + '秒）: ' + msg);
+  return msg;
+}
+
 // ===== v1.2.1: 台帳の整理（6分の実行制限に当たったための対策） =====
 /**
  * 台帳ファイルが増えすぎて runNow が6分で止まったので、古いファイルを1本にまとめる。
@@ -325,8 +366,10 @@ function findUdemyBase_() {
  */
 function runConsolidateOnce() {
   var t0 = new Date().getTime();
-  var lines = ['🧹 台帳の整理をはじめます（削除はしません。「圧縮済み」フォルダへ移すだけです）'];
-  lines.push(consolidateGokigen_());
+  var lines = ['🧹 台帳の整理をはじめます（削除はしません。「圧縮済み」フォルダへ移すだけです）',
+               '※ v1.10.1から、ふだんの整理は runNow が自動でやります。'
+               + 'これはたまりすぎたぶんを一気に片づけたいときの手動用です。'];
+  lines.push(consolidateGokigen_());        // 手動のときは本数の上限も下限もかけない
   lines.push(consolidateUdemyDuplicates_());
   lines.push('⏱ 整理にかかった時間: ' + ((new Date().getTime() - t0) / 1000).toFixed(1) + '秒');
   lines.push('このあと runNow() を1回実行して、data.json が作り直せることを確かめてください。');
@@ -370,6 +413,10 @@ function safeCell_(v) {
   return v;
 }
 
+/* GOKIGEN台帳のファイル名。「GOKIGEN台帳_base」も「GOKIGEN_台帳_2026-08-24」も通る。
+   読むときも、まとめるときも、この1つの見分け方を使う（食い違わないように）。 */
+var GOKIGEN_FILE_RE = /^GOKIGEN[_ ]?台帳/;
+
 // GOKIGEN台帳_base に書き出す列。readGokigen_ は位置で読むので、この並びを変えないこと。
 var GOKIGEN_BASE_HEAD = ['日付', '曜日', '体重', '体脂肪率', '筋肉量', '内臓脂肪', '体年齢',
   '血圧上', '血圧下', 'ご機嫌度', '睡眠', '運動', '会食', 'ルーティン', '一言'];
@@ -383,9 +430,15 @@ function gokigenBaseRow_(r) {
   ].map(safeCell_);
 }
 
-function consolidateGokigen_() {
+/**
+ * 日次のGOKIGEN台帳を base にまとめる。
+ *   cutoff   … この日付以前のファイルが対象（省略時は CONFIG.consolidateBefore）
+ *   maxFiles … 1回でまとめる上限（省略時は全部）。古いものから順に取る
+ *   minFiles … 対象がこの本数に満たなければ、何もせず見送る（省略時は1）
+ */
+function consolidateGokigen_(cutoff, maxFiles, minFiles) {
   var folder = DriveApp.getFolderById(CONFIG.gokigenFolderId);
-  var cutoff = CONFIG.consolidateBefore;
+  cutoff = cutoff || CONFIG.consolidateBefore;
 
   // 対象＝直下のスプレッドシートのうち、GOKIGEN台帳で、名前の日付が cutoff 以前のもの
   var targets = [];
@@ -396,7 +449,7 @@ function consolidateGokigen_() {
     if (f.isTrashed()) continue;                              // v1.7.2：ゴミ箱のものは読まない
     var n = f.getName();
     if (n === CONFIG.gokigenBaseName) continue;
-    if (!/^GOKIGEN[_ ]?台帳/.test(n)) continue;      // 関係ないファイルは絶対にさわらない
+    if (!GOKIGEN_FILE_RE.test(n)) continue;          // 関係ないファイルは絶対にさわらない
     var d = nameDate_(n);
     if (!d || d > cutoff) continue;
     targets.push({ file: f, name: n, t: f.getLastUpdated().getTime() });
@@ -406,7 +459,21 @@ function consolidateGokigen_() {
     return '① GOKIGEN台帳: ' + cutoff + ' 以前のまとめ対象はありませんでした' +
            (base ? '（baseはすでにあります）' : '');
   }
-  targets.sort(function (a, b) { return a.t - b.t; });   // 古い順＝弱い順に読む
+  if (minFiles && targets.length < minFiles) {
+    return '① GOKIGEN台帳: 対象' + targets.length + '本（' + minFiles +
+           '本たまってからまとめます。まだ見送り）';
+  }
+  /* 古い順＝弱い順に読む。名前の日付で並べる（更新日時だと、あとから直した古い日が
+     いちばん新しく見えて、読む順番がひっくり返る）。 */
+  targets.sort(function (a, b) {
+    var da = nameDate_(a.name), db = nameDate_(b.name);
+    return da < db ? -1 : da > db ? 1 : (a.t - b.t);
+  });
+  var skipped = 0;
+  if (maxFiles && targets.length > maxFiles) {
+    skipped = targets.length - maxFiles;
+    targets = targets.slice(0, maxFiles);                // 古いほうから。残りは次の回
+  }
 
   // すでにある base を最初に読み、そのあと日次を古い順に重ねる（＝ふだんの読み方と同じ順番）
   var out = {};
@@ -429,13 +496,15 @@ function consolidateGokigen_() {
   sheet.getRange(1, 1, values.length, GOKIGEN_BASE_HEAD.length).setValues(values);
   SpreadsheetApp.flush();
 
-  // 読めたことを確かめてから元ファイルを移す（ここで失敗したら1本も移さない）
+  /* 書き出した base を読み直して、**中身が1つも変わっていない**ことを確かめてから
+     元ファイルを移す。日数を数えるだけだと、値がズレていても通ってしまう。
+     ここで引っかかったら1本も移さない（元ファイルが残るので、次の回にやり直せる）。 */
   var check = {};
   readGokigenInto_(DriveApp.getFileById(ss.getId()), check);
-  var checkDates = Object.keys(check);
-  if (checkDates.length < dates.length) {
-    throw new Error('まとめた base を読み直したら ' + checkDates.length + '日分しかありません（元は ' +
-                    dates.length + '日分）。元ファイルはそのままにしました。');
+  var diff = gokigenDiff_(out, check);
+  if (diff) {
+    throw new Error('まとめた base を読み直したら中身が違いました（' + diff +
+                    '）。元ファイルはそのままにしたので、やり直せます。');
   }
 
   var arch = archiveFolder_(folder);
@@ -443,7 +512,40 @@ function consolidateGokigen_() {
 
   return '① GOKIGEN台帳: ' + targets.length + '本を「' + CONFIG.gokigenBaseName + '」に統合しました（' +
          dates[0] + '〜' + dates[dates.length - 1] + ' の' + dates.length + '日分）。' +
-         '元の' + targets.length + '本は「' + CONFIG.archiveFolderName + '」へ移動（削除していません）';
+         '元の' + targets.length + '本は「' + CONFIG.archiveFolderName + '」へ移動（削除していません）' +
+         (skipped ? '。残り' + skipped + '本は次の回にまとめます' : '');
+}
+
+/**
+ * v1.10.1：まとめる前（before）と、書き出して読み直したあと（after）を突き合わせる。
+ * 違いが1つでもあれば、その中身を文にして返す（無ければ null）。
+ * 日付の数だけでなく、体重からご機嫌度・一言まで1項目ずつ見る。
+ */
+function gokigenDiff_(before, after) {
+  /* safeCell_ が付ける先頭の「'」は、数式と読まれないための目印であって中身ではない。
+     スプレッドシートは読み戻すときに外してくれるが、外さない実装もありうるので、
+     ここで同じ規則で外してから比べる（この目印だけを理由に統合が止まらないように）。 */
+  var norm = function (v) {
+    if (v == null) return '';
+    var t = String(v);
+    return /^'[=+@]/.test(t) ? t.slice(1) : t;
+  };
+  var dates = Object.keys(before).sort();
+  for (var i = 0; i < dates.length; i++) {
+    var d = dates[i], a = before[d], b = after[d];
+    if (!b) return d + ' が読み直したら消えている';
+    for (var j = 0; j < HEALTH_FIELDS.length; j++) {
+      var f = HEALTH_FIELDS[j];
+      var x = a[f], y = b[f];
+      if (x == null && y == null) continue;
+      if (norm(x) !== norm(y)) {
+        return d + ' の' + f + ' が ' + JSON.stringify(x) + ' → ' + JSON.stringify(y) + ' に変わっている';
+      }
+    }
+  }
+  var extra = Object.keys(after).filter(function (d) { return !before[d]; });
+  if (extra.length) return '身に覚えのない日が増えている（' + extra.slice(0, 3).join('・') + '）';
+  return null;
 }
 
 /** 1ファイル分のGOKIGEN台帳を out（日付→レコード）に重ねる。readGokigen_ と同じ規則 */
@@ -737,7 +839,7 @@ function buildData_(previous) {
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.10',
+    version: '1.10.1',
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -890,13 +992,17 @@ function ledgerByName_(name, fallbackId, folderId) {
  * ・まとめ先の「GOKIGEN台帳_base」は、更新日時がいちばん新しくても **必ず最初に読む**。
  *   そうしないと「新しいファイル優先」の順番がひっくり返り、まとめる前と結果が変わってしまう。
  */
-function filesOldestFirst_(folderId, baseName) {
+function filesOldestFirst_(folderId, baseName, nameRe) {
   var it = DriveApp.getFolderById(folderId).getFiles();   // 直下のみ（サブフォルダは対象外）
   var list = [];
   while (it.hasNext()) {
     var f = it.next();
     if (f.getMimeType() !== MimeType.GOOGLE_SHEETS) continue; // スプレッドシート以外は無視
     if (f.isTrashed()) continue;                              // v1.7.2：ゴミ箱のものは読まない
+    /* v1.10.1：名前で先に絞る。GOKIGEN台帳フォルダには行きたい場所台帳・低山台帳・
+       WANT台帳・note台帳ログも同居していて、これまでは**それも全部開いて中身を読んで**
+       いた（見出しが「日付」でないので結局捨てるだけ）。開かなければそのぶん速い。 */
+    if (nameRe && !nameRe.test(f.getName())) continue;
     var rank = (baseName && f.getName() === baseName) ? 0 : 1;
     list.push({ file: f, rank: rank, t: f.getLastUpdated().getTime() });
   }
@@ -907,10 +1013,13 @@ function filesOldestFirst_(folderId, baseName) {
 // ===== GOKIGEN台帳 =====
 function readGokigen_() {
   var out = {}, n = 0;
-  filesOldestFirst_(CONFIG.gokigenFolderId, CONFIG.gokigenBaseName).forEach(function (file) {
-    readGokigenInto_(file, out);            // 1ファイルぶんを重ねる（統合処理と同じ規則）
-    n++;
-  });
+  /* v1.10.1：「GOKIGEN台帳〜」という名前のファイルだけを開く。
+     統合処理（consolidateGokigen_）が対象を選ぶのと同じ見分け方にそろえてある。 */
+  filesOldestFirst_(CONFIG.gokigenFolderId, CONFIG.gokigenBaseName, GOKIGEN_FILE_RE)
+    .forEach(function (file) {
+      readGokigenInto_(file, out);          // 1ファイルぶんを重ねる（統合処理と同じ規則）
+      n++;
+    });
   // 内部フラグを外す
   Object.keys(out).forEach(function (d) { delete out[d]._ok; });
   Logger.log('GOKIGEN台帳: ' + n + 'ファイル → ' + Object.keys(out).length + '日分');
