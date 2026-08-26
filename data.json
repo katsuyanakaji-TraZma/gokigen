@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-26T08:29:27+09:00",
+  "generatedAt": "2026-08-27T06:24:00+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-08-26",
+    "asOf": "2026-08-27",
     "major": 57,
     "minor": 4,
     "months": 688,
@@ -97,6 +97,10 @@
       },
       {
         "name": "Udemy台帳ログ_2026-08-26",
+        "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-08-27",
         "rows": 10
       }
     ],
@@ -941,6 +945,23 @@
       "dining": null,
       "routine": null,
       "note": "就床0:57・起床6:30・睡眠5時間17分(快眠スコア90.1・中途覚醒0・効率95.2%)。Oura睡眠80「ぐっすり」・コンディション71・安静時心拍は高め継続。体重83.2は+0.1の横ばい圏。前日は昼寝＋消灯3時間前倒しで回復一歩目。C08収録は8/30(日)10:00へ移動(要判断: ナイトウォーク明けのため8/31午前案あり)。今夜からドーミーイン神田泊(8/27三井化学対面)"
+    },
+    {
+      "date": "2026-08-27",
+      "dow": "木",
+      "weight": 82.6,
+      "fat": null,
+      "muscle": null,
+      "visceral": null,
+      "bodyAge": null,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 73,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "ドーミーイン神田泊のためホテル体重計で82.6kg(最軽量タイ・体組成データなし)。睡眠スコアはOura値73。Ouraコンディション74「ほどほどに」・アクティビティ66・レジリエンスやや不足・HRVバランスに負担の兆候(気楽に過ごす推奨)。前日8/26はウォーキングタグ・ストレス1h45/回復2h。リミットレスなし。本日は三井化学本社デイスリー対面研修9:00-17:10"
     }
   ],
   "udemyCourses": [
@@ -1016,19 +1037,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2025-12-15",
-      "time": null,
-      "rows": [
-        {
-          "id": "C02",
-          "cumEnroll": 2400,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2025-12-20",
       "time": null,
@@ -2830,6 +2838,82 @@
           "cumEnroll": 17888,
           "monthEnroll": 171,
           "cumRevenue": 67517.48,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-08-27",
+      "time": "6:00",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 459,
+          "monthEnroll": 268,
+          "cumRevenue": 235.23,
+          "rating": null
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 4957,
+          "monthEnroll": 220,
+          "cumRevenue": 7864.4,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2819,
+          "monthEnroll": 80,
+          "cumRevenue": 4461.73,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4021,
+          "monthEnroll": 66,
+          "cumRevenue": 3839.26,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4545,
+          "monthEnroll": 67,
+          "cumRevenue": 7354.36,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7707,
+          "monthEnroll": 92,
+          "cumRevenue": 14896.8,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4874,
+          "monthEnroll": 35,
+          "cumRevenue": 11282.77,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8120,
+          "monthEnroll": 36,
+          "cumRevenue": 26405.16,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15135,
+          "monthEnroll": 290,
+          "cumRevenue": 48696.8,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17895,
+          "monthEnroll": 178,
+          "cumRevenue": 67520.11,
           "rating": null
         }
       ]
@@ -5912,54 +5996,54 @@
     },
     {
       "ym": "2026-08",
-      "enroll": 70459,
-      "newEnroll": 2031,
-      "revenue": 192553.99,
-      "officialNew": 1259,
-      "officialAsOf": "2026-08-26",
+      "enroll": 70532,
+      "newEnroll": 2104,
+      "revenue": 192556.62,
+      "officialNew": 1332,
+      "officialAsOf": "2026-08-27",
       "from": "2026-07-17",
-      "to": "2026-08-26",
-      "records": 17,
+      "to": "2026-08-27",
+      "records": 18,
       "byCourse": {
         "C01": {
-          "enroll": 448,
+          "enroll": 459,
           "revenue": 235.23
         },
         "C02": {
-          "enroll": 4944,
+          "enroll": 4957,
           "revenue": 7864.4
         },
         "C03": {
-          "enroll": 2816,
+          "enroll": 2819,
           "revenue": 4461.73
         },
         "C04": {
-          "enroll": 4012,
+          "enroll": 4021,
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4542,
+          "enroll": 4545,
           "revenue": 7354.36
         },
         "C06": {
-          "enroll": 7699,
+          "enroll": 7707,
           "revenue": 14896.8
         },
         "C07": {
-          "enroll": 4873,
+          "enroll": 4874,
           "revenue": 11282.77
         },
         "C08": {
-          "enroll": 8119,
+          "enroll": 8120,
           "revenue": 26405.16
         },
         "C09": {
-          "enroll": 15118,
+          "enroll": 15135,
           "revenue": 48696.8
         },
         "C10": {
-          "enroll": 17888,
-          "revenue": 67517.48
+          "enroll": 17895,
+          "revenue": 67520.11
         }
       }
     }
@@ -7690,7 +7774,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-08-26",
+    "asOf": "2026-08-27",
     "kinds": [
       "教え",
       "トライ",
@@ -8727,9 +8811,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-08-26",
-    "from": "2026-08-26",
-    "to": "2027-02-26",
+    "asOf": "2026-08-27",
+    "from": "2026-08-27",
+    "to": "2027-02-27",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
