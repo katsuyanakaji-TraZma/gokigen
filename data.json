@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T06:24:13+09:00",
+  "generatedAt": "2026-08-28T12:42:01+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -102,6 +102,10 @@
       {
         "name": "Udemy台帳ログ_2026-08-27",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-08-28",
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -187,6 +191,10 @@
       },
       {
         "name": "note台帳ログ_2026-08-27",
+        "rows": 0
+      },
+      {
+        "name": "note台帳ログ_2026-08-28",
         "rows": 0
       }
     ],
@@ -966,6 +974,23 @@
       "dining": null,
       "routine": null,
       "note": "ドーミーイン神田泊のためホテル体重計で82.6kg(最軽量タイ・体組成データなし)。睡眠スコアはOura値73。Ouraコンディション74「ほどほどに」・アクティビティ66・レジリエンスやや不足・HRVバランスに負担の兆候(気楽に過ごす推奨)。前日8/26はウォーキングタグ・ストレス1h45/回復2h。リミットレスなし。本日は三井化学本社デイスリー対面研修9:00-17:10"
+    },
+    {
+      "date": "2026-08-28",
+      "dow": "金",
+      "weight": 82.9,
+      "fat": 30.2,
+      "muscle": 55,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": null,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "ホテル泊明け・帰宅して自宅で計測82.9kg(82円台キープ)。睡眠アプリ・Ouraスクショは未着のため睡眠スコア未記帳。朝食はご飯・茄子と豆腐の味噌汁・彩りサラダ・納豆・もずくの整った和定食。前日は三井化学対面3日目完遂＋虎島全国大会実行委員会(2027/4/17横浜・万葉の湯決定)。明日8/29は「部下の一言」提出とナイトウォーク"
     }
   ],
   "udemyCourses": [
@@ -1041,19 +1066,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2025-12-20",
-      "time": null,
-      "rows": [
-        {
-          "id": "C02",
-          "cumEnroll": 2500,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2025-12-27",
       "time": null,
@@ -2918,6 +2930,82 @@
           "cumEnroll": 17895,
           "monthEnroll": 178,
           "cumRevenue": 67520.11,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-08-28",
+      "time": "8:13",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 466,
+          "monthEnroll": 275,
+          "cumRevenue": 235.23,
+          "rating": null
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 4972,
+          "monthEnroll": 235,
+          "cumRevenue": 7864.4,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2819,
+          "monthEnroll": 80,
+          "cumRevenue": 4461.73,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4029,
+          "monthEnroll": 74,
+          "cumRevenue": 3839.26,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4550,
+          "monthEnroll": 72,
+          "cumRevenue": 7354.36,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7713,
+          "monthEnroll": 98,
+          "cumRevenue": 14896.8,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4875,
+          "monthEnroll": 36,
+          "cumRevenue": 11282.77,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8120,
+          "monthEnroll": 36,
+          "cumRevenue": 26405.16,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15147,
+          "monthEnroll": 302,
+          "cumRevenue": 48696.8,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17912,
+          "monthEnroll": 195,
+          "cumRevenue": 67525.35,
           "rating": null
         }
       ]
@@ -6000,21 +6088,21 @@
     },
     {
       "ym": "2026-08",
-      "enroll": 70532,
-      "newEnroll": 2104,
-      "revenue": 192556.62,
-      "officialNew": 1332,
-      "officialAsOf": "2026-08-27",
+      "enroll": 70603,
+      "newEnroll": 2175,
+      "revenue": 192561.86,
+      "officialNew": 1403,
+      "officialAsOf": "2026-08-28",
       "from": "2026-07-17",
-      "to": "2026-08-27",
-      "records": 18,
+      "to": "2026-08-28",
+      "records": 19,
       "byCourse": {
         "C01": {
-          "enroll": 459,
+          "enroll": 466,
           "revenue": 235.23
         },
         "C02": {
-          "enroll": 4957,
+          "enroll": 4972,
           "revenue": 7864.4
         },
         "C03": {
@@ -6022,19 +6110,19 @@
           "revenue": 4461.73
         },
         "C04": {
-          "enroll": 4021,
+          "enroll": 4029,
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4545,
+          "enroll": 4550,
           "revenue": 7354.36
         },
         "C06": {
-          "enroll": 7707,
+          "enroll": 7713,
           "revenue": 14896.8
         },
         "C07": {
-          "enroll": 4874,
+          "enroll": 4875,
           "revenue": 11282.77
         },
         "C08": {
@@ -6042,12 +6130,12 @@
           "revenue": 26405.16
         },
         "C09": {
-          "enroll": 15135,
+          "enroll": 15147,
           "revenue": 48696.8
         },
         "C10": {
-          "enroll": 17895,
-          "revenue": 67520.11
+          "enroll": 17912,
+          "revenue": 67525.35
         }
       }
     }
@@ -9159,9 +9247,13 @@
       {
         "name": "note台帳ログ_2026-08-27",
         "rows": 0
+      },
+      {
+        "name": "note台帳ログ_2026-08-28",
+        "rows": 0
       }
     ],
-    "fileUrl": "https://docs.google.com/spreadsheets/d/15k6VUmetXH-ViKbAoj5XPJkVx4AXAt7LkH3bxx2ra9g/edit?usp=drivesdk",
+    "fileUrl": "https://docs.google.com/spreadsheets/d/1Nag837OqESGGspzuIrptYiC2dhFcYew1YjrEgq5tRAQ/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
   },
   "places": {
