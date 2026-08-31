@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-31T08:33:27+09:00",
+  "generatedAt": "2026-09-01T08:30:07+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-08-31",
+    "asOf": "2026-09-01",
     "major": 57,
-    "minor": 4,
-    "months": 688,
-    "version": "ver57.04"
+    "minor": 5,
+    "months": 689,
+    "version": "ver57.05"
   },
   "monthlyReview": [],
   "source": {
@@ -117,6 +117,10 @@
       },
       {
         "name": "Udemy台帳ログ_2026-08-31",
+        "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-09-01",
         "rows": 10
       }
     ],
@@ -1062,6 +1066,23 @@
       "dining": null,
       "routine": null,
       "note": "就床0:26・起床6:39・睡眠5時間45分(快眠スコア95.3・中途覚醒0・効率92.7%)。Ouraコンディション82(今週最高)・睡眠89(王冠)・アクティビティ84・レジリエンスやや不足。体重84.4は8/21焼肉日と同値のスパイク(徹夜30km＋朝ラーメン・ビール・ハイボールの塩分と水分保持とみる・8/29比+1.6)。前日ストレス1h15/回復1h15バランス日・昼寝あり。本日9:00 C08進化編収録→天狼院③→焼肉→22:00月次クーポン切替＆月次レビュー"
+    },
+    {
+      "date": "2026-09-01",
+      "dow": "火",
+      "weight": null,
+      "fat": null,
+      "muscle": null,
+      "visceral": null,
+      "bodyAge": null,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 91,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "就床23:45・入眠23:50・起床6:45・睡眠6時間31分(快眠スコア90.7・効率93.1%・中途覚醒1)。23時台の消灯はここ数週間で最速＆睡眠6時間半は8月最長級——月末3連戦(徹夜ウォーク→C08収録→焼肉)を経て9月初日にリズム回復。体重・Oura・リミットレスは未着。本日はダブル発射日=昼12:00天狼院楽市街開き『月刊GOKIGEN』販売開始告知＋夜22:15 C08教育アナウンス(アップ完了が前提)"
     }
   ],
   "udemyCourses": [
@@ -1137,19 +1158,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-01-25",
-      "time": null,
-      "rows": [
-        {
-          "id": "C02",
-          "cumEnroll": 2900,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2026-02-09",
       "time": null,
@@ -3265,6 +3273,82 @@
           "id": "C10",
           "cumEnroll": 17941,
           "monthEnroll": 224,
+          "cumRevenue": 67530.63,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-09-01",
+      "time": "6:45",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 477,
+          "monthEnroll": 286,
+          "cumRevenue": 237.84,
+          "rating": null
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5014,
+          "monthEnroll": 277,
+          "cumRevenue": 7869.23,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2833,
+          "monthEnroll": 94,
+          "cumRevenue": 4461.73,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4045,
+          "monthEnroll": 91,
+          "cumRevenue": 3839.26,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4556,
+          "monthEnroll": 79,
+          "cumRevenue": 7355.42,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7724,
+          "monthEnroll": 109,
+          "cumRevenue": 14896.8,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4882,
+          "monthEnroll": 43,
+          "cumRevenue": 11284.26,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8128,
+          "monthEnroll": 44,
+          "cumRevenue": 26411.63,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15188,
+          "monthEnroll": 343,
+          "cumRevenue": 48702.23,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17953,
+          "monthEnroll": 236,
           "cumRevenue": 67530.63,
           "rating": null
         }
@@ -6398,6 +6482,59 @@
           "revenue": 67530.63
         }
       }
+    },
+    {
+      "ym": "2026-09",
+      "enroll": 70800,
+      "newEnroll": 46,
+      "revenue": 192589.03,
+      "officialNew": 1602,
+      "officialAsOf": "2026-09-01",
+      "from": "2026-08-31",
+      "to": "2026-09-01",
+      "records": 1,
+      "byCourse": {
+        "C01": {
+          "enroll": 477,
+          "revenue": 237.84
+        },
+        "C02": {
+          "enroll": 5014,
+          "revenue": 7869.23
+        },
+        "C03": {
+          "enroll": 2833,
+          "revenue": 4461.73
+        },
+        "C04": {
+          "enroll": 4045,
+          "revenue": 3839.26
+        },
+        "C05": {
+          "enroll": 4556,
+          "revenue": 7355.42
+        },
+        "C06": {
+          "enroll": 7724,
+          "revenue": 14896.8
+        },
+        "C07": {
+          "enroll": 4882,
+          "revenue": 11284.26
+        },
+        "C08": {
+          "enroll": 8128,
+          "revenue": 26411.63
+        },
+        "C09": {
+          "enroll": 15188,
+          "revenue": 48702.23
+        },
+        "C10": {
+          "enroll": 17953,
+          "revenue": 67530.63
+        }
+      }
     }
   ],
   "warnings": [
@@ -8126,7 +8263,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-08-31",
+    "asOf": "2026-09-01",
     "kinds": [
       "教え",
       "トライ",
@@ -8149,16 +8286,16 @@
       }
     },
     "month": {
-      "from": "2026-08-01",
-      "to": "2026-08-31",
-      "rows": 113,
+      "from": "2026-09-01",
+      "to": "2026-09-30",
+      "rows": 0,
       "counts": {
-        "教え": 10,
-        "トライ": 4,
-        "初めて": 3,
-        "学び": 6,
-        "人": 8,
-        "もがき": 2
+        "教え": 0,
+        "トライ": 0,
+        "初めて": 0,
+        "学び": 0,
+        "人": 0,
+        "もがき": 0
       }
     },
     "recent": [
@@ -9163,9 +9300,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-08-31",
-    "from": "2026-08-31",
-    "to": "2027-03-03",
+    "asOf": "2026-09-01",
+    "from": "2026-09-01",
+    "to": "2027-03-01",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
