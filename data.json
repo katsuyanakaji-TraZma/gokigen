@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T06:25:47+09:00",
+  "generatedAt": "2026-09-04T08:33:37+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -130,6 +130,10 @@
       {
         "name": "Udemy台帳ログ_2026-09-03",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-09-04",
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -179,6 +183,10 @@
       },
       {
         "name": "リミットレス台帳ログ_2026-09-03",
+        "rows": 2
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-09-04",
         "rows": 2
       }
     ],
@@ -244,6 +252,10 @@
       {
         "name": "note台帳ログ_2026-09-03",
         "rows": 1
+      },
+      {
+        "name": "note台帳ログ_2026-09-04",
+        "rows": 2
       }
     ],
     "placesFileId": "18y_FjBcl6nYQmxkTAKJatsJsxeMnF_FKUJTO9A0vYHQ",
@@ -1141,6 +1153,23 @@
       "dining": null,
       "routine": null,
       "note": "睡眠5時間26分(0:36入眠→6:35起床)・効率88.3%・Oura睡眠78・コンディション62(気を配りましょう)・BMI27.8・基礎代謝1622kcal"
+    },
+    {
+      "date": "2026-09-04",
+      "dow": "金",
+      "weight": 83.6,
+      "fat": 30.4,
+      "muscle": 55.3,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": null,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "BMI27.9・基礎代謝1626kcal・前日比+0.4kg(家族でカツカレーの翌朝)"
     }
   ],
   "udemyCourses": [
@@ -1216,75 +1245,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-04-20",
-      "time": null,
-      "rows": [
-        {
-          "id": "C02",
-          "cumEnroll": 3822,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2384,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3711,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4242,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7166,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4627,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 7948,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 13407,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17094,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2026-06-05",
       "time": null,
@@ -3479,6 +3439,82 @@
           "monthEnroll": 11,
           "cumRevenue": 67533.25,
           "rating": 4.17
+        }
+      ]
+    },
+    {
+      "date": "2026-09-04",
+      "time": "7:26",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 481,
+          "monthEnroll": 2,
+          "cumRevenue": 237.84,
+          "rating": 4.55
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5058,
+          "monthEnroll": 36,
+          "cumRevenue": 7869.23,
+          "rating": 4.05
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2842,
+          "monthEnroll": 6,
+          "cumRevenue": 4464.35,
+          "rating": 4.15
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4054,
+          "monthEnroll": 10,
+          "cumRevenue": 3839.26,
+          "rating": 4.09
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4568,
+          "monthEnroll": 10,
+          "cumRevenue": 7355.42,
+          "rating": 4.06
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7751,
+          "monthEnroll": 18,
+          "cumRevenue": 14896.8,
+          "rating": 4.26
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4888,
+          "monthEnroll": 6,
+          "cumRevenue": 11284.26,
+          "rating": 4
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8132,
+          "monthEnroll": 2,
+          "cumRevenue": 26411.63,
+          "rating": 3.91
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15239,
+          "monthEnroll": 36,
+          "cumRevenue": 48702.23,
+          "rating": 4.04
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17988,
+          "monthEnroll": 24,
+          "cumRevenue": 67533.25,
+          "rating": 4.18
         }
       ]
     }
@@ -6613,53 +6649,53 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 70915,
-      "newEnroll": 161,
+      "enroll": 71001,
+      "newEnroll": 247,
       "revenue": 192594.27,
-      "officialNew": 62,
-      "officialAsOf": "2026-09-03",
+      "officialNew": 150,
+      "officialAsOf": "2026-09-04",
       "from": "2026-08-31",
-      "to": "2026-09-03",
-      "records": 3,
+      "to": "2026-09-04",
+      "records": 4,
       "byCourse": {
         "C01": {
-          "enroll": 479,
+          "enroll": 481,
           "revenue": 237.84
         },
         "C02": {
-          "enroll": 5033,
+          "enroll": 5058,
           "revenue": 7869.23
         },
         "C03": {
-          "enroll": 2840,
+          "enroll": 2842,
           "revenue": 4464.35
         },
         "C04": {
-          "enroll": 4050,
+          "enroll": 4054,
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4561,
+          "enroll": 4568,
           "revenue": 7355.42
         },
         "C06": {
-          "enroll": 7745,
+          "enroll": 7751,
           "revenue": 14896.8
         },
         "C07": {
-          "enroll": 4882,
+          "enroll": 4888,
           "revenue": 11284.26
         },
         "C08": {
-          "enroll": 8131,
+          "enroll": 8132,
           "revenue": 26411.63
         },
         "C09": {
-          "enroll": 15219,
+          "enroll": 15239,
           "revenue": 48702.23
         },
         "C10": {
-          "enroll": 17975,
+          "enroll": 17988,
           "revenue": 67533.25
         }
       }
@@ -6858,6 +6894,10 @@
       },
       {
         "name": "リミットレス台帳ログ_2026-09-03",
+        "rows": 2
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-09-04",
         "rows": 2
       }
     ],
@@ -8410,6 +8450,18 @@
         "date": "2026-09-03",
         "ver": "57.05",
         "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "お正月の家族5人温泉旅行の計画をスタート(候補: 伊豆・房総・群馬・千葉白子温泉のテニスコート付き宿。車で行ける・露天風呂・2泊3日想定)",
+        "who": "家族",
+        "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-03",
+        "ver": "57.05",
+        "kinds": [
           "初めて"
         ],
         "unsure": [],
@@ -8417,6 +8469,18 @@
         "text": "人生初、動画編集ソフトを一切使わずにAIエージェントに動画を作ってもらった——しかもものすごい完成度。2020年に編集ソフトで初めて動画を作ってから6年での転換点",
         "who": "ゆるりんちょ。(那須岳編・自動編集工程)",
         "src": "本人確定(9/3点呼)"
+      },
+      {
+        "date": "2026-09-03",
+        "ver": "57.05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🤝人",
+        "text": "家族でカツカレーを囲み旅行会議。雨の登山や大丸温泉の思い出を振り返る温かい時間",
+        "who": "家族",
+        "src": "ダイジェスト"
       }
     ],
     "lifeFirsts": {
@@ -8502,30 +8566,40 @@
     "week": {
       "from": "2026-08-30",
       "to": "2026-09-05",
-      "rows": 6,
+      "rows": 8,
       "counts": {
         "教え": 1,
-        "トライ": 0,
+        "トライ": 1,
         "初めて": 2,
         "学び": 0,
-        "人": 2,
+        "人": 3,
         "もがき": 0
       }
     },
     "month": {
       "from": "2026-09-01",
       "to": "2026-09-30",
-      "rows": 6,
+      "rows": 8,
       "counts": {
         "教え": 1,
-        "トライ": 0,
+        "トライ": 1,
         "初めて": 2,
         "学び": 0,
-        "人": 2,
+        "人": 3,
         "もがき": 0
       }
     },
     "recent": [
+      {
+        "date": "2026-09-03",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🤝人",
+        "text": "家族でカツカレーを囲み旅行会議。雨の登山や大丸温泉の思い出を振り返る温かい時間",
+        "who": "家族"
+      },
       {
         "date": "2026-09-03",
         "kinds": [
@@ -8535,6 +8609,16 @@
         "kindsText": "🌱初めて",
         "text": "人生初、動画編集ソフトを一切使わずにAIエージェントに動画を作ってもらった——しかもものすごい完成度。2020年に編集ソフトで初めて動画を作ってから6年での転換点",
         "who": "ゆるりんちょ。(那須岳編・自動編集工程)"
+      },
+      {
+        "date": "2026-09-03",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "お正月の家族5人温泉旅行の計画をスタート(候補: 伊豆・房総・群馬・千葉白子温泉のテニスコート付き宿。車で行ける・露天風呂・2泊3日想定)",
+        "who": "家族"
       },
       {
         "date": "2026-09-02",
@@ -8555,29 +8639,9 @@
         "kindsText": "🌱初めて?",
         "text": "八重洲MOTO TOKYO 初訪問？(要本人確定)",
         "who": "会食"
-      },
-      {
-        "date": "2026-09-02",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🤝人",
-        "text": "中部電力の牛島さん・杉本さん・岩崎さん・中川さんから八重洲MOTO TOKYOで接待(17:40-21:00)",
-        "who": "会食・仕事枠"
-      },
-      {
-        "date": "2026-09-02",
-        "kinds": [
-          "教え"
-        ],
-        "unsure": [],
-        "kindsText": "🗣️教え",
-        "text": "中部電力「タイプ分け」研修3時間の講師（村ワーク・異タイプ攻略・トリセツ・3ヶ月バディ提案）",
-        "who": "企業研修"
       }
     ],
-    "total": 143,
+    "total": 145,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
@@ -9804,20 +9868,30 @@
     ]
   },
   "note": {
-    "asOf": "2026-09-03",
-    "time": "22:44",
+    "asOf": "2026-09-04",
+    "time": "22:46",
     "month": {
-      "date": "2026-09-03",
-      "time": "22:44",
+      "date": "2026-09-04",
+      "time": "22:46",
       "span": "月間",
       "period": "月間",
-      "views": 8932,
-      "comments": 58,
-      "likes": 560,
-      "note": "その役職、誰かの罰ゲームですか。(707ビュー・スキ117)／2位「中島さんのせいで、100km歩く羽目にあいました」613",
-      "src": "note台帳ログ_2026-09-03"
+      "views": 9048,
+      "comments": 56,
+      "likes": 567,
+      "note": "その役職、誰かの罰ゲームですか。(719ビュー・スキ117)",
+      "src": "note台帳ログ_2026-09-04"
     },
-    "all": null,
+    "all": {
+      "date": "2026-09-04",
+      "time": "22:46",
+      "span": "全期間",
+      "period": "全期間",
+      "views": 78938,
+      "comments": 461,
+      "likes": 3734,
+      "note": "全期間TOP: Udemyが大進化！AIロールプレイ(1261)／誰がどんなOSから発言しているのか(823)",
+      "src": "note台帳ログ_2026-09-04"
+    },
     "rows": [
       {
         "date": "2026-08-20",
@@ -9873,6 +9947,28 @@
         "likes": 560,
         "note": "その役職、誰かの罰ゲームですか。(707ビュー・スキ117)／2位「中島さんのせいで、100km歩く羽目にあいました」613",
         "src": "note台帳ログ_2026-09-03"
+      },
+      {
+        "date": "2026-09-04",
+        "time": "22:46",
+        "span": "全期間",
+        "period": "全期間",
+        "views": 78938,
+        "comments": 461,
+        "likes": 3734,
+        "note": "全期間TOP: Udemyが大進化！AIロールプレイ(1261)／誰がどんなOSから発言しているのか(823)",
+        "src": "note台帳ログ_2026-09-04"
+      },
+      {
+        "date": "2026-09-04",
+        "time": "22:46",
+        "span": "月間",
+        "period": "月間",
+        "views": 9048,
+        "comments": 56,
+        "likes": 567,
+        "note": "その役職、誰かの罰ゲームですか。(719ビュー・スキ117)",
+        "src": "note台帳ログ_2026-09-04"
       }
     ],
     "used": [
@@ -9907,9 +10003,13 @@
       {
         "name": "note台帳ログ_2026-09-03",
         "rows": 1
+      },
+      {
+        "name": "note台帳ログ_2026-09-04",
+        "rows": 2
       }
     ],
-    "fileUrl": "https://docs.google.com/spreadsheets/d/1va-hCwzkfuP5w8KW2Yn3b2fcQ5RFUi3cWDV3eZzlYlM/edit?usp=drivesdk",
+    "fileUrl": "https://docs.google.com/spreadsheets/d/1Yj1JEXO6WVha2fZXpmTjjtzGrDtMjVxbhWFFK16QIng/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
   },
   "places": {
