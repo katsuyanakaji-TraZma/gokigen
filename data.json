@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-04T08:33:37+09:00",
+  "generatedAt": "2026-09-05T06:24:09+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-09-04",
+    "asOf": "2026-09-05",
     "major": 57,
     "minor": 5,
     "months": 689,
@@ -134,6 +134,10 @@
       {
         "name": "Udemy台帳ログ_2026-09-04",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-09-05",
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -188,6 +192,10 @@
       {
         "name": "リミットレス台帳ログ_2026-09-04",
         "rows": 2
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-09-05",
+        "rows": 4
       }
     ],
     "ecoFiles": [
@@ -256,6 +264,10 @@
       {
         "name": "note台帳ログ_2026-09-04",
         "rows": 2
+      },
+      {
+        "name": "note台帳ログ_2026-09-05",
+        "rows": 1
       }
     ],
     "placesFileId": "18y_FjBcl6nYQmxkTAKJatsJsxeMnF_FKUJTO9A0vYHQ",
@@ -1170,6 +1182,23 @@
       "dining": null,
       "routine": null,
       "note": "BMI27.9・基礎代謝1626kcal・前日比+0.4kg(家族でカツカレーの翌朝)"
+    },
+    {
+      "date": "2026-09-05",
+      "dow": "土",
+      "weight": 84.5,
+      "fat": 30.8,
+      "muscle": 55.5,
+      "visceral": 11,
+      "bodyAge": 62,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 92.6,
+      "exercise": null,
+      "dining": "前夜:1人社長の会(月イチ近況報告会)",
+      "routine": null,
+      "note": "睡眠4時間24分(0:45入眠→5:12起床)・効率96%・Oura睡眠72・コンディション63(無理はしないようにしましょう・安静時心拍高め)・BMI28.2・内臓脂肪Lv11"
     }
   ],
   "udemyCourses": [
@@ -1245,75 +1274,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-06-05",
-      "time": null,
-      "rows": [
-        {
-          "id": "C02",
-          "cumEnroll": 4256,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2502,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3809,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4320,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7399,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4704,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 7993,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 13948,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17312,
-          "monthEnroll": null,
-          "cumRevenue": null,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2026-07-10",
       "time": "11:00",
@@ -3515,6 +3475,82 @@
           "monthEnroll": 24,
           "cumRevenue": 67533.25,
           "rating": 4.18
+        }
+      ]
+    },
+    {
+      "date": "2026-09-05",
+      "time": "6:07",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 482,
+          "monthEnroll": 3,
+          "cumRevenue": 237.84,
+          "rating": 4.56
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5066,
+          "monthEnroll": 44,
+          "cumRevenue": 7869.23,
+          "rating": 4.05
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2842,
+          "monthEnroll": 6,
+          "cumRevenue": 4464.35,
+          "rating": 4.15
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4055,
+          "monthEnroll": 11,
+          "cumRevenue": 3839.26,
+          "rating": 4.09
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4570,
+          "monthEnroll": 12,
+          "cumRevenue": 7355.42,
+          "rating": 4.06
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7756,
+          "monthEnroll": 23,
+          "cumRevenue": 14896.8,
+          "rating": 4.27
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4889,
+          "monthEnroll": 7,
+          "cumRevenue": 11284.26,
+          "rating": 4
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8132,
+          "monthEnroll": 2,
+          "cumRevenue": 26411.63,
+          "rating": 3.91
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15248,
+          "monthEnroll": 45,
+          "cumRevenue": 48707.54,
+          "rating": 4.04
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 17996,
+          "monthEnroll": 33,
+          "cumRevenue": 67533.25,
+          "rating": 4.15
         }
       ]
     }
@@ -6649,21 +6685,21 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 71001,
-      "newEnroll": 247,
-      "revenue": 192594.27,
-      "officialNew": 150,
-      "officialAsOf": "2026-09-04",
+      "enroll": 71036,
+      "newEnroll": 282,
+      "revenue": 192599.58,
+      "officialNew": 186,
+      "officialAsOf": "2026-09-05",
       "from": "2026-08-31",
-      "to": "2026-09-04",
-      "records": 4,
+      "to": "2026-09-05",
+      "records": 5,
       "byCourse": {
         "C01": {
-          "enroll": 481,
+          "enroll": 482,
           "revenue": 237.84
         },
         "C02": {
-          "enroll": 5058,
+          "enroll": 5066,
           "revenue": 7869.23
         },
         "C03": {
@@ -6671,19 +6707,19 @@
           "revenue": 4464.35
         },
         "C04": {
-          "enroll": 4054,
+          "enroll": 4055,
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4568,
+          "enroll": 4570,
           "revenue": 7355.42
         },
         "C06": {
-          "enroll": 7751,
+          "enroll": 7756,
           "revenue": 14896.8
         },
         "C07": {
-          "enroll": 4888,
+          "enroll": 4889,
           "revenue": 11284.26
         },
         "C08": {
@@ -6691,11 +6727,11 @@
           "revenue": 26411.63
         },
         "C09": {
-          "enroll": 15239,
-          "revenue": 48702.23
+          "enroll": 15248,
+          "revenue": 48707.54
         },
         "C10": {
-          "enroll": 17988,
+          "enroll": 17996,
           "revenue": 67533.25
         }
       }
@@ -6899,6 +6935,10 @@
       {
         "name": "リミットレス台帳ログ_2026-09-04",
         "rows": 2
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-09-05",
+        "rows": 4
       }
     ],
     "rows": [
@@ -8481,6 +8521,54 @@
         "text": "家族でカツカレーを囲み旅行会議。雨の登山や大丸温泉の思い出を振り返る温かい時間",
         "who": "家族",
         "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-04",
+        "ver": "57.05",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "3時間の進捗報告会ファシリ——「問いの内在化(セルフコーチングOS)」「コミュニケーションはプロジェクトに宿る」「引き際のバトンタッチ」を伝授",
+        "who": "研修・コーチング",
+        "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-04",
+        "ver": "57.05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🤝人",
+        "text": "「1人社長の会」月イチ近況報告会——高尾山ビアマウント計画・養分ビジネス談義・介護のリアル・生き様(ZAMA)論",
+        "who": "コミュニティ",
+        "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-04",
+        "ver": "57.05",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "「生き様(ZAMA)の時代」を言語化——知識・技術はAIにもぎ取られるが生き様はもぎ取れない",
+        "who": "思想・鉱脈",
+        "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-04",
+        "ver": "57.05",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "ゴッキーに「月刊ごきげん」の型化とAI雑誌編集の8ステッププロンプトを指導",
+        "who": "月刊GOKIGEN・AI活用",
+        "src": "ダイジェスト"
       }
     ],
     "lifeFirsts": {
@@ -8554,7 +8642,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-09-04",
+    "asOf": "2026-09-05",
     "kinds": [
       "教え",
       "トライ",
@@ -8566,30 +8654,70 @@
     "week": {
       "from": "2026-08-30",
       "to": "2026-09-05",
-      "rows": 8,
+      "rows": 12,
       "counts": {
-        "教え": 1,
-        "トライ": 1,
+        "教え": 3,
+        "トライ": 2,
         "初めて": 2,
         "学び": 0,
-        "人": 3,
+        "人": 4,
         "もがき": 0
       }
     },
     "month": {
       "from": "2026-09-01",
       "to": "2026-09-30",
-      "rows": 8,
+      "rows": 12,
       "counts": {
-        "教え": 1,
-        "トライ": 1,
+        "教え": 3,
+        "トライ": 2,
         "初めて": 2,
         "学び": 0,
-        "人": 3,
+        "人": 4,
         "もがき": 0
       }
     },
     "recent": [
+      {
+        "date": "2026-09-04",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "ゴッキーに「月刊ごきげん」の型化とAI雑誌編集の8ステッププロンプトを指導",
+        "who": "月刊GOKIGEN・AI活用"
+      },
+      {
+        "date": "2026-09-04",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "「生き様(ZAMA)の時代」を言語化——知識・技術はAIにもぎ取られるが生き様はもぎ取れない",
+        "who": "思想・鉱脈"
+      },
+      {
+        "date": "2026-09-04",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🤝人",
+        "text": "「1人社長の会」月イチ近況報告会——高尾山ビアマウント計画・養分ビジネス談義・介護のリアル・生き様(ZAMA)論",
+        "who": "コミュニティ"
+      },
+      {
+        "date": "2026-09-04",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "3時間の進捗報告会ファシリ——「問いの内在化(セルフコーチングOS)」「コミュニケーションはプロジェクトに宿る」「引き際のバトンタッチ」を伝授",
+        "who": "研修・コーチング"
+      },
       {
         "date": "2026-09-03",
         "kinds": [
@@ -8599,49 +8727,9 @@
         "kindsText": "🤝人",
         "text": "家族でカツカレーを囲み旅行会議。雨の登山や大丸温泉の思い出を振り返る温かい時間",
         "who": "家族"
-      },
-      {
-        "date": "2026-09-03",
-        "kinds": [
-          "初めて"
-        ],
-        "unsure": [],
-        "kindsText": "🌱初めて",
-        "text": "人生初、動画編集ソフトを一切使わずにAIエージェントに動画を作ってもらった——しかもものすごい完成度。2020年に編集ソフトで初めて動画を作ってから6年での転換点",
-        "who": "ゆるりんちょ。(那須岳編・自動編集工程)"
-      },
-      {
-        "date": "2026-09-03",
-        "kinds": [
-          "トライ"
-        ],
-        "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "お正月の家族5人温泉旅行の計画をスタート(候補: 伊豆・房総・群馬・千葉白子温泉のテニスコート付き宿。車で行ける・露天風呂・2泊3日想定)",
-        "who": "家族"
-      },
-      {
-        "date": "2026-09-02",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🤝人",
-        "text": "鈴木さん(MOTOグループ社長)が美味しいお酒を振る舞ってくれた",
-        "who": "会食"
-      },
-      {
-        "date": "2026-09-02",
-        "kinds": [],
-        "unsure": [
-          "初めて"
-        ],
-        "kindsText": "🌱初めて?",
-        "text": "八重洲MOTO TOKYO 初訪問？(要本人確定)",
-        "who": "会食"
       }
     ],
-    "total": 145,
+    "total": 149,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
@@ -9620,21 +9708,14 @@
     }
   },
   "calendar": {
-    "asOf": "2026-09-04",
-    "from": "2026-09-04",
-    "to": "2027-03-04",
+    "asOf": "2026-09-05",
+    "from": "2026-09-05",
+    "to": "2027-03-05",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
-    "count": 33,
+    "count": 32,
     "events": [
-      {
-        "date": "2026-09-04",
-        "ym": "2026-09",
-        "title": "🎁ご褒美枠｜友（客/師/恩/友/家族）→ひとり社長の会＠予魯寿八",
-        "kind": "booked",
-        "cat": "friend"
-      },
       {
         "date": "2026-09-08",
         "ym": "2026-09",
@@ -9868,30 +9949,20 @@
     ]
   },
   "note": {
-    "asOf": "2026-09-04",
-    "time": "22:46",
+    "asOf": "2026-09-05",
+    "time": "22:43",
     "month": {
-      "date": "2026-09-04",
-      "time": "22:46",
+      "date": "2026-09-05",
+      "time": "22:43",
       "span": "月間",
       "period": "月間",
-      "views": 9048,
+      "views": 9132,
       "comments": 56,
-      "likes": 567,
-      "note": "その役職、誰かの罰ゲームですか。(719ビュー・スキ117)",
-      "src": "note台帳ログ_2026-09-04"
+      "likes": 579,
+      "note": "その役職、誰かの罰ゲームですか。(729・スキ117)／スピリチュアルではなく科学の話(446・スキ43)／AIに「忘れないでくれ」と頼んだたった3つのこと(431・スキ29)",
+      "src": "note台帳ログ_2026-09-05"
     },
-    "all": {
-      "date": "2026-09-04",
-      "time": "22:46",
-      "span": "全期間",
-      "period": "全期間",
-      "views": 78938,
-      "comments": 461,
-      "likes": 3734,
-      "note": "全期間TOP: Udemyが大進化！AIロールプレイ(1261)／誰がどんなOSから発言しているのか(823)",
-      "src": "note台帳ログ_2026-09-04"
-    },
+    "all": null,
     "rows": [
       {
         "date": "2026-08-20",
@@ -9969,6 +10040,17 @@
         "likes": 567,
         "note": "その役職、誰かの罰ゲームですか。(719ビュー・スキ117)",
         "src": "note台帳ログ_2026-09-04"
+      },
+      {
+        "date": "2026-09-05",
+        "time": "22:43",
+        "span": "月間",
+        "period": "月間",
+        "views": 9132,
+        "comments": 56,
+        "likes": 579,
+        "note": "その役職、誰かの罰ゲームですか。(729・スキ117)／スピリチュアルではなく科学の話(446・スキ43)／AIに「忘れないでくれ」と頼んだたった3つのこと(431・スキ29)",
+        "src": "note台帳ログ_2026-09-05"
       }
     ],
     "used": [
@@ -10007,9 +10089,13 @@
       {
         "name": "note台帳ログ_2026-09-04",
         "rows": 2
+      },
+      {
+        "name": "note台帳ログ_2026-09-05",
+        "rows": 1
       }
     ],
-    "fileUrl": "https://docs.google.com/spreadsheets/d/1Yj1JEXO6WVha2fZXpmTjjtzGrDtMjVxbhWFFK16QIng/edit?usp=drivesdk",
+    "fileUrl": "https://docs.google.com/spreadsheets/d/1YW6EJeUyHWEGiy5CG9ZWx3Sihd759jMEiY7Kwfin9Rg/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
   },
   "places": {
