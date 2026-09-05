@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T06:24:09+09:00",
+  "generatedAt": "2026-09-05T18:36:32+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -225,6 +225,10 @@
       },
       {
         "name": "経済台帳ログ_2026-08-23",
+        "rows": 22
+      },
+      {
+        "name": "経済台帳ログ_2026-09-05",
         "rows": 22
       }
     ],
@@ -8806,7 +8810,7 @@
     "baseName": "経済台帳_base",
     "baseUrl": "https://docs.google.com/spreadsheets/d/1gka3Kxiiv2oTt5mvS8tr7wtRzfqwHSoRtHBdLfQXaQ4/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/13oyaDeWl0nviGqLF_PblBhgGM-X4NsTR",
-    "asOf": "2026-08-23",
+    "asOf": "2026-09-05",
     "used": [
       {
         "name": "経済台帳_base",
@@ -8835,11 +8839,15 @@
       {
         "name": "経済台帳ログ_2026-08-23",
         "rows": 22
+      },
+      {
+        "name": "経済台帳ログ_2026-09-05",
+        "rows": 22
       }
     ],
     "rows": [
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "ORロイヤルティーズ OR",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8849,27 +8857,27 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "SBI 外貨建債券",
         "cat": "外国債券",
         "level": "item",
         "account": "sbi",
-        "amount": 4966062,
+        "amount": 4881437,
         "currency": "JPY",
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "SBI 米国株式(クラス計)",
         "cat": "米国株式",
         "level": "item",
         "account": "sbi",
-        "amount": 6205864,
+        "amount": 6038131,
         "currency": "JPY",
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "SBI 預り金(円)",
         "cat": "現金",
         "level": "item",
@@ -8879,17 +8887,17 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "SBI 預り金(米ドル)",
         "cat": "現金",
         "level": "item",
         "account": "sbi",
-        "amount": 2315945,
+        "amount": 2276710,
         "currency": "JPY",
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "SPDRゴールドミニシェアーズ GLDM",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8899,7 +8907,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "アグニコイーグルマインズ AEM",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8909,7 +8917,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "アリスタネットワークス ANET",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8919,7 +8927,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "アルファベットA GOOGL",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8929,7 +8937,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "インタラクティブブローカーズ IBKR",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8939,7 +8947,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "ウィートンプレシャスメタルズ WPM",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8949,7 +8957,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "ウーバーテクノロジーズ UBER",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8959,7 +8967,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "グローバルXウラニウムETF URA",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8969,7 +8977,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "シーブリッジゴールド SA",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8979,7 +8987,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "テックリソーシズB TECK",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8989,7 +8997,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "パランティアテクノロジーズ PLTR",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -8999,7 +9007,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "フランコネバダ FNV",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -9009,7 +9017,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "ロビンフッドマーケッツA HOOD",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -9019,7 +9027,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "ヴァンエック中小型金鉱株ETF GDXJ",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -9029,7 +9037,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "ヴァンエック金鉱株ETF GDX",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -9039,7 +9047,7 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "台湾セミコンダクターADR TSM",
         "cat": "米国株式(明細)",
         "level": "item",
@@ -9049,12 +9057,12 @@
         "src": "SBIメイン"
       },
       {
-        "date": "2026-08-23",
+        "date": "2026-09-05",
         "name": "野村 お預り資産",
         "cat": "証券口座",
         "level": "item",
         "account": "nomura",
-        "amount": 11119197,
+        "amount": 10989251,
         "currency": "JPY",
         "src": "野村"
       }
@@ -9283,14 +9291,51 @@
         "bank": 7265348,
         "bankAt": "2026-08-21",
         "complete": true
+      },
+      {
+        "date": "2026-09-05",
+        "rows": 22,
+        "total": 32080383,
+        "postedTotal": 24195510,
+        "posted": [
+          "nomura",
+          "sbi"
+        ],
+        "carried": [
+          "bank",
+          "gold"
+        ],
+        "back": [],
+        "accounts": [
+          "bank",
+          "gold",
+          "nomura",
+          "sbi"
+        ],
+        "kind": {
+          "sbi": "posted",
+          "gold": "carry",
+          "nomura": "posted",
+          "bank": "carry"
+        },
+        "level": "item",
+        "sbi": 13206259,
+        "sbiAt": "2026-09-05",
+        "gold": 619525,
+        "goldAt": "2026-08-21",
+        "nomura": 10989251,
+        "nomuraAt": "2026-09-05",
+        "bank": 7265348,
+        "bankAt": "2026-08-21",
+        "complete": true
       }
     ],
     "accounts": [
       {
         "key": "sbi",
         "label": "SBIメイン",
-        "amount": 13497852,
-        "asOf": "2026-08-23",
+        "amount": 13206259,
+        "asOf": "2026-09-05",
         "days": 0,
         "stale": false,
         "known": true
@@ -9300,15 +9345,15 @@
         "label": "SBI貴金属",
         "amount": 619525,
         "asOf": "2026-08-21",
-        "days": 2,
-        "stale": false,
+        "days": 15,
+        "stale": true,
         "known": true
       },
       {
         "key": "nomura",
         "label": "野村",
-        "amount": 11119197,
-        "asOf": "2026-08-23",
+        "amount": 10989251,
+        "asOf": "2026-09-05",
         "days": 0,
         "stale": false,
         "known": true
@@ -9318,8 +9363,8 @@
         "label": "個人銀行",
         "amount": 7265348,
         "asOf": "2026-08-21",
-        "days": 2,
-        "stale": false,
+        "days": 15,
+        "stale": true,
         "known": true
       }
     ],
@@ -9377,7 +9422,7 @@
       }
     ],
     "sumLevel": "item",
-    "total": 32501922
+    "total": 32080383
   },
   "want": {
     "fileId": "19ajM16i5LNtpzOweJe0SKwHRrM6nDoHmUtBLJ2qYy28",
