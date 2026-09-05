@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T06:26:48+09:00",
+  "generatedAt": "2026-09-06T08:29:29+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -138,6 +138,10 @@
       {
         "name": "Udemy台帳ログ_2026-09-05",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-09-06",
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -195,6 +199,10 @@
       },
       {
         "name": "リミットレス台帳ログ_2026-09-05",
+        "rows": 4
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-09-06",
         "rows": 4
       }
     ],
@@ -272,6 +280,10 @@
       {
         "name": "note台帳ログ_2026-09-05",
         "rows": 1
+      },
+      {
+        "name": "note台帳ログ_2026-09-06",
+        "rows": 2
       }
     ],
     "placesFileId": "18y_FjBcl6nYQmxkTAKJatsJsxeMnF_FKUJTO9A0vYHQ",
@@ -1203,6 +1215,23 @@
       "dining": "前夜:1人社長の会(月イチ近況報告会)",
       "routine": null,
       "note": "睡眠4時間24分(0:45入眠→5:12起床)・効率96%・Oura睡眠72・コンディション63(無理はしないようにしましょう・安静時心拍高め)・BMI28.2・内臓脂肪Lv11"
+    },
+    {
+      "date": "2026-09-06",
+      "dow": "日",
+      "weight": 83.8,
+      "fat": 30.5,
+      "muscle": 55.3,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": null,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "前日比-0.7kg・BMI28.0・基礎代謝1628kcal・Oura睡眠69・コンディション72(休めるときに休む)・アクティビティ89"
     }
   ],
   "udemyCourses": [
@@ -1278,82 +1307,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-07-10",
-      "time": "11:00",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 105,
-          "monthEnroll": 16,
-          "cumRevenue": 162.56,
-          "rating": 4.9
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 4557,
-          "monthEnroll": 75,
-          "cumRevenue": 7485.11,
-          "rating": 4.04
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2629,
-          "monthEnroll": 24,
-          "cumRevenue": 4320.54,
-          "rating": 4.17
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3904,
-          "monthEnroll": 16,
-          "cumRevenue": 3792.4,
-          "rating": 4.05
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4440,
-          "monthEnroll": 27,
-          "cumRevenue": 7280.46,
-          "rating": 4.16
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7545,
-          "monthEnroll": 34,
-          "cumRevenue": 14749.05,
-          "rating": 4.09
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4796,
-          "monthEnroll": 16,
-          "cumRevenue": 11204.29,
-          "rating": 4.13
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8055,
-          "monthEnroll": 7,
-          "cumRevenue": 26331.96,
-          "rating": 3.75
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 14520,
-          "monthEnroll": 108,
-          "cumRevenue": 47670.96,
-          "rating": 4.01
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17585,
-          "monthEnroll": 62,
-          "cumRevenue": 67048.77,
-          "rating": 4.12
-        }
-      ]
-    },
     {
       "date": "2026-07-12",
       "time": "8:00",
@@ -3555,6 +3508,82 @@
           "monthEnroll": 33,
           "cumRevenue": 67533.25,
           "rating": 4.15
+        }
+      ]
+    },
+    {
+      "date": "2026-09-06",
+      "time": "6:33",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 486,
+          "monthEnroll": 7,
+          "cumRevenue": 237.84,
+          "rating": 4.55
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5073,
+          "monthEnroll": 52,
+          "cumRevenue": 7869.23,
+          "rating": 4.05
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2846,
+          "monthEnroll": 10,
+          "cumRevenue": 4464.35,
+          "rating": 4.16
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4056,
+          "monthEnroll": 12,
+          "cumRevenue": 3839.26,
+          "rating": 4.09
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4571,
+          "monthEnroll": 13,
+          "cumRevenue": 7355.42,
+          "rating": 4.06
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7760,
+          "monthEnroll": 27,
+          "cumRevenue": 14896.8,
+          "rating": 4.24
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4891,
+          "monthEnroll": 9,
+          "cumRevenue": 11284.26,
+          "rating": 4
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8134,
+          "monthEnroll": 4,
+          "cumRevenue": 26411.63,
+          "rating": 3.91
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15258,
+          "monthEnroll": 55,
+          "cumRevenue": 48707.54,
+          "rating": 4.04
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18002,
+          "monthEnroll": 39,
+          "cumRevenue": 67533.25,
+          "rating": 4.14
         }
       ]
     }
@@ -6689,53 +6718,53 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 71036,
-      "newEnroll": 282,
+      "enroll": 71077,
+      "newEnroll": 323,
       "revenue": 192599.58,
-      "officialNew": 186,
-      "officialAsOf": "2026-09-05",
+      "officialNew": 228,
+      "officialAsOf": "2026-09-06",
       "from": "2026-08-31",
-      "to": "2026-09-05",
-      "records": 5,
+      "to": "2026-09-06",
+      "records": 6,
       "byCourse": {
         "C01": {
-          "enroll": 482,
+          "enroll": 486,
           "revenue": 237.84
         },
         "C02": {
-          "enroll": 5066,
+          "enroll": 5073,
           "revenue": 7869.23
         },
         "C03": {
-          "enroll": 2842,
+          "enroll": 2846,
           "revenue": 4464.35
         },
         "C04": {
-          "enroll": 4055,
+          "enroll": 4056,
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4570,
+          "enroll": 4571,
           "revenue": 7355.42
         },
         "C06": {
-          "enroll": 7756,
+          "enroll": 7760,
           "revenue": 14896.8
         },
         "C07": {
-          "enroll": 4889,
+          "enroll": 4891,
           "revenue": 11284.26
         },
         "C08": {
-          "enroll": 8132,
+          "enroll": 8134,
           "revenue": 26411.63
         },
         "C09": {
-          "enroll": 15248,
+          "enroll": 15258,
           "revenue": 48707.54
         },
         "C10": {
-          "enroll": 17996,
+          "enroll": 18002,
           "revenue": 67533.25
         }
       }
@@ -6942,6 +6971,10 @@
       },
       {
         "name": "リミットレス台帳ログ_2026-09-05",
+        "rows": 4
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-09-06",
         "rows": 4
       }
     ],
@@ -8573,6 +8606,54 @@
         "text": "ゴッキーに「月刊ごきげん」の型化とAI雑誌編集の8ステッププロンプトを指導",
         "who": "月刊GOKIGEN・AI活用",
         "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-05",
+        "ver": "57.05",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "Kindle出版部MTGで「コンテキストマネジメント」(プロンプトより文脈共有・関係性の定義でAIが阿吽の相棒になる)と月刊ごきげん6時間創刊の裏側を共有",
+        "who": "Kindle出版部・AI活用",
+        "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-05",
+        "ver": "57.05",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "パートナーに「隣人を持ち上げて引き上げてもらう」コミュニティ生存戦略と「提案なき独走」へのフィードバック",
+        "who": "コミュニティ運営",
+        "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-05",
+        "ver": "57.05",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "楽市での立ち回りを「街おこしナビゲーター(楽市完全ガイド)」と決定——自分の本だけでなく他の住人の本と街歩きレポでファンを作る",
+        "who": "天狼院楽市",
+        "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-05",
+        "ver": "57.05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🤝人",
+        "text": "歯科でインプラント治療。スタッフに「AIじゃないよ、俺らが作った」と職人のプライドで返され大笑い",
+        "who": "歯科",
+        "src": "ダイジェスト"
       }
     ],
     "lifeFirsts": {
@@ -8671,17 +8752,57 @@
     "month": {
       "from": "2026-09-01",
       "to": "2026-09-30",
-      "rows": 12,
+      "rows": 16,
       "counts": {
-        "教え": 3,
-        "トライ": 2,
+        "教え": 5,
+        "トライ": 3,
         "初めて": 2,
         "学び": 0,
-        "人": 4,
+        "人": 5,
         "もがき": 0
       }
     },
     "recent": [
+      {
+        "date": "2026-09-05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🤝人",
+        "text": "歯科でインプラント治療。スタッフに「AIじゃないよ、俺らが作った」と職人のプライドで返され大笑い",
+        "who": "歯科"
+      },
+      {
+        "date": "2026-09-05",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "楽市での立ち回りを「街おこしナビゲーター(楽市完全ガイド)」と決定——自分の本だけでなく他の住人の本と街歩きレポでファンを作る",
+        "who": "天狼院楽市"
+      },
+      {
+        "date": "2026-09-05",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "パートナーに「隣人を持ち上げて引き上げてもらう」コミュニティ生存戦略と「提案なき独走」へのフィードバック",
+        "who": "コミュニティ運営"
+      },
+      {
+        "date": "2026-09-05",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "Kindle出版部MTGで「コンテキストマネジメント」(プロンプトより文脈共有・関係性の定義でAIが阿吽の相棒になる)と月刊ごきげん6時間創刊の裏側を共有",
+        "who": "Kindle出版部・AI活用"
+      },
       {
         "date": "2026-09-04",
         "kinds": [
@@ -8691,49 +8812,9 @@
         "kindsText": "🗣️教え",
         "text": "ゴッキーに「月刊ごきげん」の型化とAI雑誌編集の8ステッププロンプトを指導",
         "who": "月刊GOKIGEN・AI活用"
-      },
-      {
-        "date": "2026-09-04",
-        "kinds": [
-          "トライ"
-        ],
-        "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "「生き様(ZAMA)の時代」を言語化——知識・技術はAIにもぎ取られるが生き様はもぎ取れない",
-        "who": "思想・鉱脈"
-      },
-      {
-        "date": "2026-09-04",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🤝人",
-        "text": "「1人社長の会」月イチ近況報告会——高尾山ビアマウント計画・養分ビジネス談義・介護のリアル・生き様(ZAMA)論",
-        "who": "コミュニティ"
-      },
-      {
-        "date": "2026-09-04",
-        "kinds": [
-          "教え"
-        ],
-        "unsure": [],
-        "kindsText": "🗣️教え",
-        "text": "3時間の進捗報告会ファシリ——「問いの内在化(セルフコーチングOS)」「コミュニケーションはプロジェクトに宿る」「引き際のバトンタッチ」を伝授",
-        "who": "研修・コーチング"
-      },
-      {
-        "date": "2026-09-03",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🤝人",
-        "text": "家族でカツカレーを囲み旅行会議。雨の登山や大丸温泉の思い出を振り返る温かい時間",
-        "who": "家族"
       }
     ],
-    "total": 149,
+    "total": 153,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
@@ -9745,11 +9826,11 @@
   "weekly": {
     "folderId": "1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk",
     "folderUrl": "https://drive.google.com/drive/folders/1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk",
-    "count": 1,
+    "count": 2,
     "latest": {
-      "name": "週報_2026-08-23_第2号",
-      "url": "https://docs.google.com/document/d/1I59YsGMag4AhlguxAG7MOow6ZhXs0WfygiGTOkhq16I/edit?usp=drivesdk",
-      "modified": "2026-08-23 07:12"
+      "name": "週報_2026-09-06",
+      "url": "https://docs.google.com/document/d/1oxNAZGFDusNvYmKnpUjLGzIQehZcNmxUueF2YvUNUnQ/edit?usp=drivesdk",
+      "modified": "2026-09-06 07:13"
     }
   },
   "calendar": {
@@ -9994,20 +10075,30 @@
     ]
   },
   "note": {
-    "asOf": "2026-09-05",
-    "time": "22:43",
+    "asOf": "2026-09-06",
+    "time": "22:46",
     "month": {
-      "date": "2026-09-05",
-      "time": "22:43",
+      "date": "2026-09-06",
+      "time": "22:46",
       "span": "月間",
       "period": "月間",
-      "views": 9132,
-      "comments": 56,
-      "likes": 579,
-      "note": "その役職、誰かの罰ゲームですか。(729・スキ117)／スピリチュアルではなく科学の話(446・スキ43)／AIに「忘れないでくれ」と頼んだたった3つのこと(431・スキ29)",
-      "src": "note台帳ログ_2026-09-05"
+      "views": 8755,
+      "comments": 54,
+      "likes": 566,
+      "note": "その役職、誰かの罰ゲームですか。(730・スキ118)",
+      "src": "note台帳ログ_2026-09-06"
     },
-    "all": null,
+    "all": {
+      "date": "2026-09-06",
+      "time": "22:46",
+      "span": "全期間",
+      "period": "全期間",
+      "views": 79414,
+      "comments": 463,
+      "likes": 3769,
+      "note": "8万ビューまであと586",
+      "src": "note台帳ログ_2026-09-06"
+    },
     "rows": [
       {
         "date": "2026-08-20",
@@ -10096,6 +10187,28 @@
         "likes": 579,
         "note": "その役職、誰かの罰ゲームですか。(729・スキ117)／スピリチュアルではなく科学の話(446・スキ43)／AIに「忘れないでくれ」と頼んだたった3つのこと(431・スキ29)",
         "src": "note台帳ログ_2026-09-05"
+      },
+      {
+        "date": "2026-09-06",
+        "time": "22:46",
+        "span": "全期間",
+        "period": "全期間",
+        "views": 79414,
+        "comments": 463,
+        "likes": 3769,
+        "note": "8万ビューまであと586",
+        "src": "note台帳ログ_2026-09-06"
+      },
+      {
+        "date": "2026-09-06",
+        "time": "22:46",
+        "span": "月間",
+        "period": "月間",
+        "views": 8755,
+        "comments": 54,
+        "likes": 566,
+        "note": "その役職、誰かの罰ゲームですか。(730・スキ118)",
+        "src": "note台帳ログ_2026-09-06"
       }
     ],
     "used": [
@@ -10138,9 +10251,13 @@
       {
         "name": "note台帳ログ_2026-09-05",
         "rows": 1
+      },
+      {
+        "name": "note台帳ログ_2026-09-06",
+        "rows": 2
       }
     ],
-    "fileUrl": "https://docs.google.com/spreadsheets/d/1YW6EJeUyHWEGiy5CG9ZWx3Sihd759jMEiY7Kwfin9Rg/edit?usp=drivesdk",
+    "fileUrl": "https://docs.google.com/spreadsheets/d/1Nw_8Hqij8ure911EDbCrBR2jPFoUuNZnodBVgtn8gM8/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
   },
   "places": {
