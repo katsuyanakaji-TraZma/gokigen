@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-08T12:42:34+09:00",
+  "generatedAt": "2026-09-09T06:24:57+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-09-08",
+    "asOf": "2026-09-09",
     "major": 57,
     "minor": 5,
     "months": 689,
@@ -8932,7 +8932,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-09-08",
+    "asOf": "2026-09-09",
     "kinds": [
       "教え",
       "トライ",
@@ -10054,9 +10054,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-09-08",
-    "from": "2026-09-08",
-    "to": "2027-03-08",
+    "asOf": "2026-09-09",
+    "from": "2026-09-09",
+    "to": "2027-03-09",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
