@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T06:24:57+09:00",
+  "generatedAt": "2026-09-09T12:43:37+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -150,6 +150,10 @@
       {
         "name": "Udemy台帳ログ_2026-09-08",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-09-09",
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -220,6 +224,10 @@
       {
         "name": "リミットレス台帳ログ_2026-09-02",
         "rows": 4
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-09-09",
+        "rows": 2
       }
     ],
     "ecoFiles": [
@@ -300,6 +308,10 @@
       {
         "name": "note台帳ログ_2026-09-06",
         "rows": 2
+      },
+      {
+        "name": "note台帳ログ_2026-09-09",
+        "rows": 1
       }
     ],
     "placesFileId": "18y_FjBcl6nYQmxkTAKJatsJsxeMnF_FKUJTO9A0vYHQ",
@@ -1282,6 +1294,23 @@
       "dining": null,
       "routine": null,
       "note": "ホテル前泊のため体組成なし。Oura睡眠69・コンディション70(眠れない夜が続いていますか)・アクティビティ76。本人「リアル研修の前の日はホテル泊なのでどうしても睡眠が浅い」"
+    },
+    {
+      "date": "2026-09-09",
+      "dow": "水",
+      "weight": 82.8,
+      "fat": 30.1,
+      "muscle": 55,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": null,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "前回比-0.6kg・BMI27.7・たんぱく質率16.0%が「適正」に(初)・Oura睡眠62・コンディション70(休憩を取りましょう・心拍高め)・アクティビティ85"
     }
   ],
   "udemyCourses": [
@@ -1357,82 +1386,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-08-01",
-      "time": "21:18",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 188,
-          "monthEnroll": 0,
-          "cumRevenue": 176.67,
-          "rating": 4.89
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 4739,
-          "monthEnroll": 0,
-          "cumRevenue": 7497.68,
-          "rating": 4.04
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2737,
-          "monthEnroll": 0,
-          "cumRevenue": 4323.63,
-          "rating": 4.14
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3956,
-          "monthEnroll": 0,
-          "cumRevenue": 3792.8,
-          "rating": 4.15
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4479,
-          "monthEnroll": 0,
-          "cumRevenue": 7281.09,
-          "rating": 4.21
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7616,
-          "monthEnroll": 0,
-          "cumRevenue": 14751.22,
-          "rating": 4.12
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4842,
-          "monthEnroll": 0,
-          "cumRevenue": 11206.66,
-          "rating": 4.01
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8087,
-          "monthEnroll": 0,
-          "cumRevenue": 26334.14,
-          "rating": 3.83
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 14846,
-          "monthEnroll": 0,
-          "cumRevenue": 47683.43,
-          "rating": 4.01
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17722,
-          "monthEnroll": 0,
-          "cumRevenue": 67120.42,
-          "rating": 4.17
-        }
-      ]
-    },
     {
       "date": "2026-08-09",
       "time": "8:00",
@@ -3634,6 +3587,82 @@
           "monthEnroll": 62,
           "cumRevenue": 67533.25,
           "rating": 4.14
+        }
+      ]
+    },
+    {
+      "date": "2026-09-09",
+      "time": "9:09",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 489,
+          "monthEnroll": 10,
+          "cumRevenue": 237.84,
+          "rating": 4.55
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5114,
+          "monthEnroll": 94,
+          "cumRevenue": 7869.23,
+          "rating": 4.04
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2852,
+          "monthEnroll": 16,
+          "cumRevenue": 4464.35,
+          "rating": 4.14
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4061,
+          "monthEnroll": 17,
+          "cumRevenue": 3839.26,
+          "rating": 4.09
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4575,
+          "monthEnroll": 17,
+          "cumRevenue": 7355.42,
+          "rating": 4.06
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7773,
+          "monthEnroll": 40,
+          "cumRevenue": 14896.8,
+          "rating": 4.24
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4894,
+          "monthEnroll": 12,
+          "cumRevenue": 11287.34,
+          "rating": 4
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8135,
+          "monthEnroll": 6,
+          "cumRevenue": 26411.63,
+          "rating": 3.93
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15302,
+          "monthEnroll": 99,
+          "cumRevenue": 48710.62,
+          "rating": 4.05
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18030,
+          "monthEnroll": 69,
+          "cumRevenue": 67533.25,
+          "rating": 4.13
         }
       ]
     }
@@ -6768,25 +6797,25 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 71179,
-      "newEnroll": 425,
+      "enroll": 71225,
+      "newEnroll": 471,
       "revenue": 192605.74,
-      "officialNew": 332,
-      "officialAsOf": "2026-09-08",
+      "officialNew": 380,
+      "officialAsOf": "2026-09-09",
       "from": "2026-08-31",
-      "to": "2026-09-08",
-      "records": 8,
+      "to": "2026-09-09",
+      "records": 9,
       "byCourse": {
         "C01": {
-          "enroll": 488,
+          "enroll": 489,
           "revenue": 237.84
         },
         "C02": {
-          "enroll": 5105,
+          "enroll": 5114,
           "revenue": 7869.23
         },
         "C03": {
-          "enroll": 2847,
+          "enroll": 2852,
           "revenue": 4464.35
         },
         "C04": {
@@ -6794,33 +6823,40 @@
           "revenue": 3839.26
         },
         "C05": {
-          "enroll": 4573,
+          "enroll": 4575,
           "revenue": 7355.42
         },
         "C06": {
-          "enroll": 7767,
+          "enroll": 7773,
           "revenue": 14896.8
         },
         "C07": {
-          "enroll": 4893,
+          "enroll": 4894,
           "revenue": 11287.34
         },
         "C08": {
-          "enroll": 8136,
+          "enroll": 8135,
           "revenue": 26411.63
         },
         "C09": {
-          "enroll": 15286,
+          "enroll": 15302,
           "revenue": 48710.62
         },
         "C10": {
-          "enroll": 18023,
+          "enroll": 18030,
           "revenue": 67533.25
         }
       }
     }
   ],
   "warnings": [
+    {
+      "level": "info",
+      "kind": "enrollDrop",
+      "course": "C08",
+      "date": "2026-09-09",
+      "text": "C08 ご機嫌の累計登録が 2026-09-08 の 8136人 → 2026-09-09 の 8135人 と1人減っています（返金などの小さな揺らぎとみられます）"
+    },
     {
       "level": "info",
       "kind": "enrollDrop",
@@ -7034,6 +7070,10 @@
       {
         "name": "リミットレス台帳ログ_2026-09-02",
         "rows": 4
+      },
+      {
+        "name": "リミットレス台帳ログ_2026-09-09",
+        "rows": 2
       }
     ],
     "rows": [
@@ -8844,6 +8884,30 @@
         "text": "鈴木さんへ「言い訳の底にある恐れ」「渡った橋を焼き落とす(宣言とフィードバック予約)」を伝授。偏差値38のランニングサークルの自己開示つき。Udemyクーポン(C06)送付済み",
         "who": "コーチング",
         "src": "ダイジェスト+本人確定"
+      },
+      {
+        "date": "2026-09-08",
+        "ver": "57.05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🤝人",
+        "text": "家族でバレーボール(アジア選手権)観戦",
+        "who": "家族",
+        "src": "ダイジェスト"
+      },
+      {
+        "date": "2026-09-08",
+        "ver": "57.05",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "管理職向け研修(終日・約44〜45名)——承認銀行(存在/行動/結果承認)・質問力(Why→What)・タイプ別コミュニケーション・田淵さん(自動車販売店長)の組織再生事例。宣言の1週間後相互チェックを合意",
+        "who": "企業研修",
+        "src": "ダイジェスト(AI生成・要確認)"
       }
     ],
     "lifeFirsts": {
@@ -8944,30 +9008,50 @@
     "week": {
       "from": "2026-09-06",
       "to": "2026-09-12",
-      "rows": 11,
+      "rows": 13,
       "counts": {
-        "教え": 3,
+        "教え": 4,
         "トライ": 4,
         "初めて": 2,
         "学び": 0,
-        "人": 2,
+        "人": 3,
         "もがき": 0
       }
     },
     "month": {
       "from": "2026-09-01",
       "to": "2026-09-30",
-      "rows": 27,
+      "rows": 29,
       "counts": {
-        "教え": 8,
+        "教え": 9,
         "トライ": 7,
         "初めて": 5,
         "学び": 0,
-        "人": 7,
+        "人": 8,
         "もがき": 0
       }
     },
     "recent": [
+      {
+        "date": "2026-09-08",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "🗣️教え",
+        "text": "管理職向け研修(終日・約44〜45名)——承認銀行(存在/行動/結果承認)・質問力(Why→What)・タイプ別コミュニケーション・田淵さん(自動車販売店長)の組織再生事例。宣言の1週間後相互チェックを合意",
+        "who": "企業研修"
+      },
+      {
+        "date": "2026-09-08",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🤝人",
+        "text": "家族でバレーボール(アジア選手権)観戦",
+        "who": "家族"
+      },
       {
         "date": "2026-09-07",
         "kinds": [
@@ -8997,29 +9081,9 @@
         "kindsText": "🗣️教え",
         "text": "田島さんへ天狼院楽市(作れない・売れないの呪縛を解く街)と三浦店主の先見性を紹介。渋谷店訪問を勧める",
         "who": "天狼院楽市"
-      },
-      {
-        "date": "2026-09-07",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🤝人",
-        "text": "島さんと川口・西川口の多文化史・たろ焼き談義→西川口ガチ中華＆モンゴルスナック会を企画。次回セッション11/9(月)13:00",
-        "who": "地元・会食候補(友枠)"
-      },
-      {
-        "date": "2026-09-07",
-        "kinds": [
-          "トライ"
-        ],
-        "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "「楽市町内会」AI共創ギルド構想——持ち上げ・引き上げ合うオンボーディング体制で街を醸成する",
-        "who": "天狼院楽市"
       }
     ],
-    "total": 164,
+    "total": 166,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
@@ -10281,30 +10345,20 @@
     ]
   },
   "note": {
-    "asOf": "2026-09-06",
-    "time": "22:46",
+    "asOf": "2026-09-09",
+    "time": "0:48",
     "month": {
-      "date": "2026-09-06",
-      "time": "22:46",
+      "date": "2026-09-09",
+      "time": "0:48",
       "span": "月間",
       "period": "月間",
-      "views": 8755,
+      "views": 9390,
       "comments": 54,
-      "likes": 566,
-      "note": "その役職、誰かの罰ゲームですか。(730・スキ118)",
-      "src": "note台帳ログ_2026-09-06"
+      "likes": 596,
+      "note": "その役職、誰かの罰ゲームですか。(745・スキ119)／スピリチュアルではなく科学の話(453・スキ45)",
+      "src": "note台帳ログ_2026-09-09"
     },
-    "all": {
-      "date": "2026-09-06",
-      "time": "22:46",
-      "span": "全期間",
-      "period": "全期間",
-      "views": 79414,
-      "comments": 463,
-      "likes": 3769,
-      "note": "8万ビューまであと586",
-      "src": "note台帳ログ_2026-09-06"
-    },
+    "all": null,
     "rows": [
       {
         "date": "2026-08-20",
@@ -10415,6 +10469,17 @@
         "likes": 566,
         "note": "その役職、誰かの罰ゲームですか。(730・スキ118)",
         "src": "note台帳ログ_2026-09-06"
+      },
+      {
+        "date": "2026-09-09",
+        "time": "0:48",
+        "span": "月間",
+        "period": "月間",
+        "views": 9390,
+        "comments": 54,
+        "likes": 596,
+        "note": "その役職、誰かの罰ゲームですか。(745・スキ119)／スピリチュアルではなく科学の話(453・スキ45)",
+        "src": "note台帳ログ_2026-09-09"
       }
     ],
     "used": [
@@ -10461,9 +10526,13 @@
       {
         "name": "note台帳ログ_2026-09-06",
         "rows": 2
+      },
+      {
+        "name": "note台帳ログ_2026-09-09",
+        "rows": 1
       }
     ],
-    "fileUrl": "https://docs.google.com/spreadsheets/d/1Nw_8Hqij8ure911EDbCrBR2jPFoUuNZnodBVgtn8gM8/edit?usp=drivesdk",
+    "fileUrl": "https://docs.google.com/spreadsheets/d/1-N3Gt_MaIIR7nUP4q4u45ncADMsqOW7VzcGzUfmxvfE/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
   },
   "places": {
