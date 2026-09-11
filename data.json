@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-11T08:31:01+09:00",
+  "generatedAt": "2026-09-12T06:24:00+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-09-11",
+    "asOf": "2026-09-12",
     "major": 57,
     "minor": 5,
     "months": 689,
@@ -9042,7 +9042,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-09-11",
+    "asOf": "2026-09-12",
     "kinds": [
       "教え",
       "トライ",
@@ -10164,21 +10164,14 @@
     }
   },
   "calendar": {
-    "asOf": "2026-09-11",
-    "from": "2026-09-11",
-    "to": "2027-03-11",
+    "asOf": "2026-09-12",
+    "from": "2026-09-12",
+    "to": "2027-03-12",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
-    "count": 30,
+    "count": 29,
     "events": [
-      {
-        "date": "2026-09-11",
-        "ym": "2026-09",
-        "title": "🎁ご褒美枠｜空き（客/師/恩/友/家族）",
-        "kind": "open",
-        "cat": null
-      },
       {
         "date": "2026-09-18",
         "ym": "2026-09",
