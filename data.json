@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T06:24:00+09:00",
+  "generatedAt": "2026-09-12T12:42:56+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -162,6 +162,10 @@
       {
         "name": "Udemy台帳ログ_2026-09-11",
         "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-09-12",
+        "rows": 10
       }
     ],
     "limitlessFiles": [
@@ -323,6 +327,10 @@
       },
       {
         "name": "note台帳ログ_2026-09-11",
+        "rows": 1
+      },
+      {
+        "name": "note台帳ログ_2026-09-12",
         "rows": 1
       }
     ],
@@ -1357,6 +1365,23 @@
       "dining": null,
       "routine": null,
       "note": "就床0:09・入眠0:34(入眠潜時24分)・起床6:11・睡眠5時間34分(快眠スコア93.3・効率92.3%・中途覚醒0)。Oura睡眠83・コンディション79・アクティビティ83・レジリエンスやや不足・「安静時心拍が下がるのに時間がかかった(寝る間際の食事?)」。体重84.0(前日+1.1・前夜は家族で回転寿司)・BMI28.1・筋肉量55.4適正・基礎代謝1629。前日: 大塚商会企画書をAIの型で15分完成(従来2時間)・note月間9,772ビュー・ゆるりんちょ登録19人。本日: 田島ストラボ ピットイン(Zoom・終日)"
+    },
+    {
+      "date": "2026-09-12",
+      "dow": "土",
+      "weight": 83.6,
+      "fat": 30.4,
+      "muscle": 55.3,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 83,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Oura睡眠83・コンディション85(王冠・「いつも以上の日」通常範囲54-82を上回る)・アクティビティ76・レジリエンスやや不足。体重83.6(前日-0.4)・BMI27.9・筋肉量55.3適正・基礎代謝1626。前日: 田島ストラボ ピットイン2時間×3本(12名)を完遂、終了後「脳の許容を使い切った」、夜は家族で唐揚げテイクアウト＋バレーボールアジア選手権(日本vsインド)観戦。本日: ScanSnap復旧＋登山計画(11:00)→登山靴(12:30)→TRC壁打ち(14:00)"
     }
   ],
   "udemyCourses": [
@@ -1432,82 +1457,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-08-12",
-      "time": "9:36",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 313,
-          "monthEnroll": null,
-          "cumRevenue": 235.23,
-          "rating": 4.66
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 4815,
-          "monthEnroll": null,
-          "cumRevenue": 7862.18,
-          "rating": 3.99
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2775,
-          "monthEnroll": null,
-          "cumRevenue": 4461.73,
-          "rating": 4.08
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3975,
-          "monthEnroll": null,
-          "cumRevenue": 3839.26,
-          "rating": 4.09
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4509,
-          "monthEnroll": null,
-          "cumRevenue": 7354.36,
-          "rating": 4.16
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7642,
-          "monthEnroll": null,
-          "cumRevenue": 14896.8,
-          "rating": 4.14
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4852,
-          "monthEnroll": null,
-          "cumRevenue": 11282.77,
-          "rating": 4.03
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8105,
-          "monthEnroll": null,
-          "cumRevenue": 26405.16,
-          "rating": 3.81
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 14950,
-          "monthEnroll": null,
-          "cumRevenue": 48683.47,
-          "rating": 4.01
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17807,
-          "monthEnroll": null,
-          "cumRevenue": 67512.44,
-          "rating": 4.17
-        }
-      ]
-    },
     {
       "date": "2026-08-13",
       "time": "19:40",
@@ -3709,6 +3658,82 @@
           "monthEnroll": 84,
           "cumRevenue": 68071.09,
           "rating": 4.14
+        }
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "time": "8:55",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 496,
+          "monthEnroll": 17,
+          "cumRevenue": 517.95,
+          "rating": 4.57
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5142,
+          "monthEnroll": 122,
+          "cumRevenue": 8261.83,
+          "rating": 4.07
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2861,
+          "monthEnroll": 25,
+          "cumRevenue": 4570.99,
+          "rating": 4.15
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4070,
+          "monthEnroll": 26,
+          "cumRevenue": 3894.13,
+          "rating": 4.17
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4580,
+          "monthEnroll": 23,
+          "cumRevenue": 7429.7,
+          "rating": 4.07
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7799,
+          "monthEnroll": 67,
+          "cumRevenue": 15043.18,
+          "rating": 4.25
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4901,
+          "monthEnroll": 19,
+          "cumRevenue": 11369.39,
+          "rating": 4
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8138,
+          "monthEnroll": 9,
+          "cumRevenue": 26495.23,
+          "rating": 3.93
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15352,
+          "monthEnroll": 149,
+          "cumRevenue": 49612.08,
+          "rating": 4.05
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18057,
+          "monthEnroll": 98,
+          "cumRevenue": 68071.09,
+          "rating": 4.13
         }
       ]
     }
@@ -6843,53 +6868,53 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 71330,
-      "newEnroll": 576,
+      "enroll": 71396,
+      "newEnroll": 642,
       "revenue": 195265.57,
-      "officialNew": 486,
-      "officialAsOf": "2026-09-11",
+      "officialNew": 555,
+      "officialAsOf": "2026-09-12",
       "from": "2026-08-31",
-      "to": "2026-09-11",
-      "records": 11,
+      "to": "2026-09-12",
+      "records": 12,
       "byCourse": {
         "C01": {
-          "enroll": 492,
+          "enroll": 496,
           "revenue": 517.95
         },
         "C02": {
-          "enroll": 5134,
+          "enroll": 5142,
           "revenue": 8261.83
         },
         "C03": {
-          "enroll": 2857,
+          "enroll": 2861,
           "revenue": 4570.99
         },
         "C04": {
-          "enroll": 4068,
+          "enroll": 4070,
           "revenue": 3894.13
         },
         "C05": {
-          "enroll": 4578,
+          "enroll": 4580,
           "revenue": 7429.7
         },
         "C06": {
-          "enroll": 7789,
+          "enroll": 7799,
           "revenue": 15043.18
         },
         "C07": {
-          "enroll": 4897,
+          "enroll": 4901,
           "revenue": 11369.39
         },
         "C08": {
-          "enroll": 8135,
+          "enroll": 8138,
           "revenue": 26495.23
         },
         "C09": {
-          "enroll": 15335,
+          "enroll": 15352,
           "revenue": 49612.08
         },
         "C10": {
-          "enroll": 18045,
+          "enroll": 18057,
           "revenue": 68071.09
         }
       }
@@ -10384,18 +10409,18 @@
     ]
   },
   "note": {
-    "asOf": "2026-09-11",
-    "time": "22:45",
+    "asOf": "2026-09-12",
+    "time": "0:49",
     "month": {
-      "date": "2026-09-11",
-      "time": "22:45",
+      "date": "2026-09-12",
+      "time": "0:49",
       "span": "月間",
       "period": "月間",
-      "views": 9772,
-      "comments": 59,
-      "likes": 616,
-      "note": "その役職、誰かの罰ゲームですか。(751ビュー・7コメント・120スキ)／2位「中島さんのせいで、100km歩く羽目にあいました」622／3位 30年後の自分から毎朝エールが届く 505",
-      "src": "note台帳ログ_2026-09-11"
+      "views": 10011,
+      "comments": 60,
+      "likes": 618,
+      "note": "月間1万ビュー初到達。TOP: その役職、誰かの罰ゲームですか。(752ビュー・7コメント・120スキ)／2位「中島さんのせいで、100km歩く羽目にあいました」622／3位 30年後の自分から毎朝エールが届く 505",
+      "src": "note台帳ログ_2026-09-12"
     },
     "all": null,
     "rows": [
@@ -10530,6 +10555,17 @@
         "likes": 616,
         "note": "その役職、誰かの罰ゲームですか。(751ビュー・7コメント・120スキ)／2位「中島さんのせいで、100km歩く羽目にあいました」622／3位 30年後の自分から毎朝エールが届く 505",
         "src": "note台帳ログ_2026-09-11"
+      },
+      {
+        "date": "2026-09-12",
+        "time": "0:49",
+        "span": "月間",
+        "period": "月間",
+        "views": 10011,
+        "comments": 60,
+        "likes": 618,
+        "note": "月間1万ビュー初到達。TOP: その役職、誰かの罰ゲームですか。(752ビュー・7コメント・120スキ)／2位「中島さんのせいで、100km歩く羽目にあいました」622／3位 30年後の自分から毎朝エールが届く 505",
+        "src": "note台帳ログ_2026-09-12"
       }
     ],
     "used": [
@@ -10584,9 +10620,13 @@
       {
         "name": "note台帳ログ_2026-09-11",
         "rows": 1
+      },
+      {
+        "name": "note台帳ログ_2026-09-12",
+        "rows": 1
       }
     ],
-    "fileUrl": "https://docs.google.com/spreadsheets/d/1zOU07mS5e_QRJ1SEZAO9xaTMQJ4enCjUJAWHwFmKSR0/edit?usp=drivesdk",
+    "fileUrl": "https://docs.google.com/spreadsheets/d/1vQsKDCmVoZyOnetz4SmMbgYkMkbLT7wcallu-bvQKBQ/edit?usp=drivesdk",
     "folderUrl": "https://drive.google.com/drive/folders/1vJ7ddquLREjntkRUy235nv5FXaas2IoV"
   },
   "places": {
