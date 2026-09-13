@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T06:24:01+09:00",
+  "generatedAt": "2026-09-13T12:42:59+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -165,6 +165,10 @@
       },
       {
         "name": "Udemy台帳ログ_2026-09-12",
+        "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-09-13",
         "rows": 10
       }
     ],
@@ -1457,82 +1461,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-08-13",
-      "time": "19:40",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 329,
-          "monthEnroll": null,
-          "cumRevenue": 235.23,
-          "rating": 4.63
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 4827,
-          "monthEnroll": null,
-          "cumRevenue": 7862.18,
-          "rating": 4
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2778,
-          "monthEnroll": null,
-          "cumRevenue": 4461.73,
-          "rating": 4.08
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3980,
-          "monthEnroll": null,
-          "cumRevenue": 3839.26,
-          "rating": 4.07
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4513,
-          "monthEnroll": null,
-          "cumRevenue": 7354.36,
-          "rating": 4.16
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7649,
-          "monthEnroll": null,
-          "cumRevenue": 14896.8,
-          "rating": 4.16
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4855,
-          "monthEnroll": null,
-          "cumRevenue": 11282.77,
-          "rating": 4.03
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8106,
-          "monthEnroll": null,
-          "cumRevenue": 26405.16,
-          "rating": 3.85
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 14966,
-          "monthEnroll": null,
-          "cumRevenue": 48683.47,
-          "rating": 4.02
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17819,
-          "monthEnroll": null,
-          "cumRevenue": 67512.44,
-          "rating": 4.19
-        }
-      ]
-    },
     {
       "date": "2026-08-15",
       "time": "8:40",
@@ -3734,6 +3662,82 @@
           "monthEnroll": 98,
           "cumRevenue": 68071.09,
           "rating": 4.13
+        }
+      ]
+    },
+    {
+      "date": "2026-09-13",
+      "time": "10:30",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 496,
+          "monthEnroll": 17,
+          "cumRevenue": 517.95,
+          "rating": null
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5142,
+          "monthEnroll": 122,
+          "cumRevenue": 8261.83,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2861,
+          "monthEnroll": 25,
+          "cumRevenue": 4570.99,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4070,
+          "monthEnroll": 26,
+          "cumRevenue": 3894.13,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4580,
+          "monthEnroll": 23,
+          "cumRevenue": 7429.7,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7799,
+          "monthEnroll": 67,
+          "cumRevenue": 15043.18,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4901,
+          "monthEnroll": 19,
+          "cumRevenue": 11369.39,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8138,
+          "monthEnroll": 9,
+          "cumRevenue": 26495.23,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15352,
+          "monthEnroll": 149,
+          "cumRevenue": 49612.08,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18057,
+          "monthEnroll": 98,
+          "cumRevenue": 68071.09,
+          "rating": null
         }
       ]
     }
@@ -6872,10 +6876,10 @@
       "newEnroll": 642,
       "revenue": 195265.57,
       "officialNew": 555,
-      "officialAsOf": "2026-09-12",
+      "officialAsOf": "2026-09-13",
       "from": "2026-08-31",
-      "to": "2026-09-12",
-      "records": 12,
+      "to": "2026-09-13",
+      "records": 13,
       "byCourse": {
         "C01": {
           "enroll": 496,
