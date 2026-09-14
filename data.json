@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T06:23:58+09:00",
+  "generatedAt": "2026-09-14T12:42:30+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
@@ -169,6 +169,10 @@
       },
       {
         "name": "Udemy台帳ログ_2026-09-13",
+        "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-09-14",
         "rows": 10
       }
     ],
@@ -348,7 +352,14 @@
     22
   ],
   "udemyBaseUrl": "https://docs.google.com/spreadsheets/d/1LnBZZQ2I0HBlGr4hcfffizAJQl-WNybIBOefX9ZZBOw/edit?usp=drivesdk",
-  "qualityDropped": [],
+  "qualityDropped": [
+    {
+      "date": "2026-09-14",
+      "field": "bpHigh",
+      "value": 64,
+      "range": "90〜200"
+    }
+  ],
   "health": [
     {
       "date": "2026-07-10",
@@ -1386,6 +1397,23 @@
       "dining": null,
       "routine": null,
       "note": "Oura睡眠83・コンディション85(王冠・「いつも以上の日」通常範囲54-82を上回る)・アクティビティ76・レジリエンスやや不足。体重83.6(前日-0.4)・BMI27.9・筋肉量55.3適正・基礎代謝1626。前日: 田島ストラボ ピットイン2時間×3本(12名)を完遂、終了後「脳の許容を使い切った」、夜は家族で唐揚げテイクアウト＋バレーボールアジア選手権(日本vsインド)観戦。本日: ScanSnap復旧＋登山計画(11:00)→登山靴(12:30)→TRC壁打ち(14:00)"
+    },
+    {
+      "date": "2026-09-14",
+      "dow": "月",
+      "weight": 83.1,
+      "fat": 30.2,
+      "muscle": 55.1,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": null,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": null
     }
   ],
   "udemyCourses": [
@@ -1461,82 +1489,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-08-15",
-      "time": "8:40",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 352,
-          "monthEnroll": null,
-          "cumRevenue": 235.23,
-          "rating": 4.63
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 4846,
-          "monthEnroll": null,
-          "cumRevenue": 7862.18,
-          "rating": 4
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2780,
-          "monthEnroll": null,
-          "cumRevenue": 4461.73,
-          "rating": 4.08
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3984,
-          "monthEnroll": null,
-          "cumRevenue": 3839.26,
-          "rating": 4.06
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4517,
-          "monthEnroll": null,
-          "cumRevenue": 7354.36,
-          "rating": 4.16
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7659,
-          "monthEnroll": null,
-          "cumRevenue": 14896.8,
-          "rating": 4.16
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4860,
-          "monthEnroll": null,
-          "cumRevenue": 11282.77,
-          "rating": 4.04
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8113,
-          "monthEnroll": null,
-          "cumRevenue": 26405.16,
-          "rating": 3.88
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 14991,
-          "monthEnroll": null,
-          "cumRevenue": 48685.69,
-          "rating": 4.03
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17829,
-          "monthEnroll": null,
-          "cumRevenue": 67512.44,
-          "rating": 4.2
-        }
-      ]
-    },
     {
       "date": "2026-08-16",
       "time": "7:10",
@@ -3736,6 +3688,82 @@
           "id": "C10",
           "cumEnroll": 18057,
           "monthEnroll": 98,
+          "cumRevenue": 68071.09,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "time": "7:30",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 496,
+          "monthEnroll": 17,
+          "cumRevenue": 517.95,
+          "rating": null
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5153,
+          "monthEnroll": 133,
+          "cumRevenue": 8261.83,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2863,
+          "monthEnroll": 27,
+          "cumRevenue": 4570.99,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4074,
+          "monthEnroll": 30,
+          "cumRevenue": 3894.13,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4583,
+          "monthEnroll": 26,
+          "cumRevenue": 7429.7,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7804,
+          "monthEnroll": 72,
+          "cumRevenue": 15043.18,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4905,
+          "monthEnroll": 23,
+          "cumRevenue": 11369.39,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8141,
+          "monthEnroll": 12,
+          "cumRevenue": 26495.23,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15372,
+          "monthEnroll": 169,
+          "cumRevenue": 49615.22,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18070,
+          "monthEnroll": 111,
           "cumRevenue": 68071.09,
           "rating": null
         }
@@ -6872,53 +6900,53 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 71396,
-      "newEnroll": 642,
-      "revenue": 195265.57,
-      "officialNew": 555,
-      "officialAsOf": "2026-09-13",
+      "enroll": 71461,
+      "newEnroll": 707,
+      "revenue": 195268.71,
+      "officialNew": 620,
+      "officialAsOf": "2026-09-14",
       "from": "2026-08-31",
-      "to": "2026-09-13",
-      "records": 13,
+      "to": "2026-09-14",
+      "records": 14,
       "byCourse": {
         "C01": {
           "enroll": 496,
           "revenue": 517.95
         },
         "C02": {
-          "enroll": 5142,
+          "enroll": 5153,
           "revenue": 8261.83
         },
         "C03": {
-          "enroll": 2861,
+          "enroll": 2863,
           "revenue": 4570.99
         },
         "C04": {
-          "enroll": 4070,
+          "enroll": 4074,
           "revenue": 3894.13
         },
         "C05": {
-          "enroll": 4580,
+          "enroll": 4583,
           "revenue": 7429.7
         },
         "C06": {
-          "enroll": 7799,
+          "enroll": 7804,
           "revenue": 15043.18
         },
         "C07": {
-          "enroll": 4901,
+          "enroll": 4905,
           "revenue": 11369.39
         },
         "C08": {
-          "enroll": 8138,
+          "enroll": 8141,
           "revenue": 26495.23
         },
         "C09": {
-          "enroll": 15352,
-          "revenue": 49612.08
+          "enroll": 15372,
+          "revenue": 49615.22
         },
         "C10": {
-          "enroll": 18057,
+          "enroll": 18070,
           "revenue": 68071.09
         }
       }
