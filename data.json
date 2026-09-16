@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-16T06:24:14+09:00",
+  "generatedAt": "2026-09-17T06:24:08+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-09-16",
+    "asOf": "2026-09-17",
     "major": 57,
     "minor": 5,
     "months": 689,
@@ -6955,6 +6955,13 @@
   "warnings": [
     {
       "level": "info",
+      "kind": "stale",
+      "course": null,
+      "date": "2026-09-14",
+      "text": "Udemy台帳が3日更新されていません（最新の記録は 2026-09-14）"
+    },
+    {
+      "level": "info",
       "kind": "enrollDrop",
       "course": "C08",
       "date": "2026-09-09",
@@ -9099,7 +9106,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-09-16",
+    "asOf": "2026-09-17",
     "kinds": [
       "教え",
       "トライ",
@@ -10221,9 +10228,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-09-16",
-    "from": "2026-09-16",
-    "to": "2027-03-16",
+    "asOf": "2026-09-17",
+    "from": "2026-09-17",
+    "to": "2027-03-17",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
