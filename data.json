@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-18T06:23:50+09:00",
+  "generatedAt": "2026-09-19T06:24:19+09:00",
   "version": "1.10.2",
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-09-18",
+    "asOf": "2026-09-19",
     "major": 57,
     "minor": 5,
     "months": 689,
@@ -181,6 +181,10 @@
       },
       {
         "name": "Udemy台帳ログ_2026-09-18",
+        "rows": 10
+      },
+      {
+        "name": "Udemy台帳ログ_2026-09-19",
         "rows": 10
       }
     ],
@@ -1456,6 +1460,23 @@
       "dining": null,
       "routine": null,
       "note": "Oura コンディション70(安静時心拍やや上昇・今日はゆっくり)・睡眠77・アクティビティ90・レジリエンス普通。研修ウィーク明け(9/14アズビルAC・9/15三菱商事・9/16大塚商会・9/17三井化学LDP Day1＋懇親会)。9/17台帳の81.8はホテル夕方測定・朝基準では83.1(9/14)→83.3。本日: 13:00 OCA自主練＋向山さんへ4月イベント見送りを伝える"
+    },
+    {
+      "date": "2026-09-19",
+      "dow": "土",
+      "weight": 83.3,
+      "fat": 30.3,
+      "muscle": 55.2,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 69,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Oura コンディション79(リフレッシュのための休憩・昨夜の睡眠の質に影響あり)・睡眠69・アクティビティ93(御徒町でギア選び)・レジリエンス普通(夜間回復良好・日中回復良好・日中ストレス中)。体重83.3(前日と同値)。9/18: 通院同行→モンベル御徒町で登山靴＋ウィックロン厚手靴下購入→DJIカメラ購入→ゆるりんちょ動画アップ＋レインウェア紹介動画撮影。本日: 午前アズビルOJTコメント製作／明日9/20 GOKIGEN OS v2改革＋家族の食事"
     }
   ],
   "udemyCourses": [
@@ -1531,82 +1552,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-08-18",
-      "time": "6:50",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 374,
-          "monthEnroll": 183,
-          "cumRevenue": 235.23,
-          "rating": 4.64
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 4869,
-          "monthEnroll": 130,
-          "cumRevenue": 7864.4,
-          "rating": 4.01
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2791,
-          "monthEnroll": 52,
-          "cumRevenue": 4461.73,
-          "rating": 4.13
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 3989,
-          "monthEnroll": 34,
-          "cumRevenue": 3839.26,
-          "rating": 4.08
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4523,
-          "monthEnroll": 45,
-          "cumRevenue": 7354.36,
-          "rating": 4.16
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7667,
-          "monthEnroll": 52,
-          "cumRevenue": 14896.8,
-          "rating": 4.18
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4862,
-          "monthEnroll": 22,
-          "cumRevenue": 11282.77,
-          "rating": 4.04
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8116,
-          "monthEnroll": 29,
-          "cumRevenue": 26405.16,
-          "rating": 3.87
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15020,
-          "monthEnroll": 173,
-          "cumRevenue": 48685.69,
-          "rating": 4.03
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17841,
-          "monthEnroll": 122,
-          "cumRevenue": 67512.44,
-          "rating": 4.2
-        }
-      ]
-    },
     {
       "date": "2026-08-19",
       "time": "6:38",
@@ -3806,6 +3751,82 @@
           "id": "C10",
           "cumEnroll": 18111,
           "monthEnroll": 153,
+          "cumRevenue": 68071.09,
+          "rating": null
+        }
+      ]
+    },
+    {
+      "date": "2026-09-19",
+      "time": "5:30",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 508,
+          "monthEnroll": 29,
+          "cumRevenue": 517.95,
+          "rating": null
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5207,
+          "monthEnroll": 187,
+          "cumRevenue": 8261.83,
+          "rating": null
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2882,
+          "monthEnroll": 46,
+          "cumRevenue": 4570.99,
+          "rating": null
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4093,
+          "monthEnroll": 49,
+          "cumRevenue": 3897.24,
+          "rating": null
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4596,
+          "monthEnroll": 39,
+          "cumRevenue": 7429.7,
+          "rating": null
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7828,
+          "monthEnroll": 96,
+          "cumRevenue": 15046.29,
+          "rating": null
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4933,
+          "monthEnroll": 51,
+          "cumRevenue": 11369.39,
+          "rating": null
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8146,
+          "monthEnroll": 18,
+          "cumRevenue": 26495.23,
+          "rating": null
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15457,
+          "monthEnroll": 255,
+          "cumRevenue": 49618.24,
+          "rating": null
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18120,
+          "monthEnroll": 162,
           "cumRevenue": 68071.09,
           "rating": null
         }
@@ -6942,53 +6963,53 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 71695,
-      "newEnroll": 941,
-      "revenue": 195274.93,
-      "officialNew": 857,
-      "officialAsOf": "2026-09-18",
+      "enroll": 71770,
+      "newEnroll": 1016,
+      "revenue": 195277.95,
+      "officialNew": 932,
+      "officialAsOf": "2026-09-19",
       "from": "2026-08-31",
-      "to": "2026-09-18",
-      "records": 16,
+      "to": "2026-09-19",
+      "records": 17,
       "byCourse": {
         "C01": {
-          "enroll": 505,
+          "enroll": 508,
           "revenue": 517.95
         },
         "C02": {
-          "enroll": 5192,
+          "enroll": 5207,
           "revenue": 8261.83
         },
         "C03": {
-          "enroll": 2872,
+          "enroll": 2882,
           "revenue": 4570.99
         },
         "C04": {
-          "enroll": 4089,
+          "enroll": 4093,
           "revenue": 3897.24
         },
         "C05": {
-          "enroll": 4594,
+          "enroll": 4596,
           "revenue": 7429.7
         },
         "C06": {
-          "enroll": 7813,
+          "enroll": 7828,
           "revenue": 15046.29
         },
         "C07": {
-          "enroll": 4929,
+          "enroll": 4933,
           "revenue": 11369.39
         },
         "C08": {
-          "enroll": 8144,
+          "enroll": 8146,
           "revenue": 26495.23
         },
         "C09": {
-          "enroll": 15446,
-          "revenue": 49615.22
+          "enroll": 15457,
+          "revenue": 49618.24
         },
         "C10": {
-          "enroll": 18111,
+          "enroll": 18120,
           "revenue": 68071.09
         }
       }
@@ -9141,7 +9162,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-09-18",
+    "asOf": "2026-09-19",
     "kinds": [
       "教え",
       "トライ",
@@ -10263,9 +10284,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-09-18",
-    "from": "2026-09-18",
-    "to": "2027-03-18",
+    "asOf": "2026-09-19",
+    "from": "2026-09-19",
+    "to": "2027-03-19",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
