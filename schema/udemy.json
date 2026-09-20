@@ -23,14 +23,20 @@
       "required": true,
       "sameAsFileDate": true,
       "col": "記録日",
-      "label": "記録日"
+      "label": "記録日",
+      "colAliases": [
+        "日付"
+      ]
     },
     "time": {
       "type": "string",
       "required": true,
       "pattern": "^\\d{1,2}:\\d{2}$",
       "col": "基準時刻",
-      "label": "基準時刻"
+      "label": "基準時刻",
+      "colAliases": [
+        "時刻"
+      ]
     },
     "src": {
       "type": "string",
@@ -56,21 +62,30 @@
         "C10"
       ],
       "col": "コースID",
-      "label": "コースID"
+      "label": "コースID",
+      "colAliases": [
+        "ID"
+      ]
     },
     "name": {
       "type": "string",
       "required": true,
       "maxLen": 120,
       "col": "コース名",
-      "label": "コース名"
+      "label": "コース名",
+      "colAliases": [
+        "講座名"
+      ]
     },
     "published": {
       "type": "string",
       "nullable": true,
       "pattern": "^\\d{4}-\\d{2}$",
       "col": "公開年月",
-      "label": "公開年月"
+      "label": "公開年月",
+      "colAliases": [
+        "公開月"
+      ]
     },
     "cum_enroll": {
       "type": "int",
@@ -78,7 +93,11 @@
       "min": 0,
       "max": 200000,
       "col": "累計登録",
-      "label": "累計登録"
+      "label": "累計登録",
+      "colAliases": [
+        "累計登録者",
+        "累計受講生"
+      ]
     },
     "month_enroll": {
       "type": "int",
@@ -141,5 +160,6 @@
     "courses は10要素ちょうど。11要素目や「全体」「合計」の行はスキーマ違反として拒否する（月間の二重計上の元）。",
     "コースIDは C01〜C10 だけ。同じIDを2回書くのも拒否。",
     "累計登録・累計収益は「累計」なので前回より減ることは無い。減っていたら数字の取り違えを疑う。"
-  ]
+  ],
+  "sheetTab": "台帳ログ"
 }

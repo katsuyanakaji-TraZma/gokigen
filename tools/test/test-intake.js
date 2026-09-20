@@ -45,6 +45,8 @@ function node(o, forceId) {
   o.id = forceId || nid();
   o.trashed = false;
   o.updated = new Date(2026, 8, 20, 12, 0, Math.min(59, DB.seq));
+  // スプレッドシートは複数シートを持てる（Udemy台帳_base の1枚目はダッシュボード）
+  if (o.mime === SHEET_MIME && !o.tabs) o.tabs = [{ name: "シート1", grid: o.grid || [] }];
   DB.nodes[o.id] = o;
   return o;
 }
@@ -63,7 +65,7 @@ function FileW(n) {
     moveTo: fw => { n.parent = fw.getId(); },
     makeCopy: (name, fw) => FileW(node({
       name: name, mime: n.mime, text: n.text, parent: fw.getId(),
-      grid: n.grid ? JSON.parse(JSON.stringify(n.grid)) : null
+      tabs: n.tabs ? JSON.parse(JSON.stringify(n.tabs)) : null
     })),
     _n: n
   };
@@ -81,8 +83,8 @@ function FolderW(n) {
     _n: n
   };
 }
-function SheetW(n) {
-  const g = n.grid;
+function SheetW(tab) {
+  const g = tab.grid;
   const lastRow = () => { let r = 0; g.forEach((row, i) => { if (row.some(c => c !== "" && c != null)) r = i + 1; }); return r; };
   const lastCol = () => { let c = 0; g.forEach(row => row.forEach((v, j) => { if (v !== "" && v != null) c = Math.max(c, j + 1); })); return c; };
   const ensure = (r, c) => {
@@ -100,6 +102,8 @@ function SheetW(n) {
     return out;
   };
   return {
+    getName: () => tab.name,
+    getLastColumn: lastCol,
     getDataRange: () => ({ getValues: () => read(1, 1, Math.max(lastRow(), 1), Math.max(lastCol(), 1)) }),
     getRange: (r, c, nr, nc) => ({
       setValue: v => { ensure(r, c); g[r - 1][c - 1] = v; },
@@ -117,10 +121,18 @@ const DriveApp = {
   getRootFolder: () => FolderW(DB.nodes.ROOT)
 };
 const SpreadsheetApp = {
-  openById: id => ({ getId: () => id, getSheets: () => [SheetW(DB.nodes[id])] }),
+  openById: id => ({
+    getId: () => id,
+    getSheets: () => DB.nodes[id].tabs.map(SheetW),
+    getSheetByName: nm => {
+      const t = DB.nodes[id].tabs.find(x => x.name === nm);
+      return t ? SheetW(t) : null;
+    }
+  }),
   create: name => {
-    const n = node({ name: name, mime: SHEET_MIME, grid: [], parent: "ROOT" });
-    return { getId: () => n.id, getSheets: () => [SheetW(n)] };
+    const n = node({ name: name, mime: SHEET_MIME, tabs: [{ name: "シート1", grid: [] }], parent: "ROOT" });
+    return { getId: () => n.id, getSheets: () => n.tabs.map(SheetW),
+             getSheetByName: nm => { const t = n.tabs.find(x => x.name === nm); return t ? SheetW(t) : null; } };
   },
   flush: () => {}
 };
@@ -155,10 +167,11 @@ eval(pick(gs, "var LIMITLESS_FOLDER_ID", "// ===== STEP1"));
 eval(pick(gs, "/** ファイルを別フォルダへ移す", "/** 「=」で始まる文字列を"));
 eval(pick(gs, "function safeCell_", "/* GOKIGEN台帳のファイル名"));
 eval(pick(gs, "function normHead_", "// 見出し行を探して"));
+eval(pick(gs, "// 統合したUdemyログに書き出す列", "function consolidateUdemyDuplicates_"));  // UDEMY_MERGE_HEAD
 eval(pick(gs, "// ===== 変換ヘルパー =====", "// ===== GitHub ====="));
 eval(pick(iv, "var V2 = {", "/* ====================================================================="));
 eval(pick(iv, "var V2_NAME_RE", "/* ===== v2 検品 ここまで ===== */"));
-eval(pick(iv, "/** GOKIGEN台帳フォルダ直下のフォルダ", "/* =====================================================================\n   ===== STEP0"));
+eval(pick(iv, "/** GOKIGEN台帳フォルダ直下のフォルダ"));   // STEP0・STEP2 の関数まで全部
 eval(pick(html, "/** 取込の時刻を短く出す", "/* ===== v2 取込バッジ ここまで ===== */"));
 
 /* ==========================================================================
@@ -178,12 +191,26 @@ V2.ledgers.forEach(led => {
 // 既にある台帳（見出しだけ入っている状態から始める）
 const GOKIGEN_HEAD = ["日付","曜日","体重","体脂肪率","筋肉量","内臓脂肪","体年齢",
                       "血圧上","血圧下","ご機嫌度","睡眠","運動","会食","ルーティン","一言"];
-node({ name: "GOKIGEN台帳_base", mime: SHEET_MIME, parent: CONFIG.gokigenFolderId,
-       grid: [GOKIGEN_HEAD.slice(), ["2026-09-13","日",83.4,"","","","","","","7/10",70,"","","",""]] });
-node({ name: "Udemy台帳_base", mime: SHEET_MIME, parent: CONFIG.udemyFolderId,
-       grid: [["記録日","基準時刻","コースID","コース名","公開年月","累計登録","月間登録","累計収益(USD)","評価","施策メモ","出所"]] });
-node({ name: "経済台帳_base", mime: SHEET_MIME, parent: CONFIG.ecoFolderId,
-       grid: [["記録日","口座","区分","評価額","通貨","出所"]] });
+node({ name: "GOKIGEN台帳_base", mime: SHEET_MIME, parent: CONFIG.gokigenFolderId, tabs: [
+  { name: "シート1", grid: [GOKIGEN_HEAD.slice(), ["2026-09-13","日",83.4,"","","","","","","7/10",70,"","","",""]] }] });
+/* Udemy台帳_base は**複数シート**。1枚目はダッシュボードで、台帳の実体は「台帳ログ」。
+   1枚目に書き込むとダッシュボードが壊れる（2026-09-20にSTEP2で実際に踏んだ形をそのまま再現） */
+node({ name: "Udemy台帳_base", mime: SHEET_MIME, parent: CONFIG.udemyFolderId, tabs: [
+  { name: "ダッシュボード", grid: [
+    ["Udemy 講座ポートフォリオ ダッシュボード","","","","","","","","",""],
+    ["講座","累計登録","構成比","直近ペース(人/日)","モメンタム","30日換算 新規","ARPU(USD)","評価","公開後日数","次のアクション"],
+    ["開くリーダー",17791,"25.6%",8.6,"1.37x",259,"$3.77",4.18,"1,773日","安定"]] },
+  { name: "台帳ログ", grid: [
+    ["記録日","基準時刻","コースID","コース名","公開年月","累計登録","月間登録","累計収益(USD)","評価","施策メモ","出所"]] },
+  { name: "コースマスタ", grid: [["コースID","略称","公開日"],["C01","組織適応の教科書","2026/6/1"]] }
+] });
+/* 経済台帳_base の実物の見出し。「記録日」ではなく「日付」、「口座/資産名」ではなく「項目」、
+   「評価額」ではなく「評価額円」、「出所」ではなく「備考」。**「通貨」の列は無い** */
+node({ name: "経済台帳_base", mime: SHEET_MIME, parent: CONFIG.ecoFolderId, tabs: [
+  { name: "シート1", grid: [
+    ["日付","区分","項目","数量・額面","評価額円","評価損益円","損益率","備考"],
+    ["2026-08-16","総括","SBI証券口座 合計","",13104897,2246626,"+20.69%","前日比0円"]] }
+] });
 
 PROPS[V2.slackProp] = "https://hooks.slack.test/gokigen";   // #gokigen-取込 のWebhook（作り物）
 
@@ -191,8 +218,13 @@ const box  = v2Folder_(V2.boxName);
 const done = v2Folder_(V2.doneName);
 const errB = v2Folder_(V2.errName);
 const put  = (name, text, mime) => box.createFile(name, text, mime || "application/json");
-const baseGrid = name => DB.nodes[Object.keys(DB.nodes).find(k => DB.nodes[k].name === name)].grid;
-const rowsOf = name => baseGrid(name).slice(1).filter(r => r.some(c => c !== "" && c != null));
+const baseNode = name => DB.nodes[Object.keys(DB.nodes).find(k => DB.nodes[k].name === name && !DB.nodes[k].folder)];
+const baseGrid = (name, tab) => {
+  const n = baseNode(name);
+  const t = tab ? n.tabs.find(x => x.name === tab) : n.tabs[0];
+  return t.grid;
+};
+const rowsOf = (name, tab) => baseGrid(name, tab).slice(1).filter(r => r.some(c => c !== "" && c != null));
 const lastSlack = () => SLACK[SLACK.length - 1];
 const appState = () => ikState({ meta: { intake: v2IntakeMeta_() } });
 
@@ -271,20 +303,25 @@ r = runIntake_();
 eq(r.ng, 1, "③-1 NGになる");
 has(r.results[0].errors.join(" / "), "courses", "③-2 理由がcoursesの件数だと分かる");
 has(r.results[0].errors.join(" / "), "11件", "③-3 何件だったかが書いてある");
-eq(rowsOf("Udemy台帳_base").length, 0, "③-4 台帳には1行も入らない");
+eq(rowsOf("Udemy台帳_base", "台帳ログ").length, 0, "③-4 台帳には1行も入らない");
 // 10件ちょうどなら通る（門番が厳しすぎて正常も止める、では困る）
 put("intake_udemy_2026-09-16_0631.json",
     JSON.stringify({ date: "2026-09-16", time: "6:30", src: "Udemy画面", courses: udemyCourses(10) }));
 r = runIntake_();
 eq(r.ok, 1, "③-5 10件ちょうどなら通る");
-eq(rowsOf("Udemy台帳_base").length, 10, "③-6 10行が台帳に入る");
-const uHead = baseGrid("Udemy台帳_base")[0];
+eq(rowsOf("Udemy台帳_base", "台帳ログ").length, 10, "③-6 10行が台帳に入る");
+const uHead = baseGrid("Udemy台帳_base", "台帳ログ")[0];
 eq(uHead.length, 11, "③-7 見出しは増えない（「累計収益(USD)」と「累計収益USD」を別の列にしない）");
+eq(baseGrid("Udemy台帳_base", "ダッシュボード").length, 3,
+   "③-8 1枚目のダッシュボードには1行も書き込まない（書いたらグラフが壊れる）");
+eq(baseGrid("Udemy台帳_base", "コースマスタ").length, 2, "③-9 コースマスタにも書き込まない");
+has(r.results[0].wrote.sheet, "台帳ログ", "③-10 書き込み先が「台帳ログ」だと記録に残る");
 
 /* ==========================================================================
    ④ economy「合計」行 → ❌（8/18・8/23の事故：小計行の混入で合計が2倍）
    ========================================================================== */
 console.log("\n【STEP5-④】economy に「合計」の行 → ❌");
+const ecoBefore = rowsOf("経済台帳_base").length;          // 実物と同じく「総括」行が1行ある
 put("intake_economy_2026-09-17_0700.json", JSON.stringify({
   date: "2026-09-17",
   items: [
@@ -296,7 +333,7 @@ r = runIntake_();
 eq(r.ng, 1, "④-1 NGになる");
 has(r.results[0].errors.join(" / "), "合計", "④-2 理由が「合計」の行だと分かる");
 has(r.results[0].errors.join(" / "), "2件目", "④-3 何件目の行かが書いてある");
-eq(rowsOf("経済台帳_base").length, 0, "④-4 台帳には1行も入らない");
+eq(rowsOf("経済台帳_base").length, ecoBefore, "④-4 台帳には1行も入らない（元の行はそのまま）");
 // 区分に「総括」と書いた場合も同じく止まる
 put("intake_economy_2026-09-17_0701.json", JSON.stringify({
   date: "2026-09-17",
@@ -322,8 +359,20 @@ put("intake_economy_2026-09-17_0703.json", JSON.stringify({
 }));
 r = runIntake_();
 eq(r.ok, 1, "④-8 明細だけなら通る");
-eq(rowsOf("経済台帳_base").length, 2, "④-9 2行が台帳に入る");
-eq(baseGrid("経済台帳_base")[0].length, 6, "④-10 「口座」と「口座/資産名」を別の列にしない");
+eq(rowsOf("経済台帳_base").length, ecoBefore + 2, "④-9 2行が台帳に入る");
+/* 実物の見出し（日付／区分／項目／…／備考）にそのまま乗せる。
+   「記録日」「口座/資産名」「出所」という**別の列を作らない**。無い「通貨」だけを右端に足す。 */
+const ecoHead = baseGrid("経済台帳_base")[0];
+ok(ecoHead.indexOf("記録日") < 0 && ecoHead.indexOf("口座/資産名") < 0 && ecoHead.indexOf("出所") < 0,
+   "④-10 実物の見出し（日付・項目・備考）に乗せ、別名の列を二重に作らない", ecoHead.join("/"));
+eq(ecoHead.length, 9, "④-11 元の8列＋足りなかった「通貨」の1列だけ");
+eq(ecoHead[8], "通貨", "④-12 足した列は右端（既存の列はずれない）");
+const ecoRow = rowsOf("経済台帳_base").pop();
+eq(ecoRow[0], "2026-09-17", "④-13 日付が「日付」列に入る");
+eq(ecoRow[2], "野村 預り金", "④-14 口座名が「項目」列に入る");
+eq(ecoRow[4], 1105000, "④-15 金額が「評価額円」列に入る");
+eq(String(ecoRow[7]).replace(/^'/, ""), "野村", "④-16 出所が「備考」列に入る");
+eq(String(ecoRow[8]).replace(/^'/, ""), "JPY", "④-17 通貨が新しい列に入る");
 
 /* ==========================================================================
    ⑤ weight 830 → ❌（レンジ）
@@ -417,6 +466,55 @@ V2.ledgers.forEach(led => {
   ok(new RegExp(s.fileNamePattern).test("intake_" + led + "_2026-09-14_0734.json"),
      "schema/" + led + ".json のファイル名の型が実際の名前に当たる", s.fileNamePattern);
 });
+
+/* ==========================================================================
+   STEP2 移行：日次ログ → 台帳_base
+   （2026-09-20に「Udemy台帳_base に列がありません／経済台帳_base に列がありません」で
+     止まった件の再発防止。原因は見出しが無いことではなく、1枚目がダッシュボードだったこと） =
+   ========================================================================== */
+console.log("\n【STEP2】日次ログ → 台帳_base（列の名前が違っても・シートが複数でも通る）");
+const udemyFolder = FolderW(DB.nodes[CONFIG.udemyFolderId]);
+const ecoFolder   = FolderW(DB.nodes[CONFIG.ecoFolderId]);
+node({ name: "Udemy台帳ログ_2026-09-15", mime: SHEET_MIME, parent: CONFIG.udemyFolderId, tabs: [
+  { name: "シート1", grid: [
+    ["記録日","基準時刻","コースID","コース名","公開年月","累計登録","累計収益(USD)","評価","出所"],
+    ["2026-09-15","6:30","C01","組織適応の教科書","2026-06",300,210.5,4.81,"Udemy画面"],
+    ["2026-09-15","6:30","C02","老害とは呼ばせない","2025-07",4850,7600.0,4.01,"Udemy画面"]] }] });
+node({ name: "経済台帳ログ_2026-09-15", mime: SHEET_MIME, parent: CONFIG.ecoFolderId, tabs: [
+  { name: "シート1", grid: [
+    ["記録日","口座/資産名","区分","評価額","通貨","出所"],
+    ["2026-09-15","SBI 米国株式","米国株式",6300000,"JPY","SBIメイン"]] }] });
+
+const plan = {};
+v2MigratePlan_().forEach(c => { plan[c.label] = c; });
+
+const uLogBefore = rowsOf("Udemy台帳_base", "台帳ログ").length;
+let mg = v2Migrate_(plan.udemy);
+ok(mg.ok, "STEP2-1 udemy が「列がありません」で止まらない", mg.msg);
+eq(rowsOf("Udemy台帳_base", "台帳ログ").length, uLogBefore + 2, "STEP2-2 台帳ログに2行増える");
+eq(baseGrid("Udemy台帳_base", "ダッシュボード").length, 3, "STEP2-3 ダッシュボードは1行も動かない");
+has(mg.msg, "台帳ログ", "STEP2-4 どのシートに入れたかがログに残る");
+
+const ecoBefore2 = rowsOf("経済台帳_base").length;
+mg = v2Migrate_(plan.economy);
+ok(mg.ok, "STEP2-5 economy が「列がありません」で止まらない", mg.msg);
+eq(rowsOf("経済台帳_base").length, ecoBefore2 + 1, "STEP2-6 経済台帳_base に1行増える");
+const mRow = rowsOf("経済台帳_base").pop();
+eq(mRow[0], "2026-09-15", "STEP2-7 「記録日」が実物の「日付」列に入る");
+eq(mRow[2], "SBI 米国株式", "STEP2-8 「口座/資産名」が実物の「項目」列に入る");
+eq(mRow[4], 6300000, "STEP2-9 「評価額」が実物の「評価額円」列に入る");
+eq(mRow[7], "SBIメイン", "STEP2-10 「出所」が実物の「備考」列に入る");
+eq(baseGrid("経済台帳_base")[0][8], "通貨", "STEP2-11 元々無かった「通貨」だけが右端に足される");
+
+// 取り込んだログは削除せず _v1アーカイブ へ
+const arc = v2Folder_(V2.archiveV1Name);
+eq(kids(arc._n.id).filter(n => n.name.indexOf("経済台帳ログ_") === 0).length, 1,
+   "STEP2-12 取り込んだログは削除せず _v1アーカイブ へ移る");
+
+// 何度実行しても二重にならない
+const again = rowsOf("経済台帳_base").length;
+v2Migrate_(plan.economy);
+eq(rowsOf("経済台帳_base").length, again, "STEP2-13 もう一度実行しても行は増えない");
 
 console.log("\n【アプリの配線】");
 has(html, 'id="ikBar"', "家画面の最上段に取込バッジのDOMがある");

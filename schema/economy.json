@@ -21,7 +21,10 @@
       "required": true,
       "sameAsFileDate": true,
       "col": "記録日",
-      "label": "記録日"
+      "label": "記録日",
+      "colAliases": [
+        "日付"
+      ]
     }
   },
   "rowFields": {
@@ -33,9 +36,9 @@
       "col": "口座/資産名",
       "label": "口座/資産名",
       "colAliases": [
+        "項目",
         "口座",
-        "資産名",
-        "項目"
+        "資産名"
       ]
     },
     "cat": {
@@ -52,7 +55,11 @@
       "min": 0,
       "max": 10000000000,
       "col": "評価額",
-      "label": "評価額"
+      "label": "評価額",
+      "colAliases": [
+        "評価額円",
+        "金額"
+      ]
     },
     "currency": {
       "type": "enum",

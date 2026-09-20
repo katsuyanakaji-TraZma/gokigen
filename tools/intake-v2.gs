@@ -421,18 +421,99 @@ function v2HeadOrder_(schema) {
   return out;
 }
 
-/** 台帳_base のシート。無ければ見出しつきで作る */
-function v2BaseSheet_(schema) {
+/** 見出しを探すために、シートの上から10行だけ読む（全部読むと重い） */
+function v2SheetHead_(sh) {
+  var lastRow = sh.getLastRow(), lastCol = sh.getLastColumn();
+  if (!lastRow || !lastCol) return [];
+  return sh.getRange(1, 1, Math.min(10, lastRow), lastCol).getValues();
+}
+
+/**
+ * 台帳ファイルの中から「行が並んでいるシート」を選ぶ。
+ * **1枚目とは限らない**。Udemy台帳_base の1枚目は「ダッシュボード」で、台帳の実体は
+ * 「台帳ログ」シート。1枚目に書き込むとダッシュボードを壊す（既存の readUdemyLedger_ も
+ * getSheetByName('台帳ログ') で開いている。同じ見分け方にそろえる）。
+ *   ① schemaの sheetTab で名前の指定があり、そのシートの見出しが合えば、それを使う
+ *   ② 合わなければ、欲しい列がいちばん多く並んでいるシート
+ *   ③ ただし**キー列（記録日など）が見つからないシートは選ばない**（ダッシュボードを掴まないため）
+ * 返り値 { sheet, name, headRow, headers, idx, width } / 見つからなければ null
+ */
+function v2OpenLedger_(ss, cols, keyCols, aliases, preferName) {
+  var cand = [];
+  ss.getSheets().forEach(function (sh) {
+    var head = v2SheetHead_(sh);
+    if (!head.length) return;
+    var hr = v2HeadRow_(head, cols);
+    if (hr < 0) return;
+    var headers = head[hr].slice();
+    var idx = {}, hit = 0, keyOk = true;
+    cols.forEach(function (c) {
+      var i = v2FindCol_(headers, c, (aliases || {})[c]);
+      idx[c] = i;
+      if (i >= 0) hit++;
+    });
+    (keyCols || []).forEach(function (c) { if (!(idx[c] >= 0)) keyOk = false; });
+    cand.push({ sheet: sh, name: sh.getName(), headRow: hr, headers: headers,
+                idx: idx, width: headers.length, hit: hit, keyOk: keyOk });
+  });
+  var ok = cand.filter(function (c) { return c.keyOk; });
+  if (preferName) {
+    for (var i = 0; i < ok.length; i++) if (ok[i].name === preferName) return ok[i];
+  }
+  ok.sort(function (a, b) { return b.hit - a.hit; });
+  return ok.length ? ok[0] : null;
+}
+
+/** 見つからなかった列を見出しの**右端**に足す（既にある列はずらさない＝既存データは動かない） */
+function v2AddCols_(found, cols) {
+  var added = [];
+  cols.forEach(function (c) {
+    if (found.idx[c] >= 0) return;
+    found.idx[c] = found.width;
+    found.sheet.getRange(found.headRow + 1, found.width + 1).setValue(c);
+    found.headers.push(c);
+    found.width++;
+    added.push(c);
+  });
+  if (added.length) Logger.log('台帳に列を足しました: ' + found.name + ' / ' + added.join('・'));
+  return added;
+}
+
+/** 見出しをそのまま使う台帳を、新しく1枚作ったときの形 */
+function v2FreshFound_(sh, head) {
+  sh.getRange(1, 1, 1, head.length).setValues([head]);
+  var m = {};
+  head.forEach(function (c, i) { m[c] = i; });
+  return { sheet: sh, name: sh.getName(), headRow: 0, headers: head.slice(), idx: m, width: head.length };
+}
+
+/** 台帳_base を開く。無ければ見出しつきで作る */
+function v2OpenBase_(schema) {
   var folder = DriveApp.getFolderById(v2LedgerFolderId_(schema.folder));
+  var need = v2HeadOrder_(schema);
+  var specs = v2ColSpecs_(schema);
+  var aliases = {};
+  need.forEach(function (c) { aliases[c] = (specs[c] || {}).colAliases; });
+  var up = v2UpsertKey_(schema);
+  var keyCols = (up.by === 'append') ? [] : [up.col];
+
   var f = fileInFolder_(folder, schema.sheetName);
-  if (f) return SpreadsheetApp.openById(f.getId()).getSheets()[0];
-  var ss = SpreadsheetApp.create(schema.sheetName);
-  var file = DriveApp.getFileById(ss.getId());
-  moveFile_(file, folder);
-  var sh = ss.getSheets()[0];
-  sh.appendRow(v2HeadOrder_(schema));
+  if (f) {
+    var ss = SpreadsheetApp.openById(f.getId());
+    var found = v2OpenLedger_(ss, need, keyCols, aliases, schema.sheetTab);
+    if (found) { v2AddCols_(found, need); return found; }
+    // 見出しが見つからない。空のシートなら見出しを書く。中身があるなら**触らない**
+    var sh0 = (schema.sheetTab && ss.getSheetByName(schema.sheetTab)) || ss.getSheets()[0];
+    if (sh0.getLastRow() > 0) {
+      throw new Error(schema.sheetName + ' に、この台帳の見出し（' + keyCols.join('・') +
+                      '）が見つかりません。step2_checkLedgers() でシートと見出しを確かめてください');
+    }
+    return v2FreshFound_(sh0, need);
+  }
+  var nss = SpreadsheetApp.create(schema.sheetName);
+  moveFile_(DriveApp.getFileById(nss.getId()), folder);
   Logger.log('台帳を新しく作りました: ' + schema.sheetName);
-  return sh;
+  return v2FreshFound_(nss.getSheets()[0], need);
 }
 
 /** 見出し行を探す（欲しい列名がいちばん多く並んでいる行） */
@@ -488,33 +569,15 @@ function v2SafeCell_(spec, v) {
  */
 function v2AppendToBase_(schema, rows, dateStr) {
   if (!rows || !rows.length) return { sheet: schema.sheetName, added: 0, replaced: 0 };
-  var sh = v2BaseSheet_(schema);
+  var base = v2OpenBase_(schema);
+  var sh = base.sheet, idx = base.idx, width = base.width, headRow = base.headRow;
   var specs = v2ColSpecs_(schema);
-  var need = v2HeadOrder_(schema);
-  var values = sh.getDataRange().getValues();
-  var headRow = v2HeadRow_(values, need);
-  if (headRow < 0) {                                   // 空っぽのシート
-    sh.getRange(1, 1, 1, need.length).setValues([need]);
-    values = sh.getDataRange().getValues();
-    headRow = 0;
-  }
-  var headers = values[headRow].slice();
-  var width = headers.length;
-  var idx = {};
-  need.forEach(function (c) {
-    var i = v2FindCol_(headers, c, (specs[c] || {}).colAliases);
-    if (i >= 0) { idx[c] = i; return; }
-    idx[c] = width;                                     // 台帳にまだ無い列は、見出しの右端に足す
-    sh.getRange(headRow + 1, width + 1).setValue(c);
-    headers.push(c);
-    width++;
-    Logger.log('台帳に列を足しました: ' + schema.sheetName + ' / ' + c);
-  });
 
   // 同じ日付（id）の古い行を消す＝同日2回投入なら新しい方が正本
   var up = v2UpsertKey_(schema), replaced = 0;
-  if (up.by !== 'append' && idx[up.col] != null) {
+  if (up.by !== 'append' && idx[up.col] >= 0) {
     var col = idx[up.col];
+    var values = sh.getDataRange().getValues();
     var keys = null;
     if (up.by === 'key') {
       keys = {};
@@ -541,7 +604,7 @@ function v2AppendToBase_(schema, rows, dateStr) {
   });
   sh.getRange(sh.getLastRow() + 1, 1, out.length, width).setValues(out);
   SpreadsheetApp.flush();
-  return { sheet: schema.sheetName, added: out.length, replaced: replaced };
+  return { sheet: schema.sheetName + '［' + base.name + '］', added: out.length, replaced: replaced };
 }
 
 /** Slack #gokigen-取込 へ。webhookが未登録でも**止めない**（通知が出ないことは記録に残す） */
@@ -766,30 +829,32 @@ function v2Sig_(row, idx, keyCols) {
 function v2Migrate_(cfg) {
   var folder = DriveApp.getFolderById(cfg.folderId);
   var baseFile = fileInFolder_(folder, cfg.baseName);
-  var sh;
+  var found;
   if (baseFile) {
-    sh = SpreadsheetApp.openById(baseFile.getId()).getSheets()[0];
+    var ss = SpreadsheetApp.openById(baseFile.getId());
+    /* **1枚目とは限らない**。Udemy台帳_base の1枚目はダッシュボードで、
+       台帳の実体は「台帳ログ」シート。中身を見てシートを選ぶ。 */
+    found = v2OpenLedger_(ss, cfg.head, cfg.key, cfg.alias || {}, cfg.sheetTab);
+    if (!found) {
+      var sh0 = (cfg.sheetTab && ss.getSheetByName(cfg.sheetTab)) || ss.getSheets()[0];
+      if (sh0.getLastRow() > 0) {
+        return { label: cfg.label, ok: false,
+                 msg: cfg.baseName + ': キーの列（' + cfg.key.join('・') + '）が見つかりません。' +
+                      'step2_checkLedgers() でシートと見出しを確かめてください（中身は触っていません）' };
+      }
+      found = v2FreshFound_(sh0, cfg.head);
+    }
   } else {
-    var ss = SpreadsheetApp.create(cfg.baseName);
-    moveFile_(DriveApp.getFileById(ss.getId()), folder);
-    sh = ss.getSheets()[0];
-    sh.getRange(1, 1, 1, cfg.head.length).setValues([cfg.head]);
+    var nss = SpreadsheetApp.create(cfg.baseName);
+    moveFile_(DriveApp.getFileById(nss.getId()), folder);
     Logger.log('台帳を新しく作りました: ' + cfg.baseName);
+    found = v2FreshFound_(nss.getSheets()[0], cfg.head);
   }
+  /* 台帳に無い列（経済台帳の「通貨」など）は見出しの右端に足す。
+     **ここで諦めない**——列が1つ無いだけで移行を止めると、数字が入らないまま黙って止まる。 */
+  var addedCols = v2AddCols_(found, cfg.head);
+  var sh = found.sheet, headers = found.headers, idxBase = found.idx, headRow = found.headRow;
   var values = sh.getDataRange().getValues();
-  var headRow = v2HeadRow_(values, cfg.head);
-  if (headRow < 0) {
-    sh.getRange(1, 1, 1, cfg.head.length).setValues([cfg.head]);
-    values = sh.getDataRange().getValues();
-    headRow = 0;
-  }
-  var headers = values[headRow];
-  var idxBase = {};
-  cfg.head.forEach(function (c) { idxBase[c] = v2FindCol_(headers, c, (cfg.alias || {})[c]); });
-  var missing = cfg.head.filter(function (c) { return idxBase[c] < 0; });
-  if (missing.length) {
-    return { label: cfg.label, ok: false, msg: cfg.baseName + ' に列がありません: ' + missing.join('・') };
-  }
 
   var have = {}, before = 0;
   for (var r = headRow + 1; r < values.length; r++) {
@@ -820,7 +885,7 @@ function v2Migrate_(cfg) {
     cfg.head.forEach(function (c) { idxSrc[c] = v2FindCol_(vals[hr], c, (cfg.alias || {})[c]); });
     for (var r = hr + 1; r < vals.length; r++) {
       var line = [];
-      for (var i = 0; i < headers.length; i++) line.push('');
+      for (var i = 0; i < found.width; i++) line.push('');
       cfg.head.forEach(function (c) {
         if (idxSrc[c] < 0 || idxBase[c] < 0) return;
         line[idxBase[c]] = vals[r][idxSrc[c]];
@@ -836,7 +901,7 @@ function v2Migrate_(cfg) {
 
   var out = order.map(function (s) { return add[s]; });
   if (out.length) {
-    sh.getRange(sh.getLastRow() + 1, 1, out.length, headers.length).setValues(out);
+    sh.getRange(sh.getLastRow() + 1, 1, out.length, found.width).setValues(out);
     SpreadsheetApp.flush();
   }
   // 取り込み終わったログは削除せず「_v1アーカイブ」へ
@@ -845,11 +910,45 @@ function v2Migrate_(cfg) {
     var arc = v2Folder_(V2.archiveV1Name);
     logs.forEach(function (f) { try { moveFile_(f, arc); archived++; } catch (e) { Logger.log('移動できません: ' + f.getName()); } });
   }
-  var msg = cfg.label + ': ログ' + readFiles + '本 → ' + cfg.baseName +
+  var msg = cfg.label + ': ログ' + readFiles + '本 → ' + cfg.baseName + '［' + found.name + '］' +
             ' に' + out.length + '行追加（元からあった' + before + '行はそのまま／重複' + skipped + '行は見送り）' +
+            (addedCols.length ? '／足した列: ' + addedCols.join('・') : '') +
             '／_v1アーカイブへ' + archived + '本';
   Logger.log(msg);
   return { label: cfg.label, ok: true, added: out.length, archived: archived, msg: msg };
+}
+
+/**
+ * 日次ログ → 台帳_base の対応表。
+ * tools/test/test-intake.js がこの**本物の設定**をそのまま使って移行を検証する
+ * （テスト用に書き写すと、直したつもりが片方だけになる）。
+ */
+function v2MigratePlan_() {
+  return [
+    { label: 'udemy', folderId: CONFIG.udemyFolderId, baseName: CONFIG.udemyBaseName,
+      sheetTab: '台帳ログ',                       // 1枚目はダッシュボード。実体はこのシート
+      logRe: /^Udemy台帳ログ_\d{4}-\d{2}-\d{2}/,
+      head: UDEMY_MERGE_HEAD, key: ['記録日', 'コースID'],
+      alias: { '記録日': ['日付'], '基準時刻': ['時刻'], 'コースID': ['ID'], 'コース名': ['講座名'],
+               '公開年月': ['公開月'], '累計登録': ['累計登録者', '累計受講生'],
+               '累計収益USD': ['累計収益', '収益'], '施策メモ': ['施策', 'メモ'] } },
+    { label: 'note', folderId: CONFIG.gokigenFolderId, baseName: 'note台帳_base',
+      logRe: new RegExp('^' + CONFIG.noteDeltaPrefix + '\\d{4}-\\d{2}-\\d{2}'),
+      head: ['記録日', '集計時刻', '期間種別', '期間', '全体ビュー', 'コメント', 'スキ', '備考'],
+      key: ['記録日', '期間種別'], alias: { '全体ビュー': ['ビュー'] } },
+    { label: 'economy', folderId: CONFIG.ecoFolderId, baseName: CONFIG.ecoBaseName,
+      logRe: /^経済台帳ログ_\d{4}-\d{2}-\d{2}/,
+      head: ['記録日', '口座/資産名', '区分', '評価額', '通貨', '出所'],
+      key: ['記録日', '口座/資産名', '区分'],
+      /* 実物の見出しは「日付／区分／項目／数量・額面／評価額円／評価損益円／損益率／備考」。
+         「通貨」の列は元々無いので、右端に足される（既存の行は空欄のまま＝円建て）。 */
+      alias: { '記録日': ['日付'], '口座/資産名': ['項目', '口座', '資産名'],
+               '評価額': ['評価額円', '金額'], '出所': ['備考'] } },
+    { label: 'limitless', folderId: CONFIG.limitlessFolderId, baseName: CONFIG.limitlessBaseName,
+      logRe: /^リミットレス台帳ログ_\d{4}-\d{2}-\d{2}/,
+      head: ['日付', '種別', '内容', '関連', '出所'], key: ['日付', '内容'],
+      alias: { '日付': ['記録日'], '種別': ['分類'] } }
+  ];
 }
 
 /** STEP2 本体。何度実行しても壊れない（足りないぶんだけ足す） */
@@ -862,30 +961,49 @@ function step2_migrateV1ToBase() {
   } catch (e) { out.push('gokigen: 失敗 ' + e); }
 
   // ② そのほかの台帳（列の名前で突き合わせる）
-  [
-    { label: 'udemy', folderId: CONFIG.udemyFolderId, baseName: CONFIG.udemyBaseName,
-      logRe: /^Udemy台帳ログ_\d{4}-\d{2}-\d{2}/,
-      head: UDEMY_MERGE_HEAD, key: ['記録日', 'コースID'],
-      alias: { '累計収益USD': ['累計収益', '収益'], '施策メモ': ['施策', 'メモ'] } },
-    { label: 'note', folderId: CONFIG.gokigenFolderId, baseName: 'note台帳_base',
-      logRe: new RegExp('^' + CONFIG.noteDeltaPrefix + '\\d{4}-\\d{2}-\\d{2}'),
-      head: ['記録日', '集計時刻', '期間種別', '期間', '全体ビュー', 'コメント', 'スキ', '備考'],
-      key: ['記録日', '期間種別'], alias: { '全体ビュー': ['ビュー'] } },
-    { label: 'economy', folderId: CONFIG.ecoFolderId, baseName: CONFIG.ecoBaseName,
-      logRe: /^経済台帳ログ_\d{4}-\d{2}-\d{2}/,
-      head: ['記録日', '口座/資産名', '区分', '評価額', '通貨', '出所'],
-      key: ['記録日', '口座/資産名', '区分'],
-      alias: { '口座/資産名': ['口座', '資産名', '項目'], '評価額': ['金額'], '出所': ['備考'] } },
-    { label: 'limitless', folderId: CONFIG.limitlessFolderId, baseName: CONFIG.limitlessBaseName,
-      logRe: /^リミットレス台帳ログ_\d{4}-\d{2}-\d{2}/,
-      head: ['日付', '種別', '内容', '関連', '出所'], key: ['日付', '内容'],
-      alias: { '日付': ['記録日'], '種別': ['分類'] } }
-  ].forEach(function (cfg) {
+  v2MigratePlan_().forEach(function (cfg) {
     try { out.push(v2Migrate_(cfg).msg); }
     catch (e) { out.push(cfg.label + ': 失敗 ' + e); }
   });
 
   var msg = 'STEP2 移行\n' + out.join('\n');
+  Logger.log(msg);
+  return msg;
+}
+
+/**
+ * 台帳のシートと見出しを一覧する（読むだけ・何も書き換えない）。
+ * 「列がありません」と言われたとき、実際に何という見出しが並んでいるのかを見るための関数。
+ */
+function step2_checkLedgers() {
+  var targets = [
+    { n: CONFIG.gokigenBaseName,   f: CONFIG.gokigenFolderId },
+    { n: CONFIG.udemyBaseName,     f: CONFIG.udemyFolderId },
+    { n: 'note台帳_base',           f: CONFIG.gokigenFolderId },
+    { n: CONFIG.ecoBaseName,       f: CONFIG.ecoFolderId },
+    { n: CONFIG.limitlessBaseName, f: CONFIG.limitlessFolderId },
+    { n: CONFIG.placesFileName,    f: CONFIG.gokigenFolderId },
+    { n: CONFIG.mtnFileName,       f: CONFIG.gokigenFolderId }
+  ];
+  var out = [];
+  targets.forEach(function (t) {
+    var file = null;
+    try { file = fileInFolder_(DriveApp.getFolderById(t.f), t.n); } catch (e) {}
+    if (!file) { out.push('― ' + t.n + '：まだありません'); return; }
+    out.push('■ ' + t.n);
+    try {
+      SpreadsheetApp.openById(file.getId()).getSheets().forEach(function (sh) {
+        var head = v2SheetHead_(sh);
+        var line = '(空)';
+        if (head.length) {
+          line = head[0].map(function (x) { return String(x == null ? '' : x).trim(); })
+                        .filter(String).slice(0, 12).join(' ｜ ');
+        }
+        out.push('　［' + sh.getName() + '］' + sh.getLastRow() + '行　' + line);
+      });
+    } catch (e) { out.push('　読めません: ' + e); }
+  });
+  var msg = '台帳のシートと見出し（1行目）\n' + out.join('\n');
   Logger.log(msg);
   return msg;
 }
