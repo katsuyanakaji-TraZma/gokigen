@@ -1,0 +1,182 @@
+{
+  "ledger": "gokigen",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-20",
+  "title": "GOKIGEN台帳（毎日の体組成・睡眠・ご機嫌度）",
+  "howToUse": "点呼のスクショから、この形のJSONを1日1本つくって 📥_取込箱 に置く。書いたら必ず読み返して mimeType・必須キー・数値レンジの3点を確かめる。",
+  "fileNamePattern": "^intake_gokigen_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
+  "mimeType": "application/json",
+  "sheetName": "GOKIGEN台帳_base",
+  "folder": "gokigen",
+  "shape": "single",
+  "dateKey": "date",
+  "fields": {
+    "date": {
+      "type": "date",
+      "required": true,
+      "sameAsFileDate": true,
+      "col": "日付",
+      "label": "日付"
+    },
+    "weekday": {
+      "type": "string",
+      "nullable": true,
+      "enum": [
+        "日",
+        "月",
+        "火",
+        "水",
+        "木",
+        "金",
+        "土"
+      ],
+      "col": "曜日",
+      "label": "曜日"
+    },
+    "weight_kg": {
+      "type": "number",
+      "nullable": true,
+      "min": 60,
+      "max": 100,
+      "col": "体重",
+      "label": "体重(kg)"
+    },
+    "fat_pct": {
+      "type": "number",
+      "nullable": true,
+      "min": 15,
+      "max": 45,
+      "col": "体脂肪率",
+      "label": "体脂肪率(%)"
+    },
+    "muscle_kg": {
+      "type": "number",
+      "nullable": true,
+      "min": 30,
+      "max": 80,
+      "col": "筋肉量",
+      "label": "筋肉量(kg)"
+    },
+    "visceral_lv": {
+      "type": "number",
+      "nullable": true,
+      "min": 1,
+      "max": 30,
+      "col": "内臓脂肪",
+      "label": "内臓脂肪レベル"
+    },
+    "body_age": {
+      "type": "number",
+      "nullable": true,
+      "min": 50,
+      "max": 70,
+      "col": "体年齢",
+      "label": "体年齢(歳)"
+    },
+    "bp_high": {
+      "type": "number",
+      "nullable": true,
+      "min": 90,
+      "max": 200,
+      "col": "血圧上",
+      "label": "血圧 上"
+    },
+    "bp_low": {
+      "type": "number",
+      "nullable": true,
+      "min": 50,
+      "max": 130,
+      "col": "血圧下",
+      "label": "血圧 下"
+    },
+    "mood_10": {
+      "type": "number",
+      "nullable": true,
+      "min": 1,
+      "max": 10,
+      "col": "ご機嫌度",
+      "colFormat": "mood10",
+      "label": "ご機嫌度(満点10点)"
+    },
+    "sleep_score": {
+      "type": "number",
+      "nullable": true,
+      "min": 0,
+      "max": 100,
+      "col": "睡眠",
+      "label": "睡眠スコア",
+      "colAliases": [
+        "睡眠スコア"
+      ]
+    },
+    "readiness": {
+      "type": "number",
+      "nullable": true,
+      "min": 0,
+      "max": 100,
+      "col": "Readiness",
+      "label": "Readiness"
+    },
+    "activity": {
+      "type": "number",
+      "nullable": true,
+      "min": 0,
+      "max": 100,
+      "col": "活動量",
+      "label": "活動量"
+    },
+    "exercise": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 200,
+      "col": "運動",
+      "label": "運動"
+    },
+    "dining": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 200,
+      "col": "会食",
+      "label": "会食"
+    },
+    "routine_pct": {
+      "type": "number",
+      "nullable": true,
+      "min": 0,
+      "max": 100,
+      "col": "ルーティン",
+      "label": "ルーティン(%)"
+    },
+    "note": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 500,
+      "col": "一言",
+      "label": "一言"
+    }
+  },
+  "example": {
+    "date": "2026-09-14",
+    "weekday": "月",
+    "weight_kg": 83.1,
+    "fat_pct": 30.2,
+    "muscle_kg": 55.1,
+    "visceral_lv": 10,
+    "body_age": 61,
+    "bp_high": null,
+    "bp_low": null,
+    "mood_10": null,
+    "sleep_score": 64,
+    "readiness": 78,
+    "activity": 80,
+    "exercise": "",
+    "dining": "",
+    "routine_pct": null,
+    "note": "9/12 15kmウォーキング。9/13欠測"
+  },
+  "notes": [
+    "ご機嫌度は満点10点にそろえる。5段階で記録した日は2倍にしてから書く。",
+    "date はファイル名の日付と必ず一致させる（ズレていたら門番が弾く）。",
+    "数字が無い項目は 0 ではなく null を書く。0を書くと「0だった」という記録になる。"
+  ]
+}

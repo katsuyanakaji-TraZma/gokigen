@@ -175,6 +175,14 @@ function run_(force) {
   var startedAt = new Date();
   var last = props.getProperty(PROP_LAST_RUN);
 
+  /* v2：いちばん最初に「📥_取込箱」を処理する。ここは**スキップのガードより前**に置く。
+     「ファイルは置いたのに数字が動かない」を構造的に不可能にするため、取込は毎回必ず走り、
+     結果は毎回Slack #gokigen-取込 に出る（沈黙禁止）。取込で何か動いたら作り直しも必ずやる。 */
+  var intake = null;
+  try { intake = runIntake_(); }
+  catch (e) { Logger.log('⚠️ 取込で例外（data.json作りは続けます）: ' + e); }
+  if (intake && (intake.ok || intake.ng)) force = true;
+
   // ムダ打ち防止：前回実行以降に台帳フォルダへ新規/更新が無ければ、生成もデプロイもしない
   if (!force && last) {
     var changed = changedFilesSince_(new Date(last));
@@ -863,11 +871,18 @@ function buildData_(previous) {
   catch (e) { Logger.log('⚠️ knowledgeを作れませんでした（前回の内容を維持します）: ' + e);
               knowledge = (previous && previous.knowledge) || null; }
 
+  /* v2：取込の結果（アプリ家画面の最上段バッジ）。作れなくても data.json は壊さない。 */
+  var intakeMeta = null;
+  try { intakeMeta = v2IntakeMeta_(); }
+  catch (e) { Logger.log('⚠️ meta.intake を作れませんでした（前回の内容を維持します）: ' + e);
+              intakeMeta = (previous && previous.meta && previous.meta.intake) || null; }
+
   Logger.log('⏱ データ作成の合計: ' + ((new Date().getTime() - tAll) / 1000).toFixed(1) + '秒');
 
   return {
     generatedAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX"),
-    version: '1.10.2',
+    version: '2.0',
+    meta: { intake: intakeMeta },
     selfVersion: selfVersion_(asOf),
     /* 月次総括の器。中身は本人が月に一度ふり返って足していく想定で、
        いまは空のまま置いておく（アプリは0件でも壊れない）。 */
@@ -2459,7 +2474,9 @@ var NOTE_KEEP = 30;                     // data.jsonに残す行数（肥大化�
 
 function readNote_() {
   var folder = DriveApp.getFolderById(CONFIG.gokigenFolderId);
-  var re = new RegExp('^' + CONFIG.noteDeltaPrefix + '\\d{4}-\\d{2}-\\d{2}');
+  /* v2：日次ログに加えて「note台帳_base」も読む。更新の新しい方が後に読まれて勝つので、
+     v2で追記されるbaseが自然に正本になる（旧ログはSTEP2で _v1アーカイブ へ移る）。 */
+  var re = new RegExp('^(' + CONFIG.noteDeltaPrefix + '\\d{4}-\\d{2}-\\d{2}|note台帳_base)');
   var srcs = [];
   var it = folder.getFiles();                                  // 直下のみ（圧縮済みフォルダは見ない）
   while (it.hasNext()) {

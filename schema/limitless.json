@@ -1,0 +1,83 @@
+{
+  "ledger": "limitless",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-20",
+  "title": "リミットレス台帳（知識・精神の6分類）",
+  "howToUse": "リミットレスの書き起こしから、教え／トライ／初めて／学び／人／もがき に当たる出来事を1件1行で書く。",
+  "fileNamePattern": "^intake_limitless_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
+  "mimeType": "application/json",
+  "sheetName": "リミットレス台帳_base_v2",
+  "folder": "limitless",
+  "shape": "rows",
+  "rowsKey": "rows",
+  "rowCount": {
+    "min": 1,
+    "max": 50
+  },
+  "dateKey": "date",
+  "fields": {
+    "date": {
+      "type": "date",
+      "required": true,
+      "sameAsFileDate": true,
+      "col": "日付",
+      "label": "日付"
+    }
+  },
+  "rowFields": {
+    "kind": {
+      "type": "string",
+      "required": true,
+      "maxLen": 40,
+      "containsOneOf": [
+        "教え",
+        "トライ",
+        "初めて",
+        "学び",
+        "人",
+        "もがき"
+      ],
+      "col": "種別",
+      "label": "種別"
+    },
+    "text": {
+      "type": "string",
+      "required": true,
+      "maxLen": 500,
+      "col": "内容",
+      "label": "内容"
+    },
+    "who": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 80,
+      "col": "関連",
+      "label": "関連(教えは誰に)",
+      "colAliases": [
+        "関連"
+      ]
+    },
+    "src": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 80,
+      "col": "出所",
+      "label": "出所"
+    }
+  },
+  "example": {
+    "date": "2026-09-14",
+    "rows": [
+      {
+        "kind": "🔥トライ,🌱初めて",
+        "text": "初めて動画のテロップを自分で焼き込んだ",
+        "who": "",
+        "src": "リミットレス"
+      }
+    ]
+  },
+  "notes": [
+    "種別は1セルに2つ入れてよい（「🔥トライ,🌱初めて」）。絵文字は自由、言葉が入っていればよい。",
+    "まだ決めかねているものは「🌱初めて?」のように「?」を付ける。集計からは外れ、行は残る。"
+  ]
+}

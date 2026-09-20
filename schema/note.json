@@ -1,0 +1,114 @@
+{
+  "ledger": "note",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-20",
+  "title": "note台帳（月間・全期間のビュー／コメント／スキ）",
+  "howToUse": "noteのダッシュボードのスクショから、同じ記録日で「月間」「全期間」の2行を書く。",
+  "fileNamePattern": "^intake_note_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
+  "mimeType": "application/json",
+  "sheetName": "note台帳_base",
+  "folder": "gokigen",
+  "shape": "rows",
+  "rowsKey": "rows",
+  "rowCount": {
+    "min": 1,
+    "max": 4
+  },
+  "rowKey": "span",
+  "uniqueRowKey": true,
+  "dateKey": "date",
+  "fields": {
+    "date": {
+      "type": "date",
+      "required": true,
+      "sameAsFileDate": true,
+      "col": "記録日",
+      "label": "記録日"
+    },
+    "time": {
+      "type": "string",
+      "required": true,
+      "pattern": "^\\d{1,2}:\\d{2}$",
+      "col": "集計時刻",
+      "label": "集計時刻"
+    }
+  },
+  "rowFields": {
+    "span": {
+      "type": "enum",
+      "required": true,
+      "enum": [
+        "月間",
+        "全期間"
+      ],
+      "col": "期間種別",
+      "label": "期間種別"
+    },
+    "period": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 40,
+      "col": "期間",
+      "label": "期間"
+    },
+    "views": {
+      "type": "int",
+      "required": true,
+      "min": 0,
+      "max": 10000000,
+      "col": "全体ビュー",
+      "label": "全体ビュー",
+      "colAliases": [
+        "ビュー"
+      ]
+    },
+    "comments": {
+      "type": "int",
+      "nullable": true,
+      "min": 0,
+      "max": 100000,
+      "col": "コメント",
+      "label": "コメント"
+    },
+    "likes": {
+      "type": "int",
+      "nullable": true,
+      "min": 0,
+      "max": 1000000,
+      "col": "スキ",
+      "label": "スキ"
+    },
+    "memo": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 200,
+      "col": "備考",
+      "label": "備考"
+    }
+  },
+  "example": {
+    "date": "2026-09-14",
+    "time": "7:00",
+    "rows": [
+      {
+        "span": "月間",
+        "period": "2026-09",
+        "views": 1234,
+        "comments": 3,
+        "likes": 45,
+        "memo": ""
+      },
+      {
+        "span": "全期間",
+        "period": "全期間",
+        "views": 98765,
+        "comments": 120,
+        "likes": 2300,
+        "memo": ""
+      }
+    ]
+  },
+  "notes": [
+    "同じ期間種別を2行書かない（月間が2行あると、どちらが正か決められない）。"
+  ]
+}

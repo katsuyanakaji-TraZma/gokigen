@@ -17,6 +17,16 @@
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html{background:var(--bg)}
   body{font-family:"Hiragino Sans","Yu Gothic Medium",sans-serif;background:var(--bg);color:var(--text);padding-bottom:84px}
+  /* v2 取込バッジ（家画面の最上段）。data.json の meta.intake を読むだけ */
+  .ikbar{display:flex;align-items:center;gap:8px;margin:-8px -14px 8px;padding:9px 14px;
+         background:#eef3ff;border-bottom:1px solid #d9e2fb;font-size:12px;color:#3b4a6b;cursor:pointer}
+  .ikbar.warn{background:#ffecec;border-bottom-color:#ffc9c9;color:#b02a2a;font-weight:700}
+  .ikp{font-size:13px;flex:0 0 auto}
+  .ikt{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ikc{flex:0 0 auto;opacity:.45;font-size:10px}
+  .ikd{margin:-8px -14px 8px;padding:9px 14px;background:#fff;border-bottom:1px solid #e6ebf5;
+       font-size:11.5px;color:var(--muted);line-height:1.75;word-break:break-all}
+  .ikd a{color:#4a7eff;text-decoration:none}
   .banner{background:linear-gradient(135deg,#4a7eff,#9b59ff 50%,#ff4d8d);padding:18px 16px 26px;position:relative;overflow:hidden}
   .banner::after{content:'';position:absolute;bottom:-20px;left:0;right:0;height:40px;background:var(--bg);border-radius:50% 50% 0 0/20px 20px 0 0}
   .b-date{font-size:12px;color:rgba(255,255,255,.75);letter-spacing:.1em}
@@ -382,6 +392,13 @@
 
 <!-- HOUSE -->
 <div class="page on" id="pg-home">
+  <!-- v2 取込バッジ。⚠️が出ていたら、まだ台帳に入っていない記録がある -->
+  <div class="ikbar" id="ikBar" style="display:none" onclick="ikToggle()">
+    <span class="ikp" id="ikPill">✅</span>
+    <span class="ikt" id="ikText"></span>
+    <span class="ikc" id="ikChev">▾</span>
+  </div>
+  <div class="ikd" id="ikDetail" style="display:none"></div>
   <div class="banner" style="margin:-8px -14px 0">
     <div class="b-date" id="dateStr"></div>
     <div class="b-ver" id="selfVer">—</div>
@@ -918,6 +935,7 @@ async function init(){
 }
 
 function renderAll(){
+  renderIntake();               // v2：取込の成否をいちばん上に（沈黙させない）
   renderHouse(); renderInsight(); renderHealth(); renderWork();
   renderEco(); renderKnow(); renderSpirit(); renderPriv(); renderSettings();
   renderCockpit();
@@ -2811,6 +2829,76 @@ function renderEcoTrend(){
       scales:{x:{ticks:{color:'#9aa0b8',font:{size:9},maxRotation:0,autoSkip:true,maxTicksLimit:6},grid:{display:false}},
               y:{ticks:{color:'#9aa0b8',font:{size:10},
                    callback:v=>(v/10000).toLocaleString('ja-JP')+'万'},grid:{color:'#e2e8f8'}}}}});
+}
+
+/* ===== v2 取込バッジ（meta.intake）ここから =====
+   ここから下の「ここまで」までは DOM に触らない（tools/test/test-intake.js が切り出して検証する）。
+   アプリは**数えない・判定しない**。GASが書いた meta.intake を、言葉にして出すだけ。 */
+
+/** 取込の時刻を短く出す。2026-09-14 12:05 → 月と日と時刻だけ（日付の区切りなので分数ではない） */
+function ikMd(s){
+  if(!s) return '';
+  const m=String(s).match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}:\d{2})/);
+  if(!m) return String(s);
+  return (+m[2])+'/'+(+m[3])+' '+m[4];
+}
+/** 取込ファイルの名前から台帳名だけを取り出す（intake_udemy_…_.json なら udemy） */
+function ikLedger(name){
+  const m=/^intake_([a-z]+)_/.exec(String(name||''));
+  return m? m[1] : String(name||'');
+}
+/**
+ * 家画面の最上段に何を出すか。
+ *   warn … NGがあった／取込箱にファイルが残っている（＝まだ台帳に入っていない）
+ *   ok   … 最後の取込が全部通っていて、取込箱も空
+ *   info … まだ一度も取り込んでいない（v1のdata.jsonなら show:false で出さない）
+ */
+function ikState(data){
+  const m = data && data.meta && data.meta.intake;
+  if(!m) return { show:false };
+  const ng = (m.ng||[]).slice();
+  (m.pending||[]).forEach(p=>{ const l=ikLedger(p.name); if(ng.indexOf(l)<0) ng.push(l); });
+  const ok = (m.ok||[]).filter(x=>ng.indexOf(x)<0);
+  const when = ikMd(m.at);
+  const detail=[];
+  (m.errors||[]).forEach(e=>detail.push('❌ '+(e.ledger||ikLedger(e.file))+'：'+(e.why||'理由不明')));
+  (m.pending||[]).forEach(p=>detail.push('📥 取込箱に残っています：'+p.name+(p.at? '（'+p.at+'）':'')));
+  if(m.slack==='未設定') detail.push('ℹ️ Slack通知が未設定です（スクリプト プロパティ SLACK_WEBHOOK_URL）');
+  if(!ng.length && !detail.length) detail.push('取込箱は空。異常はありません。');
+  if(!m.at && !ng.length){
+    return { show:true, level:'info', pill:'ℹ️', text:'取込の記録はまだありません',
+             sub:'', detail:detail, boxUrl:m.boxUrl||'' };
+  }
+  return {
+    show:true,
+    level: ng.length? 'warn':'ok',
+    pill:  ng.length? '⚠️':'✅',
+    text:  ng.length? ('未取込あり：'+ng.join('・'))
+                    : ('最終取込 '+(when||'—')+(ok.length? '（'+ok.join('・')+'）':'')),
+    sub:   ng.length&&when? when+' の取込':'',
+    detail: detail,
+    boxUrl: m.boxUrl||''
+  };
+}
+/* ===== v2 取込バッジ ここまで ===== */
+
+function renderIntake(){
+  const bar=document.getElementById('ikBar'), det=document.getElementById('ikDetail');
+  if(!bar||!det) return;
+  const s=ikState(DATA);
+  if(!s.show){ bar.style.display='none'; det.style.display='none'; return; }
+  bar.style.display='flex';
+  bar.className='ikbar'+(s.level==='warn'? ' warn':'');
+  document.getElementById('ikPill').textContent=s.pill;
+  document.getElementById('ikText').textContent=s.text+(s.sub? '　'+s.sub : '');
+  det.innerHTML=s.detail.map(x=>'<div>'+esc(x)+'</div>').join('')+
+    (s.boxUrl? '<div><a href="'+esc(s.boxUrl)+'" target="_blank" rel="noopener">📥 取込箱を開く</a></div>':'');
+  if(s.level==='warn'&&det.dataset.auto!=='1'){ det.style.display='block'; det.dataset.auto='1'; }
+}
+function ikToggle(){
+  const d=document.getElementById('ikDetail');
+  if(!d) return;
+  d.style.display = (d.style.display==='none'? 'block':'none');
 }
 
 /* ===== v1.4 ver57.x（バナー） ===== */

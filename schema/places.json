@@ -1,0 +1,45 @@
+{
+  "ledger": "places",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-20",
+  "title": "行きたい場所台帳",
+  "howToUse": "「🗺行きたい場所マップ｜<地名>｜<年>年<月>月｜決定」の決定文が出たときに、その1件を書く。",
+  "fileNamePattern": "^intake_places_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
+  "mimeType": "application/json",
+  "sheetName": "行きたい場所台帳_base",
+  "folder": "gokigen",
+  "shape": "rows",
+  "rowsKey": "rows",
+  "rowCount": { "min": 1, "max": 30 },
+  "rowKey": "id",
+  "uniqueRowKey": true,
+  "dateKey": "date",
+  "fields": {
+    "date": { "type": "date", "required": true, "sameAsFileDate": true, "label": "記録日" }
+  },
+  "rowFields": {
+    "id":       { "type": "string", "required": true, "maxLen": 20, "col": "id",       "label": "id" },
+    "name":     { "type": "string", "required": true, "maxLen": 60, "col": "場所",     "label": "場所" },
+    "kind":     { "type": "string", "nullable": true, "maxLen": 20, "col": "区分",     "label": "区分" },
+    "area":     { "type": "string", "nullable": true, "maxLen": 40, "col": "地方・国", "label": "地方・国" },
+    "lat":      { "type": "number", "nullable": true, "min": -90,  "max": 90,  "col": "緯度", "label": "緯度" },
+    "lng":      { "type": "number", "nullable": true, "min": -180, "max": 180, "col": "経度", "label": "経度" },
+    "effort":   { "type": "enum",   "nullable": true, "enum": ["低","中","高"], "col": "体力", "label": "体力" },
+    "season":   { "type": "string", "nullable": true, "maxLen": 40, "col": "ベストシーズン", "label": "ベストシーズン" },
+    "timing":   { "type": "string", "nullable": true, "maxLen": 40, "col": "推奨時期", "label": "推奨時期" },
+    "withWhom": { "type": "string", "nullable": true, "maxLen": 40, "col": "同行",     "label": "同行" },
+    "status":   { "type": "enum",   "required": true, "enum": ["候補","予定","済","却下"], "col": "状態", "label": "状態" },
+    "decided":  { "type": "string", "nullable": true, "maxLen": 20, "col": "決めた時期", "label": "決めた時期" },
+    "note":     { "type": "string", "nullable": true, "maxLen": 200, "col": "一言",   "label": "一言" },
+    "photo":    { "type": "string", "nullable": true, "maxLen": 300, "col": "写真URL", "label": "写真URL" }
+  },
+  "example": {
+    "date": "2026-09-14",
+    "rows": [
+      { "id": "P051", "name": "隠岐諸島", "kind": "日本", "area": "中国", "lat": 36.09, "lng": 133.09,
+        "effort": "中", "season": "初夏", "timing": "2027-06", "withWhom": "夫婦", "status": "候補",
+        "decided": "2026-09", "note": "", "photo": "" }
+    ]
+  },
+  "notes": ["状態「却下」の行もそのまま書く（アプリ側が出さない）。緯度経度が分からなければ null。"]
+}

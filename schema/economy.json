@@ -1,0 +1,108 @@
+{
+  "ledger": "economy",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-20",
+  "title": "経済台帳（口座ごとの評価額）",
+  "howToUse": "SBI・野村・銀行のスクショから、口座/資産ごとの明細行だけを書く。合計や総資産の行は書かない（アプリが足し算する）。",
+  "fileNamePattern": "^intake_economy_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
+  "mimeType": "application/json",
+  "sheetName": "経済台帳_base",
+  "folder": "eco",
+  "shape": "rows",
+  "rowsKey": "items",
+  "rowCount": {
+    "min": 1,
+    "max": 60
+  },
+  "dateKey": "date",
+  "fields": {
+    "date": {
+      "type": "date",
+      "required": true,
+      "sameAsFileDate": true,
+      "col": "記録日",
+      "label": "記録日"
+    }
+  },
+  "rowFields": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLen": 80,
+      "forbidPattern": "合計|総資産|総額|My資産",
+      "col": "口座/資産名",
+      "label": "口座/資産名",
+      "colAliases": [
+        "口座",
+        "資産名",
+        "項目"
+      ]
+    },
+    "cat": {
+      "type": "string",
+      "required": true,
+      "maxLen": 40,
+      "forbidPattern": "合計|総資産|総額|My資産|総括",
+      "col": "区分",
+      "label": "区分"
+    },
+    "amount": {
+      "type": "number",
+      "required": true,
+      "min": 0,
+      "max": 10000000000,
+      "col": "評価額",
+      "label": "評価額"
+    },
+    "currency": {
+      "type": "enum",
+      "required": true,
+      "enum": [
+        "JPY",
+        "USD"
+      ],
+      "col": "通貨",
+      "label": "通貨"
+    },
+    "src": {
+      "type": "enum",
+      "required": true,
+      "enum": [
+        "SBIメイン",
+        "SBI貴金属",
+        "野村",
+        "個人銀行",
+        "法人"
+      ],
+      "col": "出所",
+      "label": "出所",
+      "colAliases": [
+        "備考"
+      ]
+    }
+  },
+  "example": {
+    "date": "2026-09-14",
+    "items": [
+      {
+        "name": "SBI 米国株式",
+        "cat": "米国株式",
+        "amount": 6205864,
+        "currency": "JPY",
+        "src": "SBIメイン"
+      },
+      {
+        "name": "野村 預り金",
+        "cat": "現金",
+        "amount": 1105000,
+        "currency": "JPY",
+        "src": "野村"
+      }
+    ]
+  },
+  "notes": [
+    "「合計」「総資産」「総額」「My資産」を含む行は拒否する。小計を混ぜると同じ資産を2回数える（8/18・8/23の事故の原因）。",
+    "出所は5つのどれか。どれにも当たらない書き方をすると、どの口座の線に乗せるか決められない。",
+    "法人の現金は出所「法人」。個人資産の合計には一切混ぜない。"
+  ]
+}

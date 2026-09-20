@@ -1,0 +1,145 @@
+{
+  "ledger": "udemy",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-20",
+  "title": "Udemy台帳（コース別の累計登録・月間登録・累計収益）",
+  "howToUse": "Udemyのインストラクター画面のスクショから、C01〜C10の10本ぶんをそろえて1本のJSONにする。",
+  "fileNamePattern": "^intake_udemy_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
+  "mimeType": "application/json",
+  "sheetName": "Udemy台帳_base",
+  "folder": "udemy",
+  "shape": "rows",
+  "rowsKey": "courses",
+  "rowCount": {
+    "min": 10,
+    "max": 10
+  },
+  "rowKey": "id",
+  "uniqueRowKey": true,
+  "dateKey": "date",
+  "fields": {
+    "date": {
+      "type": "date",
+      "required": true,
+      "sameAsFileDate": true,
+      "col": "記録日",
+      "label": "記録日"
+    },
+    "time": {
+      "type": "string",
+      "required": true,
+      "pattern": "^\\d{1,2}:\\d{2}$",
+      "col": "基準時刻",
+      "label": "基準時刻"
+    },
+    "src": {
+      "type": "string",
+      "nullable": true,
+      "col": "出所",
+      "label": "出所"
+    }
+  },
+  "rowFields": {
+    "id": {
+      "type": "enum",
+      "required": true,
+      "enum": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10"
+      ],
+      "col": "コースID",
+      "label": "コースID"
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLen": 120,
+      "col": "コース名",
+      "label": "コース名"
+    },
+    "published": {
+      "type": "string",
+      "nullable": true,
+      "pattern": "^\\d{4}-\\d{2}$",
+      "col": "公開年月",
+      "label": "公開年月"
+    },
+    "cum_enroll": {
+      "type": "int",
+      "required": true,
+      "min": 0,
+      "max": 200000,
+      "col": "累計登録",
+      "label": "累計登録"
+    },
+    "month_enroll": {
+      "type": "int",
+      "nullable": true,
+      "min": 0,
+      "max": 5000,
+      "col": "月間登録",
+      "label": "月間登録"
+    },
+    "cum_revenue_usd": {
+      "type": "number",
+      "nullable": true,
+      "min": 0,
+      "max": 1000000,
+      "col": "累計収益USD",
+      "label": "累計収益(USD)",
+      "colAliases": [
+        "累計収益",
+        "収益"
+      ]
+    },
+    "rating": {
+      "type": "number",
+      "nullable": true,
+      "min": 0,
+      "max": 5,
+      "col": "評価",
+      "label": "評価"
+    },
+    "memo": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 200,
+      "col": "施策メモ",
+      "label": "施策メモ",
+      "colAliases": [
+        "施策",
+        "メモ"
+      ]
+    }
+  },
+  "example": {
+    "date": "2026-09-14",
+    "time": "6:30",
+    "src": "Udemyインストラクター画面",
+    "courses": [
+      {
+        "id": "C01",
+        "name": "はじめてのマーケティング",
+        "published": "2021-10",
+        "cum_enroll": 12345,
+        "month_enroll": 120,
+        "cum_revenue_usd": 32100.5,
+        "rating": 4.5,
+        "memo": ""
+      }
+    ]
+  },
+  "notes": [
+    "courses は10要素ちょうど。11要素目や「全体」「合計」の行はスキーマ違反として拒否する（月間の二重計上の元）。",
+    "コースIDは C01〜C10 だけ。同じIDを2回書くのも拒否。",
+    "累計登録・累計収益は「累計」なので前回より減ることは無い。減っていたら数字の取り違えを疑う。"
+  ]
+}

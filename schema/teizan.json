@@ -1,0 +1,48 @@
+{
+  "ledger": "teizan",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-20",
+  "title": "低山台帳（低山100・山＋セット温泉）",
+  "howToUse": "「⛰低山｜<山名>｜<年>年<月>月｜予定」「⛰低山｜<山名>｜<年>年<月>月<日>日｜行った」の決定文が出たときに書く。",
+  "fileNamePattern": "^intake_teizan_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
+  "mimeType": "application/json",
+  "sheetName": "低山台帳_base",
+  "folder": "gokigen",
+  "shape": "rows",
+  "rowsKey": "rows",
+  "rowCount": { "min": 1, "max": 30 },
+  "rowKey": "id",
+  "uniqueRowKey": true,
+  "dateKey": "date",
+  "fields": {
+    "date": { "type": "date", "required": true, "sameAsFileDate": true, "label": "記録日" }
+  },
+  "rowFields": {
+    "id":      { "type": "string", "required": true, "maxLen": 20, "col": "id",     "label": "id" },
+    "name":    { "type": "string", "required": true, "maxLen": 40, "col": "山名",   "label": "山名" },
+    "area":    { "type": "string", "nullable": true, "maxLen": 40, "col": "エリア", "label": "エリア" },
+    "lat":     { "type": "number", "nullable": true, "min": 20, "max": 50,   "col": "緯度", "label": "緯度" },
+    "lng":     { "type": "number", "nullable": true, "min": 120, "max": 150, "col": "経度", "label": "経度" },
+    "elev":    { "type": "int",    "nullable": true, "min": 0, "max": 4000,  "col": "標高", "label": "標高(m)" },
+    "ropeway": { "type": "enum",   "nullable": true, "enum": ["○","×"], "col": "ロープウェイ", "label": "ロープウェイ" },
+    "walk":    { "type": "string", "nullable": true, "maxLen": 40, "col": "山頂まで歩き", "label": "山頂まで歩き" },
+    "summer":  { "type": "enum",   "nullable": true, "enum": ["○","×"], "col": "夏向き", "label": "夏向き" },
+    "months":  { "type": "string", "nullable": true, "maxLen": 60, "col": "ベストシーズン月", "label": "ベストシーズン月" },
+    "effort":  { "type": "enum",   "nullable": true, "enum": ["低","中","高"], "col": "体力", "label": "体力" },
+    "onsen":   { "type": "string", "nullable": true, "maxLen": 60, "col": "セット温泉", "label": "セット温泉" },
+    "why":     { "type": "string", "nullable": true, "maxLen": 200, "col": "行く意味", "label": "行く意味" },
+    "status":  { "type": "enum",   "required": true, "enum": ["候補","予定","済"], "col": "状態", "label": "状態" },
+    "wentAt":  { "type": "date",   "nullable": true, "col": "行った日", "label": "行った日" },
+    "planned": { "type": "string", "nullable": true, "maxLen": 20, "col": "予定", "label": "予定" },
+    "note":    { "type": "string", "nullable": true, "maxLen": 200, "col": "一言", "label": "一言" }
+  },
+  "example": {
+    "date": "2026-09-14",
+    "rows": [
+      { "id": "M046", "name": "宝登山", "area": "埼玉", "lat": 36.06, "lng": 139.09, "elev": 497,
+        "ropeway": "○", "walk": "15分", "summer": "×", "months": "1,2,3,12", "effort": "低",
+        "onsen": "満願の湯", "why": "ロウバイ", "status": "候補", "wentAt": null, "planned": "2027-01", "note": "" }
+    ]
+  },
+  "notes": ["ベストシーズン月は「1,2,3,12」のように数字を並べる（GASが数字の並びにほぐす）。"]
+}
