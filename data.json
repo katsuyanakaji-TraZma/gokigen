@@ -1,14 +1,12 @@
 {
-  "generatedAt": "2026-09-22T06:23:14+09:00",
+  "generatedAt": "2026-09-22T08:29:36+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-09-22 06:22",
+      "at": "2026-09-22 08:28",
       "slack": "OK",
       "ok": [
-        "gokigen",
-        "limitless",
-        "udemy"
+        "gokigen"
       ],
       "ng": [],
       "errors": [],
@@ -1234,11 +1232,11 @@
     {
       "date": "2026-09-22",
       "dow": "火",
-      "weight": null,
-      "fat": null,
-      "muscle": null,
-      "visceral": null,
-      "bodyAge": null,
+      "weight": 82.7,
+      "fat": 30.1,
+      "muscle": 54.9,
+      "visceral": 10,
+      "bodyAge": 61,
       "bpHigh": null,
       "bpLow": null,
       "mood": null,
@@ -1246,7 +1244,7 @@
       "exercise": null,
       "dining": null,
       "routine": null,
-      "note": "Ouraコンディション81「回復の兆し」(安静時心拍がベースラインに戻りつつある)・レジリエンス普通・睡眠76・アクティビティ75。5:48時点の値。"
+      "note": "Ouraコンディション81「回復の兆し」(安静時心拍がベースラインに戻りつつある)・レジリエンス普通・睡眠76・アクティビティ75。あすけん体重82.7kg・体脂肪30.1%・筋肉量54.9kg・内臓脂肪Lv10・体内年齢61(7:07)。"
     }
   ],
   "udemyCourses": [
