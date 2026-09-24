@@ -1,17 +1,21 @@
 {
-  "generatedAt": "2026-09-24T08:29:10+09:00",
+  "generatedAt": "2026-09-24T12:41:25+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-09-24 08:28",
+      "at": "2026-09-24 12:40",
       "slack": "OK",
-      "ok": [
-        "gokigen",
-        "limitless",
-        "udemy"
+      "ok": [],
+      "ng": [
+        "teizan"
       ],
-      "ng": [],
-      "errors": [],
+      "errors": [
+        {
+          "file": "intake_teizan_2026-09-23_1000.json",
+          "ledger": "teizan",
+          "why": "[1件目] 状態が決められた言葉でない: \"行った\"（使えるのは 候補／予定／済）"
+        }
+      ],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
