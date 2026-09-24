@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-09-25T06:25:03+09:00",
+  "generatedAt": "2026-09-25T08:28:52+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-09-25 06:24",
+      "at": "2026-09-25 08:28",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2128
+        "rows": 2138
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 190
+        "rows": 199
       }
     ],
     "ecoFiles": [
@@ -1260,6 +1264,23 @@
       "dining": null,
       "routine": null,
       "note": "Ouraコンディション71「安静時心拍数の上昇」(高めの安静時心拍が継続)・レジリエンス普通・睡眠76・アクティビティ75。前日筑波山登山の疲労が反映か。睡眠アプリ:睡眠時間6h4m・睡眠効率98.1%・快眠スコア97.4・中途覚醒0。あすけん体重83.8kg(前々日82.7kgから+1.1kg・前夜の回転寿司で家族と食べ過ぎたため)・体脂肪30.5%・筋肉量55.3kg・内臓脂肪Lv10・体内年齢61(7:12)。"
+    },
+    {
+      "date": "2026-09-25",
+      "dow": "金",
+      "weight": null,
+      "fat": null,
+      "muscle": null,
+      "visceral": null,
+      "bodyAge": null,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 83,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Ouraコンディション72「無理をしないように」(体表温が通常より高い・エネルギー不足を感じたら気楽に)・レジリエンス普通・睡眠83・アクティビティ65(7:49)。前日は筑波山動画編集・研修主催で活動量多め。"
     }
   ],
   "udemyCourses": [
@@ -1335,82 +1356,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-08-23",
-      "time": "7:01",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 421,
-          "monthEnroll": 230,
-          "cumRevenue": 235.23,
-          "rating": 4.59
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 4919,
-          "monthEnroll": 182,
-          "cumRevenue": 7864.4,
-          "rating": 4.03
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2809,
-          "monthEnroll": 70,
-          "cumRevenue": 4461.73,
-          "rating": 4.14
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4004,
-          "monthEnroll": 49,
-          "cumRevenue": 3839.26,
-          "rating": 4.06
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4536,
-          "monthEnroll": 58,
-          "cumRevenue": 7354.36,
-          "rating": 4.12
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7691,
-          "monthEnroll": 76,
-          "cumRevenue": 14896.8,
-          "rating": 4.25
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4870,
-          "monthEnroll": 30,
-          "cumRevenue": 11282.77,
-          "rating": 4.05
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8117,
-          "monthEnroll": 33,
-          "cumRevenue": 26405.16,
-          "rating": 3.9
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15092,
-          "monthEnroll": 247,
-          "cumRevenue": 48696.8,
-          "rating": 4.02
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17872,
-          "monthEnroll": 155,
-          "cumRevenue": 67517.48,
-          "rating": 4.2
-        }
-      ]
-    },
     {
       "date": "2026-08-24",
       "time": "8:02",
@@ -3611,6 +3556,82 @@
           "cumEnroll": 18157,
           "monthEnroll": 196,
           "cumRevenue": 68071.09,
+          "rating": 4.11
+        }
+      ]
+    },
+    {
+      "date": "2026-09-25",
+      "time": "7:50",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 529,
+          "monthEnroll": 50,
+          "cumRevenue": 517.95,
+          "rating": 4.57
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5251,
+          "monthEnroll": 232,
+          "cumRevenue": 8264.52,
+          "rating": 4.14
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2911,
+          "monthEnroll": 75,
+          "cumRevenue": 4570.99,
+          "rating": 4.1
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4104,
+          "monthEnroll": 60,
+          "cumRevenue": 3897.24,
+          "rating": 4.14
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4604,
+          "monthEnroll": 47,
+          "cumRevenue": 7429.7,
+          "rating": 4.03
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7884,
+          "monthEnroll": 152,
+          "cumRevenue": 15046.29,
+          "rating": 4.2
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4949,
+          "monthEnroll": 67,
+          "cumRevenue": 11369.39,
+          "rating": 4.12
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8149,
+          "monthEnroll": 22,
+          "cumRevenue": 26495.23,
+          "rating": 3.95
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15523,
+          "monthEnroll": 322,
+          "cumRevenue": 49624.89,
+          "rating": 4.08
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18173,
+          "monthEnroll": 215,
+          "cumRevenue": 68074.75,
           "rating": 4.11
         }
       ]
@@ -6746,37 +6767,37 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 71997,
-      "newEnroll": 1243,
-      "revenue": 195283.63,
-      "officialNew": 1138,
-      "officialAsOf": "2026-09-24",
+      "enroll": 72077,
+      "newEnroll": 1323,
+      "revenue": 195290.95,
+      "officialNew": 1242,
+      "officialAsOf": "2026-09-25",
       "from": "2026-08-31",
-      "to": "2026-09-24",
-      "records": 21,
+      "to": "2026-09-25",
+      "records": 22,
       "byCourse": {
         "C01": {
-          "enroll": 527,
+          "enroll": 529,
           "revenue": 517.95
         },
         "C02": {
-          "enroll": 5242,
+          "enroll": 5251,
           "revenue": 8264.52
         },
         "C03": {
-          "enroll": 2901,
+          "enroll": 2911,
           "revenue": 4570.99
         },
         "C04": {
-          "enroll": 4102,
+          "enroll": 4104,
           "revenue": 3897.24
         },
         "C05": {
-          "enroll": 4601,
+          "enroll": 4604,
           "revenue": 7429.7
         },
         "C06": {
-          "enroll": 7859,
+          "enroll": 7884,
           "revenue": 15046.29
         },
         "C07": {
@@ -6784,16 +6805,16 @@
           "revenue": 11369.39
         },
         "C08": {
-          "enroll": 8148,
+          "enroll": 8149,
           "revenue": 26495.23
         },
         "C09": {
-          "enroll": 15511,
-          "revenue": 49621.23
+          "enroll": 15523,
+          "revenue": 49624.89
         },
         "C10": {
-          "enroll": 18157,
-          "revenue": 68071.09
+          "enroll": 18173,
+          "revenue": 68074.75
         }
       }
     }
@@ -6954,7 +6975,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 190
+        "rows": 199
       }
     ],
     "rows": [
@@ -9078,6 +9099,115 @@
         "text": "筑波山リベンジ登山を決行。登山靴を家に忘れ日常用スニーカーで急登・岩場・胎内くぐりを乗り越え女体山山頂(877m)に到達。前回の霧のリベンジを果たした",
         "who": null,
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-24",
+        "ver": "57.05",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📚学び",
+        "text": "Bマップ—「お披露目の場(P)」を先に用意しておくと、能力(A)が未熟でも強制的にモチベーション(M)が高まり行動が引き出される",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-24",
+        "ver": "57.05",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "💡教え",
+        "text": "「4K=最善」という思い込みを手放し、日常Vlogは1080pで十分と気づいた。撮影目的に応じてスペックを最適化する習慣を持つ",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-24",
+        "ver": "57.05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "💎人",
+        "text": "「パナソニックなんて入ったらさ、一生安泰だと思ってた世代よ。もうオワコン」「オワコン、もうかなりオワコン」",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-24",
+        "ver": "57.05",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "「ピットイン2回目」研修(3時間・21名)をTeamsで主催。行動変容モデルBマップ(B=M×A×P)とシェイピング＆フェイディングを講義し、受講生同士の実践共有ファシリテーションも実施",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-24",
+        "ver": "57.05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "💎人",
+        "text": "「登山靴忘れましたって入れた方がいいかな」「ね、そっちの方が面白いと思う」(あえて自分のハプニングをタイトル・サムネの強みにする企画)",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-24",
+        "ver": "57.05",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "明日の研修は欠席者にUdemy配布でなく当日のTeams/Zoom録画を共有する方針に決定(参加者との公平性を保つため)",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-24",
+        "ver": "57.05",
+        "kinds": [
+          "学び",
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "📚学び,💎人",
+        "text": "皇居ランで出会った85歳現役ランナーの言葉「ここまで走ってると敵がいなくなるんじゃわ。走ってればいつか1位になるよ」",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-24",
+        "ver": "57.05",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "筑波山動画をCapCutで最終仕上げしYouTubeへアップロード。Macのフリーズ・DJI Pocket4の4K容量問題はHEVC拡張機能(120円)購入と1080p設定変更で解決",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-24",
+        "ver": "57.05",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📚学び",
+        "text": "育成のシェイピング(良い行動は残し不要な雑草はカット)とフェイディング(手厚いサポートから計画的に距離を置く)。密→粗を急にすると混乱するため計画的に行う",
+        "who": null,
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -9183,82 +9313,83 @@
     "week": {
       "from": "2026-09-20",
       "to": "2026-09-26",
-      "rows": 24,
+      "rows": 33,
       "counts": {
-        "教え": 1,
-        "トライ": 8,
+        "教え": 2,
+        "トライ": 11,
         "初めて": 1,
-        "学び": 7,
-        "人": 5,
+        "学び": 10,
+        "人": 8,
         "もがき": 1
       }
     },
     "month": {
       "from": "2026-09-01",
       "to": "2026-09-30",
-      "rows": 53,
+      "rows": 62,
       "counts": {
-        "教え": 10,
-        "トライ": 15,
+        "教え": 11,
+        "トライ": 18,
         "初めて": 6,
-        "学び": 7,
-        "人": 13,
+        "学び": 10,
+        "人": 16,
         "もがき": 1
       }
     },
     "recent": [
       {
-        "date": "2026-09-23",
-        "kinds": [
-          "トライ"
-        ],
-        "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "筑波山リベンジ登山を決行。登山靴を家に忘れ日常用スニーカーで急登・岩場・胎内くぐりを乗り越え女体山山頂(877m)に到達。前回の霧のリベンジを果たした",
-        "who": null
-      },
-      {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "kinds": [
           "学び"
         ],
         "unsure": [],
         "kindsText": "📚学び",
-        "text": "相撲観戦のような一見コスパの悪いイベントも、家族で一度経験しておけば10年後15年後に語れる「話のネタ」という資産になる",
+        "text": "育成のシェイピング(良い行動は残し不要な雑草はカット)とフェイディング(手厚いサポートから計画的に距離を置く)。密→粗を急にすると混乱するため計画的に行う",
         "who": null
       },
       {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "kinds": [
           "トライ"
         ],
         "unsure": [],
         "kindsText": "🔥トライ",
-        "text": "新カメラで撮った登山動画「つくばさんプロジェクト」を細部までレビュー。顔モザイク・字幕修正・写真の歪み修正・重複カットなど具体的な修正指示を出した",
+        "text": "筑波山動画をCapCutで最終仕上げしYouTubeへアップロード。Macのフリーズ・DJI Pocket4の4K容量問題はHEVC拡張機能(120円)購入と1080p設定変更で解決",
         "who": null
       },
       {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
+        "kinds": [
+          "学び",
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "📚学び,💎人",
+        "text": "皇居ランで出会った85歳現役ランナーの言葉「ここまで走ってると敵がいなくなるんじゃわ。走ってればいつか1位になるよ」",
+        "who": null
+      },
+      {
+        "date": "2026-09-24",
         "kinds": [
           "トライ"
         ],
         "unsure": [],
         "kindsText": "🔥トライ",
-        "text": "山頂で幸福だんごとつくばうどんを堪能後、足のガクガクを察知して男体山への縦走を中止し「勇気ある撤退」でロープウェイ下山を選択",
+        "text": "明日の研修は欠席者にUdemy配布でなく当日のTeams/Zoom録画を共有する方針に決定(参加者との公平性を保つため)",
         "who": null
       },
       {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "kinds": [
-          "教え"
+          "人"
         ],
         "unsure": [],
-        "kindsText": "💡教え",
-        "text": "完璧に準備しても靴を忘れるような「直前のうっかり」は起きる。前日提唱した全自動でなく目視確認を挟むハイブリッド思考を私生活にも応用し、玄関・車・身につけるものの3ステップ目視チェックリストを出発直前に作る運用を提案",
+        "kindsText": "💎人",
+        "text": "「登山靴忘れましたって入れた方がいいかな」「ね、そっちの方が面白いと思う」(あえて自分のハプニングをタイトル・サムネの強みにする企画)",
         "who": null
       }
     ],
-    "total": 190,
+    "total": 199,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
