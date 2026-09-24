@@ -1,28 +1,20 @@
 {
-  "generatedAt": "2026-09-24T12:41:25+09:00",
+  "generatedAt": "2026-09-25T06:24:24+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-09-24 12:40",
+      "at": "2026-09-25 06:23",
       "slack": "OK",
       "ok": [],
-      "ng": [
-        "teizan"
-      ],
-      "errors": [
-        {
-          "file": "intake_teizan_2026-09-23_1000.json",
-          "ledger": "teizan",
-          "why": "[1件目] 状態が決められた言葉でない: \"行った\"（使えるのは 候補／予定／済）"
-        }
-      ],
+      "ng": [],
+      "errors": [],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
   },
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-09-24",
+    "asOf": "2026-09-25",
     "major": 57,
     "minor": 5,
     "months": 689,
@@ -9179,7 +9171,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-09-24",
+    "asOf": "2026-09-25",
     "kinds": [
       "教え",
       "トライ",
@@ -10278,9 +10270,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-09-24",
-    "from": "2026-09-24",
-    "to": "2027-03-24",
+    "asOf": "2026-09-25",
+    "from": "2026-09-25",
+    "to": "2027-03-25",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
