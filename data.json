@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-09-26T06:24:06+09:00",
+  "generatedAt": "2026-09-26T08:32:37+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-09-26 06:22",
+      "at": "2026-09-26 08:29",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2138
+        "rows": 2148
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 199
+        "rows": 209
       }
     ],
     "ecoFiles": [
@@ -1277,6 +1281,23 @@
       "dining": null,
       "routine": null,
       "note": "Ouraコンディション72「無理をしないように」(体表温が通常より高い・エネルギー不足を感じたら気楽に)・レジリエンス普通・睡眠83・アクティビティ65(7:49)。前日は筑波山動画編集・研修主催で活動量多め。"
+    },
+    {
+      "date": "2026-09-26",
+      "dow": "土",
+      "weight": null,
+      "fat": null,
+      "muscle": null,
+      "visceral": null,
+      "bodyAge": null,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 85,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Ouraコンディション66「大丈夫ですか？」(体表温がまだわずかに上昇・回復の時間を確保推奨)・レジリエンスやや不足・睡眠85・アクティビティ82。睡眠アプリ:睡眠時間7h16m・睡眠効率93.2%・快眠スコア86.0・中途覚醒1(6:57)。前日の対面研修終日ファシリテートの疲労が反映か。"
     }
   ],
   "udemyCourses": [
@@ -1352,82 +1373,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-08-24",
-      "time": "8:02",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 430,
-          "monthEnroll": 234,
-          "cumRevenue": 235.23,
-          "rating": null
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 4924,
-          "monthEnroll": 184,
-          "cumRevenue": 7864.4,
-          "rating": null
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2812,
-          "monthEnroll": 72,
-          "cumRevenue": 4461.73,
-          "rating": null
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4006,
-          "monthEnroll": 50,
-          "cumRevenue": 3839.26,
-          "rating": null
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4538,
-          "monthEnroll": 59,
-          "cumRevenue": 7354.36,
-          "rating": null
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7694,
-          "monthEnroll": 78,
-          "cumRevenue": 14896.8,
-          "rating": null
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4871,
-          "monthEnroll": 31,
-          "cumRevenue": 11282.77,
-          "rating": null
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8118,
-          "monthEnroll": 34,
-          "cumRevenue": 26405.16,
-          "rating": null
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15097,
-          "monthEnroll": 251,
-          "cumRevenue": 48696.8,
-          "rating": null
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17875,
-          "monthEnroll": 158,
-          "cumRevenue": 67517.48,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2026-08-25",
       "time": "7:31",
@@ -3629,6 +3574,82 @@
           "monthEnroll": 215,
           "cumRevenue": 68074.75,
           "rating": 4.11
+        }
+      ]
+    },
+    {
+      "date": "2026-09-26",
+      "time": "7:00",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 530,
+          "monthEnroll": 51,
+          "cumRevenue": 517.95,
+          "rating": 4.55
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5259,
+          "monthEnroll": 240,
+          "cumRevenue": 8264.52,
+          "rating": 4.14
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2914,
+          "monthEnroll": 78,
+          "cumRevenue": 4570.99,
+          "rating": 4.1
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4108,
+          "monthEnroll": 64,
+          "cumRevenue": 3897.24,
+          "rating": 4.17
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4608,
+          "monthEnroll": 51,
+          "cumRevenue": 7429.7,
+          "rating": 4.01
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7892,
+          "monthEnroll": 160,
+          "cumRevenue": 15046.29,
+          "rating": 4.18
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4954,
+          "monthEnroll": 72,
+          "cumRevenue": 11369.39,
+          "rating": 4.12
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8152,
+          "monthEnroll": 25,
+          "cumRevenue": 26495.23,
+          "rating": 3.95
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15547,
+          "monthEnroll": 346,
+          "cumRevenue": 49624.89,
+          "rating": 4.07
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18188,
+          "monthEnroll": 230,
+          "cumRevenue": 68074.75,
+          "rating": 4.13
         }
       ]
     }
@@ -6763,53 +6784,53 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 72077,
-      "newEnroll": 1323,
+      "enroll": 72152,
+      "newEnroll": 1398,
       "revenue": 195290.95,
-      "officialNew": 1242,
-      "officialAsOf": "2026-09-25",
+      "officialNew": 1317,
+      "officialAsOf": "2026-09-26",
       "from": "2026-08-31",
-      "to": "2026-09-25",
-      "records": 22,
+      "to": "2026-09-26",
+      "records": 23,
       "byCourse": {
         "C01": {
-          "enroll": 529,
+          "enroll": 530,
           "revenue": 517.95
         },
         "C02": {
-          "enroll": 5251,
+          "enroll": 5259,
           "revenue": 8264.52
         },
         "C03": {
-          "enroll": 2911,
+          "enroll": 2914,
           "revenue": 4570.99
         },
         "C04": {
-          "enroll": 4104,
+          "enroll": 4108,
           "revenue": 3897.24
         },
         "C05": {
-          "enroll": 4604,
+          "enroll": 4608,
           "revenue": 7429.7
         },
         "C06": {
-          "enroll": 7884,
+          "enroll": 7892,
           "revenue": 15046.29
         },
         "C07": {
-          "enroll": 4949,
+          "enroll": 4954,
           "revenue": 11369.39
         },
         "C08": {
-          "enroll": 8149,
+          "enroll": 8152,
           "revenue": 26495.23
         },
         "C09": {
-          "enroll": 15523,
+          "enroll": 15547,
           "revenue": 49624.89
         },
         "C10": {
-          "enroll": 18173,
+          "enroll": 18188,
           "revenue": 68074.75
         }
       }
@@ -6971,7 +6992,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 199
+        "rows": 209
       }
     ],
     "rows": [
@@ -9204,6 +9225,126 @@
         "text": "育成のシェイピング(良い行動は残し不要な雑草はカット)とフェイディング(手厚いサポートから計画的に距離を置く)。密→粗を急にすると混乱するため計画的に行う",
         "who": null,
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📚学び",
+        "text": "Z世代はストレスフリーな環境で育っているため精神論は通じない。行動直後に確実なメリットが得られるPIC(即・確実・ポジティブ)設計が不可欠",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "💎人",
+        "text": "「それ、僕が全部やりました」懇親会で、かつて感動したリコーのオープンOS設計に直接携わった受講生(小笠原さん)との劇的な出会い",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "「コーチング&リーダーシップ研修」(Day4・24名)を終日ファシリテート。ABCモデル・問いと承認・継続5ステップを講義し、受講生の1on1やタイプ分けの実践事例を引き出した",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "💎人",
+        "text": "「人生初のチャレンジを最後にやったのはいつ？」と自分に問い続けている。「この世には二種類の人しかいなくて、百キロ歩いたやつか歩いてないか」と受講生をウルトラウォークに誘う懇親会トーク",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📚学び",
+        "text": "マウントを取る人は承認不足。すごいですねでなくアイメッセージ(私は〜と感じた)で承認を打ち込むと圧が弱まる",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [
+          "教え"
+        ],
+        "unsure": [],
+        "kindsText": "💡教え",
+        "text": "受講生の自己解決力とラボでの実験精神を信頼し、コントロール欲求を手放してあえてもやもやする状態のまま手放すファシリテーションを意識する",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📚学び",
+        "text": "問いと承認は治水工事—「問い」という堤防で意識の方向をコントロールし、そこに「承認」という水を注ぎ込むことで行動を枯渇させずに大河へ導く",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [],
+        "unsure": [
+          "教え"
+        ],
+        "kindsText": "💡教え?",
+        "text": "懇親会で盛り上がった「マウント対策(アイメッセージ承認法)」を追加TIPSとして受講生に社内展開提供するか未解決。100kmウルトラウォークの企業研修プログラム化はアイデア段階(アズビル受講生4人参加の話から着想)",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "次回Day5(10/21・オンライン)までに新バディで期間中3回のC区間バディコーチングを自主実施する方針を決定。100kmウルトラウォーク(名古屋〜豊橋)に向けたベビーステップ自主練習も継続決定",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-25",
+        "ver": "57.05",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "研修をレストラン(受け身)でなくラボ/BBQ会場と位置づけ、受講生全員に公平な発言機会を設けた",
+        "who": null,
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -9309,83 +9450,82 @@
     "week": {
       "from": "2026-09-20",
       "to": "2026-09-26",
-      "rows": 33,
+      "rows": 43,
       "counts": {
-        "教え": 2,
-        "トライ": 11,
+        "教え": 3,
+        "トライ": 14,
         "初めて": 1,
-        "学び": 10,
-        "人": 8,
+        "学び": 13,
+        "人": 10,
         "もがき": 1
       }
     },
     "month": {
       "from": "2026-09-01",
       "to": "2026-09-30",
-      "rows": 62,
+      "rows": 72,
       "counts": {
-        "教え": 11,
-        "トライ": 18,
+        "教え": 12,
+        "トライ": 21,
         "初めて": 6,
-        "学び": 10,
-        "人": 16,
+        "学び": 13,
+        "人": 18,
         "もがき": 1
       }
     },
     "recent": [
       {
-        "date": "2026-09-24",
+        "date": "2026-09-25",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "研修をレストラン(受け身)でなくラボ/BBQ会場と位置づけ、受講生全員に公平な発言機会を設けた",
+        "who": null
+      },
+      {
+        "date": "2026-09-25",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "次回Day5(10/21・オンライン)までに新バディで期間中3回のC区間バディコーチングを自主実施する方針を決定。100kmウルトラウォーク(名古屋〜豊橋)に向けたベビーステップ自主練習も継続決定",
+        "who": null
+      },
+      {
+        "date": "2026-09-25",
+        "kinds": [],
+        "unsure": [
+          "教え"
+        ],
+        "kindsText": "💡教え?",
+        "text": "懇親会で盛り上がった「マウント対策(アイメッセージ承認法)」を追加TIPSとして受講生に社内展開提供するか未解決。100kmウルトラウォークの企業研修プログラム化はアイデア段階(アズビル受講生4人参加の話から着想)",
+        "who": null
+      },
+      {
+        "date": "2026-09-25",
         "kinds": [
           "学び"
         ],
         "unsure": [],
         "kindsText": "📚学び",
-        "text": "育成のシェイピング(良い行動は残し不要な雑草はカット)とフェイディング(手厚いサポートから計画的に距離を置く)。密→粗を急にすると混乱するため計画的に行う",
+        "text": "問いと承認は治水工事—「問い」という堤防で意識の方向をコントロールし、そこに「承認」という水を注ぎ込むことで行動を枯渇させずに大河へ導く",
         "who": null
       },
       {
-        "date": "2026-09-24",
+        "date": "2026-09-25",
         "kinds": [
-          "トライ"
+          "教え"
         ],
         "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "筑波山動画をCapCutで最終仕上げしYouTubeへアップロード。Macのフリーズ・DJI Pocket4の4K容量問題はHEVC拡張機能(120円)購入と1080p設定変更で解決",
-        "who": null
-      },
-      {
-        "date": "2026-09-24",
-        "kinds": [
-          "学び",
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "📚学び,💎人",
-        "text": "皇居ランで出会った85歳現役ランナーの言葉「ここまで走ってると敵がいなくなるんじゃわ。走ってればいつか1位になるよ」",
-        "who": null
-      },
-      {
-        "date": "2026-09-24",
-        "kinds": [
-          "トライ"
-        ],
-        "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "明日の研修は欠席者にUdemy配布でなく当日のTeams/Zoom録画を共有する方針に決定(参加者との公平性を保つため)",
-        "who": null
-      },
-      {
-        "date": "2026-09-24",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "💎人",
-        "text": "「登山靴忘れましたって入れた方がいいかな」「ね、そっちの方が面白いと思う」(あえて自分のハプニングをタイトル・サムネの強みにする企画)",
+        "kindsText": "💡教え",
+        "text": "受講生の自己解決力とラボでの実験精神を信頼し、コントロール欲求を手放してあえてもやもやする状態のまま手放すファシリテーションを意識する",
         "who": null
       }
     ],
-    "total": 199,
+    "total": 209,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
