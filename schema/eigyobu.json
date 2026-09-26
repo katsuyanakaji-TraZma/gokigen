@@ -2,8 +2,8 @@
   "ledger": "eigyobu",
   "schemaVersion": 2,
   "updatedAt": "2026-09-26",
-  "title": "営業部の物差し（Udemy Business経由の内訳・クーポン別の購入数）",
-  "howToUse": "毎月1日に代表が送るUdemy講師画面のスクショ2枚（パフォーマンス概要のUdemy Business部分／クーポン画面）から、前月ぶんの数字を1本のJSONにする。講座別の新規登録数はここに書かない（Udemy台帳＝udemy が正）。",
+  "title": "営業部の物差し（Udemy Business経由の登録・経路別の内訳）",
+  "howToUse": "毎月1日に代表が送るUdemy講師画面のスクショ2枚（①パフォーマンス→概要→Udemy Businessタブ・過去30日間 ②パフォーマンス→収益の収益レポート）から、前月ぶんを1本のJSONにする。講座別の新規登録数はここに書かない（Udemy台帳＝udemy が正）。",
   "fileNamePattern": "^intake_eigyobu_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
   "mimeType": "application/json",
   "sheetName": "営業部_物差し台帳_base",
@@ -45,11 +45,18 @@
       "enum": [
         "UB登録",
         "UB視聴分",
-        "UB収益USD",
-        "クーポン購入"
+        "経路別登録",
+        "経路別収益USD"
       ],
       "col": "種別",
       "label": "種別"
+    },
+    "channel": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 40,
+      "col": "経路",
+      "label": "経路（Udemy Business／あなたのプロモーション 等。画面の表記のまま）"
     },
     "course_id": {
       "type": "enum",
@@ -67,21 +74,14 @@
         "C10"
       ],
       "col": "コースID",
-      "label": "コースID"
+      "label": "コースID（全講座の数字なら null）"
     },
-    "course": {
+    "period": {
       "type": "string",
       "nullable": true,
-      "maxLen": 120,
-      "col": "講座名",
-      "label": "講座名"
-    },
-    "coupon": {
-      "type": "string",
-      "nullable": true,
-      "maxLen": 60,
-      "col": "クーポンコード",
-      "label": "クーポンコード"
+      "maxLen": 40,
+      "col": "期間",
+      "label": "期間（画面の表記。例：過去30日間）"
     },
     "value": {
       "type": "number",
@@ -106,24 +106,41 @@
     "rows": [
       {
         "kind": "UB登録",
-        "course_id": "C01",
-        "course": "【異動・昇進】組織適応の教科書",
-        "coupon": null,
-        "value": 12,
+        "channel": "Udemy Business",
+        "course_id": null,
+        "period": "過去30日間",
+        "value": 1200,
+        "memo": "①UBタブ"
+      },
+      {
+        "kind": "経路別登録",
+        "channel": "Udemy Business",
+        "course_id": null,
+        "period": "2026年9月",
+        "value": 1200,
+        "memo": "②収益レポート"
+      },
+      {
+        "kind": "経路別登録",
+        "channel": "あなたのプロモーション",
+        "course_id": null,
+        "period": "2026年9月",
+        "value": 40,
         "memo": ""
       },
       {
-        "kind": "クーポン購入",
-        "course_id": "C09",
-        "course": "部下・新人をいち早く成長させる人材育成法",
-        "coupon": "SEP2026",
-        "value": 5,
+        "kind": "経路別収益USD",
+        "channel": "Udemy Business",
+        "course_id": null,
+        "period": "2026年9月",
+        "value": 3000,
         "memo": ""
       }
     ]
   },
   "notes": [
-    "講座ごとの行は course_id（C01〜C10）を必ず書く。講座をまたぐ合計の行（「全体」「合計」）は書かない。",
+    "経路（channel）は画面の表記のまま。「合計」「全体」「総計」の行は書かない（経路の足し算は Mac 側でする）。",
+    "course_id が null の行は全講座の数字。同じ種別で全講座の行と講座別の行を混ぜない（足すと二重になる）。",
     "スクショに出ていない数字は書かない（推測で埋めない）。読めなかったものは行を作らず、点呼で代表に一言で伝える。",
     "同じ記録日に2回入れたら、あとの時刻（ファイル名のHHMM）が正本。",
     "取り込んだあと、Mac mini の営業部が 📦_取込済 の JSON を読んで ~/DTD/台帳/営業部_物差し.md に写す。"

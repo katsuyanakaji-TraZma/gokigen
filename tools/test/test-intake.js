@@ -523,8 +523,8 @@ console.log("\n【営業部】eigyobu の取込");
 const EIGYO_OK = {
   date: "2026-10-01", month: "2026-09", src: "Udemy講師画面スクショ2枚",
   rows: [
-    { kind: "UB登録", course_id: "C01", course: "組織適応の教科書", coupon: null, value: 12, memo: "" },
-    { kind: "クーポン購入", course_id: "C09", course: "教える技術", coupon: "SEP2026", value: 5, memo: "" }
+    { kind: "UB登録", channel: "Udemy Business", course_id: null, period: "過去30日間", value: 1200, memo: "" },
+    { kind: "経路別登録", channel: "あなたのプロモーション", course_id: null, period: "2026年9月", value: 40, memo: "" }
   ]
 };
 put("intake_eigyobu_2026-10-01_0700.json", JSON.stringify(EIGYO_OK));
@@ -542,11 +542,11 @@ r = runIntake_();
 eq(rowsOf("営業部_物差し台帳_base").length, 1, "営-6 同じ記録日は置き換わる（二重にならない）");
 // 合計行・知らない種別は止める
 put("intake_eigyobu_2026-10-02_0700.json", JSON.stringify({ date: "2026-10-02", month: "2026-09", src: "",
-  rows: [{ kind: "合計", course_id: null, course: "全体", coupon: null, value: 300, memo: "" }] }));
+  rows: [{ kind: "合計", channel: "全体", course_id: null, period: "", value: 300, memo: "" }] }));
 r = runIntake_();
 eq(r.ng, 1, "営-7 種別「合計」はNG");
 put("intake_eigyobu_2026-10-02_0701.json", JSON.stringify({ date: "2026-10-02", month: "2026年9月", src: "",
-  rows: [{ kind: "UB登録", course_id: "C11", course: "", coupon: null, value: 1, memo: "" }] }));
+  rows: [{ kind: "UB登録", channel: "Udemy Business", course_id: "C11", period: "", value: 1, memo: "" }] }));
 r = runIntake_();
 has(r.results[0].errors.join(" / "), "対象月", "営-8 対象月の書き方違いを止める");
 has(r.results[0].errors.join(" / "), "コースID", "営-9 C01〜C10以外のコースIDを止める");
