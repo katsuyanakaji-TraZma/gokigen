@@ -1,0 +1,131 @@
+{
+  "ledger": "eigyobu",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-26",
+  "title": "営業部の物差し（Udemy Business経由の内訳・クーポン別の購入数）",
+  "howToUse": "毎月1日に代表が送るUdemy講師画面のスクショ2枚（パフォーマンス概要のUdemy Business部分／クーポン画面）から、前月ぶんの数字を1本のJSONにする。講座別の新規登録数はここに書かない（Udemy台帳＝udemy が正）。",
+  "fileNamePattern": "^intake_eigyobu_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
+  "mimeType": "application/json",
+  "sheetName": "営業部_物差し台帳_base",
+  "folder": "eigyobu",
+  "shape": "rows",
+  "rowsKey": "rows",
+  "rowCount": {
+    "min": 1,
+    "max": 60
+  },
+  "dateKey": "date",
+  "fields": {
+    "date": {
+      "type": "date",
+      "required": true,
+      "sameAsFileDate": true,
+      "col": "記録日",
+      "label": "記録日"
+    },
+    "month": {
+      "type": "string",
+      "required": true,
+      "pattern": "^\\d{4}-\\d{2}$",
+      "col": "対象月",
+      "label": "対象月（YYYY-MM）"
+    },
+    "src": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 80,
+      "col": "出所",
+      "label": "出所"
+    }
+  },
+  "rowFields": {
+    "kind": {
+      "type": "enum",
+      "required": true,
+      "enum": [
+        "UB登録",
+        "UB視聴分",
+        "UB収益USD",
+        "クーポン購入"
+      ],
+      "col": "種別",
+      "label": "種別"
+    },
+    "course_id": {
+      "type": "enum",
+      "nullable": true,
+      "enum": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10"
+      ],
+      "col": "コースID",
+      "label": "コースID"
+    },
+    "course": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 120,
+      "col": "講座名",
+      "label": "講座名"
+    },
+    "coupon": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 60,
+      "col": "クーポンコード",
+      "label": "クーポンコード"
+    },
+    "value": {
+      "type": "number",
+      "required": true,
+      "min": 0,
+      "max": 1000000,
+      "col": "数",
+      "label": "数"
+    },
+    "memo": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 200,
+      "col": "メモ",
+      "label": "メモ"
+    }
+  },
+  "example": {
+    "date": "2026-10-01",
+    "month": "2026-09",
+    "src": "Udemy講師画面スクショ2枚（代表・10/1）",
+    "rows": [
+      {
+        "kind": "UB登録",
+        "course_id": "C01",
+        "course": "【異動・昇進】組織適応の教科書",
+        "coupon": null,
+        "value": 12,
+        "memo": ""
+      },
+      {
+        "kind": "クーポン購入",
+        "course_id": "C09",
+        "course": "部下・新人をいち早く成長させる人材育成法",
+        "coupon": "SEP2026",
+        "value": 5,
+        "memo": ""
+      }
+    ]
+  },
+  "notes": [
+    "講座ごとの行は course_id（C01〜C10）を必ず書く。講座をまたぐ合計の行（「全体」「合計」）は書かない。",
+    "スクショに出ていない数字は書かない（推測で埋めない）。読めなかったものは行を作らず、点呼で代表に一言で伝える。",
+    "同じ記録日に2回入れたら、あとの時刻（ファイル名のHHMM）が正本。",
+    "取り込んだあと、Mac mini の営業部が 📦_取込済 の JSON を読んで ~/DTD/台帳/営業部_物差し.md に写す。"
+  ]
+}

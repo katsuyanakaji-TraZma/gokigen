@@ -31,7 +31,7 @@ var V2 = {
   schemaName:    'schema',
   archiveV1Name: '_v1アーカイブ',
   backupPrefix:  '🗄_backup-v2前_',
-  ledgers: ['gokigen', 'udemy', 'note', 'economy', 'limitless', 'places', 'teizan'],
+  ledgers: ['gokigen', 'udemy', 'note', 'economy', 'limitless', 'places', 'teizan', 'eigyobu'],
   // schemaの正本はリポジトリ（schema/*.json）。Driveへはここから配る。
   schemaUrlBase: 'https://gokigen-iota.vercel.app/schema/',
   slackProp:     'SLACK_WEBHOOK_URL',
@@ -327,6 +327,7 @@ function v2Summary_(ledger, payload, rows) {
   if (ledger === 'note')      return n + '行';
   if (ledger === 'places')    return n + 'か所';
   if (ledger === 'teizan')    return n + '座';
+  if (ledger === 'eigyobu')   return (payload && payload.month ? payload.month + ' ' : '') + n + '行';
   return n + '行';
 }
 
@@ -352,6 +353,8 @@ function v2LedgerFolderId_(key) {
     limitless: CONFIG.limitlessFolderId,
     eco:       CONFIG.ecoFolderId
   };
+  // 営業部の物差しは GOKIGEN台帳フォルダの下の「営業部_物差し」フォルダへ（直下ではないので update-data.gs は読まない）
+  if (key === 'eigyobu') return v2Folder_('営業部_物差し').getId();
   return m[key] || CONFIG.gokigenFolderId;
 }
 

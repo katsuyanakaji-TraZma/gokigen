@@ -93,7 +93,12 @@ Claude側の手順です。本人がやることは**これまでと同じ「ス
 **禁止**：自由文の台帳ファイルを作ること／台帳フォルダへ直接書き込むこと。
 （GAS側も、台帳フォルダに置かれた新しいファイルは読みません）
 
-台帳の名前は7つ：`gokigen` / `udemy` / `note` / `economy` / `limitless` / `places` / `teizan`
+台帳の名前は8つ：`gokigen` / `udemy` / `note` / `economy` / `limitless` / `places` / `teizan` / `eigyobu`
+
+`eigyobu`（2026-09-26追加）＝営業部の物差し。毎月1日に代表が送るUdemy講師画面のスクショ2枚（パフォーマンス概要のUdemy Business部分／クーポン画面）から、前月のUB経由の内訳とクーポン別の購入数を書く。
+行き先は GOKIGEN台帳フォルダの下の「営業部_物差し」フォルダの「営業部_物差し台帳_base」（直下ではないので update-data.gs は読まない＝アプリには出ない）。
+Mac mini の `~/DTD/bin/eigyobu_monosashi.py` が 📦_取込済 の JSON を読み、`~/DTD/台帳/営業部_物差し.md` に写す。
+追加したとき一度だけ：intake-v2.gs を貼り替え → `syncSchemasToDrive()` を1回実行（schema/eigyobu.json がDriveに配られる）。
 
 ---
 
