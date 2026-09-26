@@ -557,6 +557,10 @@ put("intake_eigyobu_2026-10-03_0700.json", JSON.stringify({ date: "2026-10-03", 
 r = runIntake_();
 eq(r.ng, 1, "営-11 お客様名（customer など名前の欄）が混ざったらNG");
 eq(rowsOf("営業部_物差し台帳_base").length, 1, "営-12 そのときも台帳に1行も入らない");
+put("intake_eigyobu_2026-10-04_0700.json", JSON.stringify({ date: "2026-10-04", month: "2026-09", src: "",
+  rows: [{ kind: "月次収益USD", course_id: null, coupon: null, channel: null, period: "2026年9月", value: 2828.31, memo: "" }] }));
+r = runIntake_();
+eq(r.ok, 1, "営-13 収益レポートの月次収益（USD・小数）が通る");
 
 console.log("\n【アプリの配線】");
 has(html, 'id="ikBar"', "家画面の最上段に取込バッジのDOMがある");
