@@ -2,8 +2,8 @@
   "ledger": "eigyobu",
   "schemaVersion": 2,
   "updatedAt": "2026-09-26",
-  "title": "営業部の物差し（Udemy Business経由の登録・経路別の内訳）",
-  "howToUse": "毎月1日に代表が送るUdemy講師画面のスクショ2枚（①パフォーマンス→概要→Udemy Businessタブ・過去30日間 ②パフォーマンス→収益の収益レポート）から、前月ぶんを1本のJSONにする。講座別の新規登録数はここに書かない（Udemy台帳＝udemy が正）。",
+  "title": "営業部の物差し（Udemy Business経由の登録・前月の購入明細の集計）",
+  "howToUse": "毎月1日に代表が送るUdemy講師画面のスクショ2枚（①パフォーマンス→概要→Udemy Businessタブ・過去30日間 ②パフォーマンス→収益→前月をクリックした明細）から、前月ぶんを1本のJSONにする。②は購入1件ごとの行を数えて、講座別・クーポンコード別・チャンネル別の件数にまとめる。お客様名は読み取らない・書かない。講座別の新規登録数はここに書かない（Udemy台帳＝udemy が正）。",
   "fileNamePattern": "^intake_eigyobu_\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.json$",
   "mimeType": "application/json",
   "sheetName": "営業部_物差し台帳_base",
@@ -45,18 +45,12 @@
       "enum": [
         "UB登録",
         "UB視聴分",
-        "経路別登録",
-        "経路別収益USD"
+        "講座別購入",
+        "クーポン別購入",
+        "チャンネル別購入"
       ],
       "col": "種別",
       "label": "種別"
-    },
-    "channel": {
-      "type": "string",
-      "nullable": true,
-      "maxLen": 40,
-      "col": "経路",
-      "label": "経路（Udemy Business／あなたのプロモーション 等。画面の表記のまま）"
     },
     "course_id": {
       "type": "enum",
@@ -74,14 +68,28 @@
         "C10"
       ],
       "col": "コースID",
-      "label": "コースID（全講座の数字なら null）"
+      "label": "コースID（講座別購入では必ず書く。全講座の数字なら null）"
+    },
+    "coupon": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 60,
+      "col": "クーポンコード",
+      "label": "クーポンコード（クーポン別購入で書く。クーポン無しの購入は「（なし）」）"
+    },
+    "channel": {
+      "type": "string",
+      "nullable": true,
+      "maxLen": 40,
+      "col": "チャンネル",
+      "label": "チャンネル（チャンネル別購入で書く。明細の表記のまま）"
     },
     "period": {
       "type": "string",
       "nullable": true,
       "maxLen": 40,
       "col": "期間",
-      "label": "期間（画面の表記。例：過去30日間）"
+      "label": "期間（画面の表記。例：過去30日間／2026年9月）"
     },
     "value": {
       "type": "number",
@@ -89,14 +97,14 @@
       "min": 0,
       "max": 1000000,
       "col": "数",
-      "label": "数"
+      "label": "数（件数）"
     },
     "memo": {
       "type": "string",
       "nullable": true,
       "maxLen": 200,
       "col": "メモ",
-      "label": "メモ"
+      "label": "メモ（お客様名は書かない）"
     }
   },
   "example": {
@@ -106,42 +114,55 @@
     "rows": [
       {
         "kind": "UB登録",
-        "channel": "Udemy Business",
         "course_id": null,
+        "coupon": null,
+        "channel": null,
         "period": "過去30日間",
         "value": 1200,
         "memo": "①UBタブ"
       },
       {
-        "kind": "経路別登録",
-        "channel": "Udemy Business",
-        "course_id": null,
+        "kind": "講座別購入",
+        "course_id": "C09",
+        "coupon": null,
+        "channel": null,
         "period": "2026年9月",
-        "value": 1200,
-        "memo": "②収益レポート"
+        "value": 7,
+        "memo": "支払い価格が0より大きい購入"
       },
       {
-        "kind": "経路別登録",
-        "channel": "あなたのプロモーション",
+        "kind": "クーポン別購入",
         "course_id": null,
+        "coupon": "SEP2026",
+        "channel": null,
         "period": "2026年9月",
-        "value": 40,
+        "value": 5,
         "memo": ""
       },
       {
-        "kind": "経路別収益USD",
-        "channel": "Udemy Business",
+        "kind": "クーポン別購入",
         "course_id": null,
+        "coupon": "（なし）",
+        "channel": null,
         "period": "2026年9月",
-        "value": 3000,
+        "value": 3,
+        "memo": ""
+      },
+      {
+        "kind": "チャンネル別購入",
+        "course_id": null,
+        "coupon": null,
+        "channel": "インストラクタークーポン",
+        "period": "2026年9月",
+        "value": 5,
         "memo": ""
       }
     ]
   },
   "notes": [
-    "経路（channel）は画面の表記のまま。「合計」「全体」「総計」の行は書かない（経路の足し算は Mac 側でする）。",
-    "course_id が null の行は全講座の数字。同じ種別で全講座の行と講座別の行を混ぜない（足すと二重になる）。",
-    "スクショに出ていない数字は書かない（推測で埋めない）。読めなかったものは行を作らず、点呼で代表に一言で伝える。",
+    "②の明細は購入1件ごとの行。講座別購入＝支払い価格が0より大きい行を講座ごとに数えた件数。クーポン別購入・チャンネル別購入＝同じ明細をクーポンコードごと・チャンネルごとに数えた件数（こちらは支払い価格0の行も数える）。",
+    "お客様名は読み取らない・書かない（このスキーマに名前の欄は無く、知らないキーは門番が拒否する。メモにも書かない）。",
+    "「合計」「全体」の行は書かない（足し算は Mac 側でする）。スクショに出ていない数字は書かない（推測で埋めない）。",
     "同じ記録日に2回入れたら、あとの時刻（ファイル名のHHMM）が正本。",
     "取り込んだあと、Mac mini の営業部が 📦_取込済 の JSON を読んで ~/DTD/台帳/営業部_物差し.md に写す。"
   ]

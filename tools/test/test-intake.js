@@ -523,8 +523,8 @@ console.log("\n【営業部】eigyobu の取込");
 const EIGYO_OK = {
   date: "2026-10-01", month: "2026-09", src: "Udemy講師画面スクショ2枚",
   rows: [
-    { kind: "UB登録", channel: "Udemy Business", course_id: null, period: "過去30日間", value: 1200, memo: "" },
-    { kind: "経路別登録", channel: "あなたのプロモーション", course_id: null, period: "2026年9月", value: 40, memo: "" }
+    { kind: "UB登録", course_id: null, coupon: null, channel: null, period: "過去30日間", value: 1200, memo: "" },
+    { kind: "クーポン別購入", course_id: null, coupon: "SEP2026", channel: null, period: "2026年9月", value: 5, memo: "" }
   ]
 };
 put("intake_eigyobu_2026-10-01_0700.json", JSON.stringify(EIGYO_OK));
@@ -542,15 +542,21 @@ r = runIntake_();
 eq(rowsOf("営業部_物差し台帳_base").length, 1, "営-6 同じ記録日は置き換わる（二重にならない）");
 // 合計行・知らない種別は止める
 put("intake_eigyobu_2026-10-02_0700.json", JSON.stringify({ date: "2026-10-02", month: "2026-09", src: "",
-  rows: [{ kind: "合計", channel: "全体", course_id: null, period: "", value: 300, memo: "" }] }));
+  rows: [{ kind: "合計", course_id: null, coupon: null, channel: "全体", period: "", value: 300, memo: "" }] }));
 r = runIntake_();
 eq(r.ng, 1, "営-7 種別「合計」はNG");
 put("intake_eigyobu_2026-10-02_0701.json", JSON.stringify({ date: "2026-10-02", month: "2026年9月", src: "",
-  rows: [{ kind: "UB登録", channel: "Udemy Business", course_id: "C11", period: "", value: 1, memo: "" }] }));
+  rows: [{ kind: "講座別購入", course_id: "C11", coupon: null, channel: null, period: "", value: 1, memo: "" }] }));
 r = runIntake_();
 has(r.results[0].errors.join(" / "), "対象月", "営-8 対象月の書き方違いを止める");
 has(r.results[0].errors.join(" / "), "コースID", "営-9 C01〜C10以外のコースIDを止める");
 eq(rowsOf("営業部_物差し台帳_base").length, 1, "営-10 NGのときは台帳に1行も入らない");
+// お客様名は入れさせない（名前の欄は無い＝知らないキーとして止まる）
+put("intake_eigyobu_2026-10-03_0700.json", JSON.stringify({ date: "2026-10-03", month: "2026-09", src: "",
+  rows: [{ kind: "講座別購入", course_id: "C01", coupon: null, channel: null, period: "", value: 1, memo: "", customer: "山田太郎" }] }));
+r = runIntake_();
+eq(r.ng, 1, "営-11 お客様名（customer など名前の欄）が混ざったらNG");
+eq(rowsOf("営業部_物差し台帳_base").length, 1, "営-12 そのときも台帳に1行も入らない");
 
 console.log("\n【アプリの配線】");
 has(html, 'id="ikBar"', "家画面の最上段に取込バッジのDOMがある");

@@ -95,7 +95,7 @@ Claude側の手順です。本人がやることは**これまでと同じ「ス
 
 台帳の名前は8つ：`gokigen` / `udemy` / `note` / `economy` / `limitless` / `places` / `teizan` / `eigyobu`
 
-`eigyobu`（2026-09-26追加）＝営業部の物差し。毎月1日に代表が送るUdemy講師画面のスクショ2枚（①パフォーマンス→概要→Udemy Businessタブ・過去30日間 ②パフォーマンス→収益の収益レポート）から、前月のUB経由の登録数と経路別の内訳（Udemy Business／あなたのプロモーション 等）を書く。
+`eigyobu`（2026-09-26追加）＝営業部の物差し。毎月1日に代表が送るUdemy講師画面のスクショ2枚（①パフォーマンス→概要→Udemy Businessタブ・過去30日間 ②パフォーマンス→収益→前月をクリックした明細）から、前月のUB経由の登録数と、明細を数えた講座別の実費購入件数・クーポンコード別・チャンネル別の件数を書く。お客様名は読まない・書かない。
 行き先は GOKIGEN台帳フォルダの下の「営業部_物差し」フォルダの「営業部_物差し台帳_base」（直下ではないので update-data.gs は読まない＝アプリには出ない）。
 Mac mini の `~/DTD/bin/eigyobu_monosashi.py` が 📦_取込済 の JSON を読み、`~/DTD/台帳/営業部_物差し.md` に写す。
 追加したとき一度だけ：intake-v2.gs を貼り替え → `syncSchemasToDrive()` を1回実行（schema/eigyobu.json がDriveに配られる）。
