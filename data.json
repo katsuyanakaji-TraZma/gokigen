@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-09-29T06:22:56+09:00",
+  "generatedAt": "2026-09-29T08:29:07+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-09-29 06:22",
+      "at": "2026-09-29 08:28",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2148
+        "rows": 2158
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 228
+        "rows": 229
       }
     ],
     "ecoFiles": [
@@ -1328,6 +1332,23 @@
       "dining": null,
       "routine": null,
       "note": "Ouraコンディション73「習慣を見直してみませんか？」(昨夜遅い時間に心拍数が低下し完全回復していない可能性・就寝間際の夕食は代謝が活発になり過ぎることも)・レジリエンスやや不足・睡眠76・アクティビティ77(7:35)。あすけん体重83.2kg(1年前スタート84.0kgから-0.8kg)・体脂肪30.3%・筋肉量55.1kg・内臓脂肪Lv10・体内年齢61(7:28)。"
+    },
+    {
+      "date": "2026-09-29",
+      "dow": "火",
+      "weight": 82.5,
+      "fat": 30,
+      "muscle": 54.9,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 70,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Ouraコンディション74「食べたものが原因ですか？」(昨夜は遅くに心拍数が低下・消化器系が無理しませんでしたか？)・レジリエンスやや不足・睡眠70・アクティビティ71(7:54)。あすけん体重82.5kg・体脂肪30.0%・筋肉量54.9kg・内臓脂肪Lv10・体内年齢61(7:39)。"
     }
   ],
   "udemyCourses": [
@@ -1403,82 +1424,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-08-25",
-      "time": "7:31",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 439,
-          "monthEnroll": 248,
-          "cumRevenue": 235.23,
-          "rating": null
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 4934,
-          "monthEnroll": 195,
-          "cumRevenue": 7864.4,
-          "rating": null
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2813,
-          "monthEnroll": 74,
-          "cumRevenue": 4461.73,
-          "rating": null
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4008,
-          "monthEnroll": 53,
-          "cumRevenue": 3839.26,
-          "rating": null
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4540,
-          "monthEnroll": 62,
-          "cumRevenue": 7354.36,
-          "rating": null
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7698,
-          "monthEnroll": 82,
-          "cumRevenue": 14896.8,
-          "rating": null
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4871,
-          "monthEnroll": 32,
-          "cumRevenue": 11282.77,
-          "rating": null
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8119,
-          "monthEnroll": 34,
-          "cumRevenue": 26405.16,
-          "rating": null
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15111,
-          "monthEnroll": 266,
-          "cumRevenue": 48696.8,
-          "rating": null
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17881,
-          "monthEnroll": 164,
-          "cumRevenue": 67517.48,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2026-08-26",
       "time": "7:05",
@@ -3680,6 +3625,82 @@
           "monthEnroll": 230,
           "cumRevenue": 68074.75,
           "rating": 4.13
+        }
+      ]
+    },
+    {
+      "date": "2026-09-29",
+      "time": "7:53",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 532,
+          "monthEnroll": 53,
+          "cumRevenue": 517.95,
+          "rating": 4.46
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5285,
+          "monthEnroll": 267,
+          "cumRevenue": 8264.52,
+          "rating": 4.13
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2927,
+          "monthEnroll": 91,
+          "cumRevenue": 4570.99,
+          "rating": 4.1
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4116,
+          "monthEnroll": 72,
+          "cumRevenue": 3897.24,
+          "rating": 4.16
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4611,
+          "monthEnroll": 54,
+          "cumRevenue": 7429.7,
+          "rating": 4
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7911,
+          "monthEnroll": 179,
+          "cumRevenue": 15046.29,
+          "rating": 4.14
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4967,
+          "monthEnroll": 85,
+          "cumRevenue": 11369.39,
+          "rating": 4.11
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8154,
+          "monthEnroll": 27,
+          "cumRevenue": 26495.23,
+          "rating": 3.97
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15583,
+          "monthEnroll": 382,
+          "cumRevenue": 49624.89,
+          "rating": 4.09
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18203,
+          "monthEnroll": 245,
+          "cumRevenue": 68074.75,
+          "rating": 4.12
         }
       ]
     }
@@ -6814,66 +6835,59 @@
     },
     {
       "ym": "2026-09",
-      "enroll": 72152,
-      "newEnroll": 1398,
+      "enroll": 72289,
+      "newEnroll": 1535,
       "revenue": 195290.95,
-      "officialNew": 1317,
-      "officialAsOf": "2026-09-26",
+      "officialNew": 1455,
+      "officialAsOf": "2026-09-29",
       "from": "2026-08-31",
-      "to": "2026-09-26",
-      "records": 23,
+      "to": "2026-09-29",
+      "records": 24,
       "byCourse": {
         "C01": {
-          "enroll": 530,
+          "enroll": 532,
           "revenue": 517.95
         },
         "C02": {
-          "enroll": 5259,
+          "enroll": 5285,
           "revenue": 8264.52
         },
         "C03": {
-          "enroll": 2914,
+          "enroll": 2927,
           "revenue": 4570.99
         },
         "C04": {
-          "enroll": 4108,
+          "enroll": 4116,
           "revenue": 3897.24
         },
         "C05": {
-          "enroll": 4608,
+          "enroll": 4611,
           "revenue": 7429.7
         },
         "C06": {
-          "enroll": 7892,
+          "enroll": 7911,
           "revenue": 15046.29
         },
         "C07": {
-          "enroll": 4954,
+          "enroll": 4967,
           "revenue": 11369.39
         },
         "C08": {
-          "enroll": 8152,
+          "enroll": 8154,
           "revenue": 26495.23
         },
         "C09": {
-          "enroll": 15547,
+          "enroll": 15583,
           "revenue": 49624.89
         },
         "C10": {
-          "enroll": 18188,
+          "enroll": 18203,
           "revenue": 68074.75
         }
       }
     }
   ],
   "warnings": [
-    {
-      "level": "info",
-      "kind": "stale",
-      "course": null,
-      "date": "2026-09-26",
-      "text": "Udemy台帳が3日更新されていません（最新の記録は 2026-09-26）"
-    },
     {
       "level": "info",
       "kind": "enrollDrop",
@@ -7029,7 +7043,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 228
+        "rows": 229
       }
     ],
     "rows": [
@@ -9610,6 +9624,18 @@
         "text": "月刊ごきげんの「最近一番うまくいっていることは」という問いを「没頭していること」「夢中になっていること」「ワクワクしていること」の3つに整理して差し替え決定。虎島エイド紹介ページはQR読み取り精度向上のため写真を上にずらしQRを大きく配置決定",
         "who": null,
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-09-28",
+        "ver": "57.05",
+        "kinds": [],
+        "unsure": [
+          "教え"
+        ],
+        "kindsText": "💡教え?",
+        "text": "「100kmウルトラウォーク」を企業研修化するアイデア。チームで24時間かけて100kmを歩き抜く体験を、組織開発・チームビルディング研修として商品化し、実践と振り返りで組織の結束と個人の挑戦心を育む",
+        "who": null,
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -9715,7 +9741,7 @@
     "week": {
       "from": "2026-09-27",
       "to": "2026-10-03",
-      "rows": 10,
+      "rows": 11,
       "counts": {
         "教え": 0,
         "トライ": 3,
@@ -9728,7 +9754,7 @@
     "month": {
       "from": "2026-09-01",
       "to": "2026-09-30",
-      "rows": 91,
+      "rows": 92,
       "counts": {
         "教え": 12,
         "トライ": 26,
@@ -9739,6 +9765,16 @@
       }
     },
     "recent": [
+      {
+        "date": "2026-09-28",
+        "kinds": [],
+        "unsure": [
+          "教え"
+        ],
+        "kindsText": "💡教え?",
+        "text": "「100kmウルトラウォーク」を企業研修化するアイデア。チームで24時間かけて100kmを歩き抜く体験を、組織開発・チームビルディング研修として商品化し、実践と振り返りで組織の結束と個人の挑戦心を育む",
+        "who": null
+      },
       {
         "date": "2026-09-27",
         "kinds": [
@@ -9778,19 +9814,9 @@
         "kindsText": "💡教え?",
         "text": "冊子11ページの「900個のポーチには〇〇があります」というデザイナー(ひなた青いさん)記載の一節の真意が未解決",
         "who": null
-      },
-      {
-        "date": "2026-09-27",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📚学び",
-        "text": "モンベルが直営店メインで展開するのはブランド価値と価格のコントロール(値崩れ防止)のため。値下げ競争に巻き込まれない仕組みが信頼性を担保する",
-        "who": null
       }
     ],
-    "total": 228,
+    "total": 229,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
