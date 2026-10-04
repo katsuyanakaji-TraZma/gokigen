@@ -1,15 +1,11 @@
 {
-  "generatedAt": "2026-10-04T08:30:14+09:00",
+  "generatedAt": "2026-10-04T12:41:52+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-04 08:28",
+      "at": "2026-10-04 12:40",
       "slack": "OK",
-      "ok": [
-        "gokigen",
-        "limitless",
-        "udemy"
-      ],
+      "ok": [],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -11394,11 +11390,11 @@
   "weekly": {
     "folderId": "1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk",
     "folderUrl": "https://drive.google.com/drive/folders/1sV-u0tf2EJ0cEgUbI2Rt1fzS_gLWNRSk",
-    "count": 2,
+    "count": 3,
     "latest": {
-      "name": "週報_2026-09-06",
-      "url": "https://docs.google.com/document/d/1oxNAZGFDusNvYmKnpUjLGzIQehZcNmxUueF2YvUNUnQ/edit?usp=drivesdk",
-      "modified": "2026-09-06 07:13"
+      "name": "リミットレス週報_2026-10-04（ver57.6・9/27〜10/3＋月初重ね塗り）",
+      "url": "https://docs.google.com/document/d/1CsElzZhKuUCUfGHX8bNIKflgGbv-m-2uh_YqGeXqXdk/edit?usp=drivesdk",
+      "modified": "2026-10-04 09:21"
     }
   },
   "calendar": {
@@ -11408,21 +11404,14 @@
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
-    "count": 26,
+    "count": 25,
     "events": [
       {
         "date": "2026-10-06",
         "ym": "2026-10",
-        "title": "🎁ご褒美枠｜空き（客/師/恩/友/家族）",
-        "kind": "open",
-        "cat": null
-      },
-      {
-        "date": "2026-10-09",
-        "ym": "2026-10",
-        "title": "🎁ご褒美枠｜空き（客/師/恩/友）",
-        "kind": "open",
-        "cat": null
+        "title": "🎁ご褒美枠（師匠枠・予約済）｜4628 ひとり社長の会",
+        "kind": "booked",
+        "cat": "mentor"
       },
       {
         "date": "2026-10-10",
@@ -11434,8 +11423,8 @@
       {
         "date": "2026-10-16",
         "ym": "2026-10",
-        "title": "🎁ご褒美枠｜空き（客/師/恩/友/家族）",
-        "kind": "open",
+        "title": "🎁ご褒美枠（仕事枠・予約済）｜セルム 尾池さんたちと懇親会",
+        "kind": "booked",
         "cat": null
       },
       {
