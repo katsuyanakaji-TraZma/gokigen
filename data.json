@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-10-05T22:49:34+09:00",
+  "generatedAt": "2026-10-06T06:23:13+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-05 22:48",
+      "at": "2026-10-06 06:22",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -14,7 +18,7 @@
   },
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-10-05",
+    "asOf": "2026-10-06",
     "major": 57,
     "minor": 6,
     "months": 690,
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2218
+        "rows": 2228
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 269
+        "rows": 274
       }
     ],
     "ecoFiles": [
@@ -1447,6 +1451,23 @@
       "dining": "ランチ：インドカレーのセット（ナン・カレー2種・タンドリーチキン・黄色いライス・サラダ）",
       "routine": null,
       "note": "Ouraコンディション80「動きを増やしてエネルギーアップ」、レジリエンスやや不足。睡眠「短時間でもしっかり修復」：合計5時間32分・深い睡眠55分。睡眠アプリ：就床0:46・起床6:45・睡眠5時間53分・快眠96.8。昼寝：14:33就床・14:59入眠・16:00起床、睡眠60分・効率68.9%・快眠60.0。Ouraストレス管理：累積ストレス「高い」（今週）・ケアが必要「現状維持」、9月から高い状態が続く。本人「ストレスは最近高め」。体組成は7:49あすけん（1640版が正本）"
+    },
+    {
+      "date": "2026-10-06",
+      "dow": "火",
+      "weight": null,
+      "fat": null,
+      "muscle": null,
+      "visceral": null,
+      "bodyAge": null,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 65,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Ouraコンディション77「リフレッシュのための休憩」（睡眠の質に何かが影響、こまめな水分補給と短い休憩を）、レジリエンスやや不足。睡眠アプリ：就床1:20・入眠1:25・起床6:10・睡眠4時間39分・効率96.2%・快眠87.3・中途覚醒1。体組成は未着のため空欄"
     }
   ],
   "udemyCourses": [
@@ -1522,82 +1543,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-09-01",
-      "time": "6:45",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 477,
-          "monthEnroll": 286,
-          "cumRevenue": 237.84,
-          "rating": null
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 5014,
-          "monthEnroll": 277,
-          "cumRevenue": 7869.23,
-          "rating": null
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2833,
-          "monthEnroll": 94,
-          "cumRevenue": 4461.73,
-          "rating": null
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4045,
-          "monthEnroll": 91,
-          "cumRevenue": 3839.26,
-          "rating": null
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4556,
-          "monthEnroll": 79,
-          "cumRevenue": 7355.42,
-          "rating": null
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7724,
-          "monthEnroll": 109,
-          "cumRevenue": 14896.8,
-          "rating": null
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4882,
-          "monthEnroll": 43,
-          "cumRevenue": 11284.26,
-          "rating": null
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8128,
-          "monthEnroll": 44,
-          "cumRevenue": 26411.63,
-          "rating": null
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15188,
-          "monthEnroll": 343,
-          "cumRevenue": 48702.23,
-          "rating": null
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17953,
-          "monthEnroll": 236,
-          "cumRevenue": 67530.63,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2026-09-02",
       "time": "12:40",
@@ -3798,6 +3743,83 @@
           "id": "C10",
           "cumEnroll": 18243,
           "monthEnroll": 15,
+          "cumRevenue": 68076.91,
+          "rating": 4.18
+        }
+      ]
+    },
+    {
+      "date": "2026-10-06",
+      "time": "6:12",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 546,
+          "monthEnroll": 12,
+          "cumRevenue": 517.95,
+          "rating": 4.39,
+          "note": "累計が前日547→546に1減（月間12は変わらず）。要確認"
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5341,
+          "monthEnroll": 26,
+          "cumRevenue": 8264.91,
+          "rating": 4.16
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2946,
+          "monthEnroll": 9,
+          "cumRevenue": 4570.99,
+          "rating": 4.16
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4131,
+          "monthEnroll": 12,
+          "cumRevenue": 3897.24,
+          "rating": 4.16
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4623,
+          "monthEnroll": 7,
+          "cumRevenue": 7429.7,
+          "rating": 3.98
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7944,
+          "monthEnroll": 24,
+          "cumRevenue": 15047.82,
+          "rating": 4.11
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 5004,
+          "monthEnroll": 17,
+          "cumRevenue": 11369.39,
+          "rating": 4.1
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8165,
+          "monthEnroll": 6,
+          "cumRevenue": 26495.71,
+          "rating": 3.89
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15700,
+          "monthEnroll": 52,
+          "cumRevenue": 49636.68,
+          "rating": 4.08
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18246,
+          "monthEnroll": 19,
           "cumRevenue": 68076.91,
           "rating": 4.18
         }
@@ -6987,59 +7009,66 @@
     },
     {
       "ym": "2026-10",
-      "enroll": 72614,
-      "newEnroll": 325,
+      "enroll": 72646,
+      "newEnroll": 357,
       "revenue": 195307.3,
-      "officialNew": 149,
-      "officialAsOf": "2026-10-05",
+      "officialNew": 184,
+      "officialAsOf": "2026-10-06",
       "from": "2026-09-30",
-      "to": "2026-10-05",
-      "records": 5,
+      "to": "2026-10-06",
+      "records": 6,
       "byCourse": {
         "C01": {
-          "enroll": 547,
+          "enroll": 546,
           "revenue": 517.95
         },
         "C02": {
-          "enroll": 5340,
+          "enroll": 5341,
           "revenue": 8264.91
         },
         "C03": {
-          "enroll": 2945,
+          "enroll": 2946,
           "revenue": 4570.99
         },
         "C04": {
-          "enroll": 4127,
+          "enroll": 4131,
           "revenue": 3897.24
         },
         "C05": {
-          "enroll": 4621,
+          "enroll": 4623,
           "revenue": 7429.7
         },
         "C06": {
-          "enroll": 7939,
+          "enroll": 7944,
           "revenue": 15047.82
         },
         "C07": {
-          "enroll": 4997,
+          "enroll": 5004,
           "revenue": 11369.39
         },
         "C08": {
-          "enroll": 8163,
+          "enroll": 8165,
           "revenue": 26495.71
         },
         "C09": {
-          "enroll": 15692,
+          "enroll": 15700,
           "revenue": 49636.68
         },
         "C10": {
-          "enroll": 18243,
+          "enroll": 18246,
           "revenue": 68076.91
         }
       }
     }
   ],
   "warnings": [
+    {
+      "level": "info",
+      "kind": "enrollDrop",
+      "course": "C01",
+      "date": "2026-10-06",
+      "text": "C01 組織適応の教科書の累計登録が 2026-10-05 の 547人 → 2026-10-06 の 546人 と1人減っています（返金などの小さな揺らぎとみられます）"
+    },
     {
       "level": "info",
       "kind": "enrollDrop",
@@ -7195,7 +7224,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 269
+        "rows": 274
       }
     ],
     "rows": [
@@ -10269,6 +10298,66 @@
         "text": "巻き込み力とは、have toで煽ることではなく、相乗りしたくなる物語を見せて「やらないともったいない」と思わせること",
         "who": null,
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-05",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "100kmウォークの準備：リュックは濡れる前提で中身をジップロック等で防水する／手のむくみ対策に手を心臓より高く保つ工夫を考える（装備の会話で出た話）",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-05",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "レインジャケットなのに柔らかく、今まで持っていたものより通気性がずっといい。雨具はシャカシャカするもの、という思い込みが覆った",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-05",
+        "ver": "57.06",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "家族とお刺身を囲み、「サク」の語源を調べて納得。サッカー日本代表戦で上田綺世選手のゴールに一緒に沸いた",
+        "who": "家族",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-05",
+        "ver": "57.06",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "家族に「なんで同じようなものばかりあるの」と突っ込まれ、「機能はしてたな…」と苦笑い",
+        "who": "家族",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-05",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "尾張三河100kmウォークに向けて装備を新調。レインウェアはミレーのティフォンジャケット（XL）、雨と夜道用にモンベルのトレッキングアンブレラ（リフレックス・ホワイト）、休憩時の防寒にユニクロのウルトラライトダウンを選んだ",
+        "who": null,
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -10381,7 +10470,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-10-05",
+    "asOf": "2026-10-06",
     "kinds": [
       "教え",
       "トライ",
@@ -10393,82 +10482,82 @@
     "week": {
       "from": "2026-10-04",
       "to": "2026-10-10",
-      "rows": 7,
+      "rows": 12,
       "counts": {
         "教え": 0,
-        "トライ": 1,
+        "トライ": 2,
         "初めて": 0,
-        "学び": 4,
-        "人": 2,
+        "学び": 6,
+        "人": 4,
         "もがき": 0
       }
     },
     "month": {
       "from": "2026-10-01",
       "to": "2026-10-31",
-      "rows": 30,
+      "rows": 35,
       "counts": {
         "教え": 4,
-        "トライ": 6,
+        "トライ": 7,
         "初めて": 1,
-        "学び": 9,
-        "人": 6,
+        "学び": 11,
+        "人": 8,
         "もがき": 2
       }
     },
     "recent": [
       {
-        "date": "2026-10-04",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📖学び",
-        "text": "巻き込み力とは、have toで煽ることではなく、相乗りしたくなる物語を見せて「やらないともったいない」と思わせること",
-        "who": null
-      },
-      {
-        "date": "2026-10-04",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🧑‍🤝‍🧑人",
-        "text": "家族が一人でくら寿司に行ってきた話で笑い合った。ハナちゃんの散歩、歩数7,000歩の報告",
-        "who": "家族"
-      },
-      {
-        "date": "2026-10-04",
+        "date": "2026-10-05",
         "kinds": [
           "トライ"
         ],
         "unsure": [],
         "kindsText": "🔥トライ",
-        "text": "勉強会で学んだ手法を即実践し、ClaudeにKDPのカテゴリー変更を操作させた（10〜15分で完了）。「まさにこういう時代になった」",
-        "who": "Claude"
-      },
-      {
-        "date": "2026-10-04",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📖学び",
-        "text": "トラジマ全国大会は内輪ネタに偏らないよう、一人ひとりの自己変容や手に入れたギフトを語り合う分科会形式にする。メンバーが家族やパートナーを連れて行きたくなる場をめざす",
+        "text": "尾張三河100kmウォークに向けて装備を新調。レインウェアはミレーのティフォンジャケット（XL）、雨と夜道用にモンベルのトレッキングアンブレラ（リフレックス・ホワイト）、休憩時の防寒にユニクロのウルトラライトダウンを選んだ",
         "who": null
       },
       {
-        "date": "2026-10-04",
+        "date": "2026-10-05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "家族に「なんで同じようなものばかりあるの」と突っ込まれ、「機能はしてたな…」と苦笑い",
+        "who": "家族"
+      },
+      {
+        "date": "2026-10-05",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "家族とお刺身を囲み、「サク」の語源を調べて納得。サッカー日本代表戦で上田綺世選手のゴールに一緒に沸いた",
+        "who": "家族"
+      },
+      {
+        "date": "2026-10-05",
         "kinds": [
           "学び"
         ],
         "unsure": [],
         "kindsText": "📖学び",
-        "text": "トラジマは2020年5月、コロナ禍で孤軍奮闘するリーダーを横でつなぐために始めた。初回40人。「1人きりにさせない」が原点で、7年目の今は100kmウォーカーが50人を超える",
+        "text": "レインジャケットなのに柔らかく、今まで持っていたものより通気性がずっといい。雨具はシャカシャカするもの、という思い込みが覆った",
+        "who": null
+      },
+      {
+        "date": "2026-10-05",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "100kmウォークの準備：リュックは濡れる前提で中身をジップロック等で防水する／手のむくみ対策に手を心臓より高く保つ工夫を考える（装備の会話で出た話）",
         "who": null
       }
     ],
-    "total": 269,
+    "total": 274,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
@@ -11499,9 +11588,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-10-05",
-    "from": "2026-10-05",
-    "to": "2027-04-05",
+    "asOf": "2026-10-06",
+    "from": "2026-10-06",
+    "to": "2027-04-06",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
