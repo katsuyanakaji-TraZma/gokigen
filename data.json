@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-05T06:22:51+09:00",
+  "generatedAt": "2026-10-05T12:42:11+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-05 06:22",
+      "at": "2026-10-05 12:40",
       "slack": "OK",
       "ok": [],
       "ng": [],
@@ -32,7 +32,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2208
+        "rows": 2218
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +54,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 262
+        "rows": 269
       }
     ],
     "ecoFiles": [
@@ -1430,6 +1430,23 @@
       "dining": null,
       "routine": null,
       "note": "朝：Ouraコンディション76「スローダウン」、睡眠アプリ快眠93.1・睡眠5時間59分。午後に昼寝（約15:30から90分）→20:49時点でコンディション81「いいタイミング！」、睡眠91「最適・十分な昼寝」（合計睡眠6時間46分）、日中ストレス0分・回復5時間15分。数値欄は朝の値のまま"
+    },
+    {
+      "date": "2026-10-05",
+      "dow": "月",
+      "weight": 82.8,
+      "fat": 30.1,
+      "muscle": 55,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 75,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Ouraコンディション80「動きを増やしてエネルギーアップ」、レジリエンスやや不足。睡眠「短時間でもしっかり修復」：合計5時間32分・効率85%・レム1時間42分・深い睡眠55分。睡眠アプリ：就床0:46・起床6:45・睡眠5時間53分・効率98.1%・快眠スコア96.8。10/4の日中はストレス0分・回復6時間「修復の日」（昼寝あり）。体組成は7:49あすけん（0710版を置き換える正本）"
     }
   ],
   "udemyCourses": [
@@ -1505,82 +1522,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-08-31",
-      "time": "8:07",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 474,
-          "monthEnroll": 283,
-          "cumRevenue": 237.84,
-          "rating": null
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 5002,
-          "monthEnroll": 265,
-          "cumRevenue": 7869.23,
-          "rating": null
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2832,
-          "monthEnroll": 93,
-          "cumRevenue": 4461.73,
-          "rating": null
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4041,
-          "monthEnroll": 87,
-          "cumRevenue": 3839.26,
-          "rating": null
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4554,
-          "monthEnroll": 77,
-          "cumRevenue": 7355.42,
-          "rating": null
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7724,
-          "monthEnroll": 109,
-          "cumRevenue": 14896.8,
-          "rating": null
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4882,
-          "monthEnroll": 43,
-          "cumRevenue": 11284.26,
-          "rating": null
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8126,
-          "monthEnroll": 42,
-          "cumRevenue": 26411.63,
-          "rating": null
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15178,
-          "monthEnroll": 333,
-          "cumRevenue": 48702.23,
-          "rating": null
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17941,
-          "monthEnroll": 224,
-          "cumRevenue": 67530.63,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2026-09-01",
       "time": "6:45",
@@ -3783,6 +3724,82 @@
           "monthEnroll": 10,
           "cumRevenue": 68076.91,
           "rating": 4.15
+        }
+      ]
+    },
+    {
+      "date": "2026-10-05",
+      "time": "7:05",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 547,
+          "monthEnroll": 12,
+          "cumRevenue": 517.95,
+          "rating": 4.39
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5340,
+          "monthEnroll": 24,
+          "cumRevenue": 8264.91,
+          "rating": 4.16
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2945,
+          "monthEnroll": 8,
+          "cumRevenue": 4570.99,
+          "rating": 4.14
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4127,
+          "monthEnroll": 8,
+          "cumRevenue": 3897.24,
+          "rating": 4.18
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4621,
+          "monthEnroll": 5,
+          "cumRevenue": 7429.7,
+          "rating": 3.98
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7939,
+          "monthEnroll": 19,
+          "cumRevenue": 15047.82,
+          "rating": 4.12
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 4997,
+          "monthEnroll": 10,
+          "cumRevenue": 11369.39,
+          "rating": 4.1
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8163,
+          "monthEnroll": 4,
+          "cumRevenue": 26495.71,
+          "rating": 3.89
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15692,
+          "monthEnroll": 44,
+          "cumRevenue": 49636.68,
+          "rating": 4.08
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18243,
+          "monthEnroll": 15,
+          "cumRevenue": 68076.91,
+          "rating": 4.18
         }
       ]
     }
@@ -6970,53 +6987,53 @@
     },
     {
       "ym": "2026-10",
-      "enroll": 72555,
-      "newEnroll": 266,
-      "revenue": 195304.25,
-      "officialNew": 90,
-      "officialAsOf": "2026-10-04",
+      "enroll": 72614,
+      "newEnroll": 325,
+      "revenue": 195307.3,
+      "officialNew": 149,
+      "officialAsOf": "2026-10-05",
       "from": "2026-09-30",
-      "to": "2026-10-04",
-      "records": 4,
+      "to": "2026-10-05",
+      "records": 5,
       "byCourse": {
         "C01": {
-          "enroll": 541,
+          "enroll": 547,
           "revenue": 517.95
         },
         "C02": {
-          "enroll": 5334,
+          "enroll": 5340,
           "revenue": 8264.91
         },
         "C03": {
-          "enroll": 2940,
+          "enroll": 2945,
           "revenue": 4570.99
         },
         "C04": {
-          "enroll": 4123,
+          "enroll": 4127,
           "revenue": 3897.24
         },
         "C05": {
-          "enroll": 4617,
+          "enroll": 4621,
           "revenue": 7429.7
         },
         "C06": {
-          "enroll": 7932,
+          "enroll": 7939,
           "revenue": 15047.82
         },
         "C07": {
-          "enroll": 4995,
+          "enroll": 4997,
           "revenue": 11369.39
         },
         "C08": {
-          "enroll": 8159,
+          "enroll": 8163,
           "revenue": 26495.71
         },
         "C09": {
-          "enroll": 15676,
-          "revenue": 49633.63
+          "enroll": 15692,
+          "revenue": 49636.68
         },
         "C10": {
-          "enroll": 18238,
+          "enroll": 18243,
           "revenue": 68076.91
         }
       }
@@ -7178,7 +7195,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 262
+        "rows": 269
       }
     ],
     "rows": [
@@ -10168,6 +10185,90 @@
         "text": "自己開示が過ぎると相手のガードが下がり、相手も本音を話しやすくなる（歯科での会話で自分の話しすぎに気づいた）",
         "who": null,
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-04",
+        "ver": "57.06",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "カテゴリー変更は自分が編み出したように見せず、「Kindle出版部のメンバーから聞いてやってみた」と一文入れると決めた",
+        "who": "Kindle出版部のメンバー",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-04",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "ギフトは外に探しに行くもの（青い鳥）ではなく、すでに自分の中にある。ドキドキするハードルで磨き、誰かのために使い切る",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-04",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "トラジマは2020年5月、コロナ禍で孤軍奮闘するリーダーを横でつなぐために始めた。初回40人。「1人きりにさせない」が原点で、7年目の今は100kmウォーカーが50人を超える",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-04",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "トラジマ全国大会は内輪ネタに偏らないよう、一人ひとりの自己変容や手に入れたギフトを語り合う分科会形式にする。メンバーが家族やパートナーを連れて行きたくなる場をめざす",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-04",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "勉強会で学んだ手法を即実践し、ClaudeにKDPのカテゴリー変更を操作させた（10〜15分で完了）。「まさにこういう時代になった」",
+        "who": "Claude",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-04",
+        "ver": "57.06",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "家族が一人でくら寿司に行ってきた話で笑い合った。ハナちゃんの散歩、歩数7,000歩の報告",
+        "who": "家族",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-04",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "巻き込み力とは、have toで煽ることではなく、相乗りしたくなる物語を見せて「やらないともったいない」と思わせること",
+        "who": null,
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -10292,82 +10393,82 @@
     "week": {
       "from": "2026-10-04",
       "to": "2026-10-10",
-      "rows": 0,
+      "rows": 7,
       "counts": {
         "教え": 0,
-        "トライ": 0,
+        "トライ": 1,
         "初めて": 0,
-        "学び": 0,
-        "人": 0,
+        "学び": 4,
+        "人": 2,
         "もがき": 0
       }
     },
     "month": {
       "from": "2026-10-01",
       "to": "2026-10-31",
-      "rows": 23,
+      "rows": 30,
       "counts": {
         "教え": 4,
-        "トライ": 5,
+        "トライ": 6,
         "初めて": 1,
-        "学び": 5,
-        "人": 4,
+        "学び": 9,
+        "人": 6,
         "もがき": 2
       }
     },
     "recent": [
       {
-        "date": "2026-10-03",
+        "date": "2026-10-04",
         "kinds": [
           "学び"
         ],
         "unsure": [],
         "kindsText": "📖学び",
-        "text": "自己開示が過ぎると相手のガードが下がり、相手も本音を話しやすくなる（歯科での会話で自分の話しすぎに気づいた）",
+        "text": "巻き込み力とは、have toで煽ることではなく、相乗りしたくなる物語を見せて「やらないともったいない」と思わせること",
         "who": null
       },
       {
-        "date": "2026-10-03",
+        "date": "2026-10-04",
         "kinds": [
           "人"
         ],
         "unsure": [],
         "kindsText": "🧑‍🤝‍🧑人",
-        "text": "第68回シェア会：まっちゃん・かの部長・ともみんの出版や挑戦を後押し。ともみんの多彩なキャリアを見て「切り替え術を本にしよう」と提案",
-        "who": "まっちゃん・かの部長・ともみん"
+        "text": "家族が一人でくら寿司に行ってきた話で笑い合った。ハナちゃんの散歩、歩数7,000歩の報告",
+        "who": "家族"
       },
       {
-        "date": "2026-10-03",
+        "date": "2026-10-04",
         "kinds": [
           "トライ"
         ],
         "unsure": [],
         "kindsText": "🔥トライ",
-        "text": "毎日のライフログをClaudeに流し込み、月刊GOKIGEN第2号（テーマ：食）を約3時間で完成させた",
-        "who": null
+        "text": "勉強会で学んだ手法を即実践し、ClaudeにKDPのカテゴリー変更を操作させた（10〜15分で完了）。「まさにこういう時代になった」",
+        "who": "Claude"
       },
       {
-        "date": "2026-10-03",
+        "date": "2026-10-04",
         "kinds": [
           "学び"
         ],
         "unsure": [],
         "kindsText": "📖学び",
-        "text": "月刊GOKIGENの販路：天狼院楽市は実験ラボと割り切り、商業展開は集客力のあるKindleに一本化する",
+        "text": "トラジマ全国大会は内輪ネタに偏らないよう、一人ひとりの自己変容や手に入れたギフトを語り合う分科会形式にする。メンバーが家族やパートナーを連れて行きたくなる場をめざす",
         "who": null
       },
       {
-        "date": "2026-10-03",
+        "date": "2026-10-04",
         "kinds": [
-          "人"
+          "学び"
         ],
         "unsure": [],
-        "kindsText": "🧑‍🤝‍🧑人",
-        "text": "家族と登山用アウターを比較（ノースフェイスとモンベル）。家族の勧めを受けて選んだ",
-        "who": "家族"
+        "kindsText": "📖学び",
+        "text": "トラジマは2020年5月、コロナ禍で孤軍奮闘するリーダーを横でつなぐために始めた。初回40人。「1人きりにさせない」が原点で、7年目の今は100kmウォーカーが50人を超える",
+        "who": null
       }
     ],
-    "total": 262,
+    "total": 269,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
