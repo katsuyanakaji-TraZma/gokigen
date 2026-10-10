@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-10-09T18:35:22+09:00",
+  "generatedAt": "2026-10-10T12:41:51+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-09 18:34",
+      "at": "2026-10-10 12:41",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -14,7 +18,7 @@
   },
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-10-09",
+    "asOf": "2026-10-10",
     "major": 57,
     "minor": 6,
     "months": 690,
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2258
+        "rows": 2268
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 291
+        "rows": 294
       }
     ],
     "ecoFiles": [
@@ -1515,6 +1519,23 @@
       "dining": null,
       "routine": null,
       "note": "Ouraコンディション71「くつろぎましょう」（安静時心拍が完全には回復していない可能性）、レジリエンスやや不足。睡眠アプリ：就床22:57・入眠23:08・起床7:05・睡眠6時間27分・効率79.3%・快眠93.4。10/8（研修午後→懇親会）の日中：ストレス45分・回復30分。体組成は9:55あすけん（0755版を置き換える正本）"
+    },
+    {
+      "date": "2026-10-10",
+      "dow": "土",
+      "weight": 83.4,
+      "fat": 30.4,
+      "muscle": 55.1,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 72,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Ouraコンディション81「回復のためのエネルギーの貯蓄を使用中」（睡眠の質に影響はあったが心拍変動バランスは最適）、レジリエンス普通（夜間の回復＝良好・日中の回復＝最適・日中のストレス＝低）。睡眠アプリ：就床1:31・入眠2:03・起床7:21・睡眠5時間16分・効率90.0%・快眠87.1。10/9の日中：ストレス3時間・回復1時間・昼寝2回。今日から大菩薩嶺（ロッジ泊）。体組成は8:48あすけん（0838版を置き換える正本）"
     }
   ],
   "udemyCourses": [
@@ -1590,82 +1611,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-09-05",
-      "time": "6:07",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 482,
-          "monthEnroll": 3,
-          "cumRevenue": 237.84,
-          "rating": 4.56
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 5066,
-          "monthEnroll": 44,
-          "cumRevenue": 7869.23,
-          "rating": 4.05
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2842,
-          "monthEnroll": 6,
-          "cumRevenue": 4464.35,
-          "rating": 4.15
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4055,
-          "monthEnroll": 11,
-          "cumRevenue": 3839.26,
-          "rating": 4.09
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4570,
-          "monthEnroll": 12,
-          "cumRevenue": 7355.42,
-          "rating": 4.06
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7756,
-          "monthEnroll": 23,
-          "cumRevenue": 14896.8,
-          "rating": 4.27
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4889,
-          "monthEnroll": 7,
-          "cumRevenue": 11284.26,
-          "rating": 4
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8132,
-          "monthEnroll": 2,
-          "cumRevenue": 26411.63,
-          "rating": 3.91
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15248,
-          "monthEnroll": 45,
-          "cumRevenue": 48707.54,
-          "rating": 4.04
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 17996,
-          "monthEnroll": 33,
-          "cumRevenue": 67533.25,
-          "rating": 4.15
-        }
-      ]
-    },
     {
       "date": "2026-09-06",
       "time": "6:33",
@@ -3870,6 +3815,83 @@
           "monthEnroll": 45,
           "cumRevenue": 68076.91,
           "rating": 4.19
+        }
+      ]
+    },
+    {
+      "date": "2026-10-10",
+      "time": "8:35",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 553,
+          "monthEnroll": 19,
+          "cumRevenue": 600.07,
+          "rating": 4.34
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5386,
+          "monthEnroll": 72,
+          "cumRevenue": 8684.76,
+          "rating": 4.16
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2952,
+          "monthEnroll": 15,
+          "cumRevenue": 4701.59,
+          "rating": 4.14
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4136,
+          "monthEnroll": 20,
+          "cumRevenue": 3951.49,
+          "rating": 4.18,
+          "note": "累計が前日4,137→4,136（1減）"
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4629,
+          "monthEnroll": 13,
+          "cumRevenue": 7494.96,
+          "rating": 3.98
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7968,
+          "monthEnroll": 49,
+          "cumRevenue": 15240.11,
+          "rating": 4.16
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 5018,
+          "monthEnroll": 31,
+          "cumRevenue": 11476.62,
+          "rating": 4.09
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8169,
+          "monthEnroll": 11,
+          "cumRevenue": 26558.1,
+          "rating": 3.86
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15770,
+          "monthEnroll": 122,
+          "cumRevenue": 50829.2,
+          "rating": 4.08
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18285,
+          "monthEnroll": 58,
+          "cumRevenue": 68749.81,
+          "rating": 4.18
         }
       ]
     }
@@ -7057,59 +7079,66 @@
     },
     {
       "ym": "2026-10",
-      "enroll": 72817,
-      "newEnroll": 528,
-      "revenue": 195307.3,
-      "officialNew": 359,
-      "officialAsOf": "2026-10-09",
+      "enroll": 72866,
+      "newEnroll": 577,
+      "revenue": 198286.71,
+      "officialNew": 410,
+      "officialAsOf": "2026-10-10",
       "from": "2026-09-30",
-      "to": "2026-10-09",
-      "records": 9,
+      "to": "2026-10-10",
+      "records": 10,
       "byCourse": {
         "C01": {
           "enroll": 553,
-          "revenue": 517.95
+          "revenue": 600.07
         },
         "C02": {
-          "enroll": 5371,
-          "revenue": 8264.91
+          "enroll": 5386,
+          "revenue": 8684.76
         },
         "C03": {
-          "enroll": 2951,
-          "revenue": 4570.99
+          "enroll": 2952,
+          "revenue": 4701.59
         },
         "C04": {
-          "enroll": 4137,
-          "revenue": 3897.24
+          "enroll": 4136,
+          "revenue": 3951.49
         },
         "C05": {
           "enroll": 4629,
-          "revenue": 7429.7
+          "revenue": 7494.96
         },
         "C06": {
-          "enroll": 7964,
-          "revenue": 15047.82
+          "enroll": 7968,
+          "revenue": 15240.11
         },
         "C07": {
           "enroll": 5018,
-          "revenue": 11369.39
+          "revenue": 11476.62
         },
         "C08": {
           "enroll": 8169,
-          "revenue": 26495.71
+          "revenue": 26558.1
         },
         "C09": {
-          "enroll": 15753,
-          "revenue": 49636.68
+          "enroll": 15770,
+          "revenue": 50829.2
         },
         "C10": {
-          "enroll": 18272,
-          "revenue": 68076.91
+          "enroll": 18285,
+          "revenue": 68749.81
         }
       }
     }
   ],
   "warnings": [
+    {
+      "level": "info",
+      "kind": "enrollDrop",
+      "course": "C04",
+      "date": "2026-10-10",
+      "text": "C04 リスキリングの累計登録が 2026-10-09 の 4137人 → 2026-10-10 の 4136人 と1人減っています（返金などの小さな揺らぎとみられます）"
+    },
     {
       "level": "info",
       "kind": "enrollDrop",
@@ -7272,7 +7301,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 291
+        "rows": 294
       }
     ],
     "rows": [
@@ -10610,6 +10639,42 @@
         "text": "時代の流れのようなコントロールできないことに悩むリーダーへ：天気の話をしても解決しない。自分たちがコントロールできる職場の魅力に集中する",
         "who": "LDP卒業生",
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-09",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "12/19の両親の合同法要（父の三回忌・母の十三回忌）の食事を、お寺の部屋に届けてもらう仕出しで大人9名分を仮予約。子ども2人のメニューは12月上旬に確定させる",
+        "who": "家族",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-09",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "大菩薩嶺のルートは、急坂を避けて距離は長いが緩やかな反時計回りを選ぶ。しんどくなったら途中で引き返す。動画で雷岩や避難小屋の位置まで予習",
+        "who": "アキさん",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-09",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "大菩薩嶺の宿のロッジに電話で確認：暖房なし・ドライヤー不可。防寒の厚手インナーと着替えを用意する",
+        "who": "アキさん",
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -10722,7 +10787,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-10-09",
+    "asOf": "2026-10-10",
     "kinds": [
       "教え",
       "トライ",
@@ -10734,12 +10799,12 @@
     "week": {
       "from": "2026-10-04",
       "to": "2026-10-10",
-      "rows": 29,
+      "rows": 32,
       "counts": {
         "教え": 0,
-        "トライ": 6,
+        "トライ": 8,
         "初めて": 0,
-        "学び": 15,
+        "学び": 16,
         "人": 6,
         "もがき": 2
       }
@@ -10747,17 +10812,47 @@
     "month": {
       "from": "2026-10-01",
       "to": "2026-10-31",
-      "rows": 52,
+      "rows": 55,
       "counts": {
         "教え": 4,
-        "トライ": 11,
+        "トライ": 13,
         "初めて": 1,
-        "学び": 20,
+        "学び": 21,
         "人": 10,
         "もがき": 4
       }
     },
     "recent": [
+      {
+        "date": "2026-10-09",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "大菩薩嶺の宿のロッジに電話で確認：暖房なし・ドライヤー不可。防寒の厚手インナーと着替えを用意する",
+        "who": "アキさん"
+      },
+      {
+        "date": "2026-10-09",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "大菩薩嶺のルートは、急坂を避けて距離は長いが緩やかな反時計回りを選ぶ。しんどくなったら途中で引き返す。動画で雷岩や避難小屋の位置まで予習",
+        "who": "アキさん"
+      },
+      {
+        "date": "2026-10-09",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "12/19の両親の合同法要（父の三回忌・母の十三回忌）の食事を、お寺の部屋に届けてもらう仕出しで大人9名分を仮予約。子ども2人のメニューは12月上旬に確定させる",
+        "who": "家族"
+      },
       {
         "date": "2026-10-08",
         "kinds": [
@@ -10777,39 +10872,9 @@
         "kindsText": "🌊もがき",
         "text": "懇親会の前に集合写真を撮り忘れた。「一回思い出したのに忘れたのが一番の反省」。12/10の第2クラスでは撮るタイミングを事前に決めておく",
         "who": null
-      },
-      {
-        "date": "2026-10-08",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🧑‍🤝‍🧑人",
-        "text": "懇親会で2期生の後藤さんと思い出話。2013年の台風の日の初回（参加7名）の話も",
-        "who": "後藤さん"
-      },
-      {
-        "date": "2026-10-08",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📖学び",
-        "text": "受講生への言葉：「お互い様は気持ちではなくて仕組み」「専門性を深く突き抜けた人は原理原則が分かっているから、他の山も軽く登れる」",
-        "who": "LDP卒業生"
-      },
-      {
-        "date": "2026-10-08",
-        "kinds": [
-          "トライ"
-        ],
-        "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "LDPエンゲージメントワークショップ＆アルムナイフェスでファシリテーション（卒業生26名）。ほめほめタイム・エールアドバイス・予祝（未来日記）のワーク。くじは欠席に備えて番号を事前に抜いて配る方式で混乱なし",
-        "who": "LDP卒業生"
       }
     ],
-    "total": 291,
+    "total": 294,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
@@ -11840,9 +11905,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-10-09",
-    "from": "2026-10-09",
-    "to": "2027-04-09",
+    "asOf": "2026-10-10",
+    "from": "2026-10-10",
+    "to": "2027-04-10",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
