@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-10-12T06:22:45+09:00",
+  "generatedAt": "2026-10-12T08:30:34+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-12 06:22",
+      "at": "2026-10-12 08:28",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2268
+        "rows": 2278
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 294
+        "rows": 298
       }
     ],
     "ecoFiles": [
@@ -1532,6 +1536,23 @@
       "dining": null,
       "routine": null,
       "note": "Ouraコンディション81「回復のためのエネルギーの貯蓄を使用中」（睡眠の質に影響はあったが心拍変動バランスは最適）、レジリエンス普通（夜間の回復＝良好・日中の回復＝最適・日中のストレス＝低）。睡眠アプリ：就床1:31・入眠2:03・起床7:21・睡眠5時間16分・効率90.0%・快眠87.1。10/9の日中：ストレス3時間・回復1時間・昼寝2回。今日から大菩薩嶺（ロッジ泊）。体組成は8:48あすけん（0838版を置き換える正本）"
+    },
+    {
+      "date": "2026-10-12",
+      "dow": "月",
+      "weight": 83.6,
+      "fat": 30.4,
+      "muscle": 55.3,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 58,
+      "exercise": "10/11 大菩薩嶺ハイキング 7:45-11:59（Oura記録）＋ウォーキング2回",
+      "dining": null,
+      "routine": null,
+      "note": "山の翌朝。Ouraコンディション71「よく眠れない日があっても大丈夫」、睡眠58、レジリエンス普通、体表温の上昇あり。睡眠アプリ：就床23:04・入眠23:17・起床6:04・睡眠6時間45分・効率96.4%・快眠92.2・中途覚醒0。10/11の日中：ストレス45分・回復1時間"
     }
   ],
   "udemyCourses": [
@@ -1607,82 +1628,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-09-06",
-      "time": "6:33",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 486,
-          "monthEnroll": 7,
-          "cumRevenue": 237.84,
-          "rating": 4.55
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 5073,
-          "monthEnroll": 52,
-          "cumRevenue": 7869.23,
-          "rating": 4.05
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2846,
-          "monthEnroll": 10,
-          "cumRevenue": 4464.35,
-          "rating": 4.16
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4056,
-          "monthEnroll": 12,
-          "cumRevenue": 3839.26,
-          "rating": 4.09
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4571,
-          "monthEnroll": 13,
-          "cumRevenue": 7355.42,
-          "rating": 4.06
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7760,
-          "monthEnroll": 27,
-          "cumRevenue": 14896.8,
-          "rating": 4.24
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4891,
-          "monthEnroll": 9,
-          "cumRevenue": 11284.26,
-          "rating": 4
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8134,
-          "monthEnroll": 4,
-          "cumRevenue": 26411.63,
-          "rating": 3.91
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15258,
-          "monthEnroll": 55,
-          "cumRevenue": 48707.54,
-          "rating": 4.04
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 18002,
-          "monthEnroll": 39,
-          "cumRevenue": 67533.25,
-          "rating": 4.14
-        }
-      ]
-    },
     {
       "date": "2026-09-07",
       "time": "7:27",
@@ -3888,6 +3833,82 @@
           "monthEnroll": 58,
           "cumRevenue": 68749.81,
           "rating": 4.18
+        }
+      ]
+    },
+    {
+      "date": "2026-10-12",
+      "time": "6:20",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 553,
+          "monthEnroll": 19,
+          "cumRevenue": 600.07,
+          "rating": 4.35
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5390,
+          "monthEnroll": 76,
+          "cumRevenue": 8684.76,
+          "rating": 4.14
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2954,
+          "monthEnroll": 17,
+          "cumRevenue": 4701.59,
+          "rating": 4.14
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4139,
+          "monthEnroll": 23,
+          "cumRevenue": 3951.49,
+          "rating": 4.17
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4629,
+          "monthEnroll": 13,
+          "cumRevenue": 7494.96,
+          "rating": 3.98
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7973,
+          "monthEnroll": 54,
+          "cumRevenue": 15240.11,
+          "rating": 4.16
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 5023,
+          "monthEnroll": 36,
+          "cumRevenue": 11476.62,
+          "rating": 4.09
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8169,
+          "monthEnroll": 12,
+          "cumRevenue": 26558.1,
+          "rating": 3.86
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15777,
+          "monthEnroll": 129,
+          "cumRevenue": 50829.2,
+          "rating": 4.09
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18288,
+          "monthEnroll": 61,
+          "cumRevenue": 68749.81,
+          "rating": 4.2
         }
       ]
     }
@@ -7075,29 +7096,29 @@
     },
     {
       "ym": "2026-10",
-      "enroll": 72866,
-      "newEnroll": 577,
+      "enroll": 72895,
+      "newEnroll": 606,
       "revenue": 198286.71,
-      "officialNew": 410,
-      "officialAsOf": "2026-10-10",
+      "officialNew": 440,
+      "officialAsOf": "2026-10-12",
       "from": "2026-09-30",
-      "to": "2026-10-10",
-      "records": 10,
+      "to": "2026-10-12",
+      "records": 11,
       "byCourse": {
         "C01": {
           "enroll": 553,
           "revenue": 600.07
         },
         "C02": {
-          "enroll": 5386,
+          "enroll": 5390,
           "revenue": 8684.76
         },
         "C03": {
-          "enroll": 2952,
+          "enroll": 2954,
           "revenue": 4701.59
         },
         "C04": {
-          "enroll": 4136,
+          "enroll": 4139,
           "revenue": 3951.49
         },
         "C05": {
@@ -7105,11 +7126,11 @@
           "revenue": 7494.96
         },
         "C06": {
-          "enroll": 7968,
+          "enroll": 7973,
           "revenue": 15240.11
         },
         "C07": {
-          "enroll": 5018,
+          "enroll": 5023,
           "revenue": 11476.62
         },
         "C08": {
@@ -7117,11 +7138,11 @@
           "revenue": 26558.1
         },
         "C09": {
-          "enroll": 15770,
+          "enroll": 15777,
           "revenue": 50829.2
         },
         "C10": {
-          "enroll": 18285,
+          "enroll": 18288,
           "revenue": 68749.81
         }
       }
@@ -7297,7 +7318,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 294
+        "rows": 298
       }
     ],
     "rows": [
@@ -10671,6 +10692,54 @@
         "text": "大菩薩嶺の宿のロッジに電話で確認：暖房なし・ドライヤー不可。防寒の厚手インナーと着替えを用意する",
         "who": "アキさん",
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-10",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "アキさんと大菩薩峠へ。病み上がりのアキさんを優先し、雷岩・山頂へは行かず介山荘付近で引き返した。雲ひとつない青空に富士山。下山後にロッジ周辺でビールとピザ、YouTube用に「お疲れ山ビール」を撮影",
+        "who": "アキさん",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-10",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "ファイントラックの肌着は、汗をかいても冷えず快適だった",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-10",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "帰りの寿司屋で14周年を祝いながら話したこと：AIが広がるほど、リアルな体験の一次情報が価値になる。温泉×ゆるい登山の発信は50〜60代に届く。情熱が乗らない企業案件は来年以降受けず、Udemy新作とYouTubeに力を注ぐ",
+        "who": "アキさん",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-10",
+        "ver": "57.06",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "景色より根っこや岩が好きだったアキさんが、富士山を見て「心が動いたのが分かった」と言った",
+        "who": "アキさん",
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -10808,17 +10877,57 @@
     "month": {
       "from": "2026-10-01",
       "to": "2026-10-31",
-      "rows": 55,
+      "rows": 59,
       "counts": {
         "教え": 4,
-        "トライ": 13,
+        "トライ": 14,
         "初めて": 1,
-        "学び": 21,
-        "人": 10,
+        "学び": 23,
+        "人": 11,
         "もがき": 4
       }
     },
     "recent": [
+      {
+        "date": "2026-10-10",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "景色より根っこや岩が好きだったアキさんが、富士山を見て「心が動いたのが分かった」と言った",
+        "who": "アキさん"
+      },
+      {
+        "date": "2026-10-10",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "帰りの寿司屋で14周年を祝いながら話したこと：AIが広がるほど、リアルな体験の一次情報が価値になる。温泉×ゆるい登山の発信は50〜60代に届く。情熱が乗らない企業案件は来年以降受けず、Udemy新作とYouTubeに力を注ぐ",
+        "who": "アキさん"
+      },
+      {
+        "date": "2026-10-10",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "ファイントラックの肌着は、汗をかいても冷えず快適だった",
+        "who": null
+      },
+      {
+        "date": "2026-10-10",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "アキさんと大菩薩峠へ。病み上がりのアキさんを優先し、雷岩・山頂へは行かず介山荘付近で引き返した。雲ひとつない青空に富士山。下山後にロッジ周辺でビールとピザ、YouTube用に「お疲れ山ビール」を撮影",
+        "who": "アキさん"
+      },
       {
         "date": "2026-10-09",
         "kinds": [
@@ -10828,49 +10937,9 @@
         "kindsText": "🔥トライ",
         "text": "大菩薩嶺の宿のロッジに電話で確認：暖房なし・ドライヤー不可。防寒の厚手インナーと着替えを用意する",
         "who": "アキさん"
-      },
-      {
-        "date": "2026-10-09",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📖学び",
-        "text": "大菩薩嶺のルートは、急坂を避けて距離は長いが緩やかな反時計回りを選ぶ。しんどくなったら途中で引き返す。動画で雷岩や避難小屋の位置まで予習",
-        "who": "アキさん"
-      },
-      {
-        "date": "2026-10-09",
-        "kinds": [
-          "トライ"
-        ],
-        "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "12/19の両親の合同法要（父の三回忌・母の十三回忌）の食事を、お寺の部屋に届けてもらう仕出しで大人9名分を仮予約。子ども2人のメニューは12月上旬に確定させる",
-        "who": "家族"
-      },
-      {
-        "date": "2026-10-08",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📖学び",
-        "text": "時代の流れのようなコントロールできないことに悩むリーダーへ：天気の話をしても解決しない。自分たちがコントロールできる職場の魅力に集中する",
-        "who": "LDP卒業生"
-      },
-      {
-        "date": "2026-10-08",
-        "kinds": [
-          "もがき"
-        ],
-        "unsure": [],
-        "kindsText": "🌊もがき",
-        "text": "懇親会の前に集合写真を撮り忘れた。「一回思い出したのに忘れたのが一番の反省」。12/10の第2クラスでは撮るタイミングを事前に決めておく",
-        "who": null
       }
     ],
-    "total": 294,
+    "total": 298,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
