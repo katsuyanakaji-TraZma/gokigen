@@ -1,11 +1,13 @@
 {
-  "generatedAt": "2026-10-11T06:22:51+09:00",
+  "generatedAt": "2026-10-11T18:36:43+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-11 06:22",
+      "at": "2026-10-11 18:35",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "teizan"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -14897,7 +14899,7 @@
     "fileId": "1vd5mPodKU4YkZHhbZyhuyBaw1nia06EzfKHdtmIgCqE",
     "fileUrl": "https://docs.google.com/spreadsheets/d/1vd5mPodKU4YkZHhbZyhuyBaw1nia06EzfKHdtmIgCqE/edit?usp=drivesdk",
     "title": "低山台帳_base",
-    "asOf": "2026-08-22 23:34",
+    "asOf": "2026-10-11 18:34",
     "goal": 100,
     "count": 46,
     "dropped": 0,
@@ -16255,7 +16257,7 @@
         "lat": 35.749,
         "lng": 138.846,
         "elev": 2057,
-        "ropeway": "なし(上日川峠まで車)",
+        "ropeway": "×",
         "walk": "150分",
         "summer": "○",
         "months": [
@@ -16269,15 +16271,15 @@
         ],
         "monthsText": "5,6,7,8,9,10,11",
         "effort": "低",
-        "onsen": "雲峰荘(裂石温泉)",
+        "onsen": "ロッジ長兵衛(上日川峠・宿泊)",
         "why": "日本百名山で最も手軽な2000m峰・大菩薩峠と富士山の稜線歩き",
-        "status": "計画",
-        "wentAt": null,
-        "planned": "10月(日未定)・アキさんと一泊二日",
-        "note": "上日川峠周回＋勝沼ワイナリー・ほうとう",
+        "status": "済",
+        "wentAt": "Sun Oct 11 2026 16:00:00 GMT+0900 (Japan Standard Time)",
+        "planned": null,
+        "note": "アキさんと。10/10長兵衛泊→上日川峠8:00発、福ちゃん荘、大菩薩峠(介山荘)、賽ノ河原避難小屋で折り返し12:00帰着。山頂は踏まず峠までで5座目に数える(本人決定)。富士山と大菩薩湖の眺望",
         "photo": null,
         "video": null,
-        "source": "https://www.yamanashi-kankou.jp/",
+        "source": null,
         "output": null
       }
     ]
