@@ -1,13 +1,11 @@
 {
-  "generatedAt": "2026-10-12T22:51:27+09:00",
+  "generatedAt": "2026-10-13T06:22:42+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-12 22:48",
+      "at": "2026-10-13 06:22",
       "slack": "OK",
-      "ok": [
-        "gokigen"
-      ],
+      "ok": [],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -16,7 +14,7 @@
   },
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-10-12",
+    "asOf": "2026-10-13",
     "major": 57,
     "minor": 6,
     "months": 690,
@@ -10850,7 +10848,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-10-12",
+    "asOf": "2026-10-13",
     "kinds": [
       "教え",
       "トライ",
@@ -11968,9 +11966,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-10-12",
-    "from": "2026-10-12",
-    "to": "2027-04-12",
+    "asOf": "2026-10-13",
+    "from": "2026-10-13",
+    "to": "2027-04-13",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
