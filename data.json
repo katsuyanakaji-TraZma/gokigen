@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-10-15T06:23:16+09:00",
+  "generatedAt": "2026-10-15T08:29:01+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-15 06:22",
+      "at": "2026-10-15 08:28",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2298
+        "rows": 2308
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 301
+        "rows": 304
       }
     ],
     "ecoFiles": [
@@ -1583,6 +1587,23 @@
       "dining": null,
       "routine": null,
       "note": "研修2日目の朝。Ouraコンディション57、睡眠59、アクティビティ89、レジリエンス普通（コンディション低調のためアクティビティ目標はベースラインより低め）。睡眠アプリ・体組成は未着"
+    },
+    {
+      "date": "2026-10-15",
+      "dow": "木",
+      "weight": null,
+      "fat": null,
+      "muscle": null,
+      "visceral": null,
+      "bodyAge": null,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 72,
+      "exercise": null,
+      "dining": "10/14 研修の懇親会",
+      "routine": null,
+      "note": "研修2日目の朝。Ouraコンディション73「スローダウン」（昨夜遅くに安静時心拍が下がったため完全には回復していない可能性）、睡眠72、アクティビティ87、レジリエンス普通。10/14の日中：ストレス1時間45分・回復1時間15分。睡眠アプリ・体組成は未着"
     }
   ],
   "udemyCourses": [
@@ -1658,82 +1679,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-09-09",
-      "time": "9:09",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 489,
-          "monthEnroll": 10,
-          "cumRevenue": 237.84,
-          "rating": 4.55
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 5114,
-          "monthEnroll": 94,
-          "cumRevenue": 7869.23,
-          "rating": 4.04
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2852,
-          "monthEnroll": 16,
-          "cumRevenue": 4464.35,
-          "rating": 4.14
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4061,
-          "monthEnroll": 17,
-          "cumRevenue": 3839.26,
-          "rating": 4.09
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4575,
-          "monthEnroll": 17,
-          "cumRevenue": 7355.42,
-          "rating": 4.06
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7773,
-          "monthEnroll": 40,
-          "cumRevenue": 14896.8,
-          "rating": 4.24
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4894,
-          "monthEnroll": 12,
-          "cumRevenue": 11287.34,
-          "rating": 4
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8135,
-          "monthEnroll": 6,
-          "cumRevenue": 26411.63,
-          "rating": 3.93
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15302,
-          "monthEnroll": 99,
-          "cumRevenue": 48710.62,
-          "rating": 4.05
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 18030,
-          "monthEnroll": 69,
-          "cumRevenue": 67533.25,
-          "rating": 4.13
-        }
-      ]
-    },
     {
       "date": "2026-09-10",
       "time": "6:40",
@@ -3938,6 +3883,82 @@
           "id": "C10",
           "cumEnroll": 18301,
           "monthEnroll": 74,
+          "cumRevenue": 68749.81,
+          "rating": 4.21
+        }
+      ]
+    },
+    {
+      "date": "2026-10-15",
+      "time": "6:23",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 554,
+          "monthEnroll": 20,
+          "cumRevenue": 600.07,
+          "rating": 4.33
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5403,
+          "monthEnroll": 91,
+          "cumRevenue": 8684.76,
+          "rating": 4.13
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2969,
+          "monthEnroll": 32,
+          "cumRevenue": 4701.59,
+          "rating": 4.14
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4147,
+          "monthEnroll": 32,
+          "cumRevenue": 3951.49,
+          "rating": 4.19
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4629,
+          "monthEnroll": 13,
+          "cumRevenue": 7494.96,
+          "rating": 3.97
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 7982,
+          "monthEnroll": 63,
+          "cumRevenue": 15240.11,
+          "rating": 4.14
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 5031,
+          "monthEnroll": 44,
+          "cumRevenue": 11476.62,
+          "rating": 4.09
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8170,
+          "monthEnroll": 14,
+          "cumRevenue": 26558.1,
+          "rating": 3.94
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15803,
+          "monthEnroll": 155,
+          "cumRevenue": 50829.2,
+          "rating": 4.11
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18308,
+          "monthEnroll": 81,
           "cumRevenue": 68749.81,
           "rating": 4.21
         }
@@ -7127,29 +7148,29 @@
     },
     {
       "ym": "2026-10",
-      "enroll": 72973,
-      "newEnroll": 684,
+      "enroll": 72996,
+      "newEnroll": 707,
       "revenue": 198286.71,
-      "officialNew": 521,
-      "officialAsOf": "2026-10-14",
+      "officialNew": 545,
+      "officialAsOf": "2026-10-15",
       "from": "2026-09-30",
-      "to": "2026-10-14",
-      "records": 13,
+      "to": "2026-10-15",
+      "records": 14,
       "byCourse": {
         "C01": {
           "enroll": 554,
           "revenue": 600.07
         },
         "C02": {
-          "enroll": 5402,
+          "enroll": 5403,
           "revenue": 8684.76
         },
         "C03": {
-          "enroll": 2967,
+          "enroll": 2969,
           "revenue": 4701.59
         },
         "C04": {
-          "enroll": 4142,
+          "enroll": 4147,
           "revenue": 3951.49
         },
         "C05": {
@@ -7157,7 +7178,7 @@
           "revenue": 7494.96
         },
         "C06": {
-          "enroll": 7980,
+          "enroll": 7982,
           "revenue": 15240.11
         },
         "C07": {
@@ -7165,15 +7186,15 @@
           "revenue": 11476.62
         },
         "C08": {
-          "enroll": 8169,
+          "enroll": 8170,
           "revenue": 26558.1
         },
         "C09": {
-          "enroll": 15798,
+          "enroll": 15803,
           "revenue": 50829.2
         },
         "C10": {
-          "enroll": 18301,
+          "enroll": 18308,
           "revenue": 68749.81
         }
       }
@@ -7349,7 +7370,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 301
+        "rows": 304
       }
     ],
     "rows": [
@@ -10807,6 +10828,42 @@
         "text": "研修の受講生向けレポートとカルテを直した。事実と解釈を分ける、誰も置いていかない言葉にそろえる、朝クラス・午後クラスで分けて成長度合いとケアが要る人が一目でわかるようにする",
         "who": null,
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-14",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "既読スルーは相手に未完了のモヤモヤを残す。「了解」「見たよ」の1行やスタンプ1個で完了させる（講義で話した内容）",
+        "who": "受講生",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-14",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "本人の言葉：「伝わったことが、伝えたこと」「社長就任おめでとうございます。で、いつ辞めるんですか？」「今年1年で、新たなこと何しでかしたの？それに答えられないと老害だよ」「1人社長だけど、僕の会社にはAIの部下が30人働いている」",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-14",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "課長層リーダーシップ研修Day1（受講生24名）。漢字一文字の出会いワーク、午後イチに360度サーベイ開封、アドバイス禁止の5分間コーチング、4タイプ別の会議での指名順。夜は懇親会",
+        "who": "受講生",
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -10931,12 +10988,12 @@
     "week": {
       "from": "2026-10-11",
       "to": "2026-10-17",
-      "rows": 3,
+      "rows": 6,
       "counts": {
         "教え": 0,
-        "トライ": 1,
+        "トライ": 2,
         "初めて": 0,
-        "学び": 1,
+        "学び": 3,
         "人": 0,
         "もがき": 1
       }
@@ -10944,17 +11001,47 @@
     "month": {
       "from": "2026-10-01",
       "to": "2026-10-31",
-      "rows": 62,
+      "rows": 65,
       "counts": {
         "教え": 4,
-        "トライ": 15,
+        "トライ": 16,
         "初めて": 1,
-        "学び": 24,
+        "学び": 26,
         "人": 11,
         "もがき": 5
       }
     },
     "recent": [
+      {
+        "date": "2026-10-14",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "課長層リーダーシップ研修Day1（受講生24名）。漢字一文字の出会いワーク、午後イチに360度サーベイ開封、アドバイス禁止の5分間コーチング、4タイプ別の会議での指名順。夜は懇親会",
+        "who": "受講生"
+      },
+      {
+        "date": "2026-10-14",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "本人の言葉：「伝わったことが、伝えたこと」「社長就任おめでとうございます。で、いつ辞めるんですか？」「今年1年で、新たなこと何しでかしたの？それに答えられないと老害だよ」「1人社長だけど、僕の会社にはAIの部下が30人働いている」",
+        "who": null
+      },
+      {
+        "date": "2026-10-14",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "既読スルーは相手に未完了のモヤモヤを残す。「了解」「見たよ」の1行やスタンプ1個で完了させる（講義で話した内容）",
+        "who": "受講生"
+      },
       {
         "date": "2026-10-12",
         "kinds": [
@@ -10974,39 +11061,9 @@
         "kindsText": "📖学び",
         "text": "本人の言葉：「承認という土台の上に規律が乗る」「世代でくくった瞬間に『もう負けています』という表現は、僕はしません」「AIに仕事を奪われると捉えるのではなく、AIを自分の部下として動かすとしたらどういう構造にするか」",
         "who": null
-      },
-      {
-        "date": "2026-10-12",
-        "kinds": [
-          "もがき"
-        ],
-        "unsure": [],
-        "kindsText": "🌊もがき",
-        "text": "京浜東北線の人身事故で約70分の運転見合わせ。そのあとホテルにチェックイン",
-        "who": null
-      },
-      {
-        "date": "2026-10-10",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🧑‍🤝‍🧑人",
-        "text": "景色より根っこや岩が好きだったアキさんが、富士山を見て「心が動いたのが分かった」と言った",
-        "who": "アキさん"
-      },
-      {
-        "date": "2026-10-10",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📖学び",
-        "text": "帰りの寿司屋で14周年を祝いながら話したこと：AIが広がるほど、リアルな体験の一次情報が価値になる。温泉×ゆるい登山の発信は50〜60代に届く。情熱が乗らない企業案件は来年以降受けず、Udemy新作とYouTubeに力を注ぐ",
-        "who": "アキさん"
       }
     ],
-    "total": 301,
+    "total": 304,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
