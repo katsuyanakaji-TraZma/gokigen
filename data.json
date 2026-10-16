@@ -1,25 +1,13 @@
 {
-  "generatedAt": "2026-10-16T08:28:58+09:00",
+  "generatedAt": "2026-10-16T12:41:23+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-16 08:28",
+      "at": "2026-10-16 12:40",
       "slack": "OK",
-      "ok": [
-        "gokigen",
-        "limitless",
-        "udemy"
-      ],
-      "ng": [
-        "asken"
-      ],
-      "errors": [
-        {
-          "file": "intake_asken_2026-10-16_0710.json",
-          "ledger": "asken",
-          "why": "知らない台帳名: asken（使えるのは gokigen／udemy／note／economy／limitless／places／teizan／eigyobu）"
-        }
-      ],
+      "ok": [],
+      "ng": [],
+      "errors": [],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
