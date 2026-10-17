@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-10-18T06:22:44+09:00",
+  "generatedAt": "2026-10-18T08:28:52+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-18 06:22",
+      "at": "2026-10-18 08:28",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2328
+        "rows": 2338
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 315
+        "rows": 319
       }
     ],
     "ecoFiles": [
@@ -1634,6 +1638,23 @@
       "dining": null,
       "routine": null,
       "note": "懇親会の翌朝。Ouraコンディション68「調子を振り返りましょう」（安静時心拍数のわずかな上昇・休憩を多めに、こまめに水分補給）、心拍変動バランス要注意。睡眠アプリ：就床0:30・入眠0:49・起床7:15・睡眠5時間39分・効率83.7%・快眠83.9・中途覚醒1・スヌーズ0。体組成は7:42あすけん。（同日の既存行を置き換える）"
+    },
+    {
+      "date": "2026-10-18",
+      "dow": "日",
+      "weight": null,
+      "fat": null,
+      "muscle": null,
+      "visceral": null,
+      "bodyAge": null,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 90,
+      "exercise": null,
+      "dining": "10/17 Udemyミートアップ後の懇親会（有楽町・2次会3次会）",
+      "routine": null,
+      "note": "Ouraコンディション77「回復の兆し」（安静時心拍数がベースラインに戻りつつある）、睡眠90、アクティビティ89、レジリエンス普通。睡眠アプリ：就床0:22・入眠0:31・起床7:30・睡眠6時間36分・効率92.8%・快眠89.9・中途覚醒2。体組成は未着"
     }
   ],
   "udemyCourses": [
@@ -1709,82 +1730,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-09-12",
-      "time": "8:55",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 496,
-          "monthEnroll": 17,
-          "cumRevenue": 517.95,
-          "rating": 4.57
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 5142,
-          "monthEnroll": 122,
-          "cumRevenue": 8261.83,
-          "rating": 4.07
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2861,
-          "monthEnroll": 25,
-          "cumRevenue": 4570.99,
-          "rating": 4.15
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4070,
-          "monthEnroll": 26,
-          "cumRevenue": 3894.13,
-          "rating": 4.17
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4580,
-          "monthEnroll": 23,
-          "cumRevenue": 7429.7,
-          "rating": 4.07
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7799,
-          "monthEnroll": 67,
-          "cumRevenue": 15043.18,
-          "rating": 4.25
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4901,
-          "monthEnroll": 19,
-          "cumRevenue": 11369.39,
-          "rating": 4
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8138,
-          "monthEnroll": 9,
-          "cumRevenue": 26495.23,
-          "rating": 3.93
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15352,
-          "monthEnroll": 149,
-          "cumRevenue": 49612.08,
-          "rating": 4.05
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 18057,
-          "monthEnroll": 98,
-          "cumRevenue": 68071.09,
-          "rating": 4.13
-        }
-      ]
-    },
     {
       "date": "2026-09-13",
       "time": "10:30",
@@ -3989,6 +3934,82 @@
           "id": "C10",
           "cumEnroll": 18323,
           "monthEnroll": 96,
+          "cumRevenue": 68763.07,
+          "rating": 4.2
+        }
+      ]
+    },
+    {
+      "date": "2026-10-18",
+      "time": "7:30",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 557,
+          "monthEnroll": 23,
+          "cumRevenue": 600.07,
+          "rating": 4.28
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5425,
+          "monthEnroll": 114,
+          "cumRevenue": 8684.76,
+          "rating": 4.14
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2981,
+          "monthEnroll": 44,
+          "cumRevenue": 4701.59,
+          "rating": 4.14
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4157,
+          "monthEnroll": 42,
+          "cumRevenue": 3951.49,
+          "rating": 4.17
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4629,
+          "monthEnroll": 13,
+          "cumRevenue": 7494.96,
+          "rating": 3.97
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 8001,
+          "monthEnroll": 82,
+          "cumRevenue": 15240.11,
+          "rating": 4.13
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 5036,
+          "monthEnroll": 49,
+          "cumRevenue": 11476.62,
+          "rating": 4.08
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8173,
+          "monthEnroll": 17,
+          "cumRevenue": 26558.1,
+          "rating": 3.94
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15854,
+          "monthEnroll": 206,
+          "cumRevenue": 50829.2,
+          "rating": 4.12
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18327,
+          "monthEnroll": 101,
           "cumRevenue": 68763.07,
           "rating": 4.2
         }
@@ -7178,29 +7199,29 @@
     },
     {
       "ym": "2026-10",
-      "enroll": 73111,
-      "newEnroll": 822,
+      "enroll": 73140,
+      "newEnroll": 851,
       "revenue": 198299.97,
-      "officialNew": 661,
-      "officialAsOf": "2026-10-17",
+      "officialNew": 691,
+      "officialAsOf": "2026-10-18",
       "from": "2026-09-30",
-      "to": "2026-10-17",
-      "records": 16,
+      "to": "2026-10-18",
+      "records": 17,
       "byCourse": {
         "C01": {
-          "enroll": 556,
+          "enroll": 557,
           "revenue": 600.07
         },
         "C02": {
-          "enroll": 5421,
+          "enroll": 5425,
           "revenue": 8684.76
         },
         "C03": {
-          "enroll": 2978,
+          "enroll": 2981,
           "revenue": 4701.59
         },
         "C04": {
-          "enroll": 4155,
+          "enroll": 4157,
           "revenue": 3951.49
         },
         "C05": {
@@ -7208,23 +7229,23 @@
           "revenue": 7494.96
         },
         "C06": {
-          "enroll": 7997,
+          "enroll": 8001,
           "revenue": 15240.11
         },
         "C07": {
-          "enroll": 5035,
+          "enroll": 5036,
           "revenue": 11476.62
         },
         "C08": {
-          "enroll": 8172,
+          "enroll": 8173,
           "revenue": 26558.1
         },
         "C09": {
-          "enroll": 15845,
+          "enroll": 15854,
           "revenue": 50829.2
         },
         "C10": {
-          "enroll": 18323,
+          "enroll": 18327,
           "revenue": 68763.07
         }
       }
@@ -7400,7 +7421,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 315
+        "rows": 319
       }
     ],
     "rows": [
@@ -11026,6 +11047,54 @@
         "text": "課長層リーダーシップ研修の最終回（オンライン・19名）。午前は5ヶ月の成果の褒め褒めとOSハント、午後はB=MAPとリーダーの器、夕方に全員の3分の最終宣言。受講生にその場でバディと次のTeamsの日程を予約させた",
         "who": "受講生",
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-17",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "100kmウォークへの巻き込み：12月の50km・3月の東京物語3に声かけ。山手線ウォークをイベントにする構想（参加費・駅ごとのQR・LINEで応援）を話した",
+        "who": "Udemy講師仲間",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-17",
+        "ver": "57.06",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "Udemyインストラクターミートアップ2026に参加。昼はまっちゃんとタイ・インド料理。夜は有楽町で2次会・3次会。NRI・リクルートの縁がある森さん（モーギュ先生）と再会",
+        "who": "Udemy講師仲間",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-17",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "アワード受賞講師の話：1動画1メッセージに絞ると完走率が上がる、質問・レビューに24時間以内に返す、AIで本数を出しても価値の芯は経験とWhy",
+        "who": "Udemy講師",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-17",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "本人が、12月に独立する人材育成責任者に助言：最初の6ヶ月は売上ゼロでも生きられるくらいコストを落とす、古巣からの仕事は退職前に値決めを仕込む",
+        "who": "Udemy講師仲間",
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -11163,17 +11232,57 @@
     "month": {
       "from": "2026-10-01",
       "to": "2026-10-31",
-      "rows": 76,
+      "rows": 80,
       "counts": {
         "教え": 4,
-        "トライ": 21,
+        "トライ": 23,
         "初めて": 1,
-        "学び": 30,
-        "人": 13,
+        "学び": 31,
+        "人": 14,
         "もがき": 5
       }
     },
     "recent": [
+      {
+        "date": "2026-10-17",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "本人が、12月に独立する人材育成責任者に助言：最初の6ヶ月は売上ゼロでも生きられるくらいコストを落とす、古巣からの仕事は退職前に値決めを仕込む",
+        "who": "Udemy講師仲間"
+      },
+      {
+        "date": "2026-10-17",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "アワード受賞講師の話：1動画1メッセージに絞ると完走率が上がる、質問・レビューに24時間以内に返す、AIで本数を出しても価値の芯は経験とWhy",
+        "who": "Udemy講師"
+      },
+      {
+        "date": "2026-10-17",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "Udemyインストラクターミートアップ2026に参加。昼はまっちゃんとタイ・インド料理。夜は有楽町で2次会・3次会。NRI・リクルートの縁がある森さん（モーギュ先生）と再会",
+        "who": "Udemy講師仲間"
+      },
+      {
+        "date": "2026-10-17",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "100kmウォークへの巻き込み：12月の50km・3月の東京物語3に声かけ。山手線ウォークをイベントにする構想（参加費・駅ごとのQR・LINEで応援）を話した",
+        "who": "Udemy講師仲間"
+      },
       {
         "date": "2026-10-16",
         "kinds": [
@@ -11183,49 +11292,9 @@
         "kindsText": "🔥トライ",
         "text": "課長層リーダーシップ研修の最終回（オンライン・19名）。午前は5ヶ月の成果の褒め褒めとOSハント、午後はB=MAPとリーダーの器、夕方に全員の3分の最終宣言。受講生にその場でバディと次のTeamsの日程を予約させた",
         "who": "受講生"
-      },
-      {
-        "date": "2026-10-16",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📖学び",
-        "text": "本人の言葉：「大きな石は最初に入れなはれ」「ペーシング（寄り添い）は迎合ではなく、リーディング（先導）のプロローグ」「素直さとは、旧OSを一度脇に置いて、異なる美学を取り込んでみる勇気」",
-        "who": null
-      },
-      {
-        "date": "2026-10-16",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🧑‍🤝‍🧑人",
-        "text": "夜は八重洲で、LDPを14年いっしょに作ってきたクライアント・パートナーと懇親会。黎明期の思い出、100kmウォーク、60歳までに登壇を畳んでいく話をした",
-        "who": "研修パートナー"
-      },
-      {
-        "date": "2026-10-15",
-        "kinds": [
-          "トライ"
-        ],
-        "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "課長層リーダーシップ研修Day2（受講生23名）。OSのバージョンアップ、表目標と裏目標、ABCモデル、問いと承認。最後の予祝ワークで全員が1年後を過去形で語った",
-        "who": "受講生"
-      },
-      {
-        "date": "2026-10-15",
-        "kinds": [
-          "トライ"
-        ],
-        "unsure": [],
-        "kindsText": "🔥トライ",
-        "text": "研修のこれから：アクションプランのたたき台回収は10/22締切、11/17・18にオンラインのピットイン（4人1組×30分）、12月に市原でDay3、3月に大阪で成果発表（3/18前泊懇親会）",
-        "who": "事務局"
       }
     ],
-    "total": 315,
+    "total": 319,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
