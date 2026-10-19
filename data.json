@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-10-20T06:27:48+09:00",
+  "generatedAt": "2026-10-20T08:29:04+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-20 06:22",
+      "at": "2026-10-20 08:28",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2348
+        "rows": 2358
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 321
+        "rows": 322
       }
     ],
     "ecoFiles": [
@@ -1668,6 +1672,23 @@
       "dining": null,
       "routine": null,
       "note": "Ouraコンディション84「準備は万全」（通常の範囲より良好）、睡眠80、アクティビティ88、レジリエンス普通。10/18の日中ストレス0分・回復6時間30分（タグ：ウォーキング・昼寝）。睡眠アプリ：就床0:00・入眠0:07・起床5:09・睡眠5時間1分・効率97.4%・快眠94.4・中途覚醒0。体組成は7:25あすけん（0717版を置き換える正本）"
+    },
+    {
+      "date": "2026-10-20",
+      "dow": "火",
+      "weight": 82.1,
+      "fat": 29.9,
+      "muscle": 54.7,
+      "visceral": 10,
+      "bodyAge": 60,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 76,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Ouraコンディション80「バランス良く過ごす」、睡眠76、アクティビティ78、レジリエンス普通。10/19の日中ストレス1時間30分・回復2時間30分（タグ：昼寝）。睡眠アプリ：就床0:27・入眠1:00・起床6:47・睡眠5時間43分・効率90.3%・快眠87.2・中途覚醒1。体組成は7:17あすけん（0659版を置き換える正本）"
     }
   ],
   "udemyCourses": [
@@ -1743,82 +1764,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-09-14",
-      "time": "7:30",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 496,
-          "monthEnroll": 17,
-          "cumRevenue": 517.95,
-          "rating": null
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 5153,
-          "monthEnroll": 133,
-          "cumRevenue": 8261.83,
-          "rating": null
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2863,
-          "monthEnroll": 27,
-          "cumRevenue": 4570.99,
-          "rating": null
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4074,
-          "monthEnroll": 30,
-          "cumRevenue": 3894.13,
-          "rating": null
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4583,
-          "monthEnroll": 26,
-          "cumRevenue": 7429.7,
-          "rating": null
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7804,
-          "monthEnroll": 72,
-          "cumRevenue": 15043.18,
-          "rating": null
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4905,
-          "monthEnroll": 23,
-          "cumRevenue": 11369.39,
-          "rating": null
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8141,
-          "monthEnroll": 12,
-          "cumRevenue": 26495.23,
-          "rating": null
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15372,
-          "monthEnroll": 169,
-          "cumRevenue": 49615.22,
-          "rating": null
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 18070,
-          "monthEnroll": 111,
-          "cumRevenue": 68071.09,
-          "rating": null
-        }
-      ]
-    },
     {
       "date": "2026-09-17",
       "time": "7:00",
@@ -4025,6 +3970,82 @@
           "monthEnroll": 102,
           "cumRevenue": 68763.07,
           "rating": 4.2
+        }
+      ]
+    },
+    {
+      "date": "2026-10-20",
+      "time": "6:55",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 558,
+          "monthEnroll": 24,
+          "cumRevenue": 600.07,
+          "rating": 4.21
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5444,
+          "monthEnroll": 133,
+          "cumRevenue": 8684.76,
+          "rating": 4.14
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 2984,
+          "monthEnroll": 47,
+          "cumRevenue": 4701.59,
+          "rating": 4.17
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4159,
+          "monthEnroll": 45,
+          "cumRevenue": 3951.49,
+          "rating": 4.17
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4629,
+          "monthEnroll": 14,
+          "cumRevenue": 7494.96,
+          "rating": 4.01
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 8005,
+          "monthEnroll": 87,
+          "cumRevenue": 15240.11,
+          "rating": 4.12
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 5039,
+          "monthEnroll": 52,
+          "cumRevenue": 11476.62,
+          "rating": 4.08
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8175,
+          "monthEnroll": 19,
+          "cumRevenue": 26558.1,
+          "rating": 3.92
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15883,
+          "monthEnroll": 235,
+          "cumRevenue": 50829.2,
+          "rating": 4.14
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18335,
+          "monthEnroll": 109,
+          "cumRevenue": 68763.07,
+          "rating": 4.21
         }
       ]
     }
@@ -7212,25 +7233,25 @@
     },
     {
       "ym": "2026-10",
-      "enroll": 73169,
-      "newEnroll": 880,
+      "enroll": 73211,
+      "newEnroll": 922,
       "revenue": 198299.97,
-      "officialNew": 720,
-      "officialAsOf": "2026-10-19",
+      "officialNew": 765,
+      "officialAsOf": "2026-10-20",
       "from": "2026-09-30",
-      "to": "2026-10-19",
-      "records": 18,
+      "to": "2026-10-20",
+      "records": 19,
       "byCourse": {
         "C01": {
           "enroll": 558,
           "revenue": 600.07
         },
         "C02": {
-          "enroll": 5433,
+          "enroll": 5444,
           "revenue": 8684.76
         },
         "C03": {
-          "enroll": 2983,
+          "enroll": 2984,
           "revenue": 4701.59
         },
         "C04": {
@@ -7242,23 +7263,23 @@
           "revenue": 7494.96
         },
         "C06": {
-          "enroll": 8002,
+          "enroll": 8005,
           "revenue": 15240.11
         },
         "C07": {
-          "enroll": 5036,
+          "enroll": 5039,
           "revenue": 11476.62
         },
         "C08": {
-          "enroll": 8173,
+          "enroll": 8175,
           "revenue": 26558.1
         },
         "C09": {
-          "enroll": 15868,
+          "enroll": 15883,
           "revenue": 50829.2
         },
         "C10": {
-          "enroll": 18328,
+          "enroll": 18335,
           "revenue": 68763.07
         }
       }
@@ -7434,7 +7455,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 321
+        "rows": 322
       }
     ],
     "rows": [
@@ -11132,6 +11153,18 @@
         "text": "本人の言葉：創業期は「真っ暗な宇宙で、1人だけで叫んでいる感じ」だった",
         "who": null,
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-19",
+        "ver": "57.06",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "夜、家族と食卓。大学の研究室の仲間が大手鉄鋼会社の役員に就任した話をした。日中の研修（オンライン）の記録はリミットレスに残っていない",
+        "who": "家族",
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -11256,30 +11289,40 @@
     "week": {
       "from": "2026-10-18",
       "to": "2026-10-24",
-      "rows": 2,
+      "rows": 3,
       "counts": {
         "教え": 0,
         "トライ": 1,
         "初めて": 0,
         "学び": 1,
-        "人": 0,
+        "人": 1,
         "もがき": 0
       }
     },
     "month": {
       "from": "2026-10-01",
       "to": "2026-10-31",
-      "rows": 82,
+      "rows": 83,
       "counts": {
         "教え": 4,
         "トライ": 24,
         "初めて": 1,
         "学び": 32,
-        "人": 14,
+        "人": 15,
         "もがき": 5
       }
     },
     "recent": [
+      {
+        "date": "2026-10-19",
+        "kinds": [
+          "人"
+        ],
+        "unsure": [],
+        "kindsText": "🧑‍🤝‍🧑人",
+        "text": "夜、家族と食卓。大学の研究室の仲間が大手鉄鋼会社の役員に就任した話をした。日中の研修（オンライン）の記録はリミットレスに残っていない",
+        "who": "家族"
+      },
       {
         "date": "2026-10-18",
         "kinds": [
@@ -11319,19 +11362,9 @@
         "kindsText": "📖学び",
         "text": "アワード受賞講師の話：1動画1メッセージに絞ると完走率が上がる、質問・レビューに24時間以内に返す、AIで本数を出しても価値の芯は経験とWhy",
         "who": "Udemy講師"
-      },
-      {
-        "date": "2026-10-17",
-        "kinds": [
-          "人"
-        ],
-        "unsure": [],
-        "kindsText": "🧑‍🤝‍🧑人",
-        "text": "Udemyインストラクターミートアップ2026に参加。昼はまっちゃんとタイ・インド料理。夜は有楽町で2次会・3次会。NRI・リクルートの縁がある森さん（モーギュ先生）と再会",
-        "who": "Udemy講師仲間"
       }
     ],
-    "total": 321,
+    "total": 322,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
