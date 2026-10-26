@@ -1,15 +1,11 @@
 {
-  "generatedAt": "2026-10-27T06:23:03+09:00",
+  "generatedAt": "2026-10-27T08:28:33+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-27 06:22",
+      "at": "2026-10-27 08:28",
       "slack": "OK",
-      "ok": [
-        "gokigen",
-        "limitless",
-        "udemy"
-      ],
+      "ok": [],
       "ng": [],
       "errors": [],
       "pending": [],
