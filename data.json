@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-10-26T18:36:01+09:00",
+  "generatedAt": "2026-10-27T06:23:03+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-10-26 18:34",
+      "at": "2026-10-27 06:22",
       "slack": "OK",
-      "ok": [],
+      "ok": [
+        "gokigen",
+        "limitless",
+        "udemy"
+      ],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -14,7 +18,7 @@
   },
   "selfVersion": {
     "birth": "1969-04-30",
-    "asOf": "2026-10-26",
+    "asOf": "2026-10-27",
     "major": 57,
     "minor": 6,
     "months": 690,
@@ -32,7 +36,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2418
+        "rows": 2428
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -54,7 +58,7 @@
     "limitlessFiles": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 351
+        "rows": 357
       }
     ],
     "ecoFiles": [
@@ -1787,6 +1791,23 @@
       "dining": null,
       "routine": null,
       "note": "Ouraコンディション84（安静時心拍数が体がよく回復したことを示す）、睡眠82「効率よく眠れました」（合計6時間38分・効率87%・安眠度良好・レム1時間34分24%・入眠潜時22分）、アクティビティ78、レジリエンス普通。あすけん体組成8:17：BMI27.7・基礎代謝1620kcal・除脂肪体重57.8kg・皮下脂肪率26.7%・体水分率50.4%・骨量2.9kg・骨格筋率45.1%・たんぱく質率16.0%。睡眠アプリは今日はなし（本人）"
+    },
+    {
+      "date": "2026-10-27",
+      "dow": "火",
+      "weight": 83.2,
+      "fat": 30.3,
+      "muscle": 55.1,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 77,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "Ouraコンディション74「ほどほどに」（心拍変動バランスが、しばらく体に負担がかかっていた可能性を示す。今日と明日は気楽に）、睡眠77、アクティビティ72、レジリエンス普通。10/26の日中のストレス：ストレス45分・回復1時間15分・タグ昼寝。あすけん体組成6:17：BMI27.8・基礎代謝1622kcal・除脂肪体重58.0kg・皮下脂肪率26.9%・体水分率50.3%・骨量2.9kg・骨格筋率45.0%・たんぱく質率15.9%。睡眠アプリは未着"
     }
   ],
   "udemyCourses": [
@@ -1862,82 +1883,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-09-24",
-      "time": "7:15",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 527,
-          "monthEnroll": 47,
-          "cumRevenue": 517.95,
-          "rating": 4.57
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 5242,
-          "monthEnroll": 221,
-          "cumRevenue": 8264.52,
-          "rating": 4.12
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2901,
-          "monthEnroll": 65,
-          "cumRevenue": 4570.99,
-          "rating": 4.13
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4102,
-          "monthEnroll": 58,
-          "cumRevenue": 3897.24,
-          "rating": 4.14
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4601,
-          "monthEnroll": 44,
-          "cumRevenue": 7429.7,
-          "rating": 4.03
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 7859,
-          "monthEnroll": 124,
-          "cumRevenue": 15046.29,
-          "rating": 4.21
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 4949,
-          "monthEnroll": 65,
-          "cumRevenue": 11369.39,
-          "rating": 4.11
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8148,
-          "monthEnroll": 21,
-          "cumRevenue": 26495.23,
-          "rating": 3.95
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15511,
-          "monthEnroll": 297,
-          "cumRevenue": 49621.23,
-          "rating": 4.07
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 18157,
-          "monthEnroll": 196,
-          "cumRevenue": 68071.09,
-          "rating": 4.11
-        }
-      ]
-    },
     {
       "date": "2026-09-25",
       "time": "7:50",
@@ -4145,6 +4090,83 @@
           "id": "C10",
           "cumEnroll": 18363,
           "monthEnroll": 137,
+          "cumRevenue": 68763.07,
+          "rating": 4.18
+        }
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "time": "5:30",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 563,
+          "monthEnroll": 29,
+          "cumRevenue": 622.4,
+          "rating": 4.19
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5503,
+          "monthEnroll": 193,
+          "cumRevenue": 8684.76,
+          "rating": 4.16
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 3009,
+          "monthEnroll": 72,
+          "cumRevenue": 4723.88,
+          "rating": 4.1
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4182,
+          "monthEnroll": 69,
+          "cumRevenue": 3951.49,
+          "rating": 4.14
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4636,
+          "monthEnroll": 21,
+          "cumRevenue": 7494.96,
+          "rating": 4.02
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 8036,
+          "monthEnroll": 118,
+          "cumRevenue": 15240.11,
+          "rating": 4.12
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 5062,
+          "monthEnroll": 75,
+          "cumRevenue": 11476.62,
+          "rating": 4.12
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8182,
+          "monthEnroll": 27,
+          "cumRevenue": 26558.1,
+          "rating": 4
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 15964,
+          "monthEnroll": 318,
+          "cumRevenue": 50829.2,
+          "rating": 4.13,
+          "note": "10月の登録318人"
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18367,
+          "monthEnroll": 141,
           "cumRevenue": 68763.07,
           "rating": 4.18
         }
@@ -7334,53 +7356,53 @@
     },
     {
       "ym": "2026-10",
-      "enroll": 73467,
-      "newEnroll": 1178,
+      "enroll": 73504,
+      "newEnroll": 1215,
       "revenue": 198344.59,
-      "officialNew": 1026,
-      "officialAsOf": "2026-10-26",
+      "officialNew": 1063,
+      "officialAsOf": "2026-10-27",
       "from": "2026-09-30",
-      "to": "2026-10-26",
-      "records": 25,
+      "to": "2026-10-27",
+      "records": 26,
       "byCourse": {
         "C01": {
           "enroll": 563,
           "revenue": 622.4
         },
         "C02": {
-          "enroll": 5500,
+          "enroll": 5503,
           "revenue": 8684.76
         },
         "C03": {
-          "enroll": 3005,
+          "enroll": 3009,
           "revenue": 4723.88
         },
         "C04": {
-          "enroll": 4180,
+          "enroll": 4182,
           "revenue": 3951.49
         },
         "C05": {
-          "enroll": 4633,
+          "enroll": 4636,
           "revenue": 7494.96
         },
         "C06": {
-          "enroll": 8033,
+          "enroll": 8036,
           "revenue": 15240.11
         },
         "C07": {
-          "enroll": 5058,
+          "enroll": 5062,
           "revenue": 11476.62
         },
         "C08": {
-          "enroll": 8180,
+          "enroll": 8182,
           "revenue": 26558.1
         },
         "C09": {
-          "enroll": 15952,
+          "enroll": 15964,
           "revenue": 50829.2
         },
         "C10": {
-          "enroll": 18363,
+          "enroll": 18367,
           "revenue": 68763.07
         }
       }
@@ -7556,7 +7578,7 @@
     "used": [
       {
         "name": "リミットレス台帳_base_v2",
-        "rows": 351
+        "rows": 357
       }
     ],
     "rows": [
@@ -11614,6 +11636,78 @@
         "text": "本人の言葉：ボディビルダーの須山翔太郎さんに肘の位置を直されて、無意識に負荷を逃がしていたと分かった。人は無意識に負荷をリリースする。やりすぎると筋トレにならない",
         "who": null,
         "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-26",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "4/30以降の領収書のうち、抜けていた約3万円分を登録し直すことになった",
+        "who": "家族",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-26",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "Kindle・Udemy・noteの目標を2030年4月29日まで置き、そこから逆算（バックキャスティング）で今の計画に落とすと決めた",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-26",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "YouTube「ゆるりんちょ。」のアキさんの登山動画を編集指示：富士山バックの場面でアキさん以外の顔にモザイク、室内に戻る前の1〜2コマを削除、明るさはオレンジを少し抑えた案、楽しさが出る44秒の場面を入れる",
+        "who": "家族",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-26",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "noteの分析は24時間動くMac miniのChromeに一本化。MyASPのクリック分析との連携は、個人情報の漏洩リスクと手間を考えてやらないと決めた",
+        "who": null,
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-26",
+        "ver": "57.06",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "奈緒さんのスマホでSBI証券のパスキーを登録し、従来のログインパスワードを無効化した（「これでしばらく大丈夫」）",
+        "who": "家族",
+        "src": "リミットレス"
+      },
+      {
+        "date": "2026-10-26",
+        "ver": "57.06",
+        "kinds": [
+          "学び"
+        ],
+        "unsure": [],
+        "kindsText": "📖学び",
+        "text": "本人の言葉：僕が考える前に君（AI）が動いて、欲しいデータを目の前に出し、分析結果と対策も出し、僕はOKだよと言うだけにしたい",
+        "who": null,
+        "src": "リミットレス"
       }
     ],
     "lifeFirsts": {
@@ -11726,7 +11820,7 @@
     }
   },
   "knowledge": {
-    "asOf": "2026-10-26",
+    "asOf": "2026-10-27",
     "kinds": [
       "教え",
       "トライ",
@@ -11738,12 +11832,12 @@
     "week": {
       "from": "2026-10-25",
       "to": "2026-10-31",
-      "rows": 5,
+      "rows": 11,
       "counts": {
         "教え": 0,
-        "トライ": 2,
+        "トライ": 7,
         "初めて": 0,
-        "学び": 3,
+        "学び": 4,
         "人": 0,
         "もがき": 0
       }
@@ -11751,69 +11845,69 @@
     "month": {
       "from": "2026-10-01",
       "to": "2026-10-31",
-      "rows": 112,
+      "rows": 118,
       "counts": {
         "教え": 12,
-        "トライ": 31,
+        "トライ": 36,
         "初めて": 1,
-        "学び": 41,
+        "学び": 42,
         "人": 20,
         "もがき": 5
       }
     },
     "recent": [
       {
-        "date": "2026-10-25",
+        "date": "2026-10-26",
         "kinds": [
           "学び"
         ],
         "unsure": [],
         "kindsText": "📖学び",
-        "text": "本人の言葉：ボディビルダーの須山翔太郎さんに肘の位置を直されて、無意識に負荷を逃がしていたと分かった。人は無意識に負荷をリリースする。やりすぎると筋トレにならない",
+        "text": "本人の言葉：僕が考える前に君（AI）が動いて、欲しいデータを目の前に出し、分析結果と対策も出し、僕はOKだよと言うだけにしたい",
         "who": null
       },
       {
-        "date": "2026-10-25",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📖学び",
-        "text": "本人の言葉：ジャンクな考え方を食べていればジャンクな発想になる。食べてもいないのに『あれは美味しくない』と言う人の話を聞いていいのか（管理職は罰ゲームという思い込みについて）",
-        "who": "家族"
-      },
-      {
-        "date": "2026-10-25",
-        "kinds": [
-          "学び"
-        ],
-        "unsure": [],
-        "kindsText": "📖学び",
-        "text": "本人の言葉：SBI証券はパスキーを設定しても従来のログインパスワードが生きたまま残る。自分でオフにしないと裏口が開いたまま",
-        "who": "家族"
-      },
-      {
-        "date": "2026-10-25",
+        "date": "2026-10-26",
         "kinds": [
           "トライ"
         ],
         "unsure": [],
         "kindsText": "🔥トライ",
-        "text": "家族のSBI証券口座のパスキー設定をその場でチェック。ログインパスワードがオフになっているかの最終確認は残っている",
+        "text": "奈緒さんのスマホでSBI証券のパスキーを登録し、従来のログインパスワードを無効化した（「これでしばらく大丈夫」）",
         "who": "家族"
       },
       {
-        "date": "2026-10-25",
+        "date": "2026-10-26",
         "kinds": [
           "トライ"
         ],
         "unsure": [],
         "kindsText": "🔥トライ",
-        "text": "YouTube「ゆるりんちょ。」が登録者100人を突破。大菩薩峠の動画は最後のまとめ（お昼ご飯・ピザ・ビールの値段）をカットする指示",
+        "text": "noteの分析は24時間動くMac miniのChromeに一本化。MyASPのクリック分析との連携は、個人情報の漏洩リスクと手間を考えてやらないと決めた",
+        "who": null
+      },
+      {
+        "date": "2026-10-26",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "YouTube「ゆるりんちょ。」のアキさんの登山動画を編集指示：富士山バックの場面でアキさん以外の顔にモザイク、室内に戻る前の1〜2コマを削除、明るさはオレンジを少し抑えた案、楽しさが出る44秒の場面を入れる",
+        "who": "家族"
+      },
+      {
+        "date": "2026-10-26",
+        "kinds": [
+          "トライ"
+        ],
+        "unsure": [],
+        "kindsText": "🔥トライ",
+        "text": "Kindle・Udemy・noteの目標を2030年4月29日まで置き、そこから逆算（バックキャスティング）で今の計画に落とすと決めた",
         "who": null
       }
     ],
-    "total": 351,
+    "total": 357,
     "folderUrl": "https://drive.google.com/drive/folders/1UAbime-oSiN-OHEH2jh2tokBzfJw4Ayg",
     "baseName": "リミットレス台帳_base_v2"
   },
@@ -12844,9 +12938,9 @@
     }
   },
   "calendar": {
-    "asOf": "2026-10-26",
-    "from": "2026-10-26",
-    "to": "2027-04-26",
+    "asOf": "2026-10-27",
+    "from": "2026-10-27",
+    "to": "2027-04-27",
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
