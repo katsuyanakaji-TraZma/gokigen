@@ -1,16 +1,23 @@
 {
-  "generatedAt": "2026-11-03T06:23:20+09:00",
+  "generatedAt": "2026-11-03T08:28:45+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-11-03 06:22",
+      "at": "2026-11-03 08:28",
       "slack": "OK",
       "ok": [
-        "limitless",
+        "gokigen"
+      ],
+      "ng": [
         "udemy"
       ],
-      "ng": [],
-      "errors": [],
+      "errors": [
+        {
+          "file": "intake_udemy_2026-11-03_0747.json",
+          "ledger": "udemy",
+          "why": "知らないキーが入っている: overview（schemaに無い。書き間違い？）"
+        }
+      ],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
@@ -1875,6 +1882,23 @@
       "dining": null,
       "routine": null,
       "note": "名古屋前泊。Ouraコンディション69「休息は有益」（これ以上の昼寝は控えめに）、睡眠71、アクティビティ86、レジリエンス普通。体組成・睡眠アプリは未着（遠征中）"
+    },
+    {
+      "date": "2026-11-03",
+      "dow": "火",
+      "weight": 84.4,
+      "fat": 30.7,
+      "muscle": 55.6,
+      "visceral": 11,
+      "bodyAge": 62,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": null,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "あすけん 07:47。BMI28.2 基礎代謝1633 除脂肪58.5 皮下脂肪27.2 体水分50.0 骨量2.9 骨格筋44.8 たんぱく質15.8。100km完歩の2日後。"
     }
   ],
   "udemyCourses": [
