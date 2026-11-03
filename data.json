@@ -1,23 +1,13 @@
 {
-  "generatedAt": "2026-11-03T08:28:45+09:00",
+  "generatedAt": "2026-11-03T12:41:26+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-11-03 08:28",
+      "at": "2026-11-03 12:40",
       "slack": "OK",
-      "ok": [
-        "gokigen"
-      ],
-      "ng": [
-        "udemy"
-      ],
-      "errors": [
-        {
-          "file": "intake_udemy_2026-11-03_0747.json",
-          "ledger": "udemy",
-          "why": "知らないキーが入っている: overview（schemaに無い。書き間違い？）"
-        }
-      ],
+      "ok": [],
+      "ng": [],
+      "errors": [],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
