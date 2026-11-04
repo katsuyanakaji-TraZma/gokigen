@@ -1,13 +1,29 @@
 {
-  "generatedAt": "2026-11-05T06:23:07+09:00",
+  "generatedAt": "2026-11-05T08:28:50+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-11-05 06:22",
+      "at": "2026-11-05 08:28",
       "slack": "OK",
-      "ok": [],
-      "ng": [],
-      "errors": [],
+      "ok": [
+        "gokigen"
+      ],
+      "ng": [
+        "limitless",
+        "udemy"
+      ],
+      "errors": [
+        {
+          "file": "intake_limitless_2026-11-04_0655.json",
+          "ledger": "limitless",
+          "why": "[1件目] 種別に分類の言葉が無い: \"decision\"（教え／トライ／初めて／学び／人／もがきのどれかを含める）"
+        },
+        {
+          "file": "intake_udemy_2026-11-05_0655.json",
+          "ledger": "udemy",
+          "why": "知らないキーが入っている: overview（schemaに無い。書き間違い？）"
+        }
+      ],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
@@ -1906,6 +1922,23 @@
       "dining": null,
       "routine": null,
       "note": "あすけん07:55: BMI27.9 基礎代謝1623 除脂肪58.1 皮下脂肪27.0 体水分50.3 骨量2.9 骨格筋45.0 たんぱく質15.8。Oura: 睡眠90/コンディション77/レジリエンス普通/症状レーダー『緊張状態の主な兆候』/休息モードON。睡眠アプリ: 就床22:02 入眠22:26 起床5:29 睡眠5h20m 効率71.6% 中途覚醒1(約1:50〜3:30) 快眠87.1。"
+    },
+    {
+      "date": "2026-11-05",
+      "dow": "木",
+      "weight": 82.6,
+      "fat": 30.1,
+      "muscle": 54.8,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 70,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "あすけん06:57: BMI27.6 基礎代謝1617 除脂肪57.8 皮下脂肪26.7 体水分50.5 骨量2.9 骨格筋45.2 たんぱく質15.9。Oura: コンディション58『無理をしない』(安静時心拍が平均より高い)/睡眠70/アクティビティ85/レジリエンス普通。睡眠アプリ: 就床1:47 入眠1:58 起床6:47 睡眠4h44m 効率94.7% 中途覚醒1 快眠83.7。"
     }
   ],
   "udemyCourses": [
