@@ -1,29 +1,13 @@
 {
-  "generatedAt": "2026-11-07T12:41:44+09:00",
+  "generatedAt": "2026-11-07T18:35:27+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-11-07 12:41",
+      "at": "2026-11-07 18:34",
       "slack": "OK",
-      "ok": [
-        "gokigen"
-      ],
-      "ng": [
-        "limitless",
-        "udemy"
-      ],
-      "errors": [
-        {
-          "file": "intake_limitless_2026-11-06_1155.json",
-          "ledger": "limitless",
-          "why": "[1件目] 種別に分類の言葉が無い: \"decision\"（教え／トライ／初めて／学び／人／もがきのどれかを含める）"
-        },
-        {
-          "file": "intake_udemy_2026-11-07_1155.json",
-          "ledger": "udemy",
-          "why": "知らないキーが入っている: overview（schemaに無い。書き間違い？）"
-        }
-      ],
+      "ok": [],
+      "ng": [],
+      "errors": [],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
