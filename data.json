@@ -1,29 +1,13 @@
 {
-  "generatedAt": "2026-11-08T08:28:48+09:00",
+  "generatedAt": "2026-11-08T12:41:14+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-11-08 08:28",
+      "at": "2026-11-08 12:40",
       "slack": "OK",
-      "ok": [
-        "gokigen"
-      ],
-      "ng": [
-        "limitless",
-        "udemy"
-      ],
-      "errors": [
-        {
-          "file": "intake_limitless_2026-11-07_0700.json",
-          "ledger": "limitless",
-          "why": "[1件目] 種別に分類の言葉が無い: \"event\"（教え／トライ／初めて／学び／人／もがきのどれかを含める）"
-        },
-        {
-          "file": "intake_udemy_2026-11-08_0700.json",
-          "ledger": "udemy",
-          "why": "知らないキーが入っている: overview（schemaに無い。書き間違い？）"
-        }
-      ],
+      "ok": [],
+      "ng": [],
+      "errors": [],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
