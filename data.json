@@ -1,15 +1,11 @@
 {
-  "generatedAt": "2026-11-09T08:29:10+09:00",
+  "generatedAt": "2026-11-09T12:44:19+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-11-09 08:28",
+      "at": "2026-11-09 12:40",
       "slack": "OK",
-      "ok": [
-        "gokigen",
-        "limitless",
-        "udemy"
-      ],
+      "ok": [],
       "ng": [],
       "errors": [],
       "pending": [],
@@ -14539,17 +14535,10 @@
     "monthsAhead": 6,
     "monthCap": 12,
     "calendarName": "katsuya.nakaji@gmail.com",
-    "count": 17,
+    "count": 16,
     "events": [
       {
         "date": "2026-11-10",
-        "ym": "2026-11",
-        "title": "🎁ご褒美枠｜空き（客/師/恩/友/家族）",
-        "kind": "open",
-        "cat": null
-      },
-      {
-        "date": "2026-11-13",
         "ym": "2026-11",
         "title": "🎁ご褒美枠｜空き（客/師/恩/友/家族）",
         "kind": "open",
