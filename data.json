@@ -1,13 +1,24 @@
 {
-  "generatedAt": "2026-11-26T06:22:45+09:00",
+  "generatedAt": "2026-11-26T08:28:45+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-11-26 06:22",
+      "at": "2026-11-26 08:28",
       "slack": "OK",
-      "ok": [],
-      "ng": [],
-      "errors": [],
+      "ok": [
+        "gokigen",
+        "udemy"
+      ],
+      "ng": [
+        "limitless"
+      ],
+      "errors": [
+        {
+          "file": "intake_limitless_2026-11-26_0802.json",
+          "ledger": "limitless",
+          "why": "日付がファイル名の日付と違う: 2026-11-25 ≠ 2026-11-26"
+        }
+      ],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
@@ -32,7 +43,7 @@
     "udemyFiles": [
       {
         "name": "Udemy台帳_base",
-        "rows": 2638
+        "rows": 2648
       },
       {
         "name": "Udemy台帳_2026-07-12",
@@ -2246,6 +2257,23 @@
       "dining": "前日11/24 研修後の懇親会",
       "routine": null,
       "note": "Oura 7:19：コンディション55（安静時心拍数の上昇）・睡眠70・アクティビティ93・レジリエンス不足。最低心拍71（平均80）・HRV14ms・体表温-0.2℃・呼吸15.9/分。体重・体組成は空欄（ホテル泊で、あすけんの画面なし）"
+    },
+    {
+      "date": "2026-11-26",
+      "dow": "木",
+      "weight": 83.7,
+      "fat": 30.5,
+      "muscle": 55.3,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 74,
+      "exercise": null,
+      "dining": null,
+      "routine": null,
+      "note": "あすけん8:02：体重83.7・体脂肪30.5・筋肉55.3・内臓10・体内年齢61・BMI28.0・基礎代謝1626。Oura 8:01：コンディション76・睡眠74・アクティビティ95・レジリエンスやや不足。最低心拍63（平均70）・体表温+0.3℃・呼吸16.1/分。就寝は1:25ごろ（代表作のKDP登録のため）"
     }
   ],
   "udemyCourses": [
@@ -2321,82 +2349,6 @@
     }
   ],
   "udemy": [
-    {
-      "date": "2026-10-19",
-      "time": "7:10",
-      "rows": [
-        {
-          "id": "C01",
-          "cumEnroll": 558,
-          "monthEnroll": 24,
-          "cumRevenue": 600.07,
-          "rating": 4.27
-        },
-        {
-          "id": "C02",
-          "cumEnroll": 5433,
-          "monthEnroll": 122,
-          "cumRevenue": 8684.76,
-          "rating": 4.14
-        },
-        {
-          "id": "C03",
-          "cumEnroll": 2983,
-          "monthEnroll": 46,
-          "cumRevenue": 4701.59,
-          "rating": 4.14
-        },
-        {
-          "id": "C04",
-          "cumEnroll": 4159,
-          "monthEnroll": 44,
-          "cumRevenue": 3951.49,
-          "rating": 4.17
-        },
-        {
-          "id": "C05",
-          "cumEnroll": 4629,
-          "monthEnroll": 13,
-          "cumRevenue": 7494.96,
-          "rating": 3.97
-        },
-        {
-          "id": "C06",
-          "cumEnroll": 8002,
-          "monthEnroll": 83,
-          "cumRevenue": 15240.11,
-          "rating": 4.13
-        },
-        {
-          "id": "C07",
-          "cumEnroll": 5036,
-          "monthEnroll": 49,
-          "cumRevenue": 11476.62,
-          "rating": 4.08
-        },
-        {
-          "id": "C08",
-          "cumEnroll": 8173,
-          "monthEnroll": 17,
-          "cumRevenue": 26558.1,
-          "rating": 3.93
-        },
-        {
-          "id": "C09",
-          "cumEnroll": 15868,
-          "monthEnroll": 220,
-          "cumRevenue": 50829.2,
-          "rating": 4.14
-        },
-        {
-          "id": "C10",
-          "cumEnroll": 18328,
-          "monthEnroll": 102,
-          "cumRevenue": 68763.07,
-          "rating": 4.2
-        }
-      ]
-    },
     {
       "date": "2026-10-20",
       "time": "6:55",
@@ -4725,6 +4677,82 @@
           "cumRevenue": 69273.11,
           "rating": 4.18,
           "note": "評価4.17→4.18。概要：累計74,698・11月991・講師評価4.15・収益11月$29.43／全期間$201,077.27。10コース合計と概要が一致"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-26",
+      "time": "8:02",
+      "rows": [
+        {
+          "id": "C01",
+          "cumEnroll": 583,
+          "monthEnroll": 15,
+          "cumRevenue": 686,
+          "rating": 4.21
+        },
+        {
+          "id": "C02",
+          "cumEnroll": 5732,
+          "monthEnroll": 189,
+          "cumRevenue": 9091.41,
+          "rating": 4.13
+        },
+        {
+          "id": "C03",
+          "cumEnroll": 3082,
+          "monthEnroll": 58,
+          "cumRevenue": 4826.01,
+          "rating": 4
+        },
+        {
+          "id": "C04",
+          "cumEnroll": 4251,
+          "monthEnroll": 49,
+          "cumRevenue": 4009.47,
+          "rating": 4.17
+        },
+        {
+          "id": "C05",
+          "cumEnroll": 4671,
+          "monthEnroll": 28,
+          "cumRevenue": 7532.71,
+          "rating": 4.01
+        },
+        {
+          "id": "C06",
+          "cumEnroll": 8161,
+          "monthEnroll": 115,
+          "cumRevenue": 15425.14,
+          "rating": 4.16
+        },
+        {
+          "id": "C07",
+          "cumEnroll": 5159,
+          "monthEnroll": 80,
+          "cumRevenue": 11637.63,
+          "rating": 4.26
+        },
+        {
+          "id": "C08",
+          "cumEnroll": 8216,
+          "monthEnroll": 29,
+          "cumRevenue": 26621.69,
+          "rating": 4.1
+        },
+        {
+          "id": "C09",
+          "cumEnroll": 16302,
+          "monthEnroll": 279,
+          "cumRevenue": 51936.14,
+          "rating": 4.16
+        },
+        {
+          "id": "C10",
+          "cumEnroll": 18610,
+          "monthEnroll": 222,
+          "cumRevenue": 69276.74,
+          "rating": 4.19
         }
       ]
     }
@@ -7965,54 +7993,54 @@
     },
     {
       "ym": "2026-11",
-      "enroll": 74698,
-      "newEnroll": 1013,
-      "revenue": 201037.09,
-      "officialNew": 991,
-      "officialAsOf": "2026-11-25",
+      "enroll": 74767,
+      "newEnroll": 1082,
+      "revenue": 201042.94,
+      "officialNew": 1064,
+      "officialAsOf": "2026-11-26",
       "from": "2026-10-31",
-      "to": "2026-11-25",
-      "records": 17,
+      "to": "2026-11-26",
+      "records": 18,
       "byCourse": {
         "C01": {
-          "enroll": 582,
+          "enroll": 583,
           "revenue": 686
         },
         "C02": {
-          "enroll": 5724,
+          "enroll": 5732,
           "revenue": 9091.41
         },
         "C03": {
-          "enroll": 3078,
+          "enroll": 3082,
           "revenue": 4826.01
         },
         "C04": {
-          "enroll": 4249,
+          "enroll": 4251,
           "revenue": 4009.47
         },
         "C05": {
-          "enroll": 4670,
+          "enroll": 4671,
           "revenue": 7532.71
         },
         "C06": {
-          "enroll": 8152,
+          "enroll": 8161,
           "revenue": 15425.14
         },
         "C07": {
-          "enroll": 5150,
+          "enroll": 5159,
           "revenue": 11637.63
         },
         "C08": {
-          "enroll": 8213,
+          "enroll": 8216,
           "revenue": 26621.69
         },
         "C09": {
-          "enroll": 16286,
-          "revenue": 51933.92
+          "enroll": 16302,
+          "revenue": 51936.14
         },
         "C10": {
-          "enroll": 18594,
-          "revenue": 69273.11
+          "enroll": 18610,
+          "revenue": 69276.74
         }
       }
     }
