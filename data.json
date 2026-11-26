@@ -1,24 +1,13 @@
 {
-  "generatedAt": "2026-11-26T08:28:45+09:00",
+  "generatedAt": "2026-11-26T12:43:48+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-11-26 08:28",
+      "at": "2026-11-26 12:40",
       "slack": "OK",
-      "ok": [
-        "gokigen",
-        "udemy"
-      ],
-      "ng": [
-        "limitless"
-      ],
-      "errors": [
-        {
-          "file": "intake_limitless_2026-11-26_0802.json",
-          "ledger": "limitless",
-          "why": "日付がファイル名の日付と違う: 2026-11-25 ≠ 2026-11-26"
-        }
-      ],
+      "ok": [],
+      "ng": [],
+      "errors": [],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
