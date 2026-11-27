@@ -1,13 +1,23 @@
 {
-  "generatedAt": "2026-11-27T06:22:49+09:00",
+  "generatedAt": "2026-11-27T12:42:54+09:00",
   "version": "2.0",
   "meta": {
     "intake": {
-      "at": "2026-11-27 06:22",
+      "at": "2026-11-27 12:41",
       "slack": "OK",
-      "ok": [],
-      "ng": [],
-      "errors": [],
+      "ok": [
+        "gokigen"
+      ],
+      "ng": [
+        "limitless"
+      ],
+      "errors": [
+        {
+          "file": "intake_limitless_2026-11-27_0934.json",
+          "ledger": "limitless",
+          "why": "日付がファイル名の日付と違う: 2026-11-26 ≠ 2026-11-27"
+        }
+      ],
       "pending": [],
       "boxUrl": "https://drive.google.com/drive/folders/11vKulLngNXp5AVVF74VzG6HEXOQlUww4"
     }
@@ -2263,6 +2273,23 @@
       "dining": null,
       "routine": null,
       "note": "あすけん8:02：体重83.7・体脂肪30.5・筋肉55.3・内臓10・体内年齢61・BMI28.0・基礎代謝1626。Oura 8:01：コンディション76・睡眠74・アクティビティ95・レジリエンスやや不足。最低心拍63（平均70）・体表温+0.3℃・呼吸16.1/分。就寝は1:25ごろ（代表作のKDP登録のため）"
+    },
+    {
+      "date": "2026-11-27",
+      "dow": "金",
+      "weight": 83.8,
+      "fat": 30.5,
+      "muscle": 55.3,
+      "visceral": 10,
+      "bodyAge": 61,
+      "bpHigh": null,
+      "bpLow": null,
+      "mood": null,
+      "sleep": 91,
+      "exercise": null,
+      "dining": "前日11/26 研修後の懇親会",
+      "routine": null,
+      "note": "あすけん7:51：体重83.8・体脂肪30.5・筋肉55.3・内臓10・体内年齢61・BMI28.0・基礎代謝1628。Oura 7:08：コンディション73・睡眠91・アクティビティ94・レジリエンスやや不足。最低心拍60（平均75）・HRV15ms・体表温-0.4℃・呼吸16.0/分"
     }
   ],
   "udemyCourses": [
